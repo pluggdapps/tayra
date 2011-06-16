@@ -1,0 +1,464 @@
+@import url(/css/global.css);
+
+#classical {width:278px}
+#ed_feature {width:396px;}
+#videos {width:396px;}
+#spotlight {width:396px;}
+#editors_choice {width:278px;}
+
+/**** 300x250 Ad ****/
+#ad300_250 {width:300px;}
+#ad300_250_article {width:300px;}
+#ad300_250_article {
+width:auto;
+height: auto;
+margin-top: 5px;
+float: right;
+background: #fff url(/img/pages/wide/ad300bg.gif) no-repeat;
+background-position: top right; 
+}
+
+#ad300_250_article iframe,#ad300_250_article span,#ad300_250_article img {
+display: block;
+margin: 18px 0 0 5px;
+}
+
+#nr_signup{
+margin-bottom: 10px;
+}
+
+/**** Editors Choice ****/
+#editors_choice, #ed_feature {
+clear: both;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+
+/**** Classical Corner ****/
+#classical {
+clear: both;
+margin-top: 10px;
+}
+
+#editors_choice .sub_heading{
+padding: 4px;
+background-color: #E8ECEF;
+border-bottom: 1px solid #A0A0A0;
+margin: 0px -10px 10px -10px;
+}
+
+/**** Special Ad ****/
+#ad160_125 {
+/*background-color: #E8ECEF;*/
+height: auto;
+width: 300px;
+text-align: center;
+margin: 0px auto 10px auto;
+}
+
+#ad160_125_2 {
+background-color: #E8ECEF;
+height: auto;
+width: 300px;
+text-align: center;
+margin: 0px auto 10px auto;
+}
+
+/**** Classical Corner ****/
+#class_sub {
+margin: 0px -10px 0px -10px;
+}
+
+/**** Album of the Day ****/
+div#aod {
+	position: relative;
+	float: left;
+	margin: 0px 10px 10px 0px;
+	width: 208px;
+	height: 220px;
+	background-color:#000;
+	background-position: 4px 20px;
+	background-repeat: no-repeat;
+}
+
+div#aod a#aod_anchor {
+	display: block;
+	width: 100%;
+	height: 75%;
+}
+
+div#aod_metadata {
+	position: absolute;
+	bottom: 0;
+	width: 198px;
+	background: #000;
+	filter: alpha(opacity=80);
+	-moz-opacity: 0.8;
+	opacity: 0.8;
+	padding: 5px 5px 8px 5px;
+}
+
+div#aod_metadata * { 
+	font-size: 0.9em;
+	font-weight: normal;
+	margin: 0;
+}
+
+div#aod_metadata .album_title * {color:#fff;}
+
+div#aod_metadata .album_artist * {color:#aaa;}
+
+div#aod_metadata .album_rating {
+	float: left;
+	margin-top: 4px;
+}
+
+div#aod_metadata .buttons img{ margin-left: 4px;}
+
+div#aod_new {
+	position: relative;
+	float: left;
+	margin: 0px 18px 10px 0px;
+	width: 200px;
+	height: 222px;
+	background-color:#fff;
+	background-position: 0px 22px;
+	background-repeat: no-repeat;
+}
+
+div#aod_new a#aod_anchor_new {
+	display: block;
+	width: 100%;
+	height: 198px;
+}
+
+/**** 200x200 ****/
+div#bboat_ad {
+	float: left;
+	width: 200px;
+	height: 220px;
+}
+
+/*BEGIN BLOG STYLE LISTS*/
+ul.blog_list { 
+margin:4px 4px 0px 18px;
+padding:0;
+list-style-image:url(/img/bullet.gif);
+}
+
+ul.blog_list li { 
+margin:0;
+padding:0;
+line-height: 1.8em;
+border-bottom: 1px solid #eee;
+padding-left: 2px
+}
+/*END BLOG STYLE LISTS*/
+
+/*BEGIN LIVE_FEED*/
+#live_feed { font-size: 0.9em; margin-top: 10px; }
+
+#live_feed a, #live_feed a:link, #live_feed a:active { color: #4f697d; }
+#live_feed a:visited { color:#777;}
+#live_feed a:hover { color:#e69; }
+
+#live_feed .content_header {
+height: 74px;
+margin: 0;
+padding: 0;
+border-bottom: none;
+background-color: transparent;
+}
+
+#live_feed.content_win {
+border: none;
+margin-bottom: 0;
+padding: 0;
+}
+
+#live_feed ul.blog_list { margin-bottom: 14px; }
+/*END LIVE_FEED*/
+
+/*BEGIN TOPBLOG*/
+#topblog {
+clear: both;
+border-width: 0px 1px 0px 1px;
+border-style: solid;
+border-color: #a0a0a0;
+margin: 0;
+padding: 0;
+margin-bottom:10px;
+}
+
+#topblog .article a, #topblog .article a:link, #topblog .article a:active { color:#4f697d; border-bottom:1px dotted #4F697D; }
+#topblog .article a:visited { color:#777;}
+#topblog .article a:hover { color:#e69; border-bottom:1px dotted #EE6699; }
+
+#topblog .blog_list * { border:none; }
+
+#topblog .content_header {
+height:50px;
+margin: 0;
+padding: 0;
+background-color: #FFFFFF;
+border: none;
+}
+
+#topblog .hr { margin: 4px 10px 0 10px; }
+
+#topblog .article_title, #topblog .article_author { padding: 0 10px; }
+#topblog .article { padding: 0px 10px; }
+
+#topblog .article_author { color: #777; }
+
+#topblog .article img { display:block; margin-bottom: 4px; }
+
+#topblog .article img.alignleft {
+float:left;
+margin-right:7px;
+}
+
+#topblog .article img.alignright {
+float:right;
+margin-left:7px;
+}
+
+#topblog #more_posts { 
+font-size: 0.8em;
+border-top: 1px solid #ddd; 
+padding: 4px 10px 10px 10px; 
+background-color: #f9f9f9;
+}
+
+#topblog #more_posts h3 { font-size: 1.1em; margin: 0; color: #333; }
+
+#topblog #more_posts li { line-height: 1.6em; }
+
+#topblog a#blog_bottom img { display: block; }
+
+#topblog #more_posts a, #topblog #more_posts a:link, #topblog #more_posts a:active { color:#4f697d; }
+#topblog #more_posts a:visited { color:#777; }
+#topblog #more_posts a:hover { color:#e69; }
+/*END TOPBLOG*/
+
+#ed_feature .article img.alignleft, #classical .article img.alignleft {
+float:left;
+margin-right:7px;
+}
+
+#ed_feature .article img.alignright, #classical .article img.alignright {
+float:right;
+margin-left:7px;
+}
+
+#ed_feature .article_title {
+border-bottom: 0;
+color: #000;
+padding-bottom: 0px;
+}
+
+#ed_feature .bottom_tab {
+clear: right;
+}
+
+.hr {
+display: block;
+clear: both;
+line-height: 0px;
+height: 0px;
+margin: 0px 0px 0px 0px;
+background-color: #ccc;
+border-bottom: 1px solid #ccc;
+}
+
+/**** New Releases ****/
+#new_releases {
+width: 212px;
+margin-bottom: 0px;
+}
+
+#new_releases .bottom_tab {
+margin-top: 10px;
+}
+
+#new_releases img.nr_sub {
+background-color: #E8E8E8;
+border-bottom: 1px solid #A0A0A0;
+margin: 0px -10px 10px -10px;
+}
+
+#new_releases img.nr_sponsor {
+background-color: #E8E8E8;
+margin: 0px -10px 0px -10px;
+}
+
+/**** General ****/
+
+#left_col {
+float:left;
+width:300px;
+margin: 0px 10px 10px 0px;
+}
+
+#center_col {
+float:left;
+width:418px;
+margin: 0px 10px 10px 0px;
+}
+
+#right_col {
+float: left;
+width: 234px;
+margin: 0px 0px 10px 0px;
+}
+
+#ed_sponsor {
+margin: 0 -10px 0 -10px;
+}
+
+blockquote {	
+	font-size: 1.4em;
+	font-style: italic;
+	margin: 10px 15px 10px 0px;	
+	padding: 10px;
+	background-color: #f9f9f9;
+	border: 1px solid #eee;
+}
+
+blockquote.pullquote {
+	float: left;
+	width: 25%;
+}
+
+.article_title {
+font-size: 13px;
+color: #000;
+font-weight: bold;
+padding-bottom: 0px;
+margin: 5px 0px 0px 0px;
+border-bottom: 0px solid #ccc;
+}
+
+.article_title a,.article_title a:active,.article_title a:link,.article_title a:visited {
+color: #444;
+}
+
+.article_author {
+font-size: 13px;
+color: #6C2335;
+margin: 0px 0px 5px 0px;
+}
+
+.article_author a,.article_author a:active,.article_author a:link,.article_author a:visited {
+color: #6C2335;
+}
+
+.article_author a:hover {
+color: #6D7C8D;
+}
+
+.article {
+margin-top: 5px;
+font-size: 12px;
+color: #2B2B2B;
+}
+
+.article a,.article a:active,.article a:link,.article a:visited {
+color: #6C2335;
+}
+
+.article a:hover {
+color: #6D7C8D;
+}
+
+a,a:active,a:link,a:visited {
+color: #6E6449;
+text-decoration:none;
+}
+
+a:hover {
+color: #6C2335;
+text-decoration:none;
+}
+
+
+.clearer {
+clear:both;
+line-height:0;
+}
+
+img.archive {
+float:right;
+}
+
+body {
+background-color:#fff; /*#EDF1F0*/
+margin: 0px;
+padding: 0px;
+font-family: "trebuchet ms",arial;
+font-size: 14px;
+}
+
+.bottom_tab {
+margin-top: 10px;
+position:relative;
+clear:both;
+width: 100%;
+left: 10px;
+text-align: right;
+}
+
+.list_item {
+font-size: 11px;
+}
+
+.album_cover {
+float: left;
+margin-bottom: 0px;
+}
+
+.album_title {
+word-wrap: break-word;
+color: #6C2335;
+margin: 0px 0px 0px 85px;
+}
+
+.album_title a,.album_title a:active,.album_title a:link,.album_title a:visited,.album_title a:hover {
+color: #6C2335;
+font-weight: normal;
+text-decoration: none;
+}
+
+.album_artist {
+word-wrap: break-word;
+font-size: 11px;
+color: #666;
+margin: 0px 0px 0px 85px;
+}
+
+.album_artist a,.album_artist a:active,.album_artist a:link,.album_artist a:visited,.album_artist a:hover {
+color: #666;
+text-decoration: none;
+}
+
+.album_rating {
+margin: 0px 0px 0px 85px;
+}
+
+.buttons {
+margin: 0px 0px 0px 85px;
+text-align: right;
+}
+
+.buttons img{
+margin-left: 4px;
+}
+
+.divider {
+clear: both;
+line-height: 0px;
+font-size: 0px;
+height: 10px;
+margin: 0px 0px 10px 0px;
+border-bottom: 1px solid #ccc;
+}

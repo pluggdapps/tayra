@@ -1,0 +1,111 @@
+/*
+ * CSS for Shared Module
+ * name: bmi-hp
+ */
+.ffp_promo {
+    width: 300px;
+}
+
+.ffp_promo select, .ffp_promo input {
+    color: #666;
+    font-size: 90%;
+    padding: 3px;
+    line-height: 100%
+}
+
+.ffp_promo .formRow {
+    position: relative;
+    margin-top: 10px;
+}
+
+#userPregnancy {
+	display:none;
+}
+
+.ffp_promo .button_pane {
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.ffp_promo form label.primary {
+    color: #88a906;
+    font-size: 120%;
+    margin: 0 10px 3px 0;
+}
+
+.ffp_promo form .unit {
+    color: #666;
+    font-size: 105%;
+}
+
+.ffp_promo .title {
+    position: relative;
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/modules/primary/caps-sprite.png) no-repeat 0 -47px;
+    font-size: 150%;
+    color: #fff;
+    font-weight: bold;
+    margin: 0;
+}
+
+.ffp_promo .title .right {
+    display: block;
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/modules/primary/caps-sprite.png) no-repeat 100% -47px;
+    line-height: 42px;
+    height: 100%;
+    margin: 0 0 0 25px;
+    padding-right: 25px;
+}
+
+.ffp_promo .primary-mid {
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/modules/primary/content-bg.png) repeat-y 0 0;
+}
+
+.ffp_promo .primary-mid .primary-content {
+    padding-top: 15px;
+    display: block;
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/modules/primary/content-bg.png) repeat-y 100% 0;
+    margin-left: 25px;
+    zoom: 1;
+    padding-right: 25px;
+    padding-bottom: 13px;
+}
+
+.ffp_promo .bot_cap {
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/modules/primary/caps-sprite.png) no-repeat 0 -89px;
+}
+
+.ffp_promo .bot_cap span {
+    display: block;
+    line-height: 5px;
+    height: 5px;
+    margin-left: 25px;
+    padding-right: 25px;
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/modules/primary/caps-sprite.png) no-repeat 100% -89px;
+    font-size: 1px; /*IE*/
+}
+
+/*
+ * Button
+ */
+.ffp_promo a.primary-button {
+    float: right;
+    display: block;
+    border: 0;
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/buttons/button-sprite.png) no-repeat 0 0;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.ffp_promo a.primary-button span {
+    display: inline-block;
+    line-height: 33px;
+    height: 33px;
+    background: url(../../../../../consumer_assets/site_images/layout/wellness/diet/ffp/buttons/button-sprite.png) no-repeat 100% 0;
+    margin-left: 15px;
+    padding-right: 15px;
+    font-size: 120%;
+    color: #fff;
+    zoom: 1;
+}

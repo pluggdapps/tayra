@@ -1,0 +1,80 @@
+div.showReportSnippet {
+    padding-bottom: 10px;
+    background: url(../images/showreports/box-bottom.png?771) no-repeat bottom left;
+    margin-bottom: 20px; }
+
+div.showReportSnippet h2 {
+    text-align: center;
+    margin: 0; }
+
+div.showReportSnippet h2 a,
+div.showReportSnippet h2 a:visited,
+div.showReportSnippet h2 a:hover {
+    color: #FFF; }
+
+div.showReportSnippet table.logo {
+    margin: 0;
+    padding: 0; }
+
+div.mainContent div.showReportSnippet .tableContainer {
+    padding: 9px;
+    background: url(../images/showreports/box-middle.png?771) repeat-y; }
+
+div.mainContent div.showReportSnippet table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px; }
+
+div.mainContent div.showReportSnippet td {
+    padding: 4px 0;
+    border-top: 1px dotted #444;
+    color: #FFF; }
+
+div.mainContent div.showReportSnippet table.logo td {
+    padding: 0; }
+
+div.mainContent div.showReportSnippet tr:first-child td {
+    border-top: 0;
+    padding-top: 0; }
+
+div.mainContent div.showReportSnippet tr:last-child td {
+    padding-bottom: 0; }
+
+div.mainContent div.showReportSnippet td.tdlabelsimpsm {
+    background: transparent;
+    border-top: 0; }
+
+div.mainContent div.showReportSnippet td.tdlabelsimpsm {
+    background: transparent; }
+
+div.mainContent div.showReportSnippet td.tdcontentsm {
+    background: transparent; }
+
+div.showReportSnippet td span.brandName a {
+    font-weight: bold; }
+
+div.showReportSnippet td.lastDate {
+    font-size: 11px;
+    white-space: nowrap; }
+
+div.showReportSnippet td.lastDate a,
+div.showReportSnippet td.lastDate a:visited div.showReportSnippet td.lastDate a:hover {
+    color: #888; }
+
+div.showReportSnippet td.lastDate span {
+    background: #000;
+    padding: 1px 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px; }
+
+div.showReportSnippet td.lastDate span.thirtyMins a,
+div.showReportSnippet td.lastDate span.sixtyMins a {
+    color: #000; }
+
+div.showReportSnippet td.lastDate span.thirtyMins {
+    color: #000;
+    background: #FFFF66; }
+
+div.showReportSnippet td.lastDate span.sixtyMins {
+    background: #888833; }

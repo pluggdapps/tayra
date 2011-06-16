@@ -1,0 +1,1496 @@
+
+#custom-doc.yui-t6 #bd #yui-main .yui-b .yui-g .yui-u  {
+    float: left;
+}
+
+#custom-doc.yui-t6 #bd  {
+    padding-bottom: 28px;
+}
+
+
+#hp-tabbed  {
+    margin-left: 20px;
+    width: 636px;
+    overflow: hidden;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .teaserblock {
+    width: 495px;
+     height: 260px;
+    border: 0px;
+    overflow: hidden;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .tab  {
+    width: 141px;
+    height: 261px;
+    float: left;
+    border: 0px;
+    background: url(http://l.yimg.com/t/i/in/promos/realbeauty/3/carousel-bkg.gif) no-repeat;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li .container {
+    
+padding: 0px;
+    height: 100%;
+    
+}
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div.hover {
+    background: url(http://l.yimg.com/t/i/in/promos/realbeauty/4/carousel-background.gif)  no-repeat;
+    background-position: 41px -2px;
+    position: absolute;
+    z-index: 2;
+    overflow: hidden;
+    padding-left: 56px;
+    opacity: 1;
+    filter: alpha(opacity:100);
+    border: 0px;
+    width: 140px;
+    right: 0px;
+    height: 65px;
+}
+
+
+/*#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li #tab-container-0.hover {
+    background-position: 41px -2px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li #tab-container-1.hover {
+    background-position: 41px -1px;
+}
+
+
+*/
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li #tab-container-2.hover {
+    background-position: 41px -1px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li #tab-container-3.hover {
+    background-position: 41px 0px;
+}
+
+
+
+
+html>body #hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div.hover  {
+    left: 439.5px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li  {
+    height: 65px;
+    border: 0px;
+    overflow: hidden;
+    float: left;
+    width: 140px;
+    
+}
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div  {
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div b {
+    font-family: Arial;
+    font-size: 16px;
+    color: #18273d;
+    font-weight: bold;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div a {
+    font-family: Arial;
+    font-size: 12px;
+    color: #414042;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div.hover b {
+    font-family: Arial;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li div.hover a {
+    font-family: Arial;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li .container  {
+    padding: 0px;
+    border: 0px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt {
+    height: 40px;
+    opacity: 0.80;
+    filter: alpha(opacity:80);
+    padding: 0px;
+     height: 57px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt h2 a {
+    
+font-family: Arial;
+    font-size: 13px;
+     color: #ffffff;
+    font-weight: normal;
+
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .tab  ul  li .container a {
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+}
+
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt .content .leftside {
+    width: 100%;
+    margin-left: 0px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt .content .leftside h2 {
+    margin: 0px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt .content .leftside p  {
+    margin: 0px;
+    text-align: right;
+    padding-right: 20px;
+    font-weight: normal;
+    font-family: Arial;
+    font-size: 12px;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt .content .leftside p a  {
+    background: url(http://l.yimg.com/t/i/in/promos/realbeauty/4/carousel-white-btn.gif) no-repeat;
+    background-position: 0px 1px;
+     padding-left: 18px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .belt .content .rightside  {
+    display: none;
+}
+
+
+#hp-tabbed .em-ep-tabbed-teaser .bd .teaserblock .image img {
+    width: 495px;
+    height: 261px;
+    padding:0px;
+}
+
+
+/*all answers block common css */
+
+.em-ep-answers-simplelist  {
+}
+
+.em-ep-answers-simplelist .hd  {
+    display: none;
+}
+
+.em-ep-answers-simplelist .bd .smile  {
+    display: none;
+}
+
+
+.em-ep-answers-simplelist {
+    margin-top: 0px;
+}
+
+
+
+/*#hp-answers-first .em-ep-answers-simplelist,  #hp-answers-second .em-ep-answers-simplelist {
+    margin-top: 0px;
+}
+*/
+
+
+.em-ep-answers-simplelist .bd ul li .container .avatar  {
+    width: 58px;
+    padding-top: 6px;
+}
+
+
+.em-ep-answers-simplelist .bd ul li .container .avatar img  {
+    border: 1px solid #bdbdbd;
+    padding: 3px;
+    width: 48px;
+    height: 48px;
+}
+
+
+.em-ep-answers-simplelist .bd ul li .container .ask  {
+    padding-left: 0px;
+    margin-left: 10px;
+    padding-bottom: 7px;
+}
+
+.em-ep-answers-simplelist .bd ul li .container .ask p a {
+    font-family: Arial;
+    font-size: 14px;
+    color: #143d77;
+
+}
+
+.em-ep-answers-simplelist .bd ul li .container .ask a:hover {
+    text-decoration: underline;
+}
+
+.em-ep-answers-simplelist .bd ul li .container .ask a.username:hover {
+    text-decoration: underline;
+}
+
+.em-ep-answers-simplelist .bd ul li .container .ask a.username {
+    font-family: Arial;
+    font-size: 11px;
+    color: #484545;
+    float:left;
+}
+
+.em-ep-answers-simplelist .bd ul li .container .ask em  {
+    font-family: Arial;
+    font-size: 11px;
+    color: #848383;
+    float:left;
+}
+
+
+.em-ep-answers-simplelist .hd h3 {
+    margin: 0px;
+}
+
+.em-ep-answers-simplelist .bd ul li  {
+    margin-top: 0px;
+}
+
+.em-ep-answers-simplelist .bd ul li .container  {
+     background: none;
+    border: 0px;
+    padding:  0px 10px 0px 0px;
+}
+
+.em-ep-answers-simplelist .bd ul li .container .ask .category  {
+}
+
+.em-ep-answers-simplelist .bd ul li .actions  {
+     background: none;
+    border: 0px;
+    color: #ffffff;
+    font-size: 0px;
+     text-align: right;
+    padding-right: 20px;
+    padding-top: 0px;
+    width: 200px;
+}
+
+.em-ep-answers-simplelist .bd ul li .actions a  {
+    font-family: Arial;
+    font-size: 12px;
+    color: #143d77;
+    font-weight: normal;
+}
+
+.em-ep-answers-simplelist .bd ul li .actions .asklink {
+    display: none;
+}
+
+.em-ep-answers-simplelist .hd h3 a  {
+     font-family: Arial;
+    font-size: 26px;
+    color: #082e62;
+    padding-top: 10px;
+    padding-left: 10px;
+    font-weight: normal;
+    padding-bottom: 0px;
+    display: inline-block;
+
+}
+.em-ep-answers-simplelist .bd  {
+    display: inline-block;
+}
+
+.em-ep-answers-simplelist .bd ul li .container .actions a.answerlink {
+    font-family: Arial;
+    font-size: 12px;
+    color: #143d77;
+}
+
+
+/*all answers block common css end */
+
+
+
+
+#hp-answers-first .em-ep-answers-simplelist .bd ul li .container .ask,
+#hp-answers-second .em-ep-answers-simplelist .bd ul li .container .ask
+{
+    padding-top: 5px;
+    width:220px;
+}
+
+
+
+
+
+
+#hp-questions-dove-heading  {
+    margin-top: 10px;
+    width: 318px;
+     /*width 7px added for dotted line*/}
+#hp-questions-dove-heading,  #hp-questions-dove  {
+    border-left: 1px dotted #c4cfdd;
+    border-right: 1px dotted #c4cfdd;
+
+margin-left: 5px;
+    float: left;
+    display: inline;
+
+}
+
+#hp-questions-dove .em-ep-answers-simplelist {
+    padding-left: 10px;
+}
+
+
+
+#hp-questions-dove-heading .hd,  #hp-answers-heading .hd  {
+    display: none;
+}
+
+#hp-answers-heading .em-ep-generic-list-vertical {
+	padding:0px;
+}
+#hp-questions-dove-heading .bd  {
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 7px;
+}
+
+
+#hp-answers-heading .bd  {
+    padding-left: 2px;
+    padding-top: 15px;
+    padding-bottom: 0px;
+}
+
+
+#hp-questions-dove-heading .bd h4 a,  #hp-answers-heading .bd h4 a {
+    font-size: 22px;
+    color: #082e62;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+
+#hp-questions-dove-heading .bd h4 a .titleimage {
+    position: relative;
+    top: 8px;
+}
+
+#hp-questions-dove-heading .bd h4 a img {
+    border: 0px;
+    padding:0px;
+}
+
+
+#hp-questions-dove-heading .bd,  #hp-answers-heading .bd  {
+    border: 0px;
+}
+
+#hp-questions-dove-heading .ft,  #hp-answers-heading .ft  {
+    display: none;
+}
+
+#hp-questions-dove-heading .bd ul li,  #hp-answers-heading .bd ul li {
+    list-style-type: none;
+}
+
+#hp-answers-heading .bd ul li .container .image {
+    display: none;
+}
+
+#hp-questions-dove-heading .bd ul li .container .image {
+    display: none;
+}
+
+
+
+/*#hp-answers-heading .em-ep-generic-list-vertical {
+    padding: 0px;
+}
+*/
+
+#hp-questions-dove-heading .em-ep-generic-list-vertical {
+    padding-left: 0px;
+}
+
+
+#hp-questions-dove .em-ep-answers-simplelist .bd ul li .container p  {
+    padding-bottom: 7px;
+}
+
+#hp-answers-first .em-ep-answers-simplelist .bd ul li .container p  {
+    padding-bottom: 5px;
+    float: left;
+}
+
+#hp-answers-second .em-ep-answers-simplelist .bd ul li .container p  {
+    padding-bottom: 7px;
+    float: left;
+}
+
+
+
+#hp-questions-dove  {
+    float: left;
+    width: 318px;
+     /*width 7px added for dotted line*/}
+
+#hp-questions-dove .em-ep-answers-simplelist  {
+    margin-top: 0px;
+
+}
+
+#hp-questions-dove .bd  {
+    padding-left:0px 0px 0px 5px;
+}
+
+#hp-questions-dove .bd ul  {
+    height: auto !important;
+}
+
+#hp-questions-dove .bd ul li  {
+    float: left;
+    padding-top: 15px;
+    width: 100%;
+}
+
+#hp-questions-dove .bd ul li .category {
+    font-family: Arial;
+    font-size: 11px;
+    color: #848383;
+}
+
+#hp-questions-dove .bd ul li .category a {
+    font-family: Arial;
+    font-size: 11px;
+    color: #484545;
+    text-decoration: none;
+}
+
+#hp-questions-dove .bd ul li .category a:hover {
+    text-decoration: underline;
+}
+
+#hp-questions-dove .ft-new,  #hp-answers-second .ft-new  {
+    text-align: right;
+    padding-right: 20px;
+}
+
+#hp-questions-dove .ft-new a,  #hp-answers-second .ft-new a {
+    background: url(http://l.yimg.com/t/i/in/promos/realbeauty/2/homepage-aswers-btn.gif)  no-repeat;
+    background-position: right;
+    padding-right: 20px;
+    font-family: Arial;
+    font-size: 12px;
+     color:  #143d77;
+    text-decoration: none;
+}
+
+#hp-questions-dove .ft-new a:hover,  #hp-answers-second .ft-new a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+#hp-answers-first .em-ep-answers-simplelist,  #hp-answers-second .em-ep-answers-simplelist {
+    margin-top: 0px;
+}
+
+
+
+
+#hp-questions-dove .ft-new,  #hp-answers-second .ft-new {
+    padding-top: 25px;
+}
+
+
+#hp-questions-dove .bd ul li .container .ask  {
+    
+ 		background: url(http://l.yimg.com/t/i/in/promos/realbeauty/5/homepage-answermodule-bullet.gif) no-repeat 0 12px;
+    padding-left: 20px;
+    
+		width: auto;
+    
+		padding-top: 5px;
+    
+		margin-left: 5px;
+    
+		}
+
+
+#hp-answers-first .bd  {
+    float: left;
+}
+
+#hp-questions-dove .bd ul  {
+     display: inline-block;
+    background: url(http://l.yimg.com/a/i/in/promos/realbeauty/images/text-bottomline.jpg) no-repeat;
+    background-position: left top;
+    padding-left: 0px;
+    padding-top: 0px;
+    float: left;
+    _width:303px;
+}
+
+
+#hp-answers-first .bd ul  {
+    display: inline-block;
+    background: url(http://l.yimg.com/a/i/in/promos/realbeauty/images/text-bottomline.jpg) no-repeat;
+    background-position: left top;
+    padding-left: 10px;
+    padding-top: 0px;
+    float: left;
+}
+
+
+#hp-answers-second .bd ul {
+    display: inline-block;
+    padding-left: 10px;
+    padding-top: 0px;
+}
+
+
+#hp-answers-first .bd ul li  {
+    float: left;
+    padding-top: 15px;
+}
+
+#hp-answers-second .bd ul li  {
+    float: left;
+    padding-top: 15px;
+}
+
+
+#hp-answers-first,  #hp-answers-second,  #hp-answers-heading  {
+    margin-left: 20px;
+    padding-left: 0px;
+    width: 311px;
+    float: left;
+    display: inline;
+    padding-bottom: 7px;
+}
+
+
+#hp-answers-heading  {
+    margin-top: 10px;
+}
+
+
+
+
+
+.em-ep-answers-simplelist .bd ul li .container .ask p  {
+ width:100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*phase1 new sections */
+
+#hp-letstalk  {
+    margin-top: 10px;
+     margin-left: 20px;
+    border: 0px;
+    width: 310px;height:329px;
+     background: transparent url(http://l.yimg.com/t/i/in/promos/realbeauty/7/letstalk-bg.jpg) no-repeat scroll 0 0;
+}
+
+#hp-letstalk .em-ep-generic-list-vertical  {
+    padding: 0px;
+}
+
+#hp-letstalk .hd  {
+    border: 0px;
+}
+
+#hp-letstalk .bd ul  {
+    /* background: url(http://l.yimg.com/t/i/in/promos/realbeauty/2/homepage-indulge-bottom-line.gif) no-repeat;
+     background-position: left top;
+     */padding-left: 10px;
+    padding-top: 13px;
+    padding-right: 16px;
+    float: left;
+}
+
+#hp-letstalk .bd  {
+    border: 0px;
+    padding: 0px;
+    no-repeat;
+    background-position: bottom;
+    float:left;
+    padding-bottom:4px;
+}
+
+#hp-letstalk .ft  {
+    border: 0px;
+    padding: 0px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    float:left;
+    width:300px;
+}
+
+#hp-letstalk .ft a {
+    background: url(http://l.yimg.com/a/i/in/promos/realbeauty/images/gray-arroy-pop.jpg) no-repeat;
+    background-position: right;
+    padding-right: 20px;
+    font-family: Arial;
+    font-size: 12px;
+     color:  #143d77;
+    font-weight: normal;
+}
+
+#hp-letstalk .hd h3 {
+    font-family: Arial;
+    font-size: 22px;
+    color: #082e62;
+    padding-top: 6px;
+    padding-left: 10px;
+    font-weight: normal;
+    padding-bottom: 6px;
+     background: transparent url(http://l.yimg.com/a/i/in/promos/realbeauty/images/pop-line.jpg) no-repeat scroll 0 38px;
+}
+
+#hp-letstalk .bd ul  {
+     height: auto !important;
+     padding-right: 10px;
+}
+
+#hp-letstalk .bd ul li  {
+    list-style-type: none;
+    border: 0px;
+}
+
+
+/* #hp-letstalk .bd ul li .container h4 a  {
+    font-family: Arial;
+    size: 11px;
+    color: #142d77;
+     font-weight: normal;
+}
+ */
+#hp-letstalk .bd ul li .container h5 a {
+    font-family: Arial;
+    font-size: 14px;
+    color: #143d77;
+     font-weight: normal;
+}
+
+#hp-letstalk .bd ul li .container h5 a span {
+    clear: both;
+     font-family: Arial;
+    font-size: 12px;
+    color: #143d77;
+     font-weight: normal;
+}
+
+#hp-letstalk .bd ul li .container  {
+    float: left;
+}
+
+#hp-letstalk .bd ul li .container .image  {
+    /*width: 59px;*/
+     padding: 0px;
+}
+
+#hp-letstalk .bd ul li.n3 .container .image,
+#hp-letstalk .bd ul li.n4 .container .image {
+    padding-bottom:10px;
+
+}
+#hp-letstalk .bd ul li .container .image img {
+    padding: 0px;
+
+}
+
+#hp-letstalk .bd ul li.n3 .container .image img,
+#hp-letstalk .bd ul li.n4 .container .image img
+{
+    width:38px;
+    height:38px;
+}
+
+#hp-letstalk .bd ul li .container h4 a  {
+    float: left;
+    padding-left: 5px;
+     font-size: 12px;
+     color: #3d3d3d;
+     font-weight: normal;
+}
+
+#hp-letstalk .bd ul li.n1 .container h4  {
+    display: none;
+}
+
+#hp-letstalk .bd ul li .container h4 {
+    width: 248px;
+    margin-left:4px;
+    float: left;
+}
+#hp-letstalk .bd ul li.n2 .container h4{
+	margin-left:0px;
+}
+#hp-letstalk .bd ul li.n1 .container p  {
+    font-size: 14px;
+    font-family: Arial;
+    color: #082e62;
+    text-align: left;
+    display: inline-block;
+    padding-top: 4px;
+    margin-top: 0px;
+}
+
+#hp-letstalk .bd ul li.n3 .container p  {
+     padding-left: 5px;
+     padding-top: 6px;
+     float: left;
+     margin-left:4px;
+}
+
+#hp-letstalk .bd ul li.n4 .container p  {
+    padding-left: 5px;
+    padding-top: 7px;
+    margin-left:4px;
+    float: left;
+}
+
+#hp-letstalk .bd ul li .container p {
+    text-align: right;
+    font-family: Arial;
+    display: inline-block;
+    width: 200px;
+     text-align: left;
+     font-size: 11px;
+     color: #143d77;
+}
+
+#hp-letstalk .bd ul li.n1 .container .image {
+     width: 99%;
+     text-align: center;
+     margin-top: 10px;
+     *margin-top: 4px;
+     display: inline-block;
+     float: left;
+     position: inherit;
+}
+
+html>body #hp-letstalk .bd ul li.n1 .container .image {
+    *padding-left: 65px;
+    *width: 185px;
+}
+
+#hp-letstalk .bd ul li.n3 {margin-top:7px;min-height:54px;_height:54px;float:left;}
+
+#hp-letstalk .bd ul li.n3 h4 a,
+#hp-letstalk .bd ul li.n4 h4 a {
+	height:30px;overflow:hidden;
+}
+
+#hp-letstalk .bd ul li.n3 .container  {
+    padding-top: 0px;
+}
+
+#hp-letstalk .bd ul li.n4 .container  {
+    padding-top: 0px;
+}
+
+
+#hp-letstalk .bd ul li.n1 .container .image  {
+    display: none;
+}
+
+#hp-letstalk .bd ul li.n1 h5 {
+    padding-right: 10px;
+}
+
+#hp-letstalk .bd ul li.n1 .container p {
+    display: none;
+}
+
+#hp-letstalk .bd ul li.n2  {
+    float: left;
+    /* height: 85px;*/
+    height:80px;
+    /**overflow:hidden;*/
+}
+
+#hp-letstalk .bd ul li.n2 .container  {
+    padding-top: 26px;
+}
+
+#hp-letstalk .bd ul li.n2 .container .image {
+    width: 280px;
+     text-align: center;
+}
+
+#hp-letstalk .bd ul li.n2 .container h4 {
+    clear: both;
+     position: relative;
+     top: -57px;
+}
+
+#hp-letstalk .bd ul li.n2 .container h4 a {
+    padding: 0px;
+     color: #3d3d3d;
+     font-size: 12px;
+     font-family: Arial;
+}
+
+#hp-letstalk .bd ul li.n2 .container p {
+    clear: both;
+     position: relative;
+     top: -13px;
+     color: #082e62;
+     font-size: 14px;
+     font-familt: Arial;
+}
+
+
+
+
+
+#hp-speaks  {
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 310px;
+    background: transparent url(http://l.yimg.com/t/i/in/promos/realbeauty/7/letstalk-bg.jpg) no-repeat;
+    float:left;
+    display:inline;
+}
+
+#hp-speaks .em-ep-generic-list-vertical  {
+    padding: 0px;
+     /*background: transparent url(http://l.yimg.com/a/i/in/promos/realbeauty/images/in-bottom-curve.gif) no-repeat scroll 0 bottom;*/
+}
+
+#hp-speaks .em-ep-generic-list-horizontal {
+    padding: 0px;
+}
+
+#hp-speaks .hd  {
+    /*background: transparent url(http://l.yimg.com/a/i/in/promos/realbeauty/images/in-top-curve.gif) no-repeat scroll 0 0;*/
+}
+
+#hp-speaks .hd h3  {
+    background: transparent url(http://l.yimg.com/a/i/in/promos/realbeauty/images/pop-line.jpg) no-repeat scroll 0 38px;
+     padding: 6px 0 6px 10px;
+     font-size: 22px;
+     font-family: arial;
+     color: #082E62;
+     font-weight: normal;
+}
+
+#hp-speaks .bd  {
+    border: 0px solid;
+     padding: 0px;
+}
+
+#hp-speaks .bd ul {
+    padding-top: 13px;
+}
+
+#hp-speaks .bd .n1 .container {
+    margin: 0px;
+}
+
+#hp-speaks .bd .n1 .container .image
+#hp-speaks .bd .n1 .container h4 {
+    display: none;
+}
+
+#hp-speaks .bd ul li  {
+    list-style-type: none;
+}
+
+#hp-speaks .bd ul li .container h4 {
+    display: none;
+}
+
+#hp-speaks .bd ul li .container .image  {
+    padding: 0px;
+     position: relative;
+     top: 44px;
+     padding-left: 10px;
+}
+
+#hp-speaks .bd ul li .container .image img {
+    width: 290px;
+     height: 190px;
+     padding: 0px;
+}
+
+#hp-speaks .bd ul li .container p {
+    clear: both;
+     position: relative;
+     top: -193px;
+     padding-left: 10px;
+    padding-bottom: 15px;
+     font-size: 12px;
+     color: #3d3d3d;
+}
+
+#hp-speaks .ft  {
+    border: 0px solid;
+     padding: 0px;
+     height: 40px;
+     padding-right:10px;
+}
+
+#hp-speaks .ft a  {
+     padding-top: 10px;
+     padding-bottom: 10px;
+     position: relative;
+     top: 10px;
+     background: transparent url(http://l.yimg.com/a/i/in/promos/realbeauty/images/gray-arroy-pop.jpg) no-repeat scroll right center;
+     font-size: 12px;
+     color: #143D77;
+     font-weight: normal;
+     padding-right: 21px;
+     padding-left:6px; /*ie6 issue with right aligned bg*/
+     _padding-right:15px;
+}
+
+
+
+
+/*middle section */
+#hp-middle-tabs{
+	float:left;
+	display:inline;
+	width:632px;
+	margin-left:20px;
+	margin-top:20px;
+	height:43px;
+	overflow:hidden;
+
+
+}
+#hp-middle-tabs .em-ep-generic-list-horizontal{padding:0px;}
+
+#hp-middle-tabs .hd {display:none;}
+
+#hp-middle-tabs .bd {
+	float:left;
+	border:0px;
+	padding:0px;
+	width:100%;
+
+}
+
+#hp-middle-tabs .bd li {display:none;float:left;}
+#hp-middle-tabs .bd li .container {
+	float:left;
+	margin:0px;
+	width:100%;
+
+}
+
+#hp-middle-tabs .bd li.n1 {display:inline;}
+#hp-middle-tabs .bd li.n1 .container h3{display:none;}
+#hp-middle-tabs .bd li.n1 .container .image{display:none;}
+#hp-middle-tabs .bd li.n1 .container p{display:none;}
+
+
+#hp-middle-tabs .bd li.n1 .container #btn-group{
+	float:left;
+	width:632px;
+
+}
+#hp-middle-tabs .bd li.n1 .container .tab1-selected { 								background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-mostpopular-selected-bkg.gif) no-repeat;
+	background-position:0px -5px;}
+
+
+#hp-middle-tabs .bd .container .tab2-selected {
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-latestarticle-bkg.gif) no-repeat;
+	background-position:0px -5px;
+
+ }
+
+#hp-middle-tabs .bd li.n1 .container .tab3-selected{
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-beautyongo-bkg.gif) no-repeat;
+	background-position:0px -5px;
+}
+
+
+
+
+/*common button attribues*/
+#hp-middle-tabs .bd li.n1 .container .button-outer{
+	float:left;
+	width:190px;
+	margin-right:10px;
+	padding-top:13px;
+	padding-bottom:13px;
+	cursor:pointer;
+}
+#hp-middle-tabs .bd li.n1 .container #btn-latest.button-outer {
+	width:189px;
+}
+
+#hp-middle-tabs .bd li.n1 .container .button-inner{
+	float:left;
+	text-align:center;
+	width:100%;
+}
+
+
+
+
+
+/*unselected button */
+#hp-middle-tabs .bd li.n1 .container #btn-group .button-outer{
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-menubox-unselected-bkg.gif) no-repeat;
+	background-position:0px 1px;
+
+}
+#hp-middle-tabs .bd li.n1 .container #btn-group .button-inner{
+	font-size:12px;
+	font-family:Arial;
+	color:#3d3d3d;
+}
+
+/*selected tab button*/
+#hp-middle-tabs .bd li.n1 .container #btn-group.tab1-selected #btn-popular.button-outer,
+#hp-middle-tabs .bd li.n1 .container #btn-group.tab2-selected #btn-latest.button-outer,
+#hp-middle-tabs .bd li.n1 .container #btn-group.tab3-selected #btn-beauty.button-outer
+{
+	background:none;
+}
+
+#hp-middle-tabs .bd li.n1 .container #btn-group.tab1-selected #btn-popular .button-inner,
+#hp-middle-tabs .bd li.n1 .container #btn-group.tab2-selected #btn-latest .button-inner,
+#hp-middle-tabs .bd li.n1 .container #btn-group.tab3-selected #btn-beauty .button-inner
+{
+	font-size:14px;
+	font-family:Arial;
+	color: #082e62;
+}
+
+
+
+
+
+
+
+#hp-most-popular{
+	float:left;
+	display:inline;
+	margin-left:20px;
+
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-mostpopular-selected-bkg.gif) no-repeat;
+	background-position:0px -48px;
+	width:632px;
+	height:288px;
+}
+
+#hp-most-popular .region {
+	width:100%;
+}
+
+#hp-most-popular .region .mc-default-container {
+	float:left;
+}
+
+#hp-most-popular .mc-default-hd {
+	display:none;
+}
+
+#hp-most-popular .mc-default-bd {
+	float:left;
+	margin-left:10px;
+	margin-top:10px;
+	display:inline;
+}
+
+
+#hp-most-popular .mc-default-bd li {
+	width:620px;
+	height:82px;
+	float:left;
+
+}
+
+#hp-most-popular .mc-default-bd li .container-right {
+	width:526px;
+	margin-left:10px;
+}
+
+#hp-most-popular .mc-default-bd li .container-right .cont {
+	background:none;
+	float:left;
+	padding-left:0px;
+	padding-bottom:0px;
+	width:100%;
+}
+#hp-most-popular .mc-default-bd li .container-right .content {
+	float:left;
+	padding-top:5px;
+	font-size:12px;
+	font-family:Arial;
+	color:#3d3d3d;
+	height:30px;
+	overflow:hidden;
+	width:100%;
+
+}
+#hp-most-popular .mc-default-bd li .container-right .cont .link {
+	width:100%;
+}
+
+#hp-most-popular .mc-default-bd li .container-right .number,
+#hp-most-popular .mc-default-bd li .container-right .comments {
+	display:none;
+}
+
+#hp-most-popular .mc-default-bd li .container-right .cont .link a {
+	font-size:14px;
+	font-family:Arial;
+	color:#143d77;
+	text-transform:capitalize;
+}
+
+#hp-most-popular .mc-default-bd li .container-right .readblock {
+	float:left;
+	padding-top:5px;
+
+}
+
+#hp-most-popular .mc-default-bd li .container-right .readblock a,
+#hp-most-popular .mc-default-bd li .container-right .readblock .pipe,
+#hp-most-popular .mc-default-bd li .container-right .readblock .num-comments {
+	float:left;
+	padding-right:5px;
+	font-size:12px;
+	font-family:Arial;
+	color:#143d77;
+}
+
+#hp-most-popular .mc-default-bd ul {
+	float:left;
+}
+#hp-most-popular .mc-default-bd ul li .container .image img {
+	width:65px;
+	height:47px;
+	padding:3px;
+	border:1px solid #e1e1e1;
+}
+
+#hp-most-popular .mc-default-ft {
+	float:left;
+	width:622px;
+
+}
+
+#hp-most-popular .mc-default-ft .view-more {
+	padding:0px;
+}
+#hp-most-popular .mc-default-ft a{
+	font-size:12px;
+	font-family:Arial;
+	color:#143d77;
+	background:url(http://l.yimg.com/a/i/in/promos/realbeauty/images/gray-arroy-pop.jpg) no-repeat;
+	background-position:center right;
+	padding-right:21px;
+
+}
+
+
+/*#yregion #custom-doc #bd #yui-main .yui-b .yui-g{
+	float:left;
+}*/
+
+
+/* to be removed later ...controled in js */
+
+#hp-most-popular{
+	display:none;
+}
+
+#hp-latest-articles{
+	display:none;
+}
+
+#hp-beauty-on-the-go{
+	display:none;
+}
+/**************************/
+
+#hp-latest-articles {
+	float:left;
+	margin-left:20px;
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-latestarticle-bkg.gif) no-repeat;
+
+	background-position:0px -48px;
+	width:632px;
+	height:288px;
+
+}
+
+#hp-latest-articles .em-ep-blogs-summary {
+	float:left;
+	padding:0px;
+}
+
+
+#hp-latest-articles .bd {
+	margin-top:10px;
+	margin-left:10px;
+
+}
+#hp-latest-articles .bd ul {
+	margin:0px;
+
+}
+
+#hp-latest-articles .bd ul li {
+	padding:0px;
+	border:0px;
+	height:82px;
+
+}
+
+#hp-latest-articles .bd ul li .image img {
+	width:65px;
+	height:47px;
+	padding:3px;
+	border:1px solid #e1e1e1;
+}
+#hp-latest-articles .bd ul li .desc {
+	float:left;
+	width:526px;
+	padding-right:10px;
+}
+
+#hp-latest-articles .bd ul li .cont {
+	float:left;
+	width:526px;
+	padding-right:10px;
+	padding-top:5px;
+	font-size:12px;
+	font-family:Arial;
+	color:#3d3d3d;
+	height:30px;
+	overflow:hidden;
+
+}
+
+#hp-latest-articles .bd ul li .cont span {
+	float:left;
+	display:none;
+
+}
+
+#hp-latest-articles .bd ul li .readmore {
+	float:left;
+	padding-top:5px;
+
+
+}
+
+#hp-latest-articles .bd ul li .readmore a {
+	font-size:12px;
+	font-family:Arial;
+	color:#143d77;
+
+}
+#hp-latest-articles .bd ul li .desc h4 {
+	float:left;
+	width:100%;
+	line-height:16px;
+
+
+}
+
+#hp-latest-articles .bd ul li .desc h4 a {
+	font-size:14px;
+	font-family:Arial;
+	color:#143d77;
+	float:left;
+
+}
+
+#hp-latest-articles .ft {
+	padding:0px 10px 0px 0px;
+	text-align:right;
+}
+
+#hp-latest-articles .ft a {
+	font-size:12px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#143d77;
+	padding-right:21px;
+	background:url(http://l.yimg.com/a/i/in/promos/realbeauty/images/gray-arroy-pop.jpg) no-repeat;
+	background-position:center right;
+
+}
+
+
+
+
+
+
+
+#hp-beauty-on-the-go {
+	float:left;
+	margin-left:20px;
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/8/homepage-beautyongo-bkg.gif) no-repeat;
+	background-position:0px -48px;
+	width:632px;
+	height:288px;
+}
+
+#hp-beauty-on-the-go .em-ep-generic-list-orderedvertical {
+	float:left;
+	padding:0px;
+	width:100%;
+}
+
+#hp-beauty-on-the-go .hd {
+	display:none;
+	border:0px;
+
+}
+
+#hp-beauty-on-the-go .hd h3 {
+
+	font-size:0px;
+	height:0px;
+}
+
+
+#hp-beauty-on-the-go .bd {
+	float:left;
+	padding:0px;
+	border:0px;
+	margin:10px 0px 0px 12px;
+	display:inline;
+	width:622px;
+
+}
+
+#hp-beauty-on-the-go .bd ul li {
+	list-style:none;
+	background-color:transparent;
+	padding-bottom:13px;
+	float:left;
+}
+
+#hp-beauty-on-the-go .bd ul li.n3 {
+	padding-bottom:10px;
+
+}
+#hp-beauty-on-the-go .bd ul li .counter {
+	display:none;
+
+}
+#hp-beauty-on-the-go .bd ul li .container {
+	padding:0px 0px 0px 20px;
+	float:left;
+	border:0px;
+	background-color:transparent;
+	background:url(http://l.yimg.com/t/i/in/promos/realbeauty/5/homepage-answermodule-bullet.gif) no-repeat;
+	background-position: 0px 4px;
+
+
+}
+
+#hp-beauty-on-the-go .bd ul li .container .image {
+	display:none;
+}
+
+#hp-beauty-on-the-go .bd ul li .container h4 {
+	float:left;
+	width:586px;
+
+}
+#hp-beauty-on-the-go .bd ul li .container h4 a {
+	float:left;
+	font-size:14px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#143d77;
+}
+
+#hp-beauty-on-the-go .bd ul li .container p {
+	float:left;
+	font-size:12px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#3d3d3d;
+	width:586px;
+	padding-top:5px;
+	height:30px;
+	overflow:hidden;
+	margin:0px;
+
+
+}
+
+#hp-beauty-on-the-go .bd ul li .container p span.s1 {
+	display:none;
+}
+
+#hp-beauty-on-the-go .bd ul li .container .readmore {
+	float:left;
+	padding-top:5px;
+	font-size:12px;
+	font-family:Arial;
+	color:#143d77;
+
+
+}
+#hp-beauty-on-the-go .bd ul li .container .readmore a {
+	float:left;
+	font-size:12px;
+	font-family:Arial;
+	color:#143d77;
+}
+
+
+
+#hp-beauty-on-the-go .ft {
+	padding:0px 10px 0px 0px;
+	float:left;
+	text-align:right;
+	width:620px;
+
+}
+
+#hp-beauty-on-the-go .ft a {
+	font-size:12px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#143d77;
+	padding-right:21px;
+	background:url(http://l.yimg.com/a/i/in/promos/realbeauty/images/gray-arroy-pop.jpg) no-repeat;
+	background-position:center right;
+
+}
+#ozone-trackcode .em-ep-generic-list-horizontal {display:none;} 

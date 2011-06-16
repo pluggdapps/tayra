@@ -1,0 +1,77 @@
+/* Main layout styles for Associates Central.
+   This file should only contain styles to position
+   page components.
+*/
+body
+{
+  margin:0px;
+  padding:0px; 
+  position:relative;
+}
+
+div
+{
+  margin:0px;
+  padding:0px;
+}
+
+div#header
+{
+  position:relative;
+  margin:0px 0px 14px 0px; 
+  background-color:#FFFFFF; 
+  height:57px;
+  border-bottom:solid 1px #c1c1c1;
+}
+
+/* New style - container for main page content with */
+div#mainContentWrap 
+{
+  margin-left:204px;
+  margin-right:0px;
+  min-width:780px;
+ }
+
+div#navigation
+{
+  width:182px;
+  position:absolute;
+  left:14px;
+}
+
+div#sidebar
+{
+  width:220px;
+  float:right;
+  right:12px;
+}
+
+div#content
+{
+  padding:10px; 
+}
+
+div#content.withSidebar
+{
+  /* Prevents content from wrapping under sidebar */
+  margin-right:236px;
+}
+
+div#footer
+{
+  margin:10px;
+}
+
+/* 3 column Layout Styles */
+table.threeColTable td {
+    vertical-align:top;
+    padding: 8px;
+    border-right: 1px solid #d0e0e8;
+    font-size: 13px;
+}
+table.threeColTable td.rightCol {
+    border-right:none;
+}
+table.threeColTable td.leftCol {
+    padding-left:0px;
+}

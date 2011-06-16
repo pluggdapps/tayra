@@ -1,0 +1,269 @@
+/**
+ * Authentication Portal style sheet.
+ * Copyright (c) 2009 Amazon.com All rights reserved.
+ * @author Max Funderburk
+ */
+ /* message container styles */
+.message {
+	margin:10px 0 10px 0;
+	padding:10px;
+	color:black;
+	font-size:12px;
+	border:1px #0071B5 solid;
+	background:#ffffdd;
+}
+.message span {
+	background: url('https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/errors-alerts/error-sprite.gif') no-repeat 0 0;
+	float:left;
+	width:25px;
+	height:25px;
+	display:block;
+}
+
+.message h6 {
+	font-size:13px;
+	margin:0 0 .25em 35px;
+	padding:0;
+}
+
+.message p {
+	margin:0 0 .25em 35px;
+	padding:0;
+}
+/* mixture of padding + margin here to get FF and IE to positon UL consistently */
+.message ul {padding-left:0; margin-left:10px;}
+.message li {margin-left:35px; list-style-type:disc;}
+.message a { color: #004B91;}
+
+
+
+.success {
+	color:#006633;
+	border:1px solid #447F00;
+}
+.success h6 {color:#006633}
+.success span {background-position: 0 -25px;}
+.success span.mini {background-position: 0px -17px !important;}
+
+
+.warning {border:1px solid #E47911;}
+.warning h6 {}
+.warning span {background-position: 0 -50px;}
+.warning span.mini {background-position: 0px -34px !important;}
+
+
+.error {
+	color:#A31919;
+	border:1px solid #A31919;
+}
+.error h6 {}
+.error span {background-position: 0 -75px}
+.error span.mini {background-position: 0px -51px !important;}
+
+
+.mini {
+	font-size:10px; 
+	padding:7px; 
+	border:1px #DDDAC0 solid;
+}
+.mini h6 {font-size:11px; margin-left:25px;}
+.mini p {margin-left:25px;}
+
+.mini span.mini {
+	background: url('https://images-na.ssl-images-amazon.com/images/G/01/x-locale/common/errors-alerts/error-sprite-mini.gif') no-repeat 0 0;
+	width:3px;
+	height:3px;
+	border:0;
+}
+
+/* YUI Reset-Fonts
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.7.0
+*/
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
+body{font:13px/1.231 Verdana,arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea,button{font:99% Verdana,arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+
+/* table-less table 550px */                                                                                                                                                                                    
+.ap_table { width:566px;}
+
+/* Switch to position: relative when new layout is deployed. New layout will allow us to remove
+ * the various widths defined for the tables preventing undesired wrapping of this text */
+.ap_caps_warn { display: inline-block; position: absolute; color:#990000; text-align: left; min-width: 210px; font-size: 75%; visibility: hidden; width: 350px; }
+.ap_caps_warn_shared { margin-top: 13px; margin-left: 5px; }
+.ap_standard_caps_warn { margin-left: 5px; margin-top:-3px; }
+.ap_col3_caps_warn { margin-left: -200px; margin-top: -3px; }
+.ap_caps_warn_shared_table { margin-top: -13px; margin-left: -60px; }
+.ap_standard_caps_warn_table { margin-left: -60px; margin-top:-13px; }
+
+#title-slot #ap_title_pagelet {
+    max-width: 600px; margin-left: auto; margin-right: auto;
+}
+
+hr.ap_dashed {
+	border: none;
+	border-top: 1px dashed #C8C8C8;
+	margin-top:5px;
+}
+
+.ap_row { clear: both; width: 100%; margin: 0; padding-top: 5px; padding-bottom: 5px; vertical-align: middle;}
+
+                                                                              
+.ap_table > .ap_row > span { float: left; padding: 0 4px; vertical-align: middle;}                                                                                                                              
+.ap_col1 { width: 180px; }                                                                                                                                                                                      
+.ap_col2 { width: 370px; }
+                                                                                                                                                                                      
+.ap_right { text-align: right; }                                                                                                                                                                                
+.ap_left { text-align: left; }                                                                                                                                                                                  
+.ap_bold { font-weight: bold; }                                                                                                                                                                                 
+.ap_no_collapse { min-height:28px; }                                                                                                                                                                            
+
+
+/* More CSS Normalization */
+* { margin: 0; padding: 0;}
+img { display: inline; border: 0 none;}
+body { font-family: Verdana; text-align: left;}
+table { border-collapse: collapse; text-align: left;}
+div, span {text-align:left;}
+
+.error h6 {color:inherit;}
+h1,h2,h3,h4,h5,h6 {color: #E47911;}
+h1{font-size:120%; font-weight:bold;}
+h2{font-size:110%; font-weight:bold;}
+h3,h4,h5,h6{font-size:100%; font-weight: bold;}
+
+/* Submit buttons that we want to render like links */
+.ap_submit_link { background-color:transparent; text-decoration:underline; border:none; cursor:pointer; }
+
+.ap_submit_link,
+a:link {color:#004B91;} /* ap_submit_link should always be the same color as an unvisited link */
+a:visited {color:#004B91; }
+a:hover {color:#004B91; }
+a:active {color:#004B91; }
+
+/* IE specifics */
+.ie {text-align:center;}
+
+/* Page Wrapper */
+div#wrapper { text-align: center;}
+
+/* AuthPortal-specific styles */	
+.faded { color: #aaa;}
+.hidden{ display: none; }
+.invisible{ visibility: hidden; }
+.black { color: black; }
+.red {color:#900; }
+.gray {color:#666; }
+.light { font-weight: 300; }
+.bold { font-weight: bold; }
+.tiny{ font-size: .75em; font-weight: normal;}
+.small{ font-size:.85em; font-weight: normal;}
+.left {text-align: left; }
+.right {text-align: right; }
+.center {text-align: center;}
+.enabled { cursor: default;}
+.disabled { cursor: not-allowed; }
+.headroom{padding-top:10px; }
+.inline {display:inline;}
+.middle {vertical-align: middle;}
+.clear-both {clear:both;}
+.padded_right{padding-right:6px; }
+.rightborder { border-right: 1px solid #CCCCCC;}
+.leftborder { border-left: 1px solid #CCCCCC;} 
+.message{ width: 600px; margin-left: auto; margin-right: auto;}
+input.disabled { background: #eee;}
+input.enabled { background: inherit;}
+.fixed_width_form { width: 550px; margin-left:auto;margin-right:auto;} 
+.fixed_width_form table {width: 550px;}
+.loading {background: url(https://images-na.ssl-images-amazon.com/images/G/01/ui/loadIndicators/loadIndicator-label.gif) no-repeat center ;}
+.form_alert { height:.9em; color: #900; padding: 3px; }
+.width_200 {width:200px; display:inline-block;}
+ul li {background-image:url(https://images-na.ssl-images-amazon.com/images/G/01/webservices/orange_bullet.png); background-position:0 0.5em; background-repeat:no-repeat;
+	list-style-type:none; margin-bottom:0.5em; padding-left:10px;}
+
+.ap_ulist li {list-style-type:none;}
+/* Amazon.com Default AuthPortal Layout Styles */
+#top-1 {text-align:center;}
+#cnep-slot {text-align:center;}
+#register-slot {text-align:center;}
+#forgotpassword-slot {text-align:center;}
+#signin-slot {text-align:center;}
+#tokenresync-slot {text-align:center;}
+#bottom-1 {text-align:center;}
+#center-0 {text-align:center;}
+#center-1 {text-align:center;}
+#message-box-slot {text-align:center;}
+.ap_header { width: 600px; margin-left: auto; margin-right: auto; text-align: left; padding-bottom: 3px; margin-top:10px; }
+.ap_pagelet { width: 600px; margin-left: auto; margin-right: auto; margin-bottom: 25px; }
+.ap_pagelet input {vertical-align: text-bottom; }
+.ap_pagelet_title {text-align:left; margin-bottom: 4px;}
+.ap_section_title {height: auto; margin-bottom: 2px;}
+.ap_section_subtitle {text-align:left;}
+.ap_flyout { background-color:#FFFFCC ; border:1px solid #992211; font-size:93%; text-align: left; display: inline;
+	padding:0px 3px 3px 8px; position:absolute; width:190px; z-index:999; color:#992211; margin-top:-20px; margin-left:-140px;}
+.ap_flyout img { position:absolute; left:-5px; top:50%;}
+.ap_form_wrapper{margin-left:auto; margin-right:auto; margin-top:5px; min-width:510px;}
+.ap_form_wrapper table {display:block; margin:auto; width:500px;}
+.ap_form_div{ margin-top:20px; margin-bottom:20px;}
+.ap_form_row{ margin:7px; }
+.ap_form_table input, .ap_form_table select { margin: 5px 2px; }                 
+.ap_forminput{ text-align:left;display:inline-block; }
+.ap_align_top { vertical-align:top; }
+.ap_align_bottom{ vertical-align:bottom; }
+.ap_popup_bg{ padding:0px 4px 4px 0px; background: #efefef; position:absolute; width:250px; top:5%; right: 35%; }
+.ap_popup{ position:relative; top:-3; left:-3;text-align:left;  border:1px solid  #E47911;
+	padding:0px 5px 7px 10px;  background: #ffffd5; padding-bottom:15px; }
+.ap_close_popup { position: absolute; bottom: 5; right: 5; }
+.ap_highlight_input { background: #ffffd5; }
+.ap_form_table td[colspan="2"]{padding-top:4px; }
+.ap_input_label {display:inline-block; margin-right:4px;font-weight:bold; text-align:right; min-width:180px;}
+.ap_radio_button {display:inline;}
+.ap_radio_label {display:inline-block;}
+.ap_radio_plus_label input {vertical-align:top; display: inline;}
+.ap_privacy_footer {border-top: 1px solid #aaa; width: 600px; margin-left: auto; margin-right: auto;}
+.ap_fpp_challenge_input_label{ margin: 3px 3px 3px 0;}
+#ap_signin_form_table td.ap_login_suggest { padding-top:0; padding-bottom: 4px;  }
+#ap_captcha_title { margin-top:10px; }
+#ap_captcha_img { border:1px solid #aaa; width:200px; height:70px;}	
+	
+/* SignIn Page */
+.ap_signin_pagelet {}
+.ap_signin_form_table_wrapper table {}
+.ap_form_table {}
+.signinSecure { padding-top: 8px; padding-bottom: 8px; }	
+
+ /* CNEP Page */
+.ap_cnep_form_row{width: 500px;text-align:left; padding: 5px 0 5px 0; clear:both;}
+.ap_cnep_label{ background:; float: left;width: 120px; text-align:right; vertical-align: bottom;font-weight:bold;}
+.ap_cnep_val{ display:inline-block; float:right; text-align:left; vertical-align:bottom; width:260px;}
+.ap_cnep_edit{ display:inline-block; vertical-align:bottom; float:right; width: 100px;background:;}
+#ap_cnep_birthdate_input{ padding: 12px 0 6px 0;}
+#ap_cnep_finished_button { margin-top:30px; padding-top:6px;}
+#ap_cnep_subtitle{ margin-bottom:5px; }
+
+/* FPP Page */
+#ap_fpp_continue_shopping{ margin-top:10px; }
+#ap_fpp_footer{ margin-top: 10px; }
+
+/* Register Page */
+
+/* 404,500 Pages */
+.ap_error_page_header { text-align:center;margin:20px;}
+.ap_error_page_title {margin-top:10px;}
+.ap_error_page_title h1 {font-size: medium;}
+.ap_error_page_message {font-size:medium;margin-top:2px;}
+.ap_error_return_home { font-size: medium; font-weight: bold; margin-top: 15px;}
+.ap_error_page_wrapper {width:600px;margin-left:auto;margin-right:auto;text-align:center;font-family: verdana,arial,helvetica,sans-serif; font-size: medium;}
+.ap_error_page_cookieless_wrapper {width:600px;margin-left:10px;font-family: verdana,arial,helvetica,sans-serif; font-size: medium;}
+.ap_error_page_cookieless_wrapper p{margin:10px auto 10px 10px}
+.ap_error_page_cookieless_title h1 {font-size: medium;margin:10px auto 10px 10px}
+.ap_error_page_cookieless_message {font-size:medium;}
+
+/* token resync page */
+.ap_resync_pagelet { padding-left: 15px; padding-bottom: 15px; padding-right: 15px; width: 1000px; margin-left: auto; margin-right: auto;}
+.ap_resync_table td{ padding-left: 15px; padding-right: 15px;padding-top: 5px; padding-bottom: 5px; margin-left: auto; margin-right: auto; width: 50%;vertical-align:text-top;}
+
+#ap_fpp_cctype_input { display: inline-block; margin-bottom: 6px; vertical-align: bottom; }
+#ap_register_phone_number_input > input{ vertical-align:inherit; }
+#add_phone_submit_button, #add_phone_cancel_button { vertical-align:middle; }

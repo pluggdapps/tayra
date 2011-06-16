@@ -1,0 +1,167 @@
+/* Main layout of shoveler widget. */
+.shoveler
+{
+  position:relative;
+  margin:2em 4px 2em 16px;
+}
+/* The version on the logged-in page needs different margins. */
+div#mainContentWrap .shoveler
+{
+  margin:2em 0px;
+}
+.shoveler ul
+{
+  margin:2px;
+  padding:0px;
+  overflow:hidden;
+}
+.shoveler ul li
+{
+  list-style:none;
+  margin:0px 5px !important;
+  padding:0px;
+  height:100%;
+}
+
+
+/* Shoveler content */
+.shoveler .shoveler-content
+{
+  margin:0px;
+  background-color:#ffffff;
+}
+.shoveler ul li div.contents
+{
+  overflow:hidden;
+  position:relative;
+}
+.shoveler ul li div.contents h3
+{
+  margin:1px;
+  font-size:13px;
+}
+.shoveler ul li div.contents p
+{
+  margin:1px;
+}
+
+/* Shoveler frame */
+.shoveler .shoveler-header
+{
+  border: 3px solid #EAF3FE; 
+  background-color: #EAF3FE;
+}
+.shoveler .shoveler-main
+{
+  border: 3px solid #EAF3FE; 
+  position: relative;
+  /* give this element hasLayout to correct MSIE render bug */
+  zoom:1;
+}
+
+/* Contents of title bar */
+.shoveler .shoveler-title
+{
+  padding:0px;
+}
+.shoveler .shoveler-title h2
+{
+  margin:1px 0px -1px 0px;
+  padding:0px 0px 0px 2px;
+  font-size:14px;
+  font-weight:bold;
+  color:#E47911;
+}
+
+
+/* Pagination */
+.shoveler #shoveler-see-all
+{
+  position:absolute;
+  top:0px;
+  right:55px;
+  padding:4px;
+  white-space:nowrap;
+}
+#shoveler-div.noscript #shoveler-see-all
+{
+  right:0px;
+}
+.shoveler .shoveler-pagination
+{
+  display:inline !important;
+}
+#shoveler-div.noscript .shoveler-pagination
+{
+  display:none !important;
+}
+
+
+/* Buttons! */
+.shoveler div.button
+{
+  position:absolute;
+  width:21px;
+  height:15px;
+  top:5px;
+  cursor:pointer;
+}
+#shoveler-div.noscript div.button
+{
+  display:none;
+}
+.shoveler div.button.disabled
+{
+  background:none;
+  cursor:default;
+}
+.shoveler div.prev-button
+{
+  right:30px;
+}
+.shoveler div.next-button
+{
+  right:5px;
+}
+
+
+/* MSIE positioning hacks. */
+* html #shoveler-div.noscript #shoveler-see-all
+{
+    right:8px;
+}
+* html div#mainContentWrap #shoveler-div.noscript #shoveler-see-all
+{
+    right:260px;
+}
+* html #shoveler-div #shoveler-see-all
+{
+    right:62px;
+}
+* html div#mainContentWrap #shoveler-div #shoveler-see-all
+{
+    right:315px;
+}
+* html .shoveler div.prev-button
+{
+    right:37px;
+}
+* html div#mainContentWrap .shoveler div.prev-button
+{
+    right:285px;
+}
+* html .shoveler div.next-button
+{
+    right:12px;
+}
+* html div#mainContentWrap .shoveler div.next-button
+{
+    right:260px;
+}
+
+
+/* Hide debug info */
+.shoveler .debug-info
+{
+  display:none;
+}

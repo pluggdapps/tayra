@@ -1,0 +1,28 @@
+/* Dropdown styling */
+#cat-browse .widget-frame,
+#seeEvents .widget-frame { background: #fff url('img/sys/rebrand/droparrow_on.png') no-repeat right top; border:1px solid #92918D; color:#222; cursor:default; font-size:11px; height:18px; line-height:17px; overflow:hidden; margin-top: -5px; padding:2px 21px 0 3px; }
+#seeEvents .widget-frame { width: 127px; }
+#seeEvents .width127 { width: 127px; }
+#seeEvents .widget-frame { overflow:hidden;width: 124px; }
+#cat-browse .widget-frame { width: 150px; }
+#cat-browse .onFocus,
+#seeEvents .onFocus { border-color: #D00509; outline: 1px solid #D00509; }
+
+.widget-scroll-frame { width: 14px;}
+.widget-scroll-border { padding:0px 0px 0px 1px; background-color: #acacac; }
+.widget-scroll-up,
+.widget-scroll-up-active,
+.widget-scroll-down,
+.widget-scroll-down-active { background: url('img/sys/1000/widget-sprites.png') no-repeat; width:13px; height:12px; font-size:0; }
+.widget-scroll-up {background-position:left -108px}
+.widget-scroll-up-active {background-position:left -120px}
+.widget-scroll-down {background-position:left -132px}
+.widget-scroll-down-active {background-position:left -144px}
+.widget-scroll-scrub-frame { background-color:#fff; width:13px}
+.widget-scroll-scrub { background:#cacaca url('img/sys/1000/bg-scroll.gif') repeat-y; border-top:1px solid #cacaca; border-bottom:1px solid #cacaca; width:13px; }
+.widget-dropdown-list { background-color: #fff; border:1px solid #92918D; font-size:11px; margin: 3px 0 0 -3px; }
+.widget-dropdown-list-item { color: #414141; cursor: pointer; display:block; line-height:19px; padding:0 5px; }
+.widget-dropdown-list-item:hover,
+.widget-dropdown-list .hover,
+.widget-dropdown-list .selected { background-color: #D00509;color:#fff; }
+#seeEvents .widget-dropdown, #seeEvents .widget-dropdown-active { overflow:hidden; width:124px }

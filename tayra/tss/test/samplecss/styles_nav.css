@@ -1,0 +1,218 @@
+﻿/* ************** header classes ************** */
+#skipnav {
+    position:absolute;
+    top:25px;
+    left:20px;
+    color:#ffffff;
+    white-space:nowrap;
+}
+#skipnav a {
+    font-family:Verdana;
+    font-size:9px;
+    color:#ffffff;
+}
+#skipnav a:focus, #skipnav a:active {
+    font-family:Verdana;
+    font-size:9px;
+    color:#007fc2;
+}
+#pd_Search {
+    position:absolute;
+    z-index:999;
+    border:solid 2px #007fc2;
+    left:0px;
+    top:18px;
+    background-color:#ffffff;
+    padding: 6px 4px 8px 4px;
+    width:205px;
+    font-family:Verdana;
+    font-size:10px;
+    line-height:12px;
+    visibility:hidden;
+}
+#pd_My {
+    position:absolute;
+    z-index:999;
+    border:solid 2px #007fc2;
+    left:0px;
+    top:18px;
+    background-color:#ffffff;
+    padding: 6px 4px 8px 4px;
+    width:205px;
+    font-family:Verdana;
+    font-size:10px;
+    line-height:12px;
+    visibility:hidden;
+}
+#pd_Info {
+    position:absolute;
+    z-index:999;
+    border:solid 2px #007fc2;
+    left:0px;
+    top:18px;
+    background-color:#ffffff;
+    padding: 8px 4px 6px 4px;
+    width:205px;
+    font-family:Verdana;
+    font-size:10px;
+    line-height:12px;
+    visibility:hidden;
+    overflow: hidden;
+}
+#pd_Search a, #pd_My a, #pd_Info a {
+    color:Gray;
+    text-decoration: none;
+}
+#pd_Search a:hover, #pd_My a:hover, #pd_Info a:hover, #pd_Search a:focus, #pd_My a:focus, #pd_Info a:focus, #pd_Search a:active, #pd_My a:active, #pd_Info a:active {
+    color:#007fc2;
+    text-decoration: none;
+    font-weight:bold;
+}
+#pd_SearchImg1, #pd_MyImg1, #pd_InfoImg1 {
+    position:absolute;top:0px;border:none;
+}
+#pd_SearchDiv {
+    position:absolute;left:15px;top:6px;
+}
+#pd_MyDiv {
+    position:absolute;left:135px;top:6px;
+}
+#pd_InfoDiv {
+    position:absolute;left:255px;top:6px;
+}
+.divHR {
+    background-color: silver;
+    line-height:1px;
+    height:1px;
+    overflow: hidden;
+    margin:5px 0px 5px 0px;
+}
+#header {
+    font-family:Verdana,arial;
+    vertical-align:middle;
+    background-color:#EDEDED;
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/grey-gradient-fill.gif);
+    background-repeat:repeat-x;
+    height:24px;
+    position:relative;
+    text-align:left;
+    min-width:840px;
+    z-index:1000;
+    clear: both;
+}
+#headerLine {
+    line-height:1px;
+    width:90%;
+    background-color:gray;
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/2px-greybar.gif);
+    background-repeat:repeat-x;
+    position:relative;
+    top:23px;
+    height:2px;
+}    
+#signinL {
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/redcorner-left.gif);
+    background-repeat:no-repeat;
+    width:10px;
+    height:28px;
+    top:0px;
+}
+#signinContent {
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/redmid.gif);
+    background-repeat:repeat-x;
+    color:#ffffff;
+    font-size:9px;
+    padding:0px 20px 0px 20px;
+    white-space:nowrap;
+    vertical-align:middle;
+}
+#signinContent a, #signinContent a:hover {
+    color:#ffffff;
+    font-size:9px;
+    font-weight:600;
+    text-decoration: underline;
+    font-family:verdana;
+    
+}
+#signinR {
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/redcorner-right.gif);
+    background-repeat:no-repeat;
+    width:10px;
+    height:28px;
+}
+#signin {
+    position:absolute;
+    right:40px;
+    top:0px;
+}
+#colLeft, #colLeft1 {
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/shadow-left.gif);background-repeat:repeat-y;width:17px;
+}
+#colMiddle {
+    vertical-align:top;background-color:white;
+}
+#colRight {
+    background-image:url(http://media.newjobs.com/opm/www/usajobs/navigation/shadow-right.gif);background-repeat:repeat-y;width:17px;
+}
+/* *** header: sub-navigation *** */
+#SearchJob {
+    position:relative;height:85px;
+}
+#SearchJob0 {
+    width:760px;
+}
+#SearchJob1 {
+    position:absolute; top:20px;left:70px;
+}
+#SearchJob1 img {
+    border:none;
+}
+#SearchJob2 {
+    position:absolute; top:15px;right:412px;color:#007fc2;font-weight:bold;font-size:11px;
+}
+#SearchJob3 {
+    position:absolute; top:30px;right:67px;white-space:nowrap;
+}
+#SearchJob4 {
+    position:absolute; top:25px;right:40px;white-space:nowrap;
+}
+#SearchJob5 {
+    position:absolute; top:52px;right:71px;white-space:nowrap;letter-spacing:-0.5px;color:#555555; 
+}
+#SearchJob5 a, #SearchJob5 a:hover {
+    font-size:10px;
+}
+#SearchJob6 {
+    position:absolute; top:8px;right:290px;color:#007fc2;font-size:10px;
+}
+.inputNav {
+    font-size: 8pt; 
+    color: #555555; 
+    font-family: Verdana,arial,geneva,san-serif;
+    border: solid 1px #555555;
+    width:210px;
+    word-spacing:-1px;
+    letter-spacing:-0.5px;
+}
+/* ************** footer ************** */
+#footer {
+    padding:15px 0px 15px 0px;
+    text-align:center;
+    font-size:smaller;
+    font-family: Verdana,arial,geneva,san-serif;
+    font-weight:normal;
+}
+#footer a, #footer a:hover {
+    font-weight:normal;
+    color: #007fc2;
+    font-family: Verdana,arial,geneva,san-serif;
+}
+
+/* footer links*/
+#footer a:visited{color:#690369;}
+
+/*browse and advanced search links*/
+#SearchJob5b a:visited, #SearchJob5 a:visited
+{
+	color:#690369;
+}

@@ -1,0 +1,407 @@
+
+/* twister-styles.css, */
+
+
+/* (FILE: /detail-page-features/twister-variations/twister-variations.css) */
+
+#priceBlockTwister > div#olpDivID {
+    font-size: 1.16em;
+}
+
+#olp-condition-link_feature_div div#olpDivID {
+  margin-top: .5em;
+  padding-bottom: 1em;
+}
+
+
+#childPriceBlockTwister div#olpDivID,
+#priceBlockTwister div#olpDivID {
+  margin-top: .5em;
+  margin-bottom: .5em;
+  padding-bottom: 0;
+}
+
+.swatchInnerBorder {
+  padding: 1px;
+  float: left;
+}
+
+.swatchSelect .swatchInnerBorder,
+.swatchPreSelect .swatchInnerBorder {
+  padding: 0px;
+  border: 1px solid #FFF;
+}
+
+.marginTop8 {
+  margin-top:8px;
+}
+.marginTop4 {
+  margin-top:4px;
+}
+
+.swatchOuter {
+  float: left;
+  display:block;
+  margin:0px 0px 0px 0px;
+  padding: 3px 3px 3px 3px;
+}
+
+.swatchOuter:active,
+.swatchOuter:focus {
+  outline: none;
+}
+
+.swatchInnerImage{
+  float: left;
+  display: block;
+  padding: 0px 0px 0px 0px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+ }
+
+.swatchInnerText{
+  position: relative;
+  float: left;
+  display: block;
+  padding: 0px 3px 0px 3px;
+  height: 27px;
+  line-height: 25px;
+  font-size: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+ }
+
+.swatchAvailable{
+  position: relative;
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 1px 1px 1px 1px;
+  border: 1px solid #3596c7;
+  cursor:pointer;
+  color: #069;
+ }
+
+.swatchHover {
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 1px;
+  border: 1px solid #039;
+  cursor: pointer;
+  color: #069;
+}
+
+.swatchHoverPopup {
+  border: 1px solid #E47911;
+}
+
+.swatchUnavailable {
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 1px 1px 1px 1px;
+  border: 1px dotted #CCC;
+  color: #66A3C2;
+}
+
+.swatchUnavailable .swatchInnerImage {
+  filter: alpha(opacity=40);
+  -moz-opacity: .40;
+  opacity: .40;
+}
+
+.swatchUnavailableHover {
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 1px 1px 1px 1px;
+  border: 1px dashed #900;
+  cursor: pointer;
+  color: #66A3C2;
+}
+
+.swatchUnavailableHoverPopup {
+  border: 1px dashed #E47911;
+}
+
+.swatchUnavailableHover .swatchInnerImage {
+  filter: alpha(opacity=40);
+  -moz-opacity: .40;
+  opacity: .40;
+}
+
+.swatchUnselectedSelectPromptText {
+  color: #990000;
+  font-weight: bold;
+  font-family: arial,verdana,helvetica,sans-serif;
+}
+
+.swatchSelect {
+  position: relative;
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  border: 2px solid #E47911;
+  cursor: pointer;
+  color: #069;
+  background-color: #EAF3FE;
+}
+
+.swatchSelectGray {
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  border: 2px solid #EBC299;
+  cursor: pointer;
+  color: #66A3C2;
+}
+
+.swatchSelectGray .swatchInnerImage {
+  filter: alpha(opacity=40);
+  -moz-opacity: .40;
+  opacity: .40;
+}
+
+.swatchPreSelect {
+  position: relative;
+  float: left;
+  display: block;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  border: 2px solid #E47911;
+  color: #069;
+  background-color: #EAF3FE;
+}
+
+.variationLabel{
+ font-family: arial,verdana,helvetica,sans-serif;
+ font-weight: bold;
+ color: #C60;
+}
+
+.variationHeader{
+ font-family: arial,verdana,helvetica,sans-serif;
+ font-weight: bold;
+ color: #C60;
+ margin-bottom: 12px; 
+ font-size: 13px;
+}
+
+.variationLabelHovered{
+ font-family: arial,verdana,helvetica,sans-serif;
+ font-weight: bold;
+ color: #069;
+}
+
+.variationDefault{
+ font-family: arial,verdana,helvetica,sans-serif;
+ font-weight: bold;
+ color: #000; 
+}
+
+.variationSelected {
+ /* IE min-height hack */
+ height: auto !important;
+ height: 20px;
+}
+
+
+.varUnavail {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #990000;
+  width: 100%;
+  padding: 3px 3px 3px 3px;
+  margin: 8px 0px 0px 0px;
+  text-align: center;
+}
+
+div.extendVariationSelectionBox { padding: 4px 0px; }
+
+table.variations { margin: 0.25em 0em; }
+table.variations th { text-align: left; padding-right: 10px; }
+
+.spacediv {
+ display: block;
+ margin-top: 2px;
+ margin-bottom: 2px;
+ padding-top:0px;
+ padding-bottom:0px;
+ font-size: x-small; 
+}
+
+/* clearfix class with the "after" attribute is used in conjunction with the container that holds all the floating swatch boxes. 
+:after - allows extra content to be added at the end of an element via the CSS. 
+content:"." - for dummy content like a simple period
+clear:both - extends the margin on the top of the cleared box, pushing it down until it "clears" the bottom of the float.  
+height: 0 - to prevent any extra line in the container box  
+visibility: hidden -  to keep the period from showing
+This is the container-enclosure fix for Firefox only
+*/
+
+.clearfix:after {  
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+/*IE does not understand ":after" 
+  IE causes all boxes to expand and enclose all content, even if a smaller dimension is stated.  
+  So a 1% height will just be expanded to whatever value is needed to contain the float.
+  The statement is a universal selector which selects an element when it is nested within html, 
+  and also when 'html' is nested within any element. IE has an invisible wrapper element around 'html', 
+  so this selector works in IE only. 
+*/
+* html .clearfix {height: 1%;}
+
+/* Styles used by technical-specs feature. TODO: refactor this feature */
+
+.techSpecTable  { border: 0px; padding: 0px; width: 60%; border-collapse: collapse }
+.techSpecTableFull  { border: 0px; padding: 0px; width: 95%; border-collapse: collapse }
+.techSpecTableHalf  { border: 0px; padding: 0px; width: 50%; border-collapse: collapse }
+.techSpecRowHeader    { padding: 0px; margin: 0px; background-color: #ffffff }
+.techSpecRow    { background-color: #eef1f6 }
+.techSpecHeader { font-weight: bold; }
+.techSpecTD1    { margin-bottom: 1px; border-bottom: 3px solid #ffffff; vertical-align: top; width: 55%; font-family: verdana; color: #333333; font-size: 10px; }
+.techSpecTD2    { margin-bottom: 1px; border-bottom: 3px solid #ffffff; vertical-align: top; font-family: verdana; color: #333333; font-size: 10px; }
+
+.twisterBBHeader { font-size: 11px; color: #000; }
+
+
+#twisterAddToCartInactiveBtn { 	cursor: not-allowed; }
+#twisterOneClickInactiveBtn { 	cursor: not-allowed; }
+
+div .bulletList UL {
+    padding: 0px 0px 0px 0px; margin: 0px; LIST-STYLE-TYPE:disc;
+}
+div .bulletList UL LI {
+    MARGIN: 0.5em 2.0em
+}
+
+/* (FILE: /detail-page-features/twister-product-image/twister-product-image.css) */
+
+.prodImageOuterStyle
+{
+  position: relative;
+  width: 280px;
+  height: 280px;
+}
+
+.prodImageOverlayOuter
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 280px;
+  height: 280px;
+}
+
+.wideImageOuter
+{
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.wideImageOverlay
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 300px;
+  height: 300px;
+}
+
+.tallImageOuter
+{
+  position: relative;
+  width: 300px !important;
+  height: 390px !important;
+}
+ 
+.tallImageOverlay
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 300px !important;
+  height: 390px !important;
+}
+
+#prodImageOverlayOuter[id]
+{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 280px;
+  display: table;
+}
+
+#prodImageOverlayMiddle
+{
+  position: absolute;
+  top: 50%;
+  left: 0px;
+}
+
+#prodImageOverlayMiddle[id]
+{
+  display: table-cell;
+  vertical-align: middle;
+  position: static;
+}
+
+#prodImageOverlayInner
+{
+  position: relative;
+  top: -50%;
+}
+
+#prodImageOverlayBox
+{
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #FFFFFF;
+  border: solid 1px #A0A0FF;
+  filter:alpha(opacity=70);
+  -moz-opacity:.70;
+}
+
+.prodImageNotBuyable#prodImageOverlayBox
+{
+  background-color: #EEBBBB;
+  border: solid 1px #550000;
+  filter:alpha(opacity=90);
+  -moz-opacity:.90;
+}
+
+#prodImageOverlayTextWrapper
+{
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.prodImageNotBuyable#prodImageOverlayVisibleText
+{
+  color: #770000;
+}
+
+.prodImageNotAvailOverlayHighlight
+{
+  color: #CC6633;
+}
+
+.prodImageNotBuyableOverlayHighlight
+{
+  color: #AA0000;
+}
+

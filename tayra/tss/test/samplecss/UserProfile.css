@@ -1,0 +1,73 @@
+#userProfile #tabs_nav { margin-top:0px }
+
+#userProfile .navForm { padding-bottom:6px; }
+
+#userProfile .friends > li { float: left; }
+#userProfile .friends.thumbnails > li { width: 68px; height: 100px; }
+#userProfile .friends.profiles > li { width: 305px; margin: 0 30px 30px 0px;}
+#userProfile .friends.profiles .lastRated { border-bottom:1px solid #efefef; padding-bottom: 2px;}
+#userProfile .friends.profiles .lastRated a { font-size: 11px; color:#787878;  }
+#userProfile .friends.profiles ul.ratingSummary li { margin-bottom: 2px;}
+#userProfile #all_friends h3 { color:#285CAB; margin-bottom:0px; }
+#userProfile #all_friends sub { font-size:95%; display:inline-block; margin-bottom:5px; }
+
+#userProfile .wtsPosters > li { float: left; width: 160px; height: 235px; }
+
+#userProfile .ratingMovieTitle h3 { color: #285CAB; display: inline-block; margin-bottom: 2px; }
+#userProfile .ratingMovieDate { float: right; color: #aaaaaa; font-size: 10px; } 
+#userProfile .user_rating .ratingStars { margin-bottom:2px; }
+.ratingStars .ratingDate {padding-left: 4px;}
+
+#userProfile .icon.profile { width:16px; height:16px; margin-right:3px; }
+#userProfile .icon.profile.friends { background-position: -224px -160px; }
+#userProfile .icon.profile.ratings { background-position: -240px -144px; }
+#userProfile .icon.profile.reviews { background-position: -240px -144px; }
+#userProfile .icon.profile.wts { background-position: -224px -144px; }
+#userProfile .icon.profile.quoteico { background-position: -240px -160px; }
+
+#userProfile .ui-tabs-nav { width:75%; }
+#userProfile #seeAllUnreadMessages { display:inline-block; margin-top:3px; } 
+
+#userProfile ul.welcomeCounts li { padding:1px 0px; }
+
+a.unlink {color: #333; cursor: default;}
+a.unlink:hover {text-decoration: none;}
+
+.loadBar {
+	border: 1px solid #d6d6d6;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	width: 100%;
+	height: 26px;
+	background: #ffffff; /* old browsers */
+	background: -moz-linear-gradient(top, #ffffff 0%, #eaeaea 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eaeaea)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 ); /* ie */
+	background: -o-linear-gradient(top, #ffffff 0%, #eaeaea 100%); /* opera */
+	color: #285cab;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+}
+.loadBar:hover {
+	border: 1px solid #ababab;
+	cursor: pointer;
+	color: #3c7ee2;
+}
+.loadBar:active { 
+	background: #efefef;
+	color: #285cab;
+}
+
+.rating_profile .reviewStatic {display: inline;}
+.rating_profile textarea { 
+    border: 1px solid #D6D6D6; 
+    display: block; 
+    font-family: arial; 
+    font-size: 12px; 
+    width: 100%; 
+} 
+
+.rating_profile .rpcontainer { 
+    width: 400px; 
+}

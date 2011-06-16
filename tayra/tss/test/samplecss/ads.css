@@ -1,0 +1,93 @@
+.page_ad { line-height:0px; position: relative;}
+.page_ad .content_box { line-height:normal; }
+#leaderboard_ad, #sleaderboard_ad { margin-top: 5px; margin-bottom: 5px; display: inline-block;}
+
+#overlay_body, #livingsocial {
+	position:fixed; display:none;
+	top:0; right:0; bottom:0; left:0;
+	z-index:65535;
+}
+	
+	/* =LIVING SOCIAL CAMPAIGN
+	-----------------------------*/
+	#livingsocial { background-color:rgba(0,0,0,0.5); }
+	/* IE doesn't support alpha transparency this way, create an element to show it... */
+	#livingsocial .background {
+		position:absolute;
+		left:0; top:0; right:0; bottom:0;
+		background-color:black;
+		filter:alpha(opacity=50);
+	}
+	#livingsocial .close {
+		width:30px; height:30px;
+		background: transparent url('../images/chrome/close.png');
+		text-indent:9600px;
+		overflow:hidden;
+		position:absolute;
+		top:-15px; right:-15px;
+	}
+	#livingsocial .close:active { top:-14px; right:-14px; } 
+	#livingsocial form {
+	  width:496px;
+	  padding:16px;
+	  min-height:134px;
+	  position:relative; top:16px;
+		margin:0px auto;
+		
+		/*background-color:white;
+		border-radius:8px;
+		-moz-border-radius:8px;
+		-webkit-border-radius:8px;
+		
+		box-shadow:0px 1px 8px rgba(0,0,0,0.5);
+		-moz-box-shadow:0px 1px 8px rgba(0,0,0,0.5);
+		-webkit-box-shadow:0px 1px 8px rgba(0,0,0,0.5);*/
+	}
+	#livingsocial form>* { display:block; margin:0px auto 20px auto; }
+	#livingsocial form label { font: bold 24px/26px Georgia, serif; color: #005270; text-align:center; }
+	#livingsocial form input.email { padding: 5px; font-size: 18px; font-family: Verdana, serif; width: 378px; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; }
+	#livingsocial form input.email:focus { border-color:#94C7FF; }
+	#livingsocial form input.placeholder { color:#777; }
+	#livingsocial form input.continue:hover { cursor:pointer; }
+	#livingsocial form input.continue:active { position:relative; top:1px; }
+	#livingsocial form input.continue { 
+		width:121px; height:30px;
+		background:transparent url('../images/ads/continue.jpg') no-repeat left top;
+		border-width:0px; margin:0px auto; padding:0px;
+		color:transparent;
+	}
+	#livingsocial form input.closeButton:hover { cursor:pointer; }
+	#livingsocial form input.closeButton:active { position:relative; top:1px; }
+	#livingsocial form input.closeButton { 
+		width:81px; height:30px;
+		background:transparent url('../images/ads/close.jpg') no-repeat left top;
+		border-width:0px; margin:0px auto; padding:0px;
+		color:transparent;
+	}
+	#livingsocial form select.city { padding: 5px; font-size: 14px; font-family: Verdana, serif; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; }
+	#livingsocial .confirm {
+		font: 14px Arial, serif; text-align:center;
+	}
+	#livingsocial .deal {
+		color: #fff; font: bold 33px/36px Verdana, sans-serif; letter-spacing: -1px;
+		text-transform: uppercase; margin:88px 8px 0px 0px; padding:0px; width: 264px; text-shadow: 0px 3px 6px #5a2a2f;
+		float:right;
+	}
+	#livingsocial .cupcakes {
+		margin:0 auto;
+		position:relative;
+		top:32px;
+		width:600px; height:400px;
+		
+		box-shadow:0px 2px 16px rgba(0,0,0,0.75);
+		-moz-box-shadow:0px 2px 16px rgba(0,0,0,0.75);
+		-webkit-box-shadow:0px 2px 16px rgba(0,0,0,0.75);
+	}
+
+	#livingsocial_sidebar form>* { display:block; margin:0px auto 5px auto; }
+	#livingsocial_sidebar form select { width: 177px; height: 20px; font-size: 13px }
+	#livingsocial_sidebar form input.email { font-family: Verdana, serif; font-size: 13px; width: 170px; height: 18px; margin-bottom: 8px }
+	#livingsocial_sidebar form input.email:focus { border-color:#94C7FF; }
+	#livingsocial_sidebar form input.placeholder { color:#777; }
+	#livingsocial_sidebar form button {float: right}
+	#livingsocial_sidebar .sponsored {color: gray; font-size: 10px; line-height: 30px}

@@ -1,0 +1,506 @@
+/* ===================== new movie box styles =============================== */
+
+div.main_movie_area {
+	padding:11px; margin-bottom:5px;
+}
+
+div.main_movie_area div.movie_poster_area {
+	margin-right:20px;
+	max-width:144px;
+}
+div.main_movie_area div.movie_poster_area>a>img {
+	/* this must be the poster image */
+	margin:0px 20px 8px 0px;
+}
+
+div.main_movie_area div.movie_poster_area ul.movie_links {
+	display:block;
+}
+div.main_movie_area div.movie_poster_area ul.movie_links>li {
+	border:1px solid #DEDCA7;
+	border-top-width:0px;
+	padding:4px;
+}
+
+div.main_movie_area div.movie_poster_area ul.movie_links>li>a {
+	background:white url('http://images.rottentomatoescdn.com/images/redesign/movies_sprite.png?v=20110204') no-repeat left top;
+	padding-left:32px;
+	font-size:11px;
+	padding-top:5px;
+	height:17px;
+	vertical-align:middle;
+	display:block;
+}
+div.main_movie_area div.movie_poster_area ul.movie_links a.trailer_link { background-position:0px 0px; }
+div.main_movie_area div.movie_poster_area ul.movie_links a.tickets_link { background-position:0px -26px; }
+div.main_movie_area div.movie_poster_area ul.movie_links a.netflix_link { background-position:0px -51px; }
+div.main_movie_area div.movie_poster_area ul.movie_links li.promo_item a.media_block_image { padding-left: 0px; background-image: none; margin-bottom: 0px;}
+div.main_movie_area div.movie_poster_area ul.movie_links li.promo_item .media_block_content { font-size: 11px; padding-top:5px;}
+div.main_movie_area div.movie_poster_area ul.movie_links li.promo_item.itunes .media_block_content ul { font-size: 11px;line-height: 11px; position: relative; top: -2px;}
+
+
+div.main_movie_area div.movie_poster_area ul.movie_links>li:first-child { 
+	border-top-width:1px;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+	-webkit-border-top-left-radius:4px;
+	-webkit-border-top-right-radius:4px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px; 
+}
+div.main_movie_area div.movie_poster_area ul.movie_links>li:last-child {
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	-webkit-border-bottom-left-radius:4px;
+	-webkit-border-bottom-right-radius:4px;
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+}
+
+div.movie_content_area {
+	overflow:hidden;
+}
+
+div.movie_content_area div.critic_side div.critic_side_container { clear:both; }
+div.movie_content_area .movie_title { margin:0px 0px 10px 0px; }
+div.movie_content_area .title_box { margin-bottom: 10px; margin-top: 10px; padding: 2px 5px; }
+div.movie_content_area div.meter_box {
+	background:transparent url('http://images.rottentomatoescdn.com/images/misc/meter-box-background.png?v=30082010') no-repeat scroll 0px -10px;
+	line-height:normal;
+	max-height:250px;
+	margin:0px;
+	padding:0px;
+}
+div.movie_content_area div.meter_box.meter_box.right_door { 
+	background-position:right -10px;
+	font-size:10px;
+}
+div.movie_content_area div.meter_box.meter_box div.clearfix { clear:both; height:0px; }
+div.movie_content_area div.meter_box_bottom {
+	background:transparent url('http://images.rottentomatoescdn.com/images/misc/meter-box-background.png?v=30082010') no-repeat scroll 0px 0px;
+	display:block;
+	height:10px;
+	margin-bottom:8px;
+}
+div.movie_content_area div.meter_box_bottom.left_side {	padding-left:8px; }
+div.movie_content_area div.meter_box_bottom.right_side { background-position:right top; }
+div.movie_content_area div.meter_box_bottom.right_side div { height:5px; }
+div.movie_content_area div.critic_side { width:66%; padding-right:8px; border-right:1px solid #E7D77F; }
+div.movie_content_area div.critic_side div.critic_side_container { clear:both; }
+div.movie_content_area div.fan_side { float:left; padding:4px 0px 0px 8px; border-left:1px solid #FFF; }
+
+div.movie_content_area div.meter_box p.help { float:left; margin-top:0px; text-transform:uppercase; font-weight:bold; color: #556F1E;}
+div.movie_content_area div.meter_box p.help:after {
+	content:url('http://images.rottentomatoescdn.com/images/tomatometer/help.png');
+	padding-left:2px;
+	vertical-align:middle;
+}
+div.movie_content_area div.meter_box.left_door { padding-left:8px; }
+div.movie_content_area div.meter_box.right_door>div { margin:1px 0px 0px 0px; }
+
+div.movie_content_area div.meter_critics {
+	display:block; float:left;
+	padding:4px 8px 0px 0px;
+}
+
+div.movie_content_area div.meter_fans {
+	overflow:hidden; float:left;
+	padding:4px 0px 0px 8px;
+}
+div.movie_content_area ul.critic_links { float:right; display:block; }
+div.movie_content_area ul.critic_links a.active { color:inherit; text-decoration:none; }
+div.movie_content_area ul.critic_links>li {  float:left; padding:0px 2px; }
+div.movie_content_area ul.critic_links>li:before { content:'|'; padding:0px 2px; }
+div.movie_content_area ul.critic_links>li:first-child:before { display:none; }
+
+div.movie_content_area span.meter {
+	clear:left;
+	color:#506A16;
+	font-size:44px;
+	font-weight:bold;
+	white-space:nowrap;
+	display:block; 
+	float:left;
+	background:transparent url('http://images.rottentomatoescdn.com/images/tomatometer/rt_lg.png?v=20110531') no-repeat left top;
+	background-repeat:no-repeat;
+	vertical-align:middle;
+	padding-left:55px;
+	margin-bottom:4px;
+	min-height:50px; 
+	max-height:50px;
+	line-height: 24px; 
+}
+div.movie_content_area span.meter.noScore {
+	font-size:26px;
+	background-image:none;
+	padding-top:10px;
+	padding-left:0px;
+	min-height:40px; 
+}
+div.movie_content_area span.meter.noReviews {
+	font-size:26px;
+	background-image:none;
+	padding-top:10px;
+	padding-left:0px;
+	min-height:30px; 
+}
+div.movie_content_area span.meter.numeric {
+	font-size:48px;
+}
+div.movie_content_area span.meter.numeric.perfect { 
+	font-size:40px; /* this is for when the movie scores 100% */ 
+}
+div.movie_content_area span.meter.numeric:after {
+	content:'%';
+	vertical-align:super;
+	font-size:24px;
+}
+div.movie_content_area span.meter.numeric.perfect:after {
+	font-size:15px;
+}
+div.movie_content_area span.meter.empty { padding-left:0px; background-position:-50px 50px; }
+div.movie_content_area span.meter.empty:after { content:''; }
+div.movie_content_area span.meter.fresh { background-position:0px 0px; }
+div.movie_content_area span.meter.rotten { background-position:0px -50px; }
+div.movie_content_area span.meter.certified { background-position:0px -100px; }
+div.movie_content_area span.meter.popcorn { background-position:0px -150px; margin-bottom:1px; }
+div.movie_content_area span.meter.wts { background-position:0px -200px; margin-bottom:0px; }
+
+div.movie_content_area div.critic_side div#top-critics-numbers { display:none; }
+div.movie_content_area div.meter_critics div.tomato_numbers { float:left; margin-right:8px; width:40%; display:block; }
+div.movie_content_area div.meter_critics div.tomato_numbers.needMoreWidth { width:48%; /* this is for when the movie scores 100% */ }
+div.movie_content_area div.meter_critics div.tomato_numbers.noReviews { width:60%; }
+div.movie_content_area div.meter_critics div.tomato_consensus { overflow:hidden; }
+div.movie_content_area div.meter_critics .tomato_bar {
+	float:left; display:inline-block; width:98%; height:19px;
+	background:transparent url('http://images.rottentomatoescdn.com/images/tomatometer/tomatometer_bar_bg.png?v=30082010') repeat-x 0px 0px;
+	margin:4px 0px;
+	border:1px solid #9AA671; border-top:0px;
+	-moz-border-radius:6px; -webkit-border-radius:6px; border-radius:6px;
+}
+div.movie_content_area div.meter_critics .tomato_bar.noScore {
+	height:28px;
+	background-image:none;
+	margin:4px 0px;
+	border-style:none;
+}
+div.movie_content_area div.meter_critics .tomato_bar>.tomato_fill {
+	float:left; display:block; height:19px; width:-1%;
+	background:transparent url('http://images.rottentomatoescdn.com/images/tomatometer/tomatometer_bar_bg.png?v=30082010') repeat-x 0px -19px;
+	border-top-left-radius:6px; border-bottom-left-radius:6px;
+	-moz-border-radius-topleft:6px; -moz-border-radius-bottomleft:6px;
+	-webkit-border-top-left-radius:6px; -webkit-border-bottom-left-radius:6px;
+}
+div.movie_content_area div.meter_critics .critic_consensus { color:#6F6A57; clear:both; font-size: 11px; line-height: 13px; }
+div.movie_content_area .critic_stats { color:#627D11; clear:left; }
+div.movie_content_area .critic_stats .subText { display:inline-block; font-weight:bold; font-size:110%; }
+div.movie_content_area .critic_stats .subText.liked_it { padding:0px 0px 0px 65px; }
+div.movie_content_area .critic_stats .subText.want_to_see { padding:0px 0px 0px 50px; }
+
+div.movie_content_area .share_social_media { border-bottom:none; margin:8px 10px 0px; padding:0; }
+div.movie_content_area .movie_subtitle { text-transform:uppercase; font-weight:bold; background-color:#E8EEF5; padding:2px 8px; margin:4px 0px; clear:both; display:block; height:15px; }
+div.movie_content_area div.movie_info p { margin-bottom:4px; }
+div.movie_content_area div.movie_info div.left_col { float:left; display:block; width:50%; }
+div.movie_content_area div.movie_info div.right_col { overflow:hidden; }
+div.movie_content_area .label { font-weight: bold; margin-right: 2px; }
+
+div#cast-info ul>li span.characters { font-size:11px; }
+div#cast-info ul>li.left_column { float:left; width:50%; }
+div#cast-info ul>li.left_column span.characters { padding-right:8px; }
+div#cast-info ul>li { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+div#cast-info ul>li>div { float:left; margin: 0 0 6px 0; }
+div#cast-info ul>li.show_more_item { display:none; }
+div#cast-info ul>li img.actorThumb { margin:0px 8px 4px 0px; vertical-align:top; }
+div#cast-info ul>li img.actorThumb.small { width:32px; }
+div#cast-info ul>li img.actorThumb.medium { width:50px; }
+
+div.movie_content_area a.show_more_link { clear:both; display:block; min-height:8px; margin: 0 0 16px 0; }
+div.movie_content_area a.show_more_link.more:after { content:url('http://images.rottentomatoescdn.com/images/icons/expand_arrow_down.gif'); padding-left:2px; }
+div.movie_content_area a.show_more_link.more.less:after { content:url('http://images.rottentomatoescdn.com/images/icons/expand_arrow_up.gif'); padding-left:2px; }
+
+div#photos_videos div.photos, div#photos_videos div.videos { margin: 0;}
+div#photos_videos div.photos { float:left; width:57%; }
+div#photos_videos div.videos { float:left; margin-left: 10px; }
+div#photos_videos ul { margin:4px 0px 0px 0px; }
+div#photos_videos ul>li { float:left; margin-right:10px; }
+div#photos_videos img.movie_thumbnail { display:block; width:80px; height:80px; }
+
+div#photos_videos a.video_clip_link>div.play_button {
+	background:transparent url('http://images.rottentomatoescdn.com/images/controls/playbutton_md.png') no-repeat 0px 0px;
+	width:21px; height:21px;
+	position:relative; left:8px; bottom:29px;
+	margin-bottom:-21px;
+}
+
+div#photos_videos a.video_clip_link>div.play_button:hover { background-position:-21px 0px; }
+div#photos_videos ul.movie_clips>li { width:108px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+/* ================= personalization/rating/review styles =================== */
+
+div#rating_widget .fbkLoginButton .fb_button { margin:10px 10px 10px 0px; }
+
+div#fb-rating-widget { min-width:480px; }
+
+div#fb-rating-widget img.profile-pic {
+	min-width:50px; max-width:50px; width:50px;
+	float:left;
+	margin-right:8px;
+}
+form#review-form { overflow:hidden; }
+form#review-form a#clear-rating, form#review-form a#edit-rating { font-size:11px; }
+span.stars, .interest {
+	display:inline-block;
+	width:70px; height:15px;
+	vertical-align:middle;
+	background:transparent url('http://images.rottentomatoescdn.com/images/rating/starbar.a.png') no-repeat -70px 0px;
+}
+.interest.friend.wts {
+	width:70px; height:10px;
+	background:transparent url('http://images.rottentomatoescdn.com/images/rating/wts.png') no-repeat 0px 0px;
+}
+.interest.friend.ni {
+	width:70px; height:10px;
+	background:transparent url('http://images.rottentomatoescdn.com/images/rating/ni.png') no-repeat 0px 0px;
+}
+span.stars.rater, .interest.rater {
+	width:95px; height:19px;
+	background:transparent url('http://images.rottentomatoescdn.com/images/rating/starbar-v2.png?v=20110208') no-repeat -95px 0px;
+}
+span.stars:hover { cursor:pointer; }
+span.fixed.stars:hover { cursor:default; }
+span.stars.score00 { background-position:-70px 0px; }
+span.stars.score05 { background-position:-56px -15px; }
+span.stars.score10 { background-position:-56px 0px; }
+span.stars.score15 { background-position:-42px -15px; }
+span.stars.score20 { background-position:-42px 0px; }
+span.stars.score25 { background-position:-28px -15px; }
+span.stars.score30 { background-position:-28px 0px; }
+span.stars.score35 { background-position:-14px -15px; }
+span.stars.score40 { background-position:-14px 0px; }
+span.stars.score45 { background-position:0px -15px; }
+span.stars.score50 { background-position:0px 0px; }
+
+span.stars.rater.score00 { background-position:-95px 0px; }
+span.stars.rater.score05 { background-position:-76px -19px; }
+span.stars.rater.score10 { background-position:-76px 0px; }
+span.stars.rater.score15 { background-position:-57px -19px; }
+span.stars.rater.score20 { background-position:-57px 0px; }
+span.stars.rater.score25 { background-position:-38px -19px; }
+span.stars.rater.score30 { background-position:-38px 0px; }
+span.stars.rater.score35 { background-position:-19px -19px; }
+span.stars.rater.score40 { background-position:-19px 0px; }
+span.stars.rater.score45 { background-position:0px -19px; }
+span.stars.rater.score50 { background-position:0px 0px; }
+
+.interest {
+	width:74px; height:15px;		
+}
+
+a.interest {
+	font-size:0px; color:transparent;
+	margin:0px 2px;
+}
+
+a.interest.wts, a.interest.wtsOff { background-position:0px -30px; }
+a.interest.wts:hover { background-position:-148px -30px; }
+a.interest.wts.wtsOn, span.interest.wts { background-position:-74px -30px; }
+
+a.interest.ni, a.interest.niOff { background-position:0px -45px; }
+a.interest.ni:hover { background-position:-148px -45px; }
+a.interest.ni.niOn, span.interest.ni { background-position:-74px -45px; }
+
+.interest.rater {
+	width:99px; height:20px;		
+}
+a.interest.rater.trailer { background-position:-198px 0px; }
+a.interest.rater.trailer:hover { background-position:-198px -20px; }
+
+a.interest.rater.wts, a.interest.rater.wtsOff { background-position:0px -40px; }
+a.interest.rater.wts:hover { background-position:-198px -40px; }
+a.interest.rater.wts.wtsOn, a.interest.rater.wts:active, span.interest.rater.wts { background-position:-99px -40px; }
+
+a.interest.rater.ni, a.interest.rater.niOff { background-position:0px -60px; }
+a.interest.rater.ni:hover { background-position:-198px -60px; }
+a.interest.rater.ni.niOn, a.interest.rater.ni:active, div#fb-rating-widget span.interest.rater.ni { background-position:-99px -60px; }
+
+
+/* below is a copy of the above to handle multiple wts items on a page for the WTS Bar.  Redesign will consolidate this. */
+a.interest { display:inline-block; font-size:0px; color:transparent; margin:0px 2px;}
+           
+.interest.rater {width:99px; height:20px; background:transparent url('http://images.rottentomatoescdn.com/images/rating/starbar-v2.png?v=20110208') no-repeat -95px 0px;}
+
+a.interest.rater.wts, a.interest.rater.wtsOff { background-position:0px -40px; }
+a.interest.rater.wts:hover { background-position:-198px -40px; }
+a.interest.rater.wts.wtsOn, a.interest.rater.wts:active, span.interest.rater.wts { background-position:-99px -40px; }
+
+a.interest.rater.ni, a.interest.rater.niOff { background-position:0px -60px; }
+a.interest.rater.ni:hover { background-position:-198px -60px; }
+a.interest.rater.ni.niOn, a.interest.rater.ni:active, span.interest.rater.ni { background-position:-99px -60px; }
+/* end duplicated content */
+
+div#fb-rating-widget span#saveStatus { vertical-align:middle; padding-left:5px; height:16px; width:30px; display:inline-block; }
+div#fb-rating-widget span#saveStatus.empty { 
+	background:transparent url('http://images.rottentomatoescdn.com/images/spacer.gif') no-repeat 0px 0px;
+}
+div#fb-rating-widget span#saveStatus.wait { 
+	background:transparent url('http://images.rottentomatoescdn.com/images/wait.16px.gif') no-repeat 10px 0px;
+}
+div#fb-rating-widget span#saveStatus span { color:#666; font-size:95%; }
+
+div#fb-rating-widget p#review-p {
+	margin:8px 4px 4px 0px;
+	display:none;
+}
+div#fb-rating-widget a#edit-rating { margin-left:4px; }
+div#fb-rating-widget textarea#review-text {
+	clear:right;
+	display:block;
+	font-size:10pt;
+	resize:none;
+	background-color:#F9FAFE;
+	border:1px solid #B7BABB;
+	margin:8px 4px 4px 0px;
+	font-family:inherit;
+	overflow-x:hidden;overflow-y:auto;
+	width:95%;
+}
+
+div#fb-rating-widget #review-text-container {width:95%;}
+div#fb-rating-widget .myRating { display:inline-block; float:left; }
+div#fb-rating-widget .shareOnFacebook { display:inline-block; float:right;}
+
+#shareOnFacebook .share_button {background:transparent url('http://images.rottentomatoescdn.com/images/rating/starbar-v4.png?v=20110209') no-repeat;  display:inline-block; width:28px; height:14px; }
+#shareOnFacebook .share_button.fb { background-position:-99px -112px; }
+#shareOnFacebook .share_button.fb:hover { background-position:-127px -112px; }
+#shareOnFacebook .share_button.fb.on, #shareOnFacebook .share_button.fb:active { background-position:-155px -112px; }
+#shareOnFacebook .share_button.tw { background-position:-99px -140px; }
+#shareOnFacebook .share_button.tw:hover { background-position:-127px -140px; }
+#shareOnFacebook .share_button.tw.on, #shareOnFacebook .share_button.tw:active { background-position:-155px -140px; }
+
+div#fb-rating-widget .formButtons { display:inline-block; float:right; margin:2px 5px; }
+
+div#fb-rating-widget span#submit-rating { 
+	width:33px; 
+	height:16px; 
+	background:transparent url('http://images.rottentomatoescdn.com/images/rating/post-button.png') no-repeat 0px 0px;
+	margin-right: 20px;
+}
+
+div#fb-rating-widget span#submit-rating:hover { 
+	background-position:0px -16px; 
+	cursor:pointer;
+}
+
+div#fb-rating-widget form#review-form a#clear-rating { 
+	vertical-align:top; 
+	margin-right:5px;
+	color: #787878;
+}
+
+div#fb-rating-widget div#likeStatus { 
+	display:inline-block;
+	margin-top:2px;
+}
+div#fb-rating-widget div#likeStatus span#submitted-like { 
+	font-size:11px;
+	display:none;
+	background:url("http://b.static.ak.fbcdn.net/rsrc.php/zU/r/YkBqJTSIXNq.png") no-repeat scroll 3px 3px #FFF1C0;
+	padding:2px 4px 2px 20px;
+}
+
+div#fb-rating-widget div#likeStatus span#undo-like { color:#3B5998; cursor:pointer; }
+
+div#fb-friend-reviews ul#friend-reviews { clear:both; margin:8px 0px; }
+div#fb-friend-reviews ul#friend-reviews>li {
+	margin-bottom:4px;
+	padding-top:10px;
+	clear:both;
+}
+div#fb-friend-reviews ul#friend-reviews>li.show_more_item { display:none; }
+div#fb-friend-reviews ul#friend-reviews>li:first-child { border-top-width: 0px; padding-top:0px; }
+
+div#fb-friend-reviews ul#friend-reviews>li img {
+	display:block; float:left;
+	margin-right:8px;
+	margin-bottom: 10px;
+	min-width:40px; max-width:40px; width:40px;
+}
+div#fb-friend-reviews ul#friend-reviews>li div.review-container { overflow:hidden; }
+div#fb-friend-reviews ul#friend-reviews>li h3 {
+	color: #285CAB;
+	font-weight:normal;
+	font-size:10pt;
+	margin:0px 0px 4px 0px;
+}
+div#fb-friend-reviews ul#friend-reviews>li span.review-date { float:right; color:#aaaaaa;; font-size: 10px }
+div#fb-friend-reviews ul#friend-reviews>li p { margin:8px 0px; }
+
+div#fb-friend-reviews ul#friend-likes { clear:both; margin:8px 0px 8px 0px }
+div#fb-friend-reviews ul#friend-likes>li {
+	margin-right:5px;
+	float: left;
+	margin-bottom:6px;
+}
+div#fb-friend-reviews ul#friend-reviews>li:last-child { clear: both }
+div#fb-friend-reviews ul#friend-likes>li img {
+	min-width:30px; max-width:30px; width:30px;
+}
+
+#fbkFriendsActivity .fbkFooter { clear:both; margin:5px; }
+#fbkFriendsActivity .fbkLoginButton { margin-left:6px; }
+#fbkFriendsActivity .fbkLoginButton .fb_button { margin-right:5px; }
+
+#fbkMovieRecommendations { text-align:center; }
+#fbkMovieRecommendations .fbkMovieBasis { float:left; width:100px; margin:0px 5px; padding:0px 8px; border-right:1px solid #C8CECD; }
+#fbkMovieRecommendations .fbkMovieBasis .fbkOtherRecommendations { padding-top:3px; } 
+#fbkMovieRecommendations .fbkMovieBasis .fbkOtherRecommendations .arrowImg { 
+	display:inline-block;
+	margin:3px;
+	width:13px; 
+	height:15px; 
+}
+#fbkMovieRecommendations .fbkMovieBasis .fbkOtherRecommendations .arrowImg.leftArrow { 
+	background:transparent url('http://images.rottentomatoescdn.com/images/icons/arrow_prev.png') no-repeat 0px 0px;
+}
+#fbkMovieRecommendations .fbkMovieBasis .fbkOtherRecommendations .arrowImg.leftArrow:hover { 
+	background:transparent url('http://images.rottentomatoescdn.com/images/icons/arrow_prev_hover.png') no-repeat 0px 0px;
+	cursor: pointer;
+}
+#fbkMovieRecommendations .fbkMovieBasis .fbkOtherRecommendations .arrowImg.rightArrow { 
+	background:transparent url('http://images.rottentomatoescdn.com/images/icons/arrow_next.png') no-repeat 0px 0px;
+}
+#fbkMovieRecommendations .fbkMovieBasis .fbkOtherRecommendations .arrowImg.rightArrow:hover { 
+	background:transparent url('http://images.rottentomatoescdn.com/images/icons/arrow_next_hover.png') no-repeat 0px 0px;
+	cursor: pointer;
+}
+#fbkMovieRecommendations .fbkMovieRecommendationText { padding-bottom:5px; }
+#fbkMovieRecommendations .fbkMovieRecommendation { float:left; margin:5px 3px 0px; width:90px; }
+#fbkMovieRecommendations .fbkMovieRecommendation .tmeter_display { margin:auto; }
+#fbkMovieRecommendations .fbkEmpty { padding:5px 0px; }
+
+#fbkFriendFavorites li { padding:0px 0px 3px; }
+#fbkFriendFavorites .fbkFavoriteCount { margin-bottom:4px; }
+#fbkFriendFavorites .fbkFavoriteCount .tmeter_display { display:inline; }
+#fbkFriendFavorites .fbkFavoriteCount .tMeterWrapper { float:left; width:46px; }
+#fbkFriendFavorites .fbkFavoriteCount .tMeterWrapper a { color:#000000; }
+
+/* =Notification box
+-----------------------------*/
+#notify-container { 
+	color: #fff; 
+	font-size: 130%; 
+	font-weight: bold; 
+	left: 0px; 
+	position: fixed; 
+	text-align: center; 
+	top: 0px;	
+	width: 100%; 
+	z-index: 9999; 
+	display: none; 
+	background: url("http://images.rottentomatoescdn.com/images/misc/notify-gradient-green.png") repeat-x;
+}
+
+#wts-bar { height: 45px; width: 997px; margin: 0 auto; text-align: left; margin-top: 5px; }
+#wts-bar img, #wts-bar .notify-text, #wts-bar a{vertical-align: middle;}
+			
+.notify-text {margin-left: 100px; margin-right: 25px;}
+	

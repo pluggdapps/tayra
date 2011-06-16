@@ -1,0 +1,144 @@
+#visibleCappy{
+	height:140px;
+	position:relative;
+	z-index:1000000;
+}
+
+.cappyHolder{
+	width:100%;
+	background:#181c1d;
+	height:25px;
+	margin: 0px 0px 0px 0px;
+}
+
+.cappy {
+	height:25px;
+	position:relative;
+	z-index:100000;
+	background:#181c1d;
+	margin:auto;
+	width:980px;
+}
+
+.cappy .moreSites ul {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+.cappy .moreSites ul li {
+	display:inline;
+	float:left;
+	position:relative;
+	text-indent:-20000px;
+	z-index:20000000;
+}
+
+.cappy .moreSites ul li a{
+	display:block;
+	background:transparent url('/sitewide/images/sprites/cappy_sprite01.gif') no-repeat scroll 0 0;
+	height:35px;
+	outline:none;
+	border:none;
+}
+
+ li.last a{
+	width:auto !important;
+	height:auto;
+	color:#ffff00!important;
+}
+
+#flux_quickmenu_3 .fluxWidget {
+margin:0px!important;
+}
+
+.cappy .moreSites .moreLinks a:hover {
+	background-position:-170px -35px;
+}
+.cappy .moreSites .moreLinks a{
+	background-position:-170px 0px;
+	width:110px;
+	height:29px;
+}
+
+.cappy .logo a:hover {
+	background-position: 0px -35px;
+}
+.cappy .logo a{
+	background-position: 0px 0px;
+	width:160px;
+	height:29px;
+}
+
+.cappy .moreSites ul li ul li a{
+	display:block;
+	width:194px!important;
+	height:16px!important;
+	color:#FFFFFF;
+	font-size:11px;
+	font-weight:normal;
+	padding: 3px 0 2px 10px;
+	overflow:hidden;
+	background-position:-1396px -989px !important;
+	text-decoration:none;
+	border:none;
+}
+
+.cappy .moreSites ul li ul {
+	background:#657678 none repeat scroll 0 0;
+	left:0px;
+	position:absolute;
+	top:25px;
+	width:204px;
+	padding:0px;
+	z-index:20000000;
+	display:none;
+	overflow:hidden;
+}
+
+.cappy .moreSites ul li ul li {
+	border-bottom:1px solid #000000;
+	display:block;
+	float:none;
+	height:20px;
+	text-indent:0;
+	width:205px;
+	overflow:hidden;
+	margin:0px 0px 0px -1px;
+}
+
+.cappy .moreSites ul li:hover ul,
+.cappy .moreSites ul li.over ul{/* For the IE DOM script hack. */
+	display:block;
+}
+
+.cappy .moreSites ul li ul li:hover{
+	background:#333832;
+}
+
+#flux_quickmenu_3 .fluxWidget .fluxBtn {
+	color:#3bb9d6!important;
+	font-family:arial!important;
+	font-size:12px!important;
+	font-weight:bold!important;
+	text-decoration:none!important;
+}
+
+#flux_quickmenu_3 .fluxWidget .fluxBtn:hover{
+	text-decoration:underline!important;
+}
+
+#flux_quickmenu_3 .fluxWidget .widgetContainer .container {
+	padding:3px 0px 0px 0px!important;
+	text-align:right!important;
+}
+
+.flux .widgetContainer {
+	margin-top:-1px!important;
+}
+
+#flux_quickmenu_3 .fluxWidget img.avatarSmall {
+	margin-top:-3px!important;
+}

@@ -1,0 +1,5 @@
+include AUTHORS
+include RELEASE
+
+recursive-include tayra *.etx *.css *.js
+recursive-include docs *.etx

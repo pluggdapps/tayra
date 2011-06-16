@@ -1,0 +1,70 @@
+﻿/* Js-Kit Echo theme 
+* guide: http://wiki.js-kit.com/Skinning-Guid
+*
+* note that in order to accommodate the parallel load of JS-Kit, this css cannot be 
+* trusted to load after the js-kit js call so all overriding css properties must include !important
+*/
+
+/* controls */
+.js-commentControl a { color:#FF9900!important; font-weight:bold!important;}
+.js-PageMore {background:url(/images/js_kit/more_btn.gif) no-repeat!important;width:548px!important;height:20px!important;padding:0!important;border:none!important;padding-top:7px!important;color:white!important}
+.js-CommentsSkin-echo .jsk-ThreadWrapper {padding:0px;}
+.jsk-CommentFormButton {background-color:white!important;font-weight:bold!important;color:white!important;border:none!important;width:80px!important;height:30px!important;background-image: url(/images/js_kit/submit_btn.jpg)!important;}
+.js-singleCommentDeletable {display:none}
+/* colors */
+
+.js-singleCommentBg { background-color:#FFFFFF!important; } /* changes the bg color of each item */
+
+.jsk-PrimaryBackgroundColor { background-color: #fff!important; } /* changes the primary foundation color */
+
+.jsk-SecondaryBackgroundColor { background-color: #fbf9ea!important; border:none!important;} /* changes things like the comment form bg */
+
+.jsk-PrimaryHighlightColor { color: #fffea9!important } /* not currently used */
+
+.jsk-SecondaryHighlightColor { color: #ffff00!important } /* not currently used */
+
+.jsk-PrimaryFontColor { color: #3a3a3a!important; } /* the color of all primary text elements */
+
+.jsk-SecondaryFontColor { color: #c6c6c6!important; } /* the color of all secondary text elements */
+
+.jsk-HeaderWrapper {display:none!important}
+
+.jsk-H1Color { color: #878487!important; } /* the color of the 1st level headers */ 
+
+.jsk-MenuContainer { background-color: #FFFFFF; }    /* the color of the 'Add another site' drop-down menu */
+
+.jskit-GoogleLikeMenuBar {
+	background-image: url(/images/js_kit/from_btn.gif)!important;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/images/js_kit/from_btn.gif', sizingMethod='crop')!important;
+	border:none!important
+}
+.jskit-GoogleLikeMenuBarText:hover { color:white!important }
+
+/* fonts */
+
+.jsk-PrimaryFont, .jsk-CommentFormSurface input { font-family: Lucida grande, Tahoma, Verdana, Arial!important; }
+
+.jsk-PrimaryFont { font-size: 8pt!important; font-weight: normal!important;}
+
+.jsk-H1Font { font-size: 1.38em!important; font-weight: bold!important; line-height: 1.4em!important; }
+
+.jsk-LinkFont, .jsk-ThreadWrapper a, .jsk-ThreadWrapper a:hover { text-decoration: none!important;color:#06C!important }
+
+ .js-CommentsSkin-echo .jsk-CommentFormBody-noWYSIWYG,  .js-CommentsSkin-echo .jsk-CommentEditFormBody-noWYSIWYG{
+	_width:522px !important;
+ }
+ 
+ /***   Begin Load Comments Styles   ***/
+ #load-comments-wrapper{
+	background:#fbf9ea;
+ }
+ 
+ #load-comments-wrapper .load-comments{
+	font-family:arial;
+	font-size:14px;
+	font-weight:bold;
+	text-align:center;
+	color:#f39501;
+	cursor:pointer;
+ } 
+ /***   End Load Comments Styles   ***/

@@ -1,0 +1,107 @@
+.popularSearches {
+	width: 302px;
+	height: 124px;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+#popularSearchTitle {
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: 700;
+	color: #FF0000;
+}
+
+.popularSearchLine {
+	font-size: 1px;
+	height: 1px;
+	width: 300px;
+	border-bottom: 2px solid #000000;
+}
+
+.popularSearchColumn {
+	width: 140px;
+	margin: 0px 0px 0px 5px;
+	float:left;
+}
+
+
+.pollSubmitLink {
+	width: 172px;
+	background-color: #81BDF3;
+	padding: 2px 6px 2px 0px;
+	text-align: right;
+	margin-left: 1px;
+	color: #FFFFFF;
+}
+/*
+.popularSearchLink {
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 700;
+}
+*/
+a.popularSearchLink:link {
+	color: #FF0000;
+	text-decoration: none;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+a.popularSearchLink:visited {
+	color: #FF0000;
+	text-decoration: none;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+a.popularSearchLink:active {
+	color: #FF0000;
+	text-decoration: none;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+a.popularSearchLink:hover {
+	color: #FF0000;
+	text-decoration: underline;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+
+a.popularSearchLinkRegular:link {
+	color: #000000;
+	text-decoration: none;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+a.popularSearchLinkRegular:visited {
+	color: #000000;
+	text-decoration: none;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+a.popularSearchLinkRegular:active {
+	color: #000000;
+	text-decoration: none;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+a.popularSearchLinkRegular:hover {
+	color: #000000;
+	text-decoration: underline;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: 400;
+}

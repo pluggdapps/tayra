@@ -1,0 +1,53 @@
+.textHeader2{font-size:16px;font-family:Arial;color:#000000;font-weight:700;}
+.newsletter{width:180px;height:93px;background-color:#F6F6F6;font-family:Verdana;font-weight:700;font-size:12px;color:#FFFFFF;}
+.newsletterBody{font-family:Arial;font-weight:400;font-size:10px;color:#000000;}
+.newsletterTitle{width:178px;height:17px;font-size:12px;background-color:#81BDF3;}
+.newsletterSignup{width:178px;height:17px;font-size:11px;font-family:Arial;background-color:#81BDF3;}
+.newsletterButton{font-family:Arial;font-size:10px;font-weight:bold;color:#000000;background-color:#FFFFFF;border:0px;width:74px;height:13px;}
+.newsletterButtonOver{font-family:Arial;font-size:10px;font-weight:bold;color:#000000;background-color:#F6F6F6;border:0px;width:74px;height:13px;}
+.visitNewsArchivesLink{text-decoration:none;color:#0000EE;font-size:11px;font-family:Verdana;}
+a.visitNewsArchiveLink:link{color:#0000EE;text-decoration:none;}
+a.visitNewsArchiveLink:visited{color:#551A8B;text-decoration:none;}
+a.visitNewsArchiveLink:active{color:#551A8B;text-decoration:none;}
+a.visitNewsArchiveLink:hover{color:#0000EE;text-decoration:underline;}
+a.visitNewsLink:link, a.visitNewsLink:visited, a.visitNewsLink:active{color:#000000;text-decoration:none;}
+a.visitNewsLink:hover{color:#0000EE;text-decoration:underline;}
+.newsBoxP{background-color:#EAF4FB;color:#000000;margin:0px 0px 3px 0px;padding:3px 3px 3px 3px;width:162px;min-height:30px;font-size:11px;font-family:Arial;font-weight:400;}
+.exploreBox{background-color:#EAF4FB;color:#000000;font-size:11px;font-family:Arial;width:165px;height:16px;font-weight:400;padding:2px 0px 1px 2px;margin-bottom:3px;}
+a.eventArchivesLink:link, a.eventArchivesLink:visited, a.eventArchivesLink:active{color:#0000EE;text-decoration:none;font-size:11px;font-family:Arial;}
+a.eventArchivesLink:hover{color:#0000EE;text-decoration:underline;font-size:11px;font-family:Arial;}
+.innerExploreBox{margin-left:2px;}
+.pollBox{background-color:#F6F6F6;width:180px;margin-top:2px;}
+.pollTitle{width:176px;background-color:#81BDF3;padding:2px 0px 2px 2px;color:#FFFFFF;font-family:Arial;font-size:14px;margin-left:1px;font-weight:700;}
+.pollQuestion{font-family:Arial;font-size:11px;font-weight:700;color:#000000;}
+.pollAnswer{font-family:Arial;font-size:12px;font-weight:700;color:#000000;margin-left:5px;}
+.spacer{font-size:1px;font-family:Arial;}
+.pollSubmitLink{background-color:#81BDF3;text-align:right;margin-left:1px;color:#FFFFFF;}
+a.pollSubmitLink:link, a.pollSubmitLink:visited, a.pollSubmitLink:active{color:#FFFFFF;text-decoration:none;}
+a.pollSubmitLink:hover{color:#FF0000;text-decoration:underline;}
+.topTenBox{width:220px;background-color:#ECFBEC;border:1px solid #89C09F;}
+.firstCam{background-color:#F5FDF5;width:215px;font-weight:700;font-family:Arial;font-size:12px;}
+.firstCamText{font-family:Arial;font-size:12px;}
+#firstCamDesc{font-family:Arial;font-size:11px;width:100px;margin:2px 0px 0px 0px;padding:0px 1px 0px 2px;font-weight:400;}
+.top10MiniBox{padding:1px 0px 1px 2px;margin:3px 0px 0px 1px;background-color:#F5FDF5;width:213px;font-family:Arial;font-size:11px;}
+.newCams{width:220px;background-color:#ECFBEC;border:1px solid #89C09F;}
+.newCamBox{width:216px;background-color:#F5FDF5;font-family:Verdana;font-size:11px;}
+.featuredBar, .featuredBarShort{background-color:#CF3733;color:#FFFFFF;width:487px;height:21px;font-weight:700;font-family:Arial;font-size:14px;}
+.featuredBarShort{width:324px;}
+.featuredBar, .featuredBarShort{text-align:left;}
+.featuredBox, .featuredBoxDDRIVE{font-family:Arial;font-size:12px;width:485px;height:150px;border-left:1px solid #A8A8A8;border-right:1px solid #A8A8A8;border-bottom:1px solid #A8A8A8;}
+.thumbCam{text-align:center;padding:10px 0px 0px 0px;float:left;width:53px;font-size:10px;font-family:Arial;}
+a.quickLink:link, a.quickLink:visited, a.quickLink:active{font-family:Arial;font-size:12px;color:#0065CB;text-decoration:none;}
+a.quickLink:hover{font-family:Arial;font-size:12px;color:#0065CB;text-decoration:underline;}
+a.quickLinkLeft:link, a.quickLinkLeft:visited, a.quickLinkLeft:active{font-family:Arial;font-size:12px;color:#1B63A2;text-decoration:none;}
+a.quickLinkLeft:hover{font-family:Arial;font-size:12px;color:#1B63A2;text-decoration:underline;}
+#quickLinksTitle{font-family:Arial;font-size:14px;font-weight:700;color:#000000;}
+/**/.newCams2{width:197px; height:140px; background-color:#ECFBEC;border:1px solid #89C09F;}/**/
+.newCamBox2{width:194px;font-family:Verdana;font-size:10px;}
+.dotNetBox{width:194px;background-color:#F6F6F6;font-family:Verdana;font-size:11px;}
+/**/.dotNetBoxContainer{width:197px; height:256px;background-color:#F6F6F6;border:1px solid #020235;}/* old height 245 */
+.topTenBox2{width:197px;background-color:#ECFBEC;border:1px solid #89C09F;}
+.firstCam2{background-color:#F5FDF5;width:194px;font-weight:700;font-family:Arial;font-size:12px;}
+#firstCamDesc2{font-family:Arial;font-size:11px;width:100px;margin:2px 0px 0px 0px;padding:0px 1px 0px 4px;font-weight:400;}
+.seeTheRest{font-size:10px;font-weight:400;}
+#dhtmltooltip{position:absolute;width:324px;border:1px solid black;padding:2px;background-color:#0E0E0E;visibility:hidden;z-index:200;}

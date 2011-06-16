@@ -1,0 +1,10 @@
+{{ Toc( position='relative', float='right' ) }}
+
+-----
+
+{{{ Nested 
+@ { 'font-size' : 'small', 'color' : 'gray' }
+Document edited using Vim \\ 
+/* vim: set filetype=etx : */
+}}}
+

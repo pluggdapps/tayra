@@ -1,0 +1,51 @@
+/* yfi_nav_topnav_noscript.css */
+
+/* this file overwrites styles in yfi_nav_topnav_base.css and yfi_nav_topnav_theme.css - it is only included in cases where js is not enabled */
+
+#y-nav { zoom: 1; }
+#y-nav-pri { border-bottom: 0; position:relative; }
+#y-nav-pri li#y-current { position: static; }
+#y-nav-sec {
+	/* hack to simulate relative positioning of quotebar + stretch subnav bar to 100% width in IE6 */
+	border-top: 39px solid #3C61A4;
+	*border-top: 41px solid #3C61A4;
+}
+/* sub nav new / updated */
+#y-nav-pri li ul li strong {
+	padding: 0 1px; 
+	background-color: #FFF;
+	margin-left: 3px;
+}
+/* sub nav  */
+#y-nav-pri li#y-current ul {
+    display: block;
+    position: absolute;
+	left: 0;
+	width: 100%;
+}
+#y-nav-pri li ul li {
+	clear: none;
+	width: auto;	
+	padding: 0 25px 0 5px;
+}
+/* IE 7 */ 
+html > body #y-nav-pri li ul li { *min-width: auto; }
+#y-nav-pri ul {	*position: static; }
+#y-nav-pri li ul {
+    background-color: #3C61A4;
+    border: 0;
+	border-top: 2px solid #3C61A4;
+}
+#y-nav-pri li ul li { border-bottom: 0; }
+#y-nav-pri li ul li a,
+#y-nav-pri li#y-current ul li a {
+    color: #FFF;
+	border: 0;
+}
+#y-nav-pri li ul li a:hover,
+#y-nav-pri li#y-current ul li a:hover,
+#y-nav-pri li ul li a:focus,
+#y-nav-pri li#y-current ul li a:focus {
+	border: 0;
+	text-decoration: underline;
+}

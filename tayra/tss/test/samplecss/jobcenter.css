@@ -1,0 +1,303 @@
+﻿#JobCenter img { border: 0; }
+
+/****** BEGIN Framing/Sizing so tab panes will not change size */
+#JobCenter div.JobCenterRecentJobs div.tabContainer,
+#JobCenter div.JobCenterJobRecommendations div.tabContainer {
+    border-left: solid 1px #E4E4E4;
+    border-right: solid 1px #E4E4E4;
+    border-bottom: solid 1px #E4E4E4;
+}
+#JobCenter div.JobCenterRecentJobs,
+#JobCenter div.JobCenterJobRecommendations,
+#JobCenter div.JobCenterRecentViewedJobs,
+#JobCenter div.JobCenterSavedJobs {
+    height: 450px;
+}
+#JobCenter div.JobCenterRecentViewedJobs,
+#JobCenter div.JobCenterSavedJobs {
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-left: solid 1px #E4E4E4;
+    border-right: solid 1px #E4E4E4;
+    border-bottom: solid 1px #E4E4E4;
+}
+#JobCenter div.JobCenterJobRecs {
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/* fix scrollbar pulling up by one pixel */
+#JobCenter div.JobCenterJobRecommendations {
+    margin-bottom: 1px;
+}
+/***** END Framing/Sizing so tab panes will not change size */
+
+#JobCenter div.JobCenterJobRecsHeader {
+    border-left: solid 1px #E4E4E4;
+    border-right: solid 1px #E4E4E4;
+    border-bottom: solid 1px #E4E4E4;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+#JobCenter div.JobRecHeaderLeft {
+    float: left;
+}
+#JobCenter div.JobRecHeaderRight {
+    float: right;
+}
+#JobCenter div.JobRecHeaderRight * {
+    vertical-align: middle;
+}
+#JobCenter span.location {
+    font-weight: normal;
+}
+#JobCenter div.JobCenterJobRecsFooter {
+    background: #FFF url(../../../images/js/JobCenterBottomBarGrad.jpg) repeat-x;
+    background-position: bottom;
+    height: 22px;
+}
+#JobCenter .JobCenterJobRecsFooter a {
+    margin: 0px 0px 0px 10px;
+    position: relative;
+    top: 4px;
+}
+
+/***** BEGIN Fix JobRecs in the ajax table */
+#JobCenter .JobCenterJobRecs #mxdlJobs {
+    width: 100%;
+}
+#JobCenter .JobCenterJobRecs #mxdlJobs td {
+    border-bottom: solid 1px #E4E4E4;
+    border-collapse: collapse;
+}
+#JobCenter .JobCenterJobRecs #mxdlJobs td table.title {
+    border: 0;
+    width: 100%;
+}
+#JobCenter .JobCenterJobRecs #mxdlJobs td table.title td {
+    border: 0;
+    width: 68%;
+}
+#JobCenter .JobCenterJobRecs td.titleLeft {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+#JobCenter .JobCenterJobRecs td.titleLeft a {
+    font-weight: bold;
+}
+/***** END JobRecs in the ajax table */
+
+/***** BEGIN SavedJobs ajax table */
+#JobCenter .JobCenterSavedJobs table.results {
+    width: 100%;
+}
+#JobCenter .JobCenterSavedJobs table.results td {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: 100%;
+    border-bottom: solid 1px #E4E4E4;
+    border-collapse: collapse;
+}
+#JobCenter .JobCenterSavedJobs table.results td a { font-weight: bold; }
+/***** END SavedJobs ajax table */
+
+/***** BEGIN RecentJobs ajax table */
+#JobCenter .JobCenterRecentJobs .JobCenterJobRecs table.results { width: 100%; }
+#JobCenter .JobCenterRecentJobs .JobCenterJobRecs table.results td {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: 100%;
+    border-bottom: solid 1px #E4E4E4;
+    border-collapse: collapse;
+}
+#JobCenter .JobCenterRecentJobs .JobCenterJobRecs table.results td a {
+    font-weight: bold;
+}
+/***** END RecentJobs ajax table */
+#JobCenter div.JobCenterJobRecs div.RecentJobsHelp { display: none; }
+#JobCenter div.JobCenterJobRecs div.RecentJobsHelp h2 {
+    color: #569841;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 3px 0px;
+    padding: 0;
+}
+#JobCenter div.JobCenterJobRecs div.RecentJobsHelp ul {
+    font-size: 11px;
+    margin: 2px 15px 2px 25px;
+}
+#JobCenter div.JobCenterJobRecs div.RecentJobsHelp ul {
+    color: #477BD1;
+    font-size: 11px;
+    list-style-image: url(../../../images/bullets/grey_bullet.gif);
+}
+
+#JobCenter div.JobCenterJobRecs div.RecentJobsHelp .imgGraph { text-align: center; }
+#JobCenter div.JobCenterRecentViewedJobs { display: none; }
+#JobCenter div.JobCenterSavedJobs { display: none; }
+#JobCenter div.loadingDiv { text-align: center; }
+#JobCenter a.bodyLink { font-weight:bold; }
+
+#JobCenter img.JobCenterLoadingGif {
+    width: 20px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
+/********* BEGIN Styles for Tabbed Navigation & Rounded Corners */
+
+/* Need to fix width so tabs don't change width on hover */
+#JobCenter #JobCenterJobRecommendations { width: 160px; }
+#JobCenter #JobCenterRecentViewedJobs { width: 122px; }
+#JobCenter #JobCenterSavedJobs { width: 88px; }
+#JobCenter #JobCenterRecentJobs { width: 116px; }
+
+#JobCenter ul.tabbedNavigation {
+    margin: 0;
+    padding: 0;
+    list-style: none none outside;
+    border: 0;
+    padding-left: 12px;
+    background: #FFF url(../../../images/js/tab_nav_grad.jpg) repeat-x;
+    background-position: bottom;
+}
+#JobCenter ul.tabbedNavigation li {
+    margin: 0;
+    margin-bottom: -1px;
+    padding: 0;
+    display: block;
+    float: left;
+}
+#JobCenter ul.tabbedNavigation #JobCenterRecentJobs {
+    margin-bottom: 1px;
+}
+#JobCenter ul.tabbedNavigation li.selected {
+    border: none;
+    padding: 0;
+}
+#JobCenter ul.tabbedNavigation a {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+}
+#JobCenter ul.tabbedNavigation li span:hover {
+    color: #202245;
+}
+#JobCenter ul.tabbedNavigation li.selected span:hover {
+    color: #EE7F0C;
+}
+#JobCenter ul.tabbedNavigation li.selected a {
+    color: #EE7F0C;
+    font-size: 13px;
+    background: #FFF;
+}
+
+#JobCenter ul.tabbedNavigation a * { display: block; }
+
+#JobCenter .pad,
+#JobCenter .round1,
+#JobCenter .round2,
+#JobCenter .round3,
+#JobCenter .round4 
+{
+    background: #FFF;
+    background: transparent;
+    /* hide overflow:hidden from IE5/Mac */ 
+    /* \*/ 
+    overflow: hidden; 
+    /* */
+}
+#JobCenter .pad { height: 4px; }
+#JobCenter li.selected .pad { height: 1px; }
+
+#JobCenter .tabtitle {
+    padding: 5px 7px;
+    margin: 0;
+    position: relative;
+    top: -3px;
+    border-left: solid 1px #DDD;
+    border-right: solid 1px #DDD;
+    text-align: center;
+    margin: 0px 0px 0px -1px;
+}
+#JobCenter li.selected .tabtitle {
+    padding: 4px 5px 6px 5px;
+    background: #FFF;
+    margin: 0px -1px;
+    border-left: solid 2px #DDD;
+    border-right: solid 2px #DDD;
+    top: 0px;
+}
+
+#JobCenter .round1,
+#JobCenter .round2,
+#JobCenter .round3,
+#JobCenter .round4 {
+    font-size: 1px;
+    height:1px;
+}
+
+#JobCenter li.selected .round2,
+#JobCenter li.selected .round3,
+#JobCenter li.selected .round4 { border-left: 1px solid #CCC; border-right: 1px solid #CCC; }
+
+#JobCenter .round1 { margin:0 2px; }
+#JobCenter li.selected .round1 { background: #CCC; }
+#JobCenter .round2 { margin:0 1px; }
+#JobCenter li.selected .round2 { border-width: 0 1px; }
+#JobCenter .round3 { margin:0 0px; }
+#JobCenter li.selected .round3 { border-width: 0 1px; }
+#JobCenter .round4 { margin: 0 0px; }
+#JobCenter li.selected .round4 { border-width: 0 1px; }
+/********* END Styles for Tabbed Navigation & Rounded Corners */
+
+#JobCenter table.RecentViewedJobs {
+    width: 100%;
+}
+#JobCenter table.RecentViewedJobs tr {
+    height: 41px;
+}
+#JobCenter table.RecentViewedJobs td {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: 100%;
+    border-bottom: solid 1px #E4E4E4;
+    border-collapse: collapse;
+}
+#JobCenter table.RecentViewedJobs td a {
+    font-weight: bold;
+}
+#JobCenter .JobCenterSavedJobs .AjaxFail { display: none; }
+#JobCenter .JobCenterSavedJobs .AjaxFail div { margin-top: 15px; margin-left: 20px; }
+#JobCenter .JobCenterSavedJobs .AjaxFail .btn {
+    border: 0;
+    color: #FFF;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+    background: #FF7D00 url(../../../images/js/btn_grad.jpg) repeat-x bottom !important;
+    border: 1px solid #FF9C00 !important;
+    height: 22px;
+    margin: 0px 10px;
+    padding: 3px 6px !important;
+}
+#NoSavedJobs { 
+    display: none; 
+    margin: 15px 10px 15px 20px;
+    line-height: 16px;
+}
+#JobCenter .JobCenterRecentJobs .JobRecHeaderLeft { display: none; }
+
+/**** RecentJobs Change Location elements ****/
+#JobCenter .JobCenterRecentJobs .RecentJobsChangeLocation { display: none; }
+#ChangeLocation { padding: 0; }
+#SubmitLocation {
+    background: #FF7D00 url(../../../images/js/btn_grad.jpg) repeat-x;
+    border: solid 1px #FF9C00;
+    color: #FFF;
+    font-size: 11px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0px 3px;
+}

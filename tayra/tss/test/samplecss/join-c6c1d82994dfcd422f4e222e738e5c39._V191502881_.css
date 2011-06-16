@@ -1,0 +1,74 @@
+.managedContent {
+    padding-left:16px;
+}
+
+div.joinpage {
+    background-repeat:repeat-y;
+    border-bottom:0px solid transparent;
+    margin:6pt auto 20px;
+    position:relative;
+    text-align:left;
+    width:950px;
+}
+div.joincolcx {
+    background-repeat:no-repeat;
+    min-width:950px;
+}
+div.joinleft {
+    float:left;
+    width:700px;
+    margin:0px 0px 10px 0px;
+    padding:0px;
+    background-color:transparent;
+    position:relative;
+}
+div.joinrightcx {
+    float:right;
+    margin-left:-200px;
+    padding-top:14px;
+    margin-bottom:6px;
+    width:226px;
+    padding-right:14px;
+    }
+/* Header Styles */
+div.joinheader {
+    position:relative;
+    height:73px;
+    background-repeat:no-repeat;
+    }
+div.jointoplinks {
+    margin:7px 14px 7px 7px;
+    }
+.quickTourButton {
+    position:absolute;
+    right:40px;
+    top:107px;
+}
+
+div.joinfooter {
+    background-color:#E1E0E0;
+    background-repeat:no-repeat;
+    border-bottom:0pt none;
+    border-left:0pt none;
+    border-right:0pt none;
+    height:80px;
+    padding:0px;
+    text-align:center;
+    font-size:11px;
+}
+div.joinfooter .letusknow {
+    padding-top:20px;
+}
+div.joinfooter .copyright {
+    background-color:#E1E0E0;
+    margin-top:30px;
+}
+
+div.landingblurb h2
+{
+    color:#4C94B7;
+    font-size:24px;
+    font-weight:lighter;
+    margin:0px;
+    padding:0px;
+}

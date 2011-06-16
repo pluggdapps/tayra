@@ -1,0 +1,462 @@
+.video1
+{
+    font-family: tahoma,sans-serif;
+}
+.video1 a, .video1 a:link, .video1 a:visited
+{
+    text-decoration: none;
+    background-color: transparent;
+    color: #07519a;
+}
+.video1 a:hover
+{
+    text-decoration: underline;
+}
+.video1 a:active
+{
+    background-color: transparent;
+    color: #090;
+}
+.video1 a.ad img
+{
+    border: none;
+    display: block;
+    text-align: center;
+}
+.video1 a.linkback
+{
+    background-position: 100% 0;
+    background-repeat: repeat-y;
+    line-height: 2em;
+    margin: 0 .7em 0 0;
+    padding: 0 .7em 0 0;
+    background-image: url(pipe.gif);
+}
+.video1 a.linkback.last
+{
+    background-image: none;
+    margin: 0;
+    padding: 0;
+}
+.video1 h3
+{
+    padding-bottom: 2px;
+    margin: 0px;
+    font-size: 100%;
+}
+.video1 .playerAdDiv
+{
+    text-align: center;
+}
+
+.msnVideoArticlePlayer
+{
+    background-color: #444444;
+    color: White;
+}
+.msnVideoArticlePlayer .clear
+{
+    clear: both;
+}
+.msnVideoArticlePlayer a, .msnVideoArticlePlayer a:visited
+{
+    text-decoration: none;
+}
+.msnVideoArticlePlayer a:hover
+{
+    text-decoration: underline;
+}
+.msnVideoArticlePlayer .playerDiv
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.msnVideoArticlePlayer .upperDiv
+{
+    padding: 10px;
+}
+.msnVideoArticlePlayer .metadataDiv
+{
+    text-align: left;
+}
+.msnVideoArticlePlayer .compact .metadataDiv
+{
+    float: left;
+    max-width: 40%;
+}
+.msnVideoArticlePlayer .titleDiv
+{
+    font-size: 100%;
+    color: White;
+    font-weight: bold;
+}
+.msnVideoArticlePlayer .dateDetail, .msnVideoArticlePlayer .durationDetail, .msnVideoArticlePlayer .sourceDetail
+{
+    color: #d3d3d3;
+}
+.msnVideoArticlePlayer .detailLabel
+{
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #d3d3d3;
+    font-weight: bold;
+}
+.msnVideoArticlePlayer .dateDetail .detailLabel
+{
+    margin-left: 0px;
+}
+.msnVideoArticlePlayer .descriptionDiv, .msnVideoArticlePlayer .detailDiv, .msnVideoArticlePlayer .detailDiv a
+{
+    color: #d3d3d3;
+}
+.msnVideoArticlePlayer .bottomDiv
+{
+    background-color: #333333;
+    height: 60px;
+}
+.msnVideoArticlePlayer .browseMoreDiv
+{
+    float: left;
+    margin: 22px 15px;
+    max-width: 40%;
+}
+.msnVideoArticlePlayer .arrow
+{
+    position: relative;
+    top: -2px;
+    padding-right: 5px;
+    border: 0px;
+}
+.msnVideoArticlePlayer .browseMoreDiv a, .msnVideoArticlePlayer .browseMoreDiv a:visited
+{
+    font-size: 110%;
+    color: #CCCCCC;
+}
+.msnVideoArticlePlayer .adDiv
+{
+    float: right;
+}
+
+/* overlay styles */
+.msnVideoOverlayPlayer
+{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    line-height: normal;
+    z-index: 2147483645; /* MAXINT - 2 */
+}
+.msnVideoOverlayPlayer .clear
+{
+    clear: both;
+}
+div.msnVideoOverlayPlayer
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+}
+.msnVideoOverlayPlayer .overlayDiv
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2147483645; /* MAXINT - 2 */
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    background-color: #333333;
+    cursor: pointer;
+}
+.msnVideoOverlayPlayer .centerDiv
+{
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 1000px;
+    z-index: 2147483646; /* MAXINT - 1, leaves 1 value incase someone *really* needs to be above our overlay */
+    cursor: pointer;
+}
+.msnVideoOverlayPlayer .positionAdj
+{
+    position: relative;
+    top: 0px;
+    left: -50%;
+    padding-top:90px
+}
+.msnVideoOverlayPlayer .adSkinDiv
+{
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    width: 1000px;
+    height: 650px;
+    display: none;
+}
+.msnVideoOverlayPlayer .headerImage
+{
+    position:absolute;
+    top: 35px;
+    left: 85px;
+    width: 830px;
+    height: 55px;
+    border-width: 0px;
+    overflow:visible; /* 65px high image flows out of box and covers top padding of content div */
+}
+.msnVideoOverlayPlayer .headerImageInner
+{
+    height: 65px;
+    overflow: hidden;
+}
+.msnVideoOverlayPlayer .contentWrapper
+{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 20px;
+    background-color: #121212;
+    cursor: default;
+}
+.msnVideoOverlayPlayer .contentWrapperInner
+{
+    overflow: hidden; /* keeps floats inside contentWrapper */
+    visibility: hidden;
+}
+.msnVideoOverlayPlayer .closeImg
+{
+    position: absolute;
+    right: -10px;
+    top: -11px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.msnVideoOverlayPlayer .leftContainer
+{
+    float: left;
+    width: 640px;
+    height: 455px;
+}
+.msnVideoOverlayPlayer .playerDiv
+{
+    width: 640px;
+    height: 360px;
+}
+.msnVideoOverlayPlayer embed, .msnVideoOverlayPlayer object
+{
+    visibility: visible !important;
+}
+.msnVideoOverlayPlayer .bottomContainer
+{
+    background-color: #222222;
+    width: 100%;
+    height: 90px;
+}
+.msnVideoOverlayPlayer .metadataWrapper, .msnVideoOverlayPlayer .upNextWrapper
+{
+    overflow: hidden;
+    color: White;
+}
+.msnVideoOverlayPlayer .metadataTable
+{
+    width: 100%;
+    height: 100%;
+}
+.msnVideoOverlayPlayer .metadataTable td
+{
+    padding: 5px;
+    vertical-align: top;
+}
+.msnVideoOverlayPlayer .metadataDiv
+{
+    position: relative;
+    height: 80px;
+    overflow: hidden;
+}
+.msnVideoOverlayPlayer .titleDiv
+{
+    color: White;
+    margin-bottom: 2px;
+    font-size: 90%;
+    overflow: hidden;
+}
+.msnVideoOverlayPlayer .descriptionDiv
+{
+    overflow: hidden;
+    color: #999999;
+    font-size: 70%;
+}
+.msnVideoOverlayPlayer .shareDiv
+{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    padding-top: 3px;
+    white-space: nowrap;
+}
+
+.msnVideoOverlayPlayer .shareText
+{
+    float: left;
+    color: #CCCCCC;
+    font-size: 80%;
+}
+.msnVideoOverlayPlayer .shareButton, .msnVideoOverlayPlayer .shareButtonIE7
+{
+    float: left;
+    margin-left: 15px;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    color: #999999;
+    font-size: 75%;
+    cursor: pointer;
+}
+.msnVideoOverlayPlayer .mailIcon
+{
+    width: 23px;
+    background-position:0 -2px;
+}
+.msnVideoOverlayPlayer .moreIcon
+{
+    text-decoration: none;
+    padding: 3px 8px 0 0;
+    width: auto;
+    background-position: right center;
+}
+.msnVideoOverlayPlayer .shareButton:hover
+{
+    color: #FFFFFF;
+}
+.msnVideoOverlayPlayer .overlayAdCell
+{
+    vertical-align: top;
+    text-align: center;
+}
+.msnVideoOverlayPlayer .overlayAdDiv
+{
+    max-width: 300px;
+    max-height: 60px;
+    overflow: hidden;
+}
+.msnVideoOverlayPlayer .overlayAdLabelDiv
+{
+    margin-top: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #999999;
+    font-size: 70%;
+}
+.msnVideoOverlayPlayer .upNextWrapper
+{
+    background-color: #222222;
+    padding: 10px;
+}
+.msnVideoOverlayPlayer .countdown
+{
+    float: left;
+    margin-top: 5px;
+    color: #999999;
+    width: 100px;
+    text-align: center;
+    white-space: nowrap;
+}
+.msnVideoOverlayPlayer .count
+{
+    color: White;
+    font-size: 250%;
+}
+.msnVideoOverlayPlayer .thumbImg
+{
+    float: left;
+    width: 128px;
+}
+.msnVideoOverlayPlayer .upNextMeta
+{
+    float: left;
+    margin: 8px 0px 0px 15px;
+    width: 375px;
+}
+.msnVideoOverlayPlayer .rightContainer
+{
+    float: right;
+}
+.msnVideoOverlayPlayer .galleryDiv
+{
+}
+
+/* lead with image styles */
+.msnLeadWithImage
+{
+    font-family: Arial, Tahoma, sans-serif;
+    position: relative;
+}
+.msnLeadWithImage .clear
+{
+    clear: both;
+}
+.msnLeadWithImage .headerDiv
+{
+    width: 100%;
+    overflow: hidden;
+}
+.msnLeadWithImage .closeBtnDiv
+{
+    float: right;
+    position: relative;
+    height: 13px;
+    cursor: pointer;
+}
+
+.msnLeadWithImage .imageDiv
+{
+    clear:both;
+    position: relative;
+    background-color: black;
+    border-style: none;
+    color: White;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+.msnLeadWithImage .thumbnailDiv
+{
+    position: absolute;
+}
+.msnLeadWithImage .playBtnDiv
+{
+    position: absolute;
+    top: 30%;
+}
+/* we separate the three sizes so we can set them individually through css */
+/* we also separate the background from the foreground so we can have opaque text over a transparent background */
+.msnLeadWithImage .titleBackground, .msnLeadWithImage .titleBackgroundNarrow, .msnLeadWithImage .titleBackgroundWide,
+.msnLeadWithImage .title, .msnLeadWithImage .titleNarrow, .msnLeadWithImage .titleWide
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 4px;
+    width: 100%;
+}
+.msnLeadWithImage .titleBackground, .msnLeadWithImage .titleBackgroundNarrow, .msnLeadWithImage .titleBackgroundWide
+{
+    background-color: Black;
+}
+.msnLeadWithImage .titleBackgroundNarrow, .msnLeadWithImage .titleNarrow
+{
+    font-size: 90%;
+}
+.msnLeadWithImage .titleBackgroundWide, .msnLeadWithImage .titleWide
+{
+    font-size: 110%;
+}
+.msnLeadWithImage .playerDiv
+{
+    text-align: left;
+}

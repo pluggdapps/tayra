@@ -1,0 +1,222 @@
+.yui3-loading #menu {
+	visibility: hidden;
+}
+#common-navigation .navmain .start {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/images/nav-left.gif") transparent;
+background-repeat:no-repeat;
+float:left;
+width:4px;
+height:39px;
+}
+#common-navigation .navmain .end {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/images/nav-right-4px.gif") transparent;
+background-repeat:no-repeat;
+float:left;
+width:4px;
+height:39px;
+}
+#common-navigation .navmain .menu-main {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/images/nav-titable-1px.gif") transparent;
+float:left;
+width:945px;
+height:39px;
+}
+#common-navigation .navmain .menu-item {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/images/separator.gif") transparent;
+background-position:100% 7px;
+background-repeat:no-repeat;
+float:left;
+padding-top:0;
+position:relative;
+}
+#common-navigation .navmain .menu-item a {
+color:#FFFFFF;
+font-family:Arial;
+font-size:16px;
+font-weight:bold;
+margin:0 9px 0 0;
+text-decoration:none;
+float:left;
+display:inline-block;
+cursor:pointer;
+}
+#common-navigation .navmain .arrow {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_arrow.gif") no-repeat scroll right 8px transparent;
+display:block;
+padding-right:15px;
+}
+#common-navigation .navmain li .menubg-lt {
+	padding:9px 23px 10px 32px;
+	display:inline-block;
+}
+#common-navigation .navmain li .selected{
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/blue_sel_left.jpg") no-repeat scroll 0 0 transparent;
+text-decoration:none !important;
+padding:0 0 0 6px;
+float:left;
+height:39px;
+margin:0 10px 0 9px !important;
+color:#769CD0 !important;
+}
+#common-navigation .navmain li .selected .menubg-lt{
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/blue_sel_tile.jpg") repeat scroll 0 0 transparent;
+padding:9px 22px 10px 17px;
+margin:0;
+float:left;
+}
+#common-navigation .navmain li .selected .arrow {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_sel_arrow.gif") no-repeat scroll right 8px transparent;
+}
+#common-navigation .navmain li .yui3-menu-label-menuvisible{
+text-decoration:none !important;
+padding:0 0 0 6px;
+float:left;
+height:39px;
+margin:0 10px 0 9px !important;
+}
+#common-navigation .navmain li .yui3-menu-label-menuvisible .arrow {
+}
+#common-navigation .navmain li .yui3-menu-label-menuvisible .menubg-lt{
+padding:9px 22px 10px 17px;
+margin:0;
+float:left;
+}
+#menu li .yui3-menu {
+top:33px !important;
+left:32px !important;
+-moz-box-shadow:4px 1px 5px #57667C;
+-webkit-box-shadow:4px 1px 5px #57667C;
+box-shadow:4px 1px 5px #57667C;
+-moz-border-radius: 5px;
+border-radius: 5px;
+width:195px !important;
+}
+#common-navigation .navmain .submenu-top {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_top.png") no-repeat scroll 0 0 transparent;
+float:left;
+height:5px;
+width:199px;
+font-size:0;
+*background-image:none;
+*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_top.png",sizingMethod="crop");
+}
+#common-navigation .navmain .submenu-main {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdwn_tile.gif") repeat-x scroll 0 0 #EBEEF1;
+border-left:1px solid #B4B4B4;
+border-right:1px solid #B4B4B4;
+float:left;
+width:197px;
+overflow:hidden;
+}
+#common-navigation .navmain .submenu-btm {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_bottom.png") no-repeat scroll 0 0 transparent;
+float:left;
+padding-top:5px;
+width:199px;
+*background-image:none;
+*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_bottom.png",sizingMethod="crop");
+}
+#common-navigation .navmain .submenu-main .bullet {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_bullet.gif") no-repeat scroll 14px 11px transparent;
+padding:6px 0 6px 25px;
+display:block;
+}
+#common-navigation .navmain .submenu-main li a {
+color:#132132;
+font-family:Arial;
+font-size:13px;
+font-weight:normal;
+display:block;
+width:192px;
+margin:0;
+}
+#common-navigation .navmain .submenu-main ul li {
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdwn_dottedline.gif") no-repeat scroll 3px bottom transparent;
+float:left !important;
+padding:3px;
+}
+#common-navigation .navmain .submenu-main ul li.last {
+background:none;
+}
+#common-navigation .navmain .submenu-main li.yui3-menuitem-active  .bullet{
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/dropdown_white_bullet.gif") no-repeat scroll 14px 11px transparent;
+}
+#common-navigation .navmain .submenu-main li.yui3-menuitem-active a {
+color:#FFFFFF;
+background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/blue_sel.jpg") no-repeat scroll 0 0 transparent;
+}
+#common-navigation .navmain .tabdove {
+background-image:url("http://l.yimg.com/a/i/in/promos/realbeauty/images/nav-titable-1px.gif");
+color:#FFFFFF;
+float:left;
+font-family:Arial;
+font-size:12px;
+height:28px;
+padding-top:11px;
+text-align:right;
+width:215px !important;
+}
+#common-navigation .navmain .dovelogo {
+float:left;
+padding-left:10px;
+padding-top:5px;
+text-align:right;
+}
+#common-navigation .navmain .menu-main li {
+position:relative;
+z-index:2;
+}
+#common-navigation .navmain .menu-main ul {
+float:left;
+}
+#common-navigation .navmain iframe{
+display:none;
+}
+#common-navigation .navmain .activetabwish{background:none;}
+#second-nav .secondnav {overflow:hidden;}
+#common-navigation .navmain .activetabaspire{background:none;}
+#common-navigation .navmain .last{
+background:none;
+}
+#second-nav .selected-nav  .navtab-lt{
+	background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/submenu_sel_left.gif") no-repeat scroll 0 0 transparent;
+	width:3px;
+	height:32px;
+	float:left;
+}
+#second-nav .selected-nav  .navtab-rt{
+	background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/submenu_sel_right.gif") no-repeat scroll right 0 transparent;
+	width:3px;
+	height:32px;
+	float:left;
+}
+#second-nav .secondnav .navtabs .selected-nav  .navtab-main a{
+	color:#143D77;
+	padding:6px 18px 9px 19px;
+	display:block;
+	margin:0;
+}
+#second-nav .secondnav .navtabs .selected-nav  .navtab-main a:hover {
+	text-decoration:none;
+}
+#second-nav .selected-nav  .navtab-main{
+	background:url("http://l.yimg.com/a/i/in/promos/realbeauty/p7/submenu_sel_tile.gif") repeat scroll 0 0 transparent;
+	float:left;
+}
+#second-nav .secondnav .navtabs .selected-nav {
+	padding:7px 16px 0 14px !important;
+}
+#second-nav .secondnav .navtabs .navtab a {
+	color:#344152;
+}
+#second-nav .secondnav {overflow:hidden;height:39px;}
+#common-navigation div.navmain {
+height:auto;
+overflow:visible;
+position:relative;
+z-index:201;
+}
+#second-nav{visibility:hidden;}
+#common-navigation .navmain li a:hover .menubg-lt span,#common-navigation .navmain li .yui3-menu-label-menuvisible .menubg-lt{text-decoration:underline;}
+#common-navigation .navmain li a .menubg-lt span{text-decoration:none;}
+#custom-doc{width:76.3em !important;min-width:0 !important;}

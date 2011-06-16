@@ -1,0 +1,156 @@
+BODY  {
+font-size: 12px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+background-color: #FDFFEE;	
+margin-top: 15px;
+margin-left: 10%;
+margin-right: 10%;
+}
+
+.anormal {
+margin-left: -10%;
+margin-right: -10%;
+}
+
+H1 {
+	font-size: 24px;
+	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif;
+	padding-bottom: 20px;
+}
+span.h20 { font-size: 20px; }
+H2 { font-size: 20px}
+H3 { font-size: 16px}
+H4 { font-size: 14px}
+H5 { font-size: 12px}
+
+A:link {
+	color: #0000cc;
+	text-decoration: none;
+	}
+A:active {
+	color: #cc0000; 
+	text-decoration: none;
+	}
+A:visited {
+	color: #333366;
+	text-decoration: none;
+	}
+A:hover {
+	color: #990000;
+	text-decoration: underline;
+	}
+
+A.lh {
+color: #000000;
+font-weight: bold;
+font-style: normal;
+text-decoration: none;
+}
+
+ul {list-style-type: none}
+
+small.update {
+font-size: 10px;
+}
+
+p.background{
+margin-top: 50px;
+}
+
+p.newsr{
+float: right;
+margin-top: 0px;
+margin-bottom: 0px;
+}
+
+p.vlsp{
+float: right;
+font-size: 10px;
+}
+
+/* Links in buttons */
+.linkbut {
+padding: 1px 3px 1px 3px;
+color : #225566;  
+background: white; 
+text-decoration: none;
+border: 1px solid #99bec6;
+}
+.linkbut:hover {   
+padding: 1px 3px 1px 3px;
+color : #000000; 
+background: #C7D0D9; 
+text-decoration: none;
+border: 1px solid #436876;
+}
+
+table.index {
+width: 100%;
+font-size: 14px;
+}
+
+table.cat{
+margin: 10%;
+width: 80%;
+}
+
+table.mems{
+border-color: #555555;
+border-width: 3px;
+background-color: #CCCCCC;
+}
+
+table.search {
+background-color: #EEEEEE;
+border: 0;
+width: 100%;
+}
+
+table.news {
+font-size: 12px;
+background-color: white;
+width: 55%;
+border: 2px outset gray;
+padding: 1px 5px;
+}
+
+td.silver {
+}
+
+td.white{
+}
+
+td.mems{
+background-color: #FFFFFF;
+padding: 4px;
+}
+
+td.small{
+font-size: 9px;}
+
+
+span.cm {
+font-size: 9px;
+}
+
+span.sa {
+font-size: 11px;
+}
+
+li.nc {
+margin-top: 25px;
+font-size: 14px;
+font-weight: bold;
+}
+
+.mainsite {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+span.hl { 
+background-color: #ff0;
+color: #f00;
+font-weight: bold;
+}
+

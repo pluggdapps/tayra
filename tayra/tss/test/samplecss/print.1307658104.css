@@ -1,0 +1,38 @@
+body {
+line-height:1.5;
+font-family:"Helvetica Neue", "Lucida Grande", Arial, Verdana, sans-serif;
+color:#000;
+background:none;
+font-size:10pt;
+}
+
+a img {
+border:none;
+}
+
+th,td {
+	border: 1px solid #eee;
+	margin: 0;
+	padding: 2px 4px;
+}
+#logo, #nav, #mini-nav, #search-box, #secondary-nav, #footer .col, #disclaimers a, .tt, .foot-divider {display: none;}
+
+a:link,a:visited {
+background:transparent;
+font-weight:700;
+text-decoration:underline;
+}
+
+#content a:link:after, #content a:visited:after {
+content:" (" attr(href) ") ";
+font-size:90%;
+}
+
+
+#rate-screenshot {
+	width: 250px;
+}
+
+#kampylink {
+	display: none !important;
+}

@@ -1,0 +1,900 @@
+div.gbox-lightning-dealsC {
+  height        : 325px;
+  overflow      : hidden;
+}
+div.gbox-main-title-barC {
+  line-height : 25px;
+  height      : 25px;
+  width       : 435px;
+  padding     : 0px;
+
+  /** needed for scrolling */
+  background : #ffffff;
+  position   : relative;
+  z-index    : 125;
+
+  /** constant delimeter */
+  border-bottom : solid 1px #aacfe2;
+}
+.gbox-main-title {
+ font-family : verdana,arial,helvetica,sans-serif;
+ font-size   : 16px;
+ font-weight : bold;
+ color       : #cc6600;
+}
+span.gbox-la-main-title-descr {
+ font-family : verdana,arial,helvetica,sans-serif;
+ font-size   : 13px;
+}
+
+/**
+ [younker, Mon Jun 11 17:00:11 2007 ]
+ Do not add a height value to this! It causes all kinds of x-browser
+ problems!!!
+**/
+div.gbox-la-individual-tabC {
+ font-family : verdana,arial,helvetica,sans-serif;
+ font-size   : 13px;
+ background  : #ffffff;
+ color       : #000000;
+}
+
+span.gbox-la-tab-avail-descr {
+ font-family : verdana,arial,helvetica,sans-serif;
+ font-size   : 13px;
+ font-style  : italic;
+ float       : right;
+}
+div.gbox-la-tab-hr {
+  border-bottom : solid 1px #aacfe2;
+  margin-bottom : 2px;
+}
+
+#gbox-la-tabs {}
+
+.gbox-la-all-tabs-cover {
+}
+
+.gbox-la-tab-mainC {
+  overflow   : hidden;
+  background : #ffffff;
+  padding    : 0 5px;
+  position : relative;
+}
+
+/**
+ Deal display stuff
+**/
+div.gbox-la-deal-displayC {
+  margin-top: 5px;
+  width    : 100%;
+  overflow : hidden;
+}
+table.gbox-la-deal-display-table {
+ display : table;
+ border  : none;
+ margin  : 0px;
+ padding : 0px;
+}
+div.gbox-la-deal-display-col-buffer {
+  padding-right : 15px;
+}
+
+/**
+ Progress Bar
+**/
+.gbox-la-progress-barC {
+ border : solid 1px #999999;
+ width  : 100%;
+ height : 19px;
+}
+.gbox-la-progress-bar {
+ height     : 100%;
+ width      : 45%;
+ background : #c3ddeb;
+}
+.gbox-la-progress-bar-report-position {
+ position : relative;
+ top      : -21;
+}
+.gbox-la-progress-bar-reportC {
+  font-family : verdana,arial,helvetica,sans-serif;
+  font-size   : 11px;
+  font-weight : bold;
+  line-height : 22px;
+  text-align  : center;
+}
+
+/**
+ Timer
+**/
+div.gbox-la-timerC {
+  white-space : nowrap;
+}
+span.gbox-la-timer-starts-in {
+ display : inline;
+}
+span.gbox-la-timer-time {
+  font-family : verdana,arial,helvetica,sans-serif;
+  font-size   : 11px;
+  font-weight : bold;
+}
+span.gbox-la-timer-remains {
+ display : inline;
+ color   : #666666;
+}
+
+#gbox-la-fsale-img {
+  background : #ffffff;
+  padding    : 20px;
+  border     : solid 1px #aacfe2;
+}
+
+#gbox-la-fsale-textC {
+  padding-left: 10px;
+}
+
+/**
+ Scroller
+**/
+table.gbox-main-title-bar {
+  width : 435px;
+}
+div.gbox-la-main-body-content {
+  position: relative;
+  width : 435px;
+}
+td.gbox-la-scroll-buttonC {
+    visibility : hidden;
+    width      : 22px;
+    margin-top : 3px;
+}
+td.gbox-la-scroll-bcC {
+    visibility : hidden;
+    width      : 130px;
+    text-align : center;
+}
+div.gbox-dotd-container {
+  padding : 0 0 4px 0;
+}
+td.gbox-dotd-style-img {
+  vertical-align : middle;
+  padding        : 0 16px 0 6px;
+  margin         : 0px;
+  width          : 253px;
+}
+div.gbox-dotd-style-img-container {
+  width      : 253px;
+  text-align : center;
+  margin     : 0 auto;
+}
+
+div.gbox-dotd-small-c,
+div.gbox-center {
+  text-align : center;
+  margin     : 0 auto;
+  width      : 100%;
+}
+.gbox-dotd-style-title {
+  font-family  : verdana,arial,helvetica,sans-serif;
+  font-size    : 22px;
+  font-weight  : bold;
+}
+.gbox-small,
+.gbox-disabled-small {
+  font-size : 10px;
+}
+.gbox {
+  font-family : verdana,arial,helvetica,sans-serif;
+  text-align  : left;
+  color       : #000000;
+}
+
+.gbox-11px {
+  font-family : verdana,arial,helvetica,sans-serif;
+  font-size   : 11px;
+  text-align  : left;
+  color       : #000000;
+}
+
+.gbox,
+.gbox-b,
+.gbox-alert,
+.gbox-alert-b,
+.gbox-disabled {
+  font-size  : 13px;
+}
+
+
+.gbox-alert-b,
+.gbox-14-b,
+.gbox-expire-alert-b,
+.gbox-price-b,
+.gbox-price-title-b,
+.gbox-disabled-b,
+.gbox-price-dotd-b,
+.gbox-b {
+  font-family : verdana,arial,helvetica,sans-serif;
+  font-weight : bold;
+}
+.gbox-14-b,
+.gbox-dotd-small-c,
+.gbox-expire-alert,
+.gbox-expire-alert-b {
+  font-size : 14px;
+}
+.gbox-alert,
+.gbox-alert-b,
+.gbox-dotd-alert,
+.gbox-price-dotd-alert,
+.gbox-expire-alert,
+.gbox-expire-alert-b,
+.gbox-price-dotd-b,
+.gbox-price-b,
+.gbox-price-title-b {
+  color : #990000;
+}
+
+.gbox-dotd-alert,
+.gbox-price-dotd,
+.gbox-price-dotd-s,
+.gbox-price-dotd-b,
+.gbox-price-dotd-alert,
+.gbox-disabled-dotd,
+.gbox-dotd {
+  font-family : Verdana, Arial, Helvetica, sans-serif;
+  font-size   : 18px;
+}
+.gbox-disabled,
+.gbox-disabled-b,
+.gbox-disabled-dotd,
+.gbox-disabled-small {
+  font-family : Verdana, Arial, Helvetica, sans-serif;
+  color       : #999999;
+}
+
+a.gbox-disabled-dotd,
+a.gbox-disabled-b {
+  font-family : Verdana, Arial, Helvetica, sans-serif;
+}
+
+div.gbox-centered {
+  text-align : center;
+}
+
+img.gbox-img,
+img.gbox-img-fog {
+  border  : none;
+  padding : 0px;
+  margin  : 0px;
+}
+img.gbox-img-fog {
+  opacity      : .25;
+  filter       : alpha(opacity=25);
+  -moz-opacity : 0.25;
+}
+.gbox-price-dotd,
+.gbox-price-dotd-s,
+.gbox-price-dotd-b,
+.gbox-price-dotd-alert,
+.gbox-price,
+.gbox-price-b,
+.gbox-price-s {
+  font-family : Verdana, Arial, Helvetica, sans-serif;
+}
+td.gbox-pad-right {
+  padding: 0 6px 0 0;
+}
+
+.gbox-nowrap,
+.gbox-price,
+.gbox-price-b,
+.gbox-price-s,
+.gbox-price-title,
+.gbox-price-title-b {
+  white-space : nowrap;
+}
+.gbox-price-dotd-s,
+.gbox-price-s {
+  text-decoration : line-through;
+}
+.section-container {
+  font-family   : verdana,arial,helvetica,sans-serif;
+  font-size     : 10px;
+  text-align    : left;
+  padding-right : 10px;
+}
+.section-title {
+  font-family : verdana,arial,helvetica,sans-serif;
+  font-size   : 16px;
+  font-weight : bold;
+  color       : #CC6600;
+}
+.discussion {
+  font-family : verdana,arial,helvetica,sans-serif;
+  font-size   : 10pt;
+  white-space : nowrap;
+}
+
+a.gbox,
+a.gbox-b,
+a.gbox-small {
+  text-decoration : none;
+}
+
+a.gbox:hover,
+a.gbox-b:hover,
+a.gbox-small:hover {
+  text-decoration : underline;
+  color           : #cc6600;
+}
+
+
+
+div.seeMore {
+  text-align : left;
+  padding    : 5px;
+  white-space: nowrap;
+}
+div.image {
+ background : #eeeeee;
+ color      : #ffffff;
+ border     : solid 1px #999999;
+ font-weight: bold;
+ text-align : center;
+}
+span.gbox-arrow {
+ font-family  : verdana,arial,helvetica,sans-serif;
+ font-weight  : bold;
+ color        : #cc6600;
+ margin-right : 3px;
+}
+#gbox-dealsC {
+  width      : 900px;
+  margin     : 0 auto;
+  padding    : 0px;
+}
+div.gbox-sectionC {
+  clear      : both;
+  text-align : left;
+}
+div.gbox-L-sectionC {
+  float      : left;
+  clear      : both;
+  width      : 435px;
+  text-align : left;
+  overflow   : hidden;
+}
+div.gbox-R-sectionC {
+  float      : right;
+  width      : 435px;
+  text-align : left;
+  overflow   : hidden;
+}
+div.gbox-section-divider {
+  clear      : both;
+  padding    : 10px 0;
+}
+div.gbox-L-quick-dealC,
+div.gbox-R-quick-dealC,
+div.gbox-C-quick-dealC,
+div.gbox-L-best-dealC,
+div.gbox-R-best-dealC,
+div.gbox-C-best-dealC {
+  width    : 300px;
+}
+div.best-deal-contentC,
+div.gbox-L-best-dealC,
+div.gbox-R-best-dealC,
+div.gbox-C-best-dealC {
+  height : 275px;
+}
+
+div.quick-deal-contentC,
+div.gbox-L-quick-dealC,
+div.gbox-R-quick-dealC,
+div.gbox-C-quick-dealC {
+  height : 115px;
+}
+
+div.gbox-L-quick-dealC,
+div.gbox-L-best-dealC {
+  float  : left;
+}
+
+div.gbox-C-quick-dealC,
+div.gbox-C-best-dealC {
+  float  : left;
+}
+div.gbox-R-quick-dealC,
+div.gbox-R-best-dealC {
+  float  : right;
+}
+div.gbox-rowC {
+  clear : both;
+}
+div.gbox-section-title {}
+div.best-dealC {
+  padding    : 0px;
+  background : #ffffff;
+  color      : #000000;
+}
+div.best-deal-contentC {
+  background : #ffffff;
+}
+
+/*
+ Top Holiday Deals styles. OK to nuke after midnight, 12/19/09.
+*/
+div.topHD {
+  margin: 0;
+  padding: 6px 0;
+  font-size: 12px;
+  padding-bottom: 0px;
+}
+span.topHD {
+  font-family: arial, sans-serif;
+  color: #009e29;
+  font-size: 11px;
+  font-weight: bold;
+}
+a.topHD {
+  font-family: arial, sans-serif;
+  text-decoration: none !important;
+  color: #d6s628;
+  font-weight: bold;
+}
+div.gbox-message-boxC {
+  height : 100%;
+}
+div.gbox-message-box {
+  text-align : center;
+  position   : relative;
+  top        : 45%;
+  font       : normal 13px verdana;
+}
+table.gbox-pricing-table   {
+  border          : 0px;
+  padding         : 0px;
+  border-collapse : collapse;
+}
+table.gbox-pricing-table td {
+ line-height : 15px;
+ font-size   : 13px;
+ font-family : arial,verdana,helvetica;
+}
+td.gbox-price-table-label {
+  font-weight    : bold;
+  text-align     : right;
+  white-space    : nowrap;
+  vertical-align : top;
+  padding-right  : 3px;
+  padding-left   : 0px;
+}
+.pricing-line {
+  line-height   : 1px;
+  border-bottom : solid 1px #aacfe2;
+}
+td.gbox-price-block-right {
+  padding-left: 2px;
+}
+.gbox-price-block-status-report {
+  color : #999999;
+}
+.shoveler,
+.shovelerCloud {
+  width:100%;
+  }
+.shoveler td div {
+  text-align:left;
+  padding:0;
+  font-size:86%;
+  overflow:hidden;
+  }
+.shoveler td p {
+  margin:7px 0 3px 0;
+  text-align:left;
+  }
+.shoveler .price {
+  white-space:nowrap; 
+  }
+.shoveler .rating {
+  margin-right:.5em;
+  color:#666;
+  white-space:nowrap;
+  font-size:80%;
+  }
+.shoveler .rating-stars {
+  margin: 0 0 0 0;
+  }
+.shoveler .rating-stars a,
+.shoveler .rating-stars a:link {
+    text-decoration: none;
+    }
+.shoveler .rating-stars a:hover {
+    text-decoration: underline;
+    }
+.shoveler .arrow {
+  width:25px;
+  padding:0;
+  }
+.shovelerBack,
+.shovelerNext {
+  position:relative;
+  }
+.shovelerBack a,
+.shovelerNext a,
+.shovelerBack .bg-text,
+.shovelerNext .bg-text,
+.shovelerBack .bg-image,
+.shovelerNext .bg-image {
+  display:block;  
+  width:25px;
+  height:50px;
+  }
+.shovelerBack a,
+.shovelerNext a {
+  position:relative;
+  cursor:pointer;
+  }
+.shovelerBack .bg-text,
+.shovelerNext .bg-text,
+.shovelerBack .bg-image,
+.shovelerNext .bg-image { 
+  position:absolute;
+  overflow:hidden;
+  left:0px;
+  }
+.shovelerBack a .bg-image {
+  background: url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/left-arrow-semi-rd.gif') no-repeat; 
+  }
+.shovelerNext a .bg-image {
+  background:
+  url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/right-arrow-semi-rd.gif') no-repeat; 
+  }
+.shovelerBack a.down .bg-image,
+.shovelerNext a.down .bg-image {
+  background-position: left -50px;
+  }	
+
+#browseNodeshovelerNJS, 
+#disperseshovelerNJS, 
+#sessionshovelerNJS {
+       width:auto;     
+}
+
+#browseNodeshovelerNJS td, 
+#disperseshovelerNJS td, 
+#sessionshovelerNJS td {
+        padding-right:20px;     
+}
+
+
+/* Shoveler cloud general */	
+.shovelerCloud  {
+    line-height: 1.7em;
+    text-align:center;
+    margin: 0pt;
+  }
+.shovelerCloud span {
+  white-space:nowrap;
+  }
+.shovelerCloud a {
+  text-decoration:none;
+  padding:1px 5px 2px 5px;
+  }
+.shovelerCloud a:visited {
+  color:#039;
+  }
+.shovelerCloud a:hover,
+.shovelerCloud a.active,
+.shovelerCloud a.active:hover,
+.shovelerCloud a.active:visited {
+  padding:1px 5px 2px 5px;
+  color:#fff;
+  background-position:top;
+  background-repeat:repeat-x;
+  border:0;
+  }
+.shovelerCloud a:hover {
+  background-color:#E0A366;
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-hover.gif");
+  }
+.shovelerCloud a.active,
+.shovelerCloud a.active:hover,
+.shovelerCloud a.active:visited {
+  background-color:#c60;
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-on.gif");
+  }
+.shovelerCloud a.active.down,
+.shovelerCloud a.active.down:hover,
+.shovelerCloud a.active.down:visited {
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-click.gif");
+  background-position:bottom;
+  }
+.shovelerCloud a.down,
+.shovelerCloud a.down:hover,
+.shovelerCloud a.down:visited {
+  background-color:#c60;
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-click.gif");
+  background-position:bottom;
+  }
+
+table.gbox-bds-pricing {
+  border-collapse: collapse;
+}
+table.gbox-bds-pricing td {
+  font-size: 11px;
+  white-space: nowrap;
+  font-family: arial,verdana,helvetica;
+  line-height: 16px;
+}
+
+
+div.bucket {
+    width    : 900px;
+}
+table.shovelerTitleBar {
+    width               : 900px;
+    background-image    : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-tbevel._V47082452_.gif');
+    background-color    : #EFF5F9;
+    background-position : center bottom;
+    background-repeat   : repeat-x;
+}
+td.shovelerTopLeft {
+    width               : 12px;
+    background-image    : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-tl._V6007502_.gif');
+    background-repeat   : no-repeat;
+    background-position : left top;
+}
+td.shovelerTop {
+    padding             : 7px 5px;
+    background-image    : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-tc._V47082457_.gif');
+    background-position : center top;
+    background-repeat   : repeat-x;
+}
+td.shovelerTopRight {
+    width: 12px;
+    background-image    : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-tr._V6007499_.gif');
+    background-repeat   : no-repeat;
+    background-position : right top;
+}
+table.shovelerDivider {
+    width      : 900px;
+    background : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-divider._V47060146_.gif') repeat-x top;
+}
+td.shovelerLeft {
+    font-size  : 1px;
+    width      : 12px;
+    background : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-bl._V47082482_.gif') no-repeat left bottom;
+}
+td.shovelerMainContent {
+    height         : 220px;
+    background     : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-bc._V47082448_.gif') repeat-x center bottom;
+    padding-bottom : 10px;
+}
+td.shovelerRight {
+    font-size  : 1px;
+    width      : 12px;
+    background : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-br._V47062575_.gif') no-repeat right bottom;
+}
+
+table.shovelerCloud {
+    width            : 900px;
+    background-image : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-divider._V47060146_.gif');
+    background-color : #EFF5F9;
+    background-position : top;
+    background-repeat   : repeat-x;
+}
+
+td.shovelerCloudLeft {
+    font-size        : 1px;
+    width            : 12px;
+    background-image : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-bl._V47082042_.gif');
+    background-position:bottom left;
+    background-repeat:no-repeat;
+}
+td.shovelerCloudCenter {
+    padding             : 7px 5px 18px;
+    background-image    : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-bc._V47082030_.gif');
+    background-position : bottom;
+    background-repeat   : repeat-x;
+}
+
+td.shovelerCloudRight {
+    font-size           : 1px;
+    width               : 12px;
+    background-image    : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced_box_fill/sliced-box-br._V47060897_.gif');
+    background-position : bottom right;
+    background-repeat   : no-repeat;
+}
+
+
+td.shovelerVerticalLeft {
+    font-size  : 1px;
+    width      : 12px;
+    background : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-vertical-l._V47082156_.gif') repeat-y left center;
+}
+
+td.shovelerVerticalRight {
+    font-size  : 1px;
+    width      : 12px;
+    background : url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/yourstore/box/sliced-box-vertical-r._V47060084_.gif') repeat-y right center;
+}
+
+.gbbdShoveler,
+.gbbdShovelerCloud {
+  width:100%;
+  }
+.gbbdShoveler td div {
+  text-align:left;
+  padding:0;
+  font-size:86%;
+  overflow:hidden;
+  }
+.gbbdShoveler td p {
+  margin:7px 0 3px 0;
+  text-align:left;
+  }
+.gbbdShoveler .price {
+  white-space:nowrap; 
+  }
+.gbbdShoveler .rating {
+  margin-right:.5em;
+  color:#666;
+  white-space:nowrap;
+  font-size:80%;
+  }
+.gbbdShoveler .rating-stars {
+  margin: 0 0 0 0;
+  }
+.gbbdShoveler .rating-stars a,
+.gbbdShoveler .rating-stars a:link {
+    text-decoration: none;
+    }
+.gbbdShoveler .rating-stars a:hover {
+    text-decoration: underline;
+    }
+.gbbdShoveler .arrow {
+  width:25px;
+  padding:0;
+  }
+.gbbdShovelerBack,
+.gbbdShovelerNext {
+  position:relative;
+  }
+.gbbdShovelerBack a,
+.gbbdShovelerNext a,
+.gbbdShovelerBack .bg-text,
+.gbbdShovelerNext .bg-text,
+.gbbdShovelerBack .bg-image,
+.gbbdShovelerNext .bg-image {
+  display:block;  
+  width:25px;
+  height:50px;
+  }
+.gbbdShovelerBack a,
+.gbbdShovelerNext a {
+  position:relative;
+  cursor:pointer;
+  }
+.gbbdShovelerBack .bg-text,
+.gbbdShovelerNext .bg-text,
+.gbbdShovelerBack .bg-image,
+.gbbdShovelerNext .bg-image { 
+  position:absolute;
+  overflow:hidden;
+  left:0px;
+  }
+.gbbdShovelerBack a .bg-image {
+  background: url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/left-arrow-semi-rd.gif') no-repeat; 
+  }
+.gbbdShovelerNext a .bg-image {
+  background:
+  url('http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/right-arrow-semi-rd.gif') no-repeat; 
+  }
+.gbbdShovelerBack a.down .bg-image,
+.gbbdShovelerNext a.down .bg-image {
+  background-position: left -50px;
+  }	
+
+#browseNodegbbdShovelerNJS, 
+#dispersegbbdShovelerNJS, 
+#sessiongbbdShovelerNJS {
+       width:auto;     
+}
+
+#browseNodegbbdShovelerNJS td, 
+#dispersegbbdShovelerNJS td, 
+#sessiongbbdShovelerNJS td {
+        padding-right:20px;     
+}
+
+
+/* Shoveler cloud general */	
+.gbbdShovelerCloud  {
+    line-height: 1.7em;
+    text-align:center;
+    margin: 0pt;
+  }
+.gbbdShovelerCloud span {
+  white-space:nowrap;
+  }
+.gbbdShovelerCloud a {
+  text-decoration:none;
+  padding:1px 5px 2px 5px;
+  }
+.gbbdShovelerCloud a:visited {
+  color:#039;
+  }
+.gbbdShovelerCloud a:hover,
+.gbbdShovelerCloud a.active,
+.gbbdShovelerCloud a.active:hover,
+.gbbdShovelerCloud a.active:visited {
+  padding:1px 5px 2px 5px;
+  color:#fff;
+  background-position:top;
+  background-repeat:repeat-x;
+  border:0;
+  }
+.gbbdShovelerCloud a:hover {
+  background-color:#E0A366;
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-hover.gif");
+  }
+.gbbdShovelerCloud a.active,
+.gbbdShovelerCloud a.active:hover,
+.gbbdShovelerCloud a.active:visited {
+  background-color:#c60;
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-on.gif");
+  }
+.gbbdShovelerCloud a.active.down,
+.gbbdShovelerCloud a.active.down:hover,
+.gbbdShovelerCloud a.active.down:visited {
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-click.gif");
+  background-position:bottom;
+  }
+.gbbdShovelerCloud a.down,
+.gbbdShovelerCloud a.down:hover,
+.gbbdShovelerCloud a.down:visited {
+  background-color:#c60;
+  background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/personalization/shoveler/select-gradient-click.gif");
+  background-position:bottom;
+  }
+
+table.gbox-bds-pricing {
+  border-collapse: collapse;
+}
+table.gbox-bds-pricing td {
+  font-size: 11px;
+  white-space: nowrap;
+  font-family: arial,verdana,helvetica;
+  line-height: 16px;
+}
+.gbox-framed-border {
+  border: solid 1px #aacfe2;
+}
+.gbox-framed-ll {
+  background: url('http://ec1.images-amazon.com/images/G/01/goldbox/gp-dotd-frame-bl.gif') 0 100% no-repeat;
+  position  : relative;
+  left      : -1;
+  bottom    : -1;
+}
+.gbox-framed-lr {
+  background: url('http://ec1.images-amazon.com/images/G/01/goldbox/gp-dotd-frame-br.gif') 100% 100% no-repeat;
+  position  : relative;
+  right     : -2;
+}
+.gbox-framed-ul {
+  background: url('http://ec1.images-amazon.com/images/G/01/goldbox/gp-dotd-frame-tl.gif') 0 0 no-repeat;
+  position  : relative;
+  left      : -2;
+  top       : -2;
+}
+.gbox-framed-ur {
+  background: url('http://ec1.images-amazon.com/images/G/01/goldbox/gp-dotd-frame-tr.gif') 100% 0 no-repeat;
+  position  : relative;
+  right     : -2;
+}
+.gbox-framed-contentC {
+ padding: 0 5px;
+}

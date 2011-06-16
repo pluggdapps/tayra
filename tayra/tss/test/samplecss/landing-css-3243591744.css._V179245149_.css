@@ -1,0 +1,23 @@
+/*!### Copyright(c) 2011 Amazon.com,Inc.,and its Affiliates. All rights reserved. Not to be reused without permission $DateTime:2011/01/25 19:29:14 $ ### */ #container{min-width:980px;}
+#center{float:right;margin:5px 0 0 -205px;overflow:hidden;width:100%;}
+.oneColumn #center{float:left;margin:5px 0 0;overflow:hidden;width:100%;}
+#filler{line-height:0;}
+#left{display:inline;float:left;margin-top:5px;position:relative;width:200px;}
+#footer{clear:both;margin-top:10px;width:100%;}
+#centerSlots{display:inline;float:left;margin-left:205px;}
+.threeColumn #centerSlots{margin-right:300px;}
+#rightSlots{float:left;margin-left:-300px;width:300px;}
+#searchResults{clear:both;}
+#bottom{clear:both;}
+#leftNav a:link,#leftNav a:visited{text-decoration:none;}
+div.left_nav{margin:0;padding:0 4px 5px;width:190px;}
+#leftNav div.left_nav ul{border-bottom:0;margin:0;padding:0 0 0 10px;}
+div.left_nav h2{display:none;}
+div.left_nav h3{color:#C60;font-size:100%;font-weight:bold;margin:0;padding:4px 0;}
+div.left_nav p.seeMore{font-size:95%;margin:0;padding:0 0 4px;text-indent:15px;}
+div.left_nav a:visited{color:#039;}
+#leftNav div.left_nav a:hover{text-decoration:underline;}
+#leftNavContainer .customPriceV2 input[type="text"]{width:50px;}
+#backlinkMsgBox span.icon{left:10px;top:10px;width:25px;height:25px;display:block;position:absolute;background-image:url("http://g-ecx.images-amazon.com/images/G/01/x-locale/common/errors-alerts/error-sprite._V192240803_.gif");background-repeat:no-repeat;}
+#backlinkMsgBox{background-color:#FFD;border:solid 1px #0071B5;font-size:95%;margin:0;padding:15px 15px 15px 45px;position:relative;}
+#backlinkMsg span{font-weight:bold;}

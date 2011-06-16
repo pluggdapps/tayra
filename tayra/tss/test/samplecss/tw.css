@@ -1,0 +1,81 @@
+#cnn_hdr_twmain { width: 416px; height: 31px; background: url('http://i2.cdn.turner.com/cnn/.element/img/3.0/main/weekend/hdr_twmain.gif') no-repeat transparent; }
+#cnn_twmain_container { width: 390px; margin: 9px 13px; height: auto; position: relative; }
+#cnn_twmain_left { width: 185px; margin-left: 10px; padding-top: 39px; height: 316px; position: relative; }
+#cnn_twmain_right { float: right; width: 195px; height: auto; }
+#cnn_twmain_right_inset { float: right; width: 185px; height: 365px; padding-top: 40px; padding-right: 10px; position: absolute; top: 0px; left: 195px; }
+#cnn_twmain_left_inset { float: left; width: 185px; height: 365px; padding-top: 40px; margin-left: 10px; position: absolute; top: 0px; left: 0px; }
+
+
+#cnn_twc1_container { margin: -8px 13px 0px; }
+
+.cnn_shdtw { background: transparent url('http://i.cdn.turner.com/cnn/.element/img/3.0/global/shade/cnn_shdcamtt1.990px.bg.tw.gif') top left repeat-y }
+.cnn_shdtwfooter { background: transparent url('http://i.cdn.turner.com/cnn/.element/img/3.0/global/shade/sprite_shades_tw.gif') 0px -1049px no-repeat }
+
+.cnn_twdivline { width: 390px; height: 1px; background: url('http://i.cdn.turner.com/cnn/.element/img/3.0/main/weekend/c1_horz_dot_line.gif') no-repeat transparent; margin: auto; }
+
+.cnn_twmain_cutoutimg { position: relative; top: -30px; }
+.cnn_twmain_inset {  }
+.cnn_twmain_section_title, .cnn_twmain_section_title a { font-family: Arial; font-size: 11px; font-weight: bold; color: #757575; margin-top: 2px; text-transform:uppercase; }
+
+.twmain_entertainment a { color: #ec008c; }
+.twmain_entertainment a:hover { color: #ca0002; }
+.twmain_politics a { color: #0a6c93; }
+.twmain_politics a:hover { color: #ca0002; }
+.twmain_tech a { color: #f7941d; }
+.twmain_tech a:hover { color: #ca0002; }
+.twmain_health a { color: #81bedd; }
+.twmain_health a:hover { color: #ca0002; }
+.twmain_sports a { color: #339900; }
+.twmain_sports a:hover { color: #ca0002; }
+
+.cnn_twmain_headline a { font-family: Arial; font-size: 24px; font-weight: bold; color: #000000; line-height: 26px; letter-spacing: -1px; }
+.cnn_twmain_headline a:hover { color: #ca0002; }
+.cnn_twmain_blurb { font-family: Arial; font-weight: normal; font-size: 12px; color: #757575; margin-top: 6px; margin-bottom: 6px; line-height: 14px; }
+.cnn_twmain_share { font-family: Arial; font-weight: bold; font-size: 12px; color:#999999; }
+.cnn_twmain_share li { display: inline; list-style: none; margin-right: 10px; }
+.cnn_twmain_fb { background: url('http://i.cdn.turner.com/cnn/.element/img/3.0/sect/politics/facebook_sm_icon.png') no-repeat transparent; background-position: left center; padding-left: 15px; }
+.cnn_twmain_tw { background: url('http://i.cdn.turner.com/cnn/.element/img/3.0/sect/politics/twitter_sm_icon.gif') no-repeat transparent; background-position: left center; padding-left: 15px; }
+.cnn_twmain_cmnt { background: url('http://i.cdn.turner.com/cnn/.element/img/3.0/sect/politics/comment_sm_icon.png') no-repeat transparent; background-position: left center; padding-left: 17px; }
+
+.cnn_twmain_tz_container { position: absolute; top: 218px; }
+.cnn_twmain_tz_container_inset { margin-top: 37px; }
+.cnn_twtz_blurb { width: 89px; padding-left: 6px; line-height: 13px; }
+.cnn_twtz_blurb a { font-family: Arial; font-size: 11px; font-weight: bold; color: #000000; }
+.cnn_twtz_blurb a:hover { color: #ca0002; }
+.cnn_twtz_img { float: left; }
+.cnn_twtz_vid_thumb { position: absolute; z-index: 25; top: 0px; left: 0px; cursor: pointer; height: 51px; }
+.cnn_twtz_vid_thumb a { background: url('http://i.cdn.turner.com/cnn/.element/img/3.0/global/video/btn_play_mini.png') no-repeat; background-position: 4px 2px; height: 25px; display: inline-block; }
+.cnn_twtz_vid_thumb a:hover { background-image: url('http://i.cdn.turner.com/cnn/.element/img/3.0/global/video/btn_play_mini_over.png'); }
+.cnn_twtz_vid_thumb a img { width: 90px; height: 51px; }
+.cnn_div_wrapper { position: relative; height: 51px; }
+
+.cnn_twmain_tz { height: 51px; margin-bottom: 10px; }
+.cnn_twmain_tz_list { font-family: Arial; font-size: 11px; font-weight: bold; color: #ca0002; padding-left: 0px; margin-top: -2px; }
+.cnn_twmain_tz_list a { font-family: Arial; font-size: 12px; font-weight: bold; color: #000000; line-height: 15px; }
+.cnn_twmain_tz_list a:hover { color: #ca0002; }
+.cnn_twtz_list img { margin-left: 5px; }
+.cnn_twmain_tz_list ul { list-style: none; }
+.cnn_twmain_tz_list li { background: url('http://i.cdn.turner.com/cnn/.element/img/3.0/global/red_bullet_tw.gif') no-repeat transparent; padding: 0 0 0 7px; background-position: 0 5px; }
+.cnn_twmain_tz_table { vertical-align: middle; }
+.cnn_twmain_tz_table a { font-family: Arial; font-size: 12px; font-weight: bold; color: #000000; }
+.cnn_twmain_tz_table a:hover { color: #ca0002; }
+.cnn_twmain_tz_table td { height: 51px; vertical-align: middle !important; position: relative; }
+.cnn_twtz_td { padding-bottom: 10px; }
+
+.cnn_twc1_text_right { width: 220px; float: right; margin-top: -4px; }
+.cnn_twc1_text_left { width: 220px; float: left; margin-top: -4px; }
+.cnn_twc1_img_right .cnn_twc1_img { float: right; margin-left: 10px;}
+.cnn_twc1_img_left .cnn_twc1_img { float: left; margin-right: 10px; }
+.cnn_twc1_header a { font-family: Arial; font-size: 10px; font-weight: bold; color: #757575; text-transform:uppercase; }
+.cnn_twc1_header a:hover { color: #ca0002; }
+.cnn_twc1_headline { margin: -2px 0px 4px; }
+.cnn_twc1_headline a { font-family: Arial; font-size: 18px; font-weight: bold; color: #000000; line-height: 18px; }
+.cnn_twc1_headline a:hover { color: #ca0002; }
+.cnn_twc1_blurb { font-family: Arial; font-weight: normal; font-size: 12px; color: #757575; margin-top: 3px; margin-bottom: 6px; line-height: 14px; }
+.cnn_twc1_large { margin: 15px 0px; [if IE 7] margin-bottom: 10px; }
+
+.cnn_headline_light a { color: #ffffff; }
+.cnn_headline_light a:hover { color: #6ab9d3; }
+.cnn_blurb_light { color: #cccccc; }
+.cnn_tw_left { float: left; }
+.cnn_clearpad16 { height: 16px; overflow: hidden; clear: both; }

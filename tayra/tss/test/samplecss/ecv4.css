@@ -1,0 +1,59 @@
+body{font-family:Arial, Helvetica, sans-serif;font-size:12px;text-align:center;background-color:#EDEDED;color:#000000;margin:0px;padding:0px;}
+:focus{outline:0;}
+.thumbout{border:1px solid #000000;}
+.thumbover{border:1px solid #1D63A2;}
+.borderContainer{width:894px;height:100%;background-color:#FFFFFF;border-right:1px solid #6F6F6F;border-left:1px solid #6F6F6F;border-bottom:1px solid #6F6F6F;}
+.bg{background-image:url(http://static.earthcamcdn.com/images/bg-sliver_2006.gif);background-position:0px 0px;background-repeat:repeat-x;width:890px;}
+td{vertical-align:top;padding:0px;margin:0px;text-align:left;}
+p{padding:0px;margin:0px;}
+form{padding:0px;margin:0px;}
+div{vertical-align:top;margin:0px;padding:0px;}
+table{vertical-align:top;}
+.textHeader{font-size:14px;font-family:Verdana;color:#000000;font-weight:700;}
+.blueHeaderBar{background-color:#00589D;color:#FFFFFF;padding:3px 0px 3px 0px;font-weight:700;font-family:Arial;font-size:14px;width:728px;}
+.mainBlueHeader{background-color:#00589D;color:#FFFFFF;padding:3px 3px 3px 3px;font-weight:700;font-family:Arial;font-size:14px;height:18px;}
+.headerTD{vertical-align:top;padding:0px;margin:0px;text-align:left;}
+.headerDIV{vertical-align:top;margin:0px;padding:0px;}
+.searchButtonBlack{font-family:Arial;font-size:11px;font-weight:700;text-decoration:none;color:#FFFFFF;background-color:#000000;border:0px;width:80px;height:20px;cursor:pointer;}
+.searchButtonBlackOver{font-family:Arial;font-size:11px;font-weight:700;text-decoration:underline;color:#CF3733;background-color:#000000;border:0px;width:80px;height:20px;cursor:pointer;}
+.clearButtonGrey{font-family:Arial;font-size:11px;font-weight:700;text-decoration:none;color:#FFFFFF;background-color:#797979;border:0px;width:80px;height:20px;cursor:pointer;}
+.submitButtonGreen{font-family:Arial;font-size:11px;font-weight:bold;letter-spacing:1px;color:#FFFFFF;background-color:#25884E;border:0px;width:90px;height:25px;cursor:pointer;}
+.clearButtonYellow{font-family:Arial;font-size:11px;font-weight:bold;letter-spacing:1px;color:#000000;background-color:#FCCD37;border:0px;width:90px;height:25px;cursor:pointer;}
+.textBox1{font-family:Arial,Sans-Serif;font-size:10px;font-weight:bold;color:#000000;background-color:#F5F5F5;width:100px;height:15px;padding:1px;border-bottom:1px solid #CFE4F9;border-right:1px solid #CFE4F9;border-left:1px solid #89A1C2;border-top:1px solid #89A1C2;}
+.searchTextBox{*margin-top:-1px;background-position:0px 0px;background:#DBDBDB url(http://static.earthcamcdn.com/images/text-box-bg.gif) no-repeat;padding:2px 0px 0px 9px;vertical-align:top;width:326px;height:20px;border:0px solid #B5B5B5;}
+.searchHeaderBG{background-image:url(http://static.earthcamcdn.com/images/searchBG.gif);background-position:0px 0px;background-repeat:repeat-x;}
+.searchboxHeaderBG{background-image:url(http://static.earthcamcdn.com/images/searchboxGradient.gif);background-position:0px 0px;background-repeat:repeat-x;}
+#topHeaderBarNav{white-space:nowrap;}
+#topHeaderBarNav a{font-weight:700;width:100px;display:inline;font-family:Arial;font-size:12px;padding:0px 10px;}
+#topHeaderBarNav a:link, #topHeaderBarNav a:visited{color:#1578D2;background-color:#FFF9E3;text-decoration:none;}
+#topHeaderBarNav a:hover{color:#1578D2;background-color:#FFF0B6;text-decoration:none;}
+.topHeaderBarNavSelected{color:#1578D2;background-color:#FFF0B6;text-decoration:none;}
+a.headerLink:link, a.headerLink:visited, a.headerLink:active{font-size:12px;font-family:Arial;color:#FFFFFF;text-decoration:none;}
+a.headerLink:hover{font-size:12px;font-family:Arial;color:#FFFFFF;text-decoration:underline;}
+a.headerLinkBlack:link, a.headerLinkBlack:visited, a.headerLinkBlack:active{font-size:11px;font-family:Arial;color:#000000;text-decoration:none;}
+a.headerLinkBlack:hover{font-size:11px;font-family:Arial;color:#000000;text-decoration:underline;}
+a:link{color:#000000;text-decoration:none;}
+a:visited, a:active{color:#551A8B;text-decoration:none;}
+a:hover{color:#1D63A2;text-decoration:underline;}
+a.yellowBarLinks:link, a.yellowBarLinks:visited, a.yellowBarLinks:active{color:#000000;text-decoration:none;}
+a.yellowBarLinks:hover{color:#1D63A2;text-decoration:underline;}
+#navbar{height:26px;padding:0px;margin:0px;background-color:#FFFFFF;}
+#navbar a{color:#000000;text-decoration:none;}
+#navbar a:hover{color:#FFFFFF;background-color:#9C9C9C;}
+#navbarContainer{height:24px;padding:0px;margin:0px;}
+.navbarItem{margin:0px;height:24px;width:115px;display:block;float:left;margin:0px 2px 0px 0px;text-align:center;white-space:nowrap;background-color:#EDEDED;vertical-align:middle;font-size:10px;font-family:Verdana;}
+.navbarItem a{display:block;height:18px;padding:5px 0px 0px 0px;}
+.navbarItem a:hover{display:block;}
+* html .ieVariableWidthFix{width:115px;}
+* html .ieVariableHeightFix{height:20px;}
+* html .ieNavbarHeightFix a{height:20px;}
+.topLinkHeader{width:890px;font-size:12px;font-family:Arial;color:#FFFFFF;text-align:right;}
+#searchBox{background-color:#FCCD37;color:#000000;width:420px;height:26px;}
+.yellowBox{background-color:#FCCD37;color:#000000;font-family:Verdana;font-size:11px;height:20px;}
+#yellowBoxRight{background-position:0px 0px;background-repeat:repeat-x;text-align:right;}
+#searchFieldBlack{border-top:1px solid #000000;border-right:1px solid #000000;border-bottom:1px solid #000000;border-left:1px solid #000000;width:323px;height:19px;vertical-align:top;margin:1px 0px 0px 1px;}
+#searchBoxButton{width:88px;height:23px;vertical-align:top;margin:2px 0px 0px 0px;}
+.footer{font-family:Verdana, Tahoma, Arial, sans-serif;font-size:10px;font-weight:700;color:#000000;text-align:center;}
+.footerText{font-family:Verdana, Tahoma, Arial, sans-serif;font-size:10px;color:#000000;text-align:center;}
+.footerTextSlogan{font-family:Arial, Helvetica, sans-serif;font-size:11px;font-weight:900;letter-spacing:3px;color:#000000;text-align:center;}
+a.footerlink:link, a.footerlink:visited, a.footerlink:active, a.footerlink:hover{color:#000000;text-decoration:underline;}

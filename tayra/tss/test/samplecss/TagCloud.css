@@ -1,0 +1,43 @@
+  div#mullet-cloud {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  div#mullet-cloud p.title {
+    font-style:normal !important;
+    font-weight:bold;
+    font-size: 14px;
+  }
+
+  div#mullet-cloud p {
+    white-space:nowrap;
+    display:inline;
+  }
+
+  div#mullet-cloud p a {
+    text-decoration: none;
+  }
+
+  div#mullet-cloud p a:hover {
+    text-decoration: underline;
+  }
+
+  div#mullet-cloud p.sm {
+    font-size: 12px;
+    display:inline;
+    padding: 0px 4px;
+    line-height:20px;
+  }
+
+  div#mullet-cloud p.md {
+    font-size: 15px;
+    display:inline;
+    padding: 0px 4px;
+  }
+
+  div#mullet-cloud p.lr {
+    font-size: 18px;
+    display:inline;
+    padding: 0px 4px;
+  }

@@ -1,0 +1,4 @@
+/* `not` psuedo-class */
+#registration_form_right input:not([type="radio"]) {
+     color : black;
+}

@@ -1,0 +1,81 @@
+#navButtons { z-index:40 }
+
+.window {  
+  display:none;
+  left:0px;
+  overflow:auto;
+  position:absolute;
+  top:-1000px;
+  z-index:100;
+  
+}
+                
+.loading { width:305px }
+
+/* lightbox styles */
+.lightbox-lid { display:block; padding-bottom:5px; zoom:1; }
+.lightbox-lid h1 { font-size:14px;}
+.lightbox-lid .left { float:left }
+.lightbox-lid .right { float:right; font-size:11px; font-size:normal; margin-right:-10px; margin-top:-10px; position:relative; }
+.lightbox-lid  a.right:hover { text-decoration:none }
+.lightbox-lid .right img { vertical-align:top }
+
+.lightbox-form {font-size:12px}
+.lightbox-form td {padding: 0px 10px 10px 0; vertical-align:top}
+.lightbox .lightbox-container { font-size:12px}
+.lightbox .text-block {padding:0 10px; display:block }
+.lightbox .disclaimer-overflow {border:1px solid #ccc; overflow-y:auto; height:120px}
+.lightbox .actionBox { display:block; padding-top:12px; padding-bottom:12px; text-align:center;}
+.lightbox .actionBox input {  font-size:12px; margin:0 10px }
+
+.lightbox { color:#414141 ; border:1px solid #6d6d6d; background-color:#fff; }
+.lightbox p { margin:4px 0 13px; }
+.lightbox-content { padding:15px;}
+
+.lightbox h3 { font-size:14px; }
+
+.lightbox .gap20 { padding-left:20px; }
+.lightbox .text-center { text-align:center; }
+
+/* Recaptcha styles */
+.recaptcha { text-align:center; padding:10px 20px; }
+.recaptcha h2 { font-size:15px; margin:0 0 5px; }
+.recaptcha h3 { text-align: left; line-height: 1.3; font-size:11px; }
+.recaptcha input.textField { width:300px; margin-bottom:25px;}
+.recaptcha input { margin:0 }
+.recaptcha p { font-size:11px; margin:8px 0 }
+.recaptcha .errorMessage { text-align:left }
+.recaptcha .errorMessage .errorMark { background-color:#f00; }
+.recaptcha .errorMessage ul { font-weight:normal; padding:0 0 0 20px; }
+.recaptcha .errorMessage ul li { margin-bottom:1em }
+.recaptcha ul.list-inside { text-align:left; margin:0; padding:0; font-size:11px; list-style-position:inside }
+.recaptcha-image { border:1px solid #ccc; margin:0 auto; display:block; width: 300px; height: 57px }
+.recaptcha-options { text-align:center; margin: 10px 0 }
+.recaptcha-options a { text-decoration:none }
+.recaptcha-options img {vertical-align:middle}
+.recaptcha-options span {padding:0 15px 0 5px !important; font-size:11px;}
+
+
+/* Offer code styles */
+ul.offerstatus { list-style-type:none; margin:0; padding:0; font-size:12px; }
+ul.offerstatus li { background:url('img/sys/1000/check.gif') 0 0 no-repeat;  padding:0 0 15px 20px; }
+
+ul.offerstatus li .text-status { display:none; color:#28974d; font-weight:bold; margin-left:10px; }
+ul.offerstatus li.accepted { background:url('img/sys/1000/check-accepted.gif') 0 0 no-repeat; }
+ul.offerstatus li.accepted .text-status { display:inline; }
+ul.offerstatus li a.expando { font-size:11px; background:url('img/sys/1000/expando-right.gif') right 0.48em no-repeat; padding-right:5px; }
+ul.offerstatus li a.expando:hover { background:url('img/sys/1000/expando-right-hover.gif') right 0.48em no-repeat;}
+ul.offerstatus li a.expando-open { font-size:11px; background:url('img/sys/1000/expando-down.gif') right 0.5em no-repeat; padding-right:7px; }
+ul.offerstatus li a.expando-open:hover { background:url('img/sys/1000/expando-down-hover.gif') right 0.5em no-repeat;}
+ul.offerstatus li .overflow-content { max-height:90px; font-size:11px }
+ul.offerstatus li .overflow-content ul { list-style:disc outside none; margin:0 0 0 25px; padding:0; }
+ul.offerstatus li .overflow-content ol { margin:0 0 0 25px; padding:0; }
+ul.offerstatus li .overflow-content li { background:none; margin-bottom:11px; padding:0;  }
+
+/* do not display border on old lightboxes (table style) */
+table.lightbox { border:0 none transparent; width:100%; }
+table.lightbox .topleft-bg, table.lightbox .top-bg, table.lightbox .topright-bg,
+table.lightbox .left-bg, table.lightbox .right-bg,
+table.lightbox .bottomleft-bg, table.lightbox .bottom-bg, table.lightbox .bottomright-bg { height:0 !important; width:0 !important; }
+table.lightbox .filler { display:none; }
+table.lightbox .lightbox-lid .right { text-transform:lowercase; }

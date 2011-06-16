@@ -1,0 +1,341 @@
+/* General-purpose font and table styles for Associates Central. */
+/* ------------------------------------------------------------- */
+
+/* Default link styles */
+a:link
+{
+    color:#003399;
+}
+a:visited
+{
+    color:#996633;
+}
+a:active
+{
+    color:#ff9933;
+}
+a:hover
+{
+    color:#E47911;
+}
+
+
+/* Text and Fonts */
+
+/* Default body text */
+body
+{
+    background-color:#e8e8e8 !important;
+    color:#000;
+    font-family:'Verdana','Arial','Helvetica',sans-serif;
+    font-size:13px;
+    background-repeat:repeat-x;
+}
+/* Breadcrumb Trails 
+   fine print. "what's this?" , "glossary", etc.. 
+   report data table headers
+*/
+.f1
+{
+    font-size:10px;
+}
+/* For emphasis in: 
+   report data table headers 
+   report data table dividers 
+*/
+.f2
+{
+    font-size:10px !important;
+    font-weight:bold !important;
+}
+/* Hint Text */
+.f3
+{
+    font-size:10px;
+    color: #666;
+}
+/* For emphasis in: 
+   Hint Text 
+*/
+.f4
+{
+    font-size:10px;
+    font-weight:bold;
+    color: #666;
+}
+/* Body Text 
+   Report Table Data 
+   Home and Reports Page 
+   (this is the default body text setting, with specificity)
+*/
+.f5
+{
+    color:#000 !important;
+    font-size:13px !important;
+}
+/* Subheads (Body Text) */
+.f6
+{
+    font-weight: bold;
+    font-size:13px !important;
+}
+/* Subhead (boxes, marketing text) */
+.f7
+{
+    font-weight: bold;
+    color: #E47911;
+    font-size:13px !important;
+}
+/* Subhead (3 column: 3rd column header) */
+.f8
+{
+    font-weight: bold;
+    color: #fff;
+    font-size:13px !important;
+}
+/* Headers (Body Copy) */
+.f9
+{
+    font-size:24px;
+    font-weight: lighter;
+    color: #4c94b7;
+    margin:0px;
+    padding:0px
+}
+/* Headers (Report Table) */
+.f10
+{
+    font-size:14px;
+    font-weight: bold;
+}
+/* Header (Glossary Pop-Up Window) */
+.f11
+{
+    font-size:14px;
+    font-weight: bold;
+    color: #fff;
+}
+/* Headers (Body Copy) */
+.f12
+{
+    font-size:16px;
+    font-weight: bold;
+    color: #E47911;
+}
+.f13
+{
+    font-size:10px;
+    color: #E47911;
+}
+.f14
+{
+    font-size:10px !important;
+    font-weight:bold !important;
+    color: #E47911;
+}
+.f15 {
+    font-size:11px;
+    color:#000000;
+    font-weight:bold;
+}
+.carat {
+    font-weight: bold;
+    color: #E47911;
+    font-size:13px !important;
+    margin-right:4px;
+    }
+
+/* Tool Showcase Table */
+
+
+/* featured products */
+#searchprod {
+    background-color:#e7f0fa;
+    padding:10px;
+    width:180px;
+    margin:0px 20px 20px 0px;
+    border:1px solid #6778A5;   
+}
+
+
+/* Box Styles */
+
+/* "normal" table class
+   Used in certain build-links and your-account pages
+*/
+table.normal
+{
+    border-top: none !important;
+    border-left: none !important;
+}
+
+table.normal th
+{
+    border-right: none !important;
+    border-bottom: none !important;
+}
+table.normal td
+{
+    border-right: none !important;
+    border-bottom: none !important;
+}
+
+
+/* "b1" table classes
+   Used in several build-links and your-account pages
+*/
+table.b1
+{
+    border-top: 1px solid #aaaaaa; 
+    border-left: 1px solid #aaaaaa; 
+}
+table.b1 th
+{
+    font-size:13px !important;
+    font-weight: bold;
+    color: #E47911;
+    padding:5px;
+    border-right: 1px solid #aaaaaa; 
+    border-bottom: 1px solid #aaaaaa; 
+    text-align:left;
+}
+table.b1 td
+{
+    font-size:13px !important;
+    background-color:#f4f4f4; 
+    padding:2px;
+    border-right: 1px solid #aaaaaa; 
+    border-bottom: 1px solid #aaaaaa; 
+}
+
+table.b1-2
+{
+    border: 1px solid #cbc9c9 !important; 
+    background-color: #f4f4f4;
+}
+table.b1-2 th
+{
+    font-size:13px !important;
+    font-weight: bold;
+    background-color: #fff !important;
+    color: #E47911;
+    padding:5px;
+    text-align:left;
+    border-bottom: 1px solid #aaa;
+}
+table.b1-2 td
+{
+    font-size:13px !important;
+    padding:6px;
+}
+
+table.b1-3
+{
+    border: none;
+}
+table.b1-3 th
+{
+    font-size:13px !important;
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #E47911;
+    padding:5px;
+    border:none;
+    text-align:left;
+}
+table.b1-3 td
+{
+    font-size:13px !important;
+    background-color: #fff;
+    padding:2px;
+    border:none;
+}
+
+/* b1-3 style outside of table context */
+h2.b1-3
+{
+    font-size:13px !important;
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #cc6600;
+    padding:5px;
+}
+
+/* "b2" table class
+   Used in certain your-account and payments pages
+*/
+table.b2
+{
+    border-top: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+}
+table.b2 th
+{
+    font-size:13px !important;
+    font-weight: bold;
+    color: #E47911;
+    padding:10px;
+    border-right: 1px solid #aaa;
+
+    border-bottom: 1px solid #aaa;
+    text-align:left;
+}
+table.b2 td
+{
+    font-size:13px !important;
+    background-color: #fff;
+    padding:10px;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
+.rightAlign
+{
+  text-align: right;
+}
+input.readonly
+{
+  background-color:#CCC;
+}
+.disabledButton
+{
+    filter:alpha(opacity=25);
+    opacity:0.25;
+    cursor:default;
+}
+
+.floatRow
+{
+  position:relative;
+}
+.floatRow .clear
+{ 
+  clear:both;
+  visibility:hidden;
+}
+.floatRow .left
+{
+  float:left;
+}
+.floatRow .right
+{
+  float:right;
+}
+
+/* multipak tables
+   Used to display multiple asins in the center or main column
+*/
+table.asinRow td.bottom 
+{
+    vertical-align:bottom;
+}
+table.asinRow td.asinDetails 
+{
+    vertical-align:top;
+    font-size:11px;
+}
+table.asinRow h4 
+{
+    font-weight:normal;
+    padding:0px;
+    margin:0px;
+}

@@ -1,0 +1,62 @@
+Confirmance issues :
+
+* ------
+  height: expression(
+            document.body.scrollHeight > document.body.offsetHeight ?
+            document.body.scrollHeight : document.body.offsetHeight + 'px');
+  The above declaration includes expression function that has >, ?, and :
+  ------
+  Ans : looks like expression() function is supported in browsers, and it
+  takes JS expression returning a string that can be substituted in the
+  style-sheet.
+
+* -----
+  Sometimes `identifiers` start with or contains '_' character. But the CSS3
+  lexer rules does not explain them.
+  -----
+
+* -----
+  Atrules : Other than CSS3 recommended rules, there are browser specific
+  ones like,
+        @-webkit-keyframes
+  These are not yet supported.
+  -----
+
+* -----
+  Tilda-combinator : Tilda combinator is not defined in CSS3 selector rules.
+  -----
+
+* -----
+  Is this a valid propery declaration ?
+    background:url(<?php print $image_path;?>/bg-header.png) repeat-x scroll top;
+  -----
+
+* ----
+  Urls are not represented in string format. EG :
+        url(http://google.com)
+  ----
+
+* ----
+  There are some browser specific selectors that starts like,
+    button::-moz-focus-inner { ... }
+  ----
+
+* ----
+  Media at-rules have this format,
+    @media all and (-webkit-min-device-pixel-ratio: 0) {
+        #pmMarkets #pmIndecies #myContainer   {position: absolute; top: 17px;}
+    }
+  ----
+
+* ----
+  There are selectors which go like this,
+    #PREON #importstd('path') .searchresults {
+        opacity: 0;
+    }
+  ----
+
+* ----
+  There seem to be browser specific @-rules, like,
+    @-webkit-keyframes overlayTransition {
+    }
+

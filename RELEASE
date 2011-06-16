@@ -1,0 +1,10 @@
+Rlease check-list 
+-----------------
+
+* Change the release version in 
+    ./CHANGELOG,
+    ./tayra/__init__.py
+* Update setup.py and MANIFEST.in for release
+* Create a tag and push the tagged branch to code.google.com
+* Upload the source into pypi.
+        make upload

@@ -1,0 +1,388 @@
+div.csld-center-widget a,
+div.csld-center-widget a:hover,
+div.csld-center-widget a:visited,
+div.csld-center-widget a:active
+{
+    text-decoration: none;
+}
+
+div.csld-center-widget {
+    text-align: center;
+}
+
+div.csld-center-widget table.main {
+    text-align: left;
+    width: 470px;
+    margin: 0 auto;
+}
+
+div.csld-center-widget table.price-block td {
+    font-size: 11px;
+}
+
+div.start-time {
+    top: 0;
+    font-size: 11px;
+    color: #666666;
+}
+
+div.csldImage {
+    top: 21px;
+    width: 100%;
+    text-align: center;
+}
+
+div.prime {
+    position: absolute;
+    left: 120px;
+}
+
+div.csld-priceblock table.price-block tr td {
+  text-align: right;
+}
+
+div.csld-priceblock table.price-block tr.list-price td {
+  font-size: 11px;
+  text-align: right;
+  color: #666666;
+}
+
+div.csld-priceblock table.price-block tr.list-price td.price {
+  text-align: left;
+  text-decoration: line-through;
+}
+
+div.csld-priceblock table.price-block tr.list-price td.price-noline {
+  text-align: left;
+}
+
+div.csld-priceblock table.price-block tr.our-price td {
+  font-size: 11px;
+  text-align: right;
+  color: #666666;
+}
+
+div.csld-priceblock table.price-block tr.our-price td.price {
+  text-align: left;
+}
+
+div.csld-priceblock table.price-block tr.deal-price td {
+  font-size: 11px;
+  text-align: right;
+  color: #990000;
+}
+
+div.csld-priceblock table.price-block tr.deal-price td.price {
+  font-family: 'Arial';
+  text-align: left;
+  font-size: 14px;
+  color: #990000;
+  font-weight: bold;
+}
+
+div.csld-priceblock table.price-block tr.deal-discount td {
+  font-size: 11px;
+  text-align: right;
+  color: #990000;
+}
+
+div.csld-priceblock table.price-block tr.deal-discount td.price {
+  text-align: left;
+  color: #990000;
+}
+
+div.csld-priceblock table.price-block td div.hr {
+}
+
+div.csld-multi-category-center-widget a,
+div.csld-multi-category-center-widget a:hover,
+div.csld-multi-category-center-widget a:visited,
+div.csld-multi-category-center-widget a:active
+{
+    text-decoration: none;
+}
+
+div.status_content {
+  top: 0px !important;
+  position: relative !important;
+}div#cart_popover.ap_titlebar {
+  display: block;
+  background-color: #FFFFFF;
+  border-bottom: 0 none;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 8px 18px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+div#cart_popover.ap_title {
+  margin-left: 10px;
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+div#cart_popover.ap_close {
+  cursor: default;
+  position: absolute;
+  right: 18px;
+  top: 13px;
+}
+
+div#cart_popover.a {
+  outline: medium none;
+  padding: 5px;
+  text-decoration: none !important;
+  color: #004B91;
+  font-family: verdana,arial,helvetica,sans-serif;
+}
+
+span#cart_popover.ap_closetext {
+  line-height: 1em;
+  margin-right: 5px;
+  font-size: small;
+  text-decoration: none;
+}
+
+span#cart_popover.ap_closebutton {
+  background-position: -140px -40px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+  vertical-align: top;
+  width: 15px;
+}
+
+div.greencheck_img {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  margin-right: 8px;
+  margin-top: 8px;
+  border: none;
+  left: -8px;
+  top: -29px;
+}
+
+a#cart_popover.cart-popover {
+  text-decoration: none;
+}
+
+span.cart-popover-label {
+  font-size: 19px;
+  line-height: 25px;
+  font-weight: bold;
+  color: #009900;
+  position: absolute;
+  left: 30px;
+  width:350px;
+}
+
+.ap_close {
+
+}
+
+table.cart-popover-table {
+  background-color: #FFFFFF;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+table.cart-popover-table td.image_title_price {
+  vertical-align: top;
+}
+
+table.inner-cart-popover-table {
+  background-color: #EAF3FE;
+  width: 485px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+span.cart-popover-prevprice {
+  font-family: Arial;
+  font-size: 12px;
+  color: #666666;
+  text-decoration: line-through;
+}
+
+span.cart-popover-dealprice {
+  font-family: Arial;
+  font-size: 12px;
+  color: #990000;
+}
+
+table.inner-cart-popover-table table.inner-msg div.alert {
+  background-position: 161px 72px !important;
+  width: 19px;
+  height: 18px;
+}
+
+table.inner-cart-popover-table table.inner-msg
+span.timeleft-large {
+  font-size: 16px;
+}
+
+table.inner-cart-popover-table table.inner-msg td.timeleft {
+  font-family: Arial;
+  font-size: 13px;
+  color: #009900;
+  font-weight: bolder;
+  padding: 0pt 5px 5px;
+}
+
+table.inner-cart-popover-table table.inner-msg td.smallprint {
+  font-family: verdana;
+  font-size: 11px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+}
+
+table.inner-cart-popover-table table.inner-msg {
+  background-color: #ffffdb;
+  margin-top: 8px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+table.inner-cart-popover-table table.inner-msg td.msgtitle {
+  font-weight: bolder;
+  font-family: verdana;
+  font-size: 11px;
+}
+
+span.cart-popover-asintitle {
+  font-weight: bolder;
+  font-family: verdana;
+  color: #004B91;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+span.ap_content {
+  font-family: verdana;
+  font-size: 11px;
+}
+div.status_content {
+  position:absolute;
+}
+
+div.status_msg_content {
+  font-family: verdana;
+  font-size: 11px !important;
+  color: #666666;
+}
+
+div.status_msg_content_pending {
+  font-family: verdana;
+  font-size: 11px !important;
+}
+
+div.status_content div.status_msg_content {
+  font-family: verdana;
+  font-size: 11px !important;
+  color: #666666;
+}
+
+div.status_content span.item_msg {
+  font-weight: bold;
+  color: #000000;
+  font-size: 11px;
+}
+
+div.status_content span.item_msg_normal {
+  color: #000000;
+  font-size: 11px;
+}
+
+div.status_content span.item_msg_normal span.timer {
+  color: #666666;
+  font-size: 11px;
+}
+
+div.status_content span.item_msg_normal span.status_timer {
+  font-weight: bold;
+  color: #009900;
+}
+
+div.status_content span.options_link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #004B91;
+  font-size: 11px;
+  font-family: verdana;
+  font-weight: bolder;
+}
+
+span.status_timer span.timeleft-large {
+  font-size: 11px;
+}
+
+div.status_msg_content span.status_timer {
+  color: #009900;
+  font-weight: bold;
+}table.cart-popover-table td.image_title_price_waitlist {
+  width: 390px;
+  vertical-align: top;
+}
+
+table.inner_message_waitlist {
+  background-color: #EAF3FE;
+  -moz-border-radius: 6px;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+table.inner_message_waitlist span.waitlist_message {
+  font-size: 12px;
+  font-family: Arial;
+}
+
+table.inner_message_waitlist div.bubble {
+  background-position: -117px -189px;
+  width: 20px;
+  height: 20px;
+  position: relative;;
+}
+
+table.inner_message_waitlist td {
+}
+
+div.waitlist_help {
+  position: absolute;
+  top: 239px;
+}
+
+div.waitlist_help_csld_single {
+  position: relative;
+}
+
+div.waitlist_help_alldeals {
+  position: relative;
+}
+
+span.help_message {
+  font-family: Arial;
+  font-size: 12px;
+  text-align: left;
+}
+
+a.waitlist_link {
+  font-size: 12px;
+  font-family: Arial;
+}
+
+div.waitlist_position_chance td.pc_value {
+  font-family: Arial;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: right;
+}
+
+div.waitlist_position_chance td.pc_label {
+  font-family: Arial;
+  font-size: 11px;
+}

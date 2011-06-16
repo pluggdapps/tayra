@@ -1,0 +1,25 @@
+#lightbox{position:absolute;left:0;width:100%;z-index:100;text-align:center;line-height:0;}
+#lightbox img{width:auto;height:auto;}
+#lightbox a img{border:none;}
+#loading{position:absolute;top:40%;left:0;height:25%;background:url("https://s.yimg.com/lq/i/in/smb/images/loading_1.0.gif") no-repeat top center;width:100%;text-align:center;line-height:0;}
+#hoverNav{position:absolute;top:0;left:0;height:100%;width:100%;z-index:10;}
+#imageDataContainer{font:10px Verdana,Helvetica,sans-serif;background-color:#fff;margin:0 auto;line-height:1.4em;overflow:auto;width:100%;padding-left:10px;padding-right:10px;min-height:100px;}
+#closeLightbox{background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.png") no-repeat scroll 0 -388px transparent;position:absolute;right:-30px;height:30px;width:30px;top:0;cursor:pointer;}
+#outerImageContainer{position:relative;background-color:#fff;width:250px;min-height:250px;margin:0 auto;padding-top:10px;padding-left:10px;padding-right:10px;}
+#imageContainer{background:url("https://s.yimg.com/lq/i/in/smb/images/fw_bg_big_1.0.jpg") repeat-x scroll 0 0 transparent;padding:10px 40px;}
+#prevLink,#nextLink{width:49%;height:100%;}
+#lightboxImage{width:500px;height:500px;}
+#numberDisplay{display:none;}
+#hoverNav a{outline:none;}
+#prevLink{width:50px;height:46px;background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.png") no-repeat scroll 0 -896px transparent;_background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.gif") no-repeat scroll 0 -896px transparent;display:block;margin-top:200px;left:0;float:left;}
+#nextLink{width:50px;height:46px;background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.png") no-repeat scroll 0 -967px transparent;_background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.gif") no-repeat scroll 0 -967px transparent;display:block;margin-top:200px;right:0;float:right;}
+#prevLink:hover,#prevLink:visited:hover{width:50px;height:46px;background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.png") no-repeat scroll 0 -896px transparent;_background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.gif") no-repeat scroll 0 -896px transparent;}
+#nextLink:hover,#nextLink:visited:hover{width:50px;height:46px;background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.png") no-repeat scroll 0 -967px transparent;_background:url("https://s.yimg.com/lq/i/in/smb/images/small-images_1.0.gif") no-repeat scroll 0 -967px transparent;}
+#imageData{color:#666;}
+#imageData #imageDetails{width:100%;float:left;text-align:left;}
+#imageData #caption{margin-top:15px;margin-bottom:25px;}
+#caption .title{font-weight:bold;font-size:16px;color:#424242;}
+#caption .content{font-family:Georgia;font-style:italic;font-size:12px;margin-top:20px;letter-spacing:0.1em;}
+#caption .signature{font-size:12px;}
+#imageData #numberDisplay{display:block;clear:left;padding-bottom:1.0em;}
+#overlay{position:absolute;top:0;left:0;z-index:90;width:100%;height:500px;background-color:#959595;}

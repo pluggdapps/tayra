@@ -1,0 +1,80 @@
+  .templates-samples li a {
+    cursor: default !important;
+  }
+
+  /* template list */
+  .tempaltes, .g-scroller-viewport, .g-scroller-viewport ul,
+  .g-scroller-viewport ul li, .g-scroller-viewport a {
+     margin: 0;
+     padding: 0;
+  }
+
+  .templates {
+    margin-top: 25px;
+    width: 545px;
+  }
+
+  .g-scroller-scroller {
+    height: 85px;
+    width: 550px;
+    position: relative;
+  }
+  .g-scroller-scroller a {
+    outline: none !important;
+  }
+
+  .g-scroller-viewport,
+  .g-scroller-viewport ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .g-scroller-viewport {
+    height: 85px;
+    width: 550px;
+    overflow: hidden;
+  }
+
+  .g-scroller-viewport ul {
+    list-style:none;
+  }
+  .g-scroller-viewport ul li {
+    float: left;
+    padding-right: 15px;
+  }
+
+  .g-scroller-viewport a {
+    display: block;
+    text-align: center;
+    width: 125px;
+    height: 85px;
+  }
+
+  .g-scroller-viewport a img {
+    border: solid 1px #ccc;
+    background-color: #eee;
+  }
+
+  .g-scroller-controls a {
+    display: block;
+    width: 9px;
+    position: absolute;
+    top: 35px;
+    height: 17px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .g-scroller-previous {
+    left: -16px;
+    background-image: url(/img/start/arrow-left.gif);
+  }
+
+  .g-scroller-next {
+    right: -16px;
+    background-image: url(/img/start/arrow-right.gif);
+  }
+
+  .disabled-next, .disabled-prev {
+    visibility: hidden;
+  }

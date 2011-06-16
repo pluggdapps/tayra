@@ -1,0 +1,152 @@
+#global_nav {
+	width: 980px;
+	margin: 0 auto;
+	font-size: 110%;
+} 
+
+div.as-nav-left-corner, div.as-nav-right-corner {
+	height: 38px;
+	width: 7px;
+	float: left;
+	
+}
+div.as-nav-left-corner {
+	background: transparent url(http://g-ecx.images-amazon.com/images/G/01/AmznServices/en_US/images/AS_searchbar_left.gif) no-repeat scroll 0 0;
+}
+div.as-nav-right-corner {
+	background: transparent url(http://g-ecx.images-amazon.com/images/G/01/AmznServices/en_US/images/AS_searchbar_right.gif) no-repeat scroll 0 0;
+}
+
+ul.as-nav-list, ul.as-subnav-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	line-height: 1.7;
+}
+
+ul.as-nav-list li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.as-nav-list {
+	background: #003366 url(http://g-ecx.images-amazon.com/images/G/01/AmznServices/en_US/images/top_nav_middle.gif) repeat-x scroll 0 0;
+	width: 966px;
+	height: 38px;
+	float: left;
+}
+
+ul.as-nav-list .as-menubar-item {
+	float: left;
+	position: relative;
+	margin-top: 8px;
+}
+
+a.as-menubar-item-label {
+	/*background-color: #003366;*/
+    border-color: transparent transparent transparent #003366;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    font-family: Verdana;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0 10px;
+    position: relative;
+	text-decoration:none;
+	text-align: left;
+	white-space: nowrap;
+}
+
+a.as-menubar-item-label.first-of-type {
+	border-color: transparent ;
+}
+
+li.hasSubmenu  a.as-menubar-item-label {
+	background: transparent url(http://g-ecx.images-amazon.com/images/G/01/AmznServices/en_US/images/menubarlabel_hassubmenu.gif) no-repeat scroll right center;
+	margin-right: 30px;
+	padding: 0 20px 0 14px;
+}
+
+li.hasSubmenu a.as-menubar-item-label-selected {
+    -moz-border-radius-topleft: 2px;
+    -moz-border-radius-topright: 1px;
+    background: url(http://g-ecx.images-amazon.com/images/G/01/AmznServices/en_US/images/menubarlabel_hassubmenuOver.gif) no-repeat scroll right center #FFFFFF;
+    border-left: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    color: #003366;
+	padding: 4px 20px 6px 14px;
+    z-index: 10;
+}
+
+
+
+.as-subnav-cont {
+	background-color: #fff;
+	position: absolute;
+	top: -1000px;
+	left: -10000px;
+	z-index: 999;
+}
+
+.as-subnav-cont ul.as-subnav-list {
+	background-color: #fff;
+	border-width: 0 1px 1px;
+	border-style: solid;
+	border-color: #ccc;
+}
+
+.as-subnav-cont a.as-menu-item-label {
+	background: url(http://g-ecx.images-amazon.com/images/G/01/AmznServices/en_US/images/menuitemlabel.gif) no-repeat scroll left center transparent;
+    font-family: Verdana;
+    font-size: 70%;
+    line-height: 1.7;
+    padding-left: 24px;
+    padding-right: 24px;
+	padding-top: 1px;
+	color: #004B91;
+    cursor: pointer;
+    text-decoration: none;
+	display: block;
+	text-align: left;
+    white-space: nowrap;
+}
+
+.as-subnav-cont a.as-menu-item-label.disabled {
+    background: none repeat scroll 0 0 transparent;
+    color: black;
+    cursor: text;
+    font-family: Verdana;
+    font-weight: bold;
+    padding: 2px 24px 2px 8px;
+}
+.as-subnav-cont a.as-menu-item-label-selected {
+	color: #E47911;
+    text-decoration: underline;
+}
+
+.as-subnav-cont a.as-menu-item-label-selected.disabled {
+	color: #000;
+    text-decoration: none;
+}
+
+.menu-shadow {
+	position: absolute;
+    visibility: hidden;
+    z-index: -1;
+}
+
+.menu-shadow-visible {
+	-moz-border-radius: 1px 1px 1px 1px;
+    background-color: black;
+	filter: alpha(opacity = 10);
+    left: 2px;
+    opacity: 0.1;
+    top: 2px;
+	bottom: -3px;
+	right: -3px;
+	visibility: visible;
+	position: absolute;
+	z-index: -1;
+}

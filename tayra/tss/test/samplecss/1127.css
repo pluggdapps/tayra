@@ -1,0 +1,22 @@
+
+@font-face {
+    font-family: 'Clarendon URW Bold';
+    src: url('http://f.fontdeck.com/f/1/ZjUzOUJZSWoABVdA2K+ZKnmaMpIq9vkmeJMqM+DzdbNCLH411QJASli2pxMvPgbiDnU.eot');
+    src: url('http://f.fontdeck.com/f/1/ZjUzOUJZSWoABVdA2K+ZKnmaMpIq9vkmeJMqM+DzdbNCLH411QJASli2pxMvPgbiDnU.eot?') format('embedded-opentype'),
+    url('http://f.fontdeck.com/f/1/ZjUzOUJZSWoABVdA2K+ZKnmaMpIq9vkmeJMqM+DzdbNCLH411QJASli2pxMvPgbiDnU.woff') format('woff'),
+    url('http://f.fontdeck.com/f/1/ZjUzOUJZSWoABVdA2K+ZKnmaMpIq9vkmeJMqM+DzdbNCLH411QJASli2pxMvPgbiDnU.ttf') format('opentype'),
+    url('http://f.fontdeck.com/f/1/ZjUzOUJZSWoABVdA2K+ZKnmaMpIq9vkmeJMqM+DzdbNCLH411QJASli2pxMvPgbiDnU.svg#373') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Aster Medium';
+    src: url('http://f.fontdeck.com/f/1/aDY3dXBMa0wABSe+Rkusz1+T98ojcSVeYOeZneMm6TDkVVPcwEpPB6jJRJiq6k+mZE8.eot');
+    src: url('http://f.fontdeck.com/f/1/aDY3dXBMa0wABSe+Rkusz1+T98ojcSVeYOeZneMm6TDkVVPcwEpPB6jJRJiq6k+mZE8.eot?') format('embedded-opentype'),
+    url('http://f.fontdeck.com/f/1/aDY3dXBMa0wABSe+Rkusz1+T98ojcSVeYOeZneMm6TDkVVPcwEpPB6jJRJiq6k+mZE8.woff') format('woff'),
+    url('http://f.fontdeck.com/f/1/aDY3dXBMa0wABSe+Rkusz1+T98ojcSVeYOeZneMm6TDkVVPcwEpPB6jJRJiq6k+mZE8.ttf') format('opentype'),
+    url('http://f.fontdeck.com/f/1/aDY3dXBMa0wABSe+Rkusz1+T98ojcSVeYOeZneMm6TDkVVPcwEpPB6jJRJiq6k+mZE8.svg#693') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

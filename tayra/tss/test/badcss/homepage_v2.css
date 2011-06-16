@@ -1,0 +1,156 @@
+/* For Spotlight Widget when it shows */
+#spotlightAd .spotlightImage { margin:5px 0 0 12px; float:left; }
+#spotlightAd .spotlightText { margin:5px 0 0 5px; float:left; width:265px; }
+
+#features_sidebar .poster_box { margin:0px 4px 4px 0px;}
+
+#newsmore li { padding-bottom:3px; }
+
+.sub-tabs.ui-tabs-nav { border-width:0px; margin-bottom:0px; }
+.sub-tabs.ui-tabs-nav > li { 
+	-moz-border-radius-topleft:0px; 
+	border-width:0px 0px 0px 1px; 
+	border-color:#787878; 
+	font-size:inherit; 
+	font-weight:normal; 
+	background-color:transparent; 
+	margin:0px; 
+	padding:0px 5px;
+	line-height: 11px;
+}
+.sub-tabs.ui-tabs-nav > li.ui-tabs-selected { color:#000000; }
+.sub-tabs.ui-tabs-nav > li.ui-tabs-first { padding-left:0px; border-width:0px; }
+
+li.columned span { display:inline-block; }
+
+/* New Carousel - Peter L 5/11 */
+#carousel-layout-box {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;	
+}
+
+.carousel {
+	padding: 0px;
+	margin: 0px;	
+}
+
+.carousel a:hover { text-decoration: none;}
+
+.carousel .poster_box {
+	width:423px;
+	height:236px; 
+	overflow:hidden;
+	margin:0px;
+	padding: 0px;
+	border: 0px;
+	display: block;
+	background-position: left top;
+}
+
+.carousel .poster_caption {
+	height: 50px;
+	font-weight: normal;
+	padding: 8px;
+	line-height: inherit;
+	display: block;
+}
+.carousel .poster_box h3 {
+	color: #FF9;
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+/* Mini carousel under main carousel - Peter L 5/11 */
+.mini-carousel-wrapper {
+	background: url("../images/home/gradient.gif") no-repeat scroll center top black;
+	height: 100px;
+	overflow: hidden;
+}
+
+.mini-carousel-wrapper .prev {
+	border: none;
+	background-color: transparent;
+	background-image: url("../images/icons/homepage_rotatorarrows.png");
+	background-position:32px -24px; 	
+    background-position:31px -24px\9; 
+	height: 22px;
+	width: 15px;
+	float: left;
+	margin: 30px 2px 0px 8px;
+}
+.mini-carousel-wrapper .prev:hover { background-position:-33px -24px; }
+.mini-carousel-wrapper .prev:active { margin-top: 31px; }
+
+.mini-carousel-wrapper .next {
+	border: none;
+	background-color: transparent;
+	background-image: url("../images/icons/homepage_rotatorarrows.png");
+	background-position:-17px -0px;
+	background-position:-16px -0px\9;
+	height: 22px;
+	width: 15px;
+	float: right;
+	margin: 30px 10px 0px 0px;
+}
+.mini-carousel-wrapper .next:hover { background-position:16px 0px; }
+.mini-carousel-wrapper .next:active { margin-top: 31px; }
+
+.mini-carousel-wrapper .mini-carousel-overlay {
+	float:left;
+	border: 2px solid #FF9;
+	width: 80px;
+	height: 50px;
+	background: transparent;
+	z-index: 2;
+	position: relative;
+	left: 29px;
+	top: -83px;
+	margin: 0px;	
+	text-align :center;
+	pointer-events: none;
+}
+
+.mini-carousel-wrapper .mini-carousel-overlay-arrow {
+	background: url("../images/home/feature_carousel_item_overlay_arrow.gif") no-repeat scroll 0 0 transparent;
+	margin: 0px auto;
+	height: 6px;
+	margin: 0px auto;
+	overflow: hidden;
+	position: relative;
+	top: -8px;
+	width: 13px;
+}
+
+/* Mini-carousel proper - arrows and overlay is part of mini-carousel-wrapper */
+.mini-carousel {
+	float: left;	
+	z-index: 1;
+}
+
+.mini-carousel .carousel-thumb {
+	width: 80px;
+	height: 50px;
+	overflow: hidden;
+	margin: 5px 4px 0px 4px;
+	border: solid 2px gray;	
+	background-position: left bottom;
+	display: block;
+}
+
+.mini-carousel .carousel-thumb-caption {
+	height: 26px;
+	color: white;
+	text-align: center;
+	width: 80px;
+	font-size: 0.8em;	
+	overflow:hidden;
+	margin: 3px 3px 0px 3px;
+	line-height: 12px;
+	display: block;	
+}
+.mini-carousel a:hover {
+	text-decoration:none;	
+}
+}

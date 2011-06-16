@@ -1,0 +1,36 @@
+body{text-align:center;background-image:url(http://l.yimg.com/a/i/us/dl/ie8/gr/landing_bg_10x450.gif); background-repeat:repeat-x;background-color:#dee9f6}
+div {margin:0;padding:0;}
+ul {color:#333333;list-style:disc;padding:0;margin-left:16px;}
+li {padding:0.1em 0 0.1em 0;font-size:12px;line-height:16px;}
+#doc{width:100%;}
+#hd{width:100%;text-align:left;font-size:12px;color:#336699;background-color:#fff;}
+#hd a {color:#0066cc;}
+#hd td {padding:8px 16px 7px 16px;}
+#bd{background-color:#fffbf0;border-bottom:8px solid #7b0099;}
+#topleft{float:left;width:293px;margin-top:66px;padding:40px;}
+#topleft h2 {font-family:arial; font-weight:bold; font-size:30px; color:#fff;text-align:left;}
+#topright{float:right;width:203px;padding:0px 37px;margin-top:70px;margin-left:61px;}
+#topright img {width:203px;height:82px; float:right;}
+#topright div{clear:both;float:right;}
+#topright .cta-w{margin-top:0px;width:203px;}
+#topright p {clear:both;font-family:verdana; font-size:10px;color:#ffffff; padding-top:10px;text-align:left;}
+#topright p a {color:#ffffff;}
+#submit-cont {margin:15px 5px;}
+#submit-cont ul{float:left;display:inline;border-bottom:1px solid #e6e6e6;margin-bottom:25px;padding-bottom:5px;}
+#submit-cont ul li{float:left;list-style:none outside none;height:230px;margin-right:30px;text-align: left;}
+#submit-cont ul li.search{width:203px;}
+#submit-cont ul li.mail{width:208px;margin-right:25px;}
+#submit-cont ul li.toolbar{width:242px;margin-right:0px;}
+#submit-cont ul li.search div,#submit-cont ul li.mail div{margin-left: 43px; margin-top: 135px;}
+#submit-cont ul li.toolbar div{margin-left: 55px; margin-top: 133px;}
+#ft3 {text-align:left;margin-left:40px;margin-bottom:60px;width:170px;font-size:10px;}
+#ft3 h2 {padding-bottom:6px;font-size:11px;font-weight:normal;}
+#ft-right {text-align:left;float:right;margin-right:20px;width:515px;}
+#ft-right h2{font-size:11px;font-weight:normal;}
+#ft-right ul{margin:0px;}
+#ft-right ul li{font-size:10px;list-style:none outside none;}
+#bot {width:100%;font-family:verdana;font-size:10px;color:#999999;width:100%;padding-bottom:7px;text-align:center;}
+#ft {color:#333333;font-size:11px;line-height:14px;}
+#ftshadow {width:100%;height:12px;background-color:#dee9f6;}
+#ft1 {font-family:verdana;text-align:left;padding-left:25px;padding-top:1px;padding-bottom:7px;}
+#ft2 {font-family:arial;text-align:left;padding-left:25px;padding-top:8px;padding-bottom:7px;}

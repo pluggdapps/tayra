@@ -1,0 +1,161 @@
+#jokes_footer {
+	background-image:url(/sitewide/images/footer/footer_bgtile.gif);
+	width:980px;
+	font: normal 11px/17px arial;
+	color:#fff;
+  	min-height:315px;
+  	height:auto !important;
+  	height:315px;
+	overflow-x:hidden;
+}
+#jokes_footer a {
+	color:#fff;
+	text-decoration:none;
+}
+#jokes_footer a:hover {
+	color:#5EDEFA;
+}
+#jokes_footer h6 {
+	color:#5EDEFA;
+	font: bold 15px/19px arial;
+	border-bottom:1px solid #666;
+	margin-bottom:3px;
+}
+#jokes_footer .jokes_footer_content {
+	padding:20px 0px 20px 30px;
+}
+
+#jokes_footer .jokes_footer_column {
+	display:block;
+	float:left;
+	width:215px;
+	margin-right:20px;
+}
+#jokes_footer .jokes_footer_column a {
+	display:block;
+}
+#jokes_footer .jokes_footer_clear {
+	clear:both;
+}
+#jokes_footer .jokes_footer_search {
+	margin-bottom:20px;
+}
+#ft #jokes_footer .ms_search {
+	background-image:url(/sitewide/images/footer/search_field.gif);
+	background-repeat:no-repeat;
+	float:none;
+	width:534px;
+}
+#ft #jokes_footer .ms_search_text {
+	border:none;
+	left:20px;
+	padding:0;
+	position:absolute;
+	top:5px;
+	width:283px;
+}
+#ft #jokes_footer .ms_search_button_site_cc {
+	background-position:0 0;
+	height:17px;
+	position:absolute;
+	right:168px;
+	top:4px;
+	width:80px;
+}
+#ft #jokes_footer .ms_search_button_site_cc:hover {
+	background-position:0 -17px;
+}
+#ft #jokes_footer .ms_search_button_web_cc {
+	background-position:-82px 0;
+	height:17px;
+	right:86px;
+	top:4px;
+	width:80px;
+}
+#ft #jokes_footer .ms_search_button_web_cc:hover {
+	background-position:-82px -17px;
+}
+#jokes_footer .jokes_footer_mtv_logo {
+	margin-top:30px;
+}	
+#jokes_footer .jokes_footer_wide {
+	width:685px;
+}
+#jokes_footer .jokes_footer_wide a {
+	float:left;
+}
+#jokes_footer .cc_footer_divider {
+	display:block;
+	float:left;
+	margin:0 10px;
+}
+
+.ms_search {
+	float:right;
+	width: 346px;
+	position: relative;
+	height:35px;
+}
+#ft .ms_search{
+	background:none;
+}
+
+.ms_search_text{
+	position: absolute;
+	top: 7px;
+	left: 10px;
+	font-size:12px;
+	padding: 2px 3px 0px 3px;
+	color: #888;
+	width: 183px;
+	height: 15px;
+	border: 1px solid #6d8091;
+}
+
+.ms_search_button_site_cc{
+	position: absolute;
+	top: 8px;
+	right: 77px;
+	background-color: transparent;
+	background-image:url(/sitewide/images/footer/search_sprite.gif);
+	background-repeat: no-repeat;
+	width:60px;
+	height:17px;
+	cursor: pointer;
+	border: none;
+}
+
+.ms_search_button_web_cc{
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	background-color: transparent;
+	background-image: url(/sitewide/images/footer/search_sprite.gif);
+	background-repeat: no-repeat;
+	width:60px;
+	height:17px;
+	cursor: pointer;
+	border: none;
+}
+
+.cc_footy{
+	width:1066px;
+	height:30px;
+	overflow:hidden;
+	margin:0 0 0 -43px;
+	position:fixed;
+	bottom:0px;
+	z-index:20000;
+}
+
+/* 5x5 text ads */
+/* 5x5 div class name for ad content served by DART */
+.textAdContent {
+	position:relative;
+	left: 3px;
+}
+/* 5x5 div class name for ad header served by DART */
+.textAdHeader {
+	position:relative;
+	float:left;
+}

@@ -1,0 +1,62 @@
+
+/* overrides for dmusic tracks */
+div#zgMp3Player { position: absolute; }
+
+/* overrides for mp3-enabled dmusic tracks */
+div.zgChart div.zgChartControls { display: none; background: #EAF2FD; height: 33px;  
+  position: relative; margin:  8px 0 10px 0; }
+div.zgChartControls div { position: absolute; }
+div.zgChartControls div.paddingCover { width: 8px; background: #EAF2FD; position: absolute; height: 33px; }
+
+.zgChartControlsInit .zgPlayAll { left: 10px; }
+.zgChartControlsInit .zgPlayAllLabel { display: block; left: 55px; }
+.zgChartControlsInit .zgMarqueeSong, .zgChartControlsInit .zgMarqueeAlbum { display: none; }
+
+.zgChartControlsActive .zgPlayAll { left: 30px; }
+.zgChartControlsActive .zgPrevious { display: block; }
+.zgChartControlsActive .zgNext { display: block; }
+.zgChartControlsActive .zgMarqueeSong, .zgChartControlsActive .zgMarqueeAlbum { display: block; }
+.zgChartControlsActive .zgPlayAllLabel { display: none; }
+
+.zgButton { cursor: pointer; position: absolute; }
+.zgMp3Sprite { background-image: url('http://g-ecx.images-amazon.com/images/G/01/zeitgeist/mp3player/dmusic-chart-sprites-1.0._V192194405_.gif'); }
+
+.zgPlayAll { top: -10px; width: 36px; height: 40px; background-position: -38px -97px; }
+.zgPlayAllHover { background-position: -38px -50px; }
+.zgPauseAll { background-position: -1px -50px; }
+
+.zgPrevious, .zgNext { display: none; top: 4px; width: 21px; height: 21px; }
+.zgPrevious { left: 5px; background-position: 0 -24px; }
+.zgNext { left: 68px; background-position: -22px -24px; }
+
+.zgPlayAllLabel { width: 100px; top: 8px; font-size: 11px; position: absolute; display: none; }
+
+.zgVolume { width: 27px; top: 5px; right: 5px; height: 23px; border-left: 2px solid #DDD;  }
+.zgSoundIcon { width: 11px; height: 10px; top: 6px; left: 9px; background-position: 0 -140px; line-height: 8px; font-size: 8px; }
+.zgSoundIconMute { background-position: -15px -140px; }
+.zgSlider { width: 26px; height: 74px; left: 0; bottom: 0; background-position: 0 -155px; display: none;  }
+.zgSliderBackground, .zgSliderForeground { width: 4px; height: 46px; left: 10px; bottom: 25px; background-position: -45px -159px; font-size: 1px; }
+.zgSliderForeground { background-position: -55px -159px; }
+.zgSliderControl { width: 13px; height: 7px; top: 3px; left: 6px; background-position: -30px -161px; line-height: 5px; font-size: 5px}
+
+.zgMarqueeSong .zgNowPlaying { position: absolute; top: 13px; color: #666; font-size: 10px; }
+.zgMarqueeSong, .zgMarqueeAlbum { left: 105px; top: 1px; width: 110px; }
+.zgMarqueeSong .zgMarqueeTitle, .zgMarqueeAlbum .zgMarqueeTitle 
+  { overflow: hidden; height: 15px; width: 140px; font-size: 11px; }
+.zgMarqueeAlbum .zgMarqueeTitle2
+  { position: absolute; top: 15px; overflow: hidden; height: 14px; width: 140px; font-size: 10px; }
+.zgMarqueeAlbum .zgNowPlaying, .zgColon { color: #666; }
+
+div.mp3Enabled div.rankedItemInfo { position: relative; }
+
+div.mp3Enabled div.mp3AsinPlay { height: 22px; width: 22px; margin: 0; cursor: pointer; padding: 0; 
+  background-position: 0 0; background-image: url('http://g-ecx.images-amazon.com/images/G/01/zeitgeist/mp3player/playbutton._V189045547_.png'); }
+
+div.zgChart a.mp3AsinTitle { font-size: 11px; }
+
+.zgMarqueeTitle2 .zgMarqueeProductTitle2 { font-size: 10px; }
+
+div.mp3Enabled div.mp3AsinPlayHover div.mp3AsinPlay { background-position: -22px 0; }
+div.mp3Enabled div.mp3AsinPause div.mp3AsinPlay { background-position: -22px -22px; }
+div.mp3Enabled div.mp3AsinPaused div.mp3AsinPlay { background-position: -22px 0; }
+div.mp3Enabled div.mp3AsinPauseHover div.mp3AsinPlay { background-position: -22px -22px; }

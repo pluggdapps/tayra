@@ -1,0 +1,943 @@
+/* -------------------------------------------------------------- 
+  
+   reset.css
+   * Resets default browser CSS.
+   
+   Based on work by Eric Meyer:
+   * meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
+   
+-------------------------------------------------------------- */
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+
+body { line-height: 1.5; background: #fff; margin:1.5em 0; }
+
+/* Tables still need 'cellspacing="0"' in the markup. */
+table { border-collapse: separate; border-spacing: 0; }
+caption, th, td { text-align: left; font-weight:400; }
+
+/* Remove possible quote marks (") from <q>, <blockquote>. */
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
+
+a img { border: none; }
+
+.reset {
+    padding: 0;
+    margin: 0;
+    background-color: #ffffff;
+    border: none;
+    clear: both;
+}
+
+div#page-wrapper {
+	margin: 0 15px;
+}
+
+div#utility-bar-wrapper {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #000;
+	color: #fff;
+	padding: 0 15px;
+	height: 36px;
+	line-height: 36px;
+	font-size: 12px;
+	text-shadow: 0 0 0 #000;
+}
+
+div#utility-bar-wrapper a {
+	color: #fff;
+}
+
+div#utility-bar-wrapper a:hover {
+	text-decoration: underline;
+}
+
+div.utilities {
+	text-align: right !important;
+}
+
+
+#header #brand {
+	height: 52px;
+	border-bottom: 2px solid #000;
+}
+
+#header #brand h1 a {
+	background: url('/media/static/assets/images/nyrb_logo.png?f8ef0f557271') no-repeat;
+	width: 631px;
+	height: 44px;
+	line-height: 600px;
+	overflow: hidden;
+	display: block;
+	float: left;
+	margin-right: 9px;
+	margin-top: 1px;
+}
+
+#header #brand form {
+	margin: 0;
+	padding: 12px 0 6px 0;
+	height: 36px;
+	float: left;
+}
+
+#header #brand form input#search {
+	margin: 0 7px 0 0;
+	padding: 3px 5px;
+	width: 165px;
+	line-height: 14px;
+	float: left;
+	border: 1px solid #dfdfdf;
+}
+
+#header #brand form input#search-button {
+	margin-left: 11px;
+	float: left;
+	margin-top: 3px;
+	border: none;
+	width: auto;
+}
+
+#page-title-wrapper {
+	border-bottom: 1px solid #990101;
+}
+
+#page-title {
+	padding-bottom: 8px;
+	margin-bottom: 1px;
+	border-bottom: 2px solid #990101;
+	float: left;
+}
+
+#page-title h2 {
+	margin-bottom :0;
+}
+
+#content {
+	padding-top: 17px;
+	padding-bottom: 18px;
+	background: url('/media/static/assets/images/main-content-background.png?f8ef0f557271') repeat-y;
+}
+
+#sidebar {
+	padding-top: 17px;
+}
+
+#content-footer {
+	border-top: 1px solid #990101;
+}
+#content-footer div {
+	margin-top: 1px;
+	border-top: 2px solid #990101;
+}
+
+#footer-wrapper {
+	margin-top: 18px;
+	padding: 18px 15px;
+	color: #666;
+	background-color: #000;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	text-shadow: 0 0 0 #000;
+}
+
+#footer-wrapper a {
+	color: #fff;
+}
+#footer-wrapper a:hover {
+	text-decoration: underline;
+}
+
+#footer {
+	text-align: left;
+}
+
+#footer li {
+	color: #fff;
+    list-style-type: none;
+    display: inline;
+    padding: 0 5px;
+    border-right: 1px solid #fff;
+}
+
+#footer li ul {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+table.calendar td {
+	color: #999;
+}
+table.calendar a {
+	color: #666;
+}
+table.calendar a:hover {
+	color: #990101;
+}
+table.calendar .not-in-month a {
+	color: #999;
+}
+table.calendar .not-in-month a:hover {
+	color: #666;
+}
+table.calendar .today a:hover {
+	color: #666;
+}
+
+/* --------------------------------------------------------------
+typography.css
+* Sets up some sensible default typography.
+Based on work by:* Nathan Borror [playgroundblues.com]
+* Jeff Croft [jeffcroft.com]
+* Christian Metts [mintchaos.com]
+* Wilson Miner [wilsonminer.com]
+* Richard Rutter [clagnut.com]
+Read more about using a baseline here:* alistapart.com/articles/settingtypeontheweb
+-------------------------------------------------------------- */
+body{color:#222;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
+h1,h2,h3,h4,h5,h6{color:#111;}
+/* Headings
+-------------------------------------------------------------- */
+/* FontDeck */
+.magazine h1,.magazine h2{font-family:"Clarendon URW Bold",Clarendon,'Century Schoolbook','Times New Roman',Times,serif;font-size-adjust:0.477;font-weight:bold;}
+.magazine h1 em,.magazine h2 em,.magazine h1 i,.magazine h2 i{font-family:"Clarendon URW Bold Oblique",Clarendon,'Century Schoolbook','Times New Roman',Times,serif;font-size-adjust:0.477;font-weight:normal;font-style:italic;}
+.books h1,.books h2{font-family:"Aster Medium",'Times New Roman',Times,serif;font-weight:normal;}
+h1,h2,h3,h4{font-family:"Times New Roman",Georgia,serif;font-weight:bold;}
+h5,h6{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:bold;}
+h2{font-size:24px;line-height:24px;margin: 12px 0;color:#333;}
+h3{font-size:14px;line-height:18px;color:#333;margin-bottom:0;}
+h3 a{color:#333;}
+h4{font-size:14px;line-height:18px;color:#444;margin-bottom:18px;font-weight:normal;}
+h4 a{color:#555;}
+h5{font-size:12px;line-height:18px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#999;text-transform:uppercase;margin-bottom:18px;}
+h6{font-size:11px;color:#333;margin:0;line-height:18px;}
+/* Text elements
+-------------------------------------------------------------- */
+p{margin:0 0 18px 0;}
+p.last{margin-bottom:0;}
+p img{float:left;margin:18px 18px 18px 0;padding:0;}
+p img.top{margin-top:0;}
+/* Use this if the image is at the top of the <p>. */
+img{margin:0 0 18px 0;}
+ul,ol{margin:0 0 18px 0;}
+ul{list-style-type:disc;}
+ol{list-style-type:decimal;}
+dl{margin:0 0 18px 0;}
+dl dt{font-weight:bold;color:#444;}
+dd{margin-left:0;}
+abbr,
+acronym{border-bottom:1px dotted #444;}
+address{margin-bottom:18px;font-style:italic;}
+del{color:#999;}
+sup{line-height:0px;}
+sup a{text-decoration:underline;padding:3px;}
+sup a:hover{background-color:#dfdfdf;color:#333;}
+.footnoteBackLink{padding:3px;}
+.footnoteBackLink:hover{background-color:#dfdfdf;color:#333;}
+a:focus,
+a:hover{color:#000;}
+a{text-decoration:none;color:#990101;}
+blockquote{margin:0 18px 18px 18px;color:#333;}
+strong{font-weight:bold;}
+em,dfn{font-style:italic;}
+dfn{font-weight:bold;}
+pre,code{margin:18px 0;white-space:pre;}
+pre,code,tt{font:12px 'andale mono','monotype.com','lucida console',monospace;line-height:18px;}
+tt{display:block;margin:18px 0;line-height:18px;}
+/* Tables
+-------------------------------------------------------------- */
+table{margin-bottom:18px;border-collapse:collapse;}
+th{font-size:11px;text-transform:uppercase;font-weight:bold;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
+th,td{height:22px;padding:0 5px;}
+tfoot{font-style:italic;}
+caption{background:#999;}
+/* Use this if you use span-x classes on th/td. */
+table .last{padding-right:0;}
+/* Some default classes
+-------------------------------------------------------------- */
+/*.caps{text-transform:lowercase;font-variant:small-caps;}*/
+/*.amp{font-style:italic;}*/
+/*.dquo{margin-left:-.5em;}*/
+.small{font-size:12px;}
+.large{font-size:16px;}
+.quiet{color:#333;}
+.caption{font-size:12px;text-align:center;}
+.highlight{background:#ff0;}
+.top{margin-top:0 !important;padding-top:0 !important;}
+.bottom{margin-bottom:0 !important;padding-bottom:0 !important;}
+
+/* -------------------------------------------------------------- 
+   
+   grid.css
+   * Sets up an easy-to-use grid of 24 columns.
+   
+   Based on work by:
+   * Nathan Borror     [playgroundblues.com]
+   * Jeff Croft        [jeffcroft.com]
+   * Christian Metts   [mintchaos.com]
+   * Khoi Vinh         [subtraction.com]
+   
+   By default, the grid is 950px wide, with 24 columns 
+   spanning 30px, and a 10px margin between columns.
+   
+   If you need fewer or more columns, use this 
+   formula to find the new total width: 
+   Total width = (columns * 40) - 10
+   
+   Read more about using a grid here:
+   * subtraction.com/archives/2007/0318_oh_yeeaahh.php
+   
+-------------------------------------------------------------- */
+
+/* A container should group all your columns. */
+.container {
+  width: 950px;
+  margin: 0 auto;
+}
+
+
+/* Columns
+-------------------------------------------------------------- */
+
+/* Use this class together with the .span-x classes
+   to create any composition of columns in a layout. */
+   
+.column {
+  float: left;
+  margin-right: 10px;
+}
+
+
+/* The last column in a row needs this class. */
+.last { margin-right: 0; }
+
+/* Use these classes to set the width of a column. */
+.span-1   { width: 30px; }
+.span-2   { width: 70px; }
+.span-3   { width: 110px; }
+.span-4   { width: 150px; }
+.span-5   { width: 190px; }
+.span-6   { width: 230px; }
+.span-7   { width: 270px; }
+.span-8   { width: 310px; }
+.span-9   { width: 350px; }
+.span-10  { width: 390px; }
+.span-11  { width: 430px; }
+.span-12  { width: 470px; }
+.span-13  { width: 510px; }
+.span-14  { width: 550px; }
+.span-15  { width: 590px; }
+.span-16  { width: 630px; }
+.span-17  { width: 670px; }
+.span-18  { width: 710px; }
+.span-19  { width: 750px; }
+.span-20  { width: 790px; }
+.span-21  { width: 830px; }
+.span-22  { width: 870px; }
+.span-23  { width: 910px; }
+.span-24  { width: 950px; margin: 0; }
+
+/* Add these to a column to append empty cols. */
+.append-1   { padding-right: 40px; }  
+.append-2   { padding-right: 80px; } 
+.append-3   { padding-right: 120px; } 
+.append-4   { padding-right: 160px; } 
+.append-5   { padding-right: 200px; } 
+.append-6   { padding-right: 240px; } 
+.append-7   { padding-right: 280px; } 
+.append-8   { padding-right: 320px; } 
+.append-9   { padding-right: 360px; } 
+.append-10  { padding-right: 400px; } 
+.append-11  { padding-right: 440px; } 
+.append-12  { padding-right: 480px; } 
+.append-13  { padding-right: 520px; } 
+.append-14  { padding-right: 560px; } 
+.append-15  { padding-right: 600px; } 
+.append-16  { padding-right: 640px; } 
+.append-17  { padding-right: 680px; } 
+.append-18  { padding-right: 720px; } 
+.append-19  { padding-right: 760px; } 
+.append-20  { padding-right: 800px; } 
+.append-21  { padding-right: 840px; } 
+.append-22  { padding-right: 880px; } 
+.append-23  { padding-right: 920px; } 
+
+/* Add these to a column to prepend empty cols. */
+.prepend-1   { padding-left: 40px; }  
+.prepend-2   { padding-left: 80px; } 
+.prepend-3   { padding-left: 120px; } 
+.prepend-4   { padding-left: 160px; } 
+.prepend-5   { padding-left: 200px; } 
+.prepend-6   { padding-left: 240px; } 
+.prepend-7   { padding-left: 280px; } 
+.prepend-8   { padding-left: 320px; } 
+.prepend-9   { padding-left: 360px; } 
+.prepend-10  { padding-left: 400px; } 
+.prepend-11  { padding-left: 440px; } 
+.prepend-12  { padding-left: 480px; } 
+.prepend-13  { padding-left: 520px; } 
+.prepend-14  { padding-left: 560px; } 
+.prepend-15  { padding-left: 600px; } 
+.prepend-16  { padding-left: 640px; } 
+.prepend-17  { padding-left: 680px; } 
+.prepend-18  { padding-left: 720px; } 
+.prepend-19  { padding-left: 760px; } 
+.prepend-20  { padding-left: 800px; } 
+.prepend-21  { padding-left: 840px; } 
+.prepend-22  { padding-left: 880px; } 
+.prepend-23  { padding-left: 920px; } 
+
+
+/* Border on right hand side of a column. */
+.border {
+  padding-right: 4px;
+  margin-right: 5px;
+  border-right: 1px solid #eee;
+}
+
+/* Border with more whitespace, spans one column. */
+.colborder {
+  padding-right: 24px;
+  margin-right: 25px;
+  border-right: 1px solid #eee;
+}
+
+
+/* Use these classes on an element to push it into the 
+   next column, or to pull it into the previous column. */
+
+.pull-1  { margin-left: -40px; }
+.pull-2  { margin-left: -80px; }
+.pull-3  { margin-left: -120px; }
+.pull-4  { margin-left: -160px; }
+
+.push-0  { margin: 0 0 0 18px; }
+.push-1  { margin: 0 -40px 0 18px; }
+.push-2  { margin: 0 -80px 0 18px; }
+.push-3  { margin: 0 -120px 0 18px; }
+.push-4  { margin: 0 -160px 0 18px; }
+.push-0, .push-1, .push-2, .push-3, .push-4 { float: right; }
+
+
+/* Misc classes and elements
+-------------------------------------------------------------- */
+
+/* Use a .box to create a padded box inside a column.  */ 
+.box { 
+  padding: 1.5em; 
+  margin-bottom: 1.5em; 
+  background: #eee; 
+}
+
+/* Use this to create a horizontal ruler across a column. */
+hr {
+  background: #ddd; 
+  color: #ddd;
+  clear: both; 
+  float: none; 
+  width: 100%; 
+  height: .1em;
+  margin: 0 0 1.4em;
+  border: none; 
+}
+hr.space {
+  background: #fff;
+  color: #fff;
+}
+
+/* Clearing floats without extra markup
+   Based on How To Clear Floats Without Structural Markup by PiE
+   [http://www.positioniseverything.net/easyclearing.html] */
+
+.clear { display: inline-block; }   
+.clear:after, .container:after {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;
+}
+* html .clear { height: 1%; }
+.clear { display: block; }
+
+/* -------------------------------------------------------------- 
+   
+   forms.css
+   * Sets up some default styling for forms
+   * Gives you classes to enhance your forms
+   
+   Usage:
+   * For text fields, use class .title or .text
+   
+-------------------------------------------------------------- */
+
+#comment-form {
+  float: left;
+  clear: left;
+}
+
+label { 
+  display: block;
+  margin-right: 10px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+  font-weight: bold; 
+  font-size: 12px;
+  color: #666;
+}
+label.help { 
+  width: 230px;
+  float: right;
+  font-weight: normal; color: #888; 
+  margin: 0 0 18px 0;
+}
+
+
+/* Fieldsets */
+fieldset    { background-color: #efefef; padding: 16px; margin: 18px 0; border: 1px solid #dfdfdf; -webkit-border-radius: 5px; -moz-border-radius: 5px; }
+fieldset p  { color: #666; }
+legend      { color: #990101; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; position: relative; top: -5px; font-weight: bold;  }
+
+/* Text fields */
+input       { margin: 0 0 18px 0; }
+input[type=submit] { width: auto;}
+
+/* Textareas */
+textarea            { width: 430px; height: 252px; margin: 0 0 18px 0; }
+textarea:focus      {  }
+
+/* Success, error & notice boxes for messages and errors. */
+.error,
+.notice, 
+.success    { border: 2px solid #dfdfdf; }
+.error      { background: #f4f4f4; color: #990101; }
+.notice     { background: #FFF6BF; color: #817134; border-color: #FFD324; }
+.success    { background: #E6EFC2; color: #529214; border-color: #C6D880; }
+.error a    { color: #D12F19; }
+.notice a   { color: #817134; }
+.success a  { color: #529214; }
+
+/* --------------------------------------------------------------
+New York Review of Books CSS
+-------------------------------------------------------------- */
+body{margin:0;font-family:"Times New Roman",Georgia,serif;font-size:14px;line-height:18px;}
+#main-content{min-height:600px;}
+/* GENERAL CLASSES */
+.invisible{visibility:hidden;}
+.hidden{display:none;}
+.center{text-align:center;}
+.numeric{text-align:right;}
+/* NYRB CLASSES */
+ul li{list-style-type:none;}
+h3.issue-title{color:#990101;}
+a.read{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:bold;font-size:11px;text-transform:uppercase;display:block;margin-top:-18px;}
+a.margin{margin-top:0 !important;margin-bottom:18px;}
+ul.pagination{margin:9px 0 9px 0;padding:0;width:470px;width:100%;float:left;clear:left;border-top:1px solid #dfdfdf;}
+ul.pagination li{font-size:10px;line-height:18px;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:bold;text-transform:uppercase;display:block;float:left;height:18px;/*width:18px;*/
+min-width:18px;margin-right:0px;text-align:center;color:#333;}
+ul.pagination li a{display:block;float:right;/*float:left;*/
+height:18px;/*width:18px;*/
+min-width:18px;padding:0 3px;color:#333;text-align:center;}
+ul.pagination li a:hover{background-color:#dfdfdf;}
+ul.pagination li.current{min-width:18px;padding:0 2px;color:#fff;background-color:#990101;}
+ul.pagination li.previous a,
+ul.pagination li.next a{font-size:16px;color:#333;}
+ul.pagination li.article-link,
+ul.pagination li.comments-link{float:right;}
+ul.pagination li.article-link a,
+ul.pagination li.comments-link a{background-color:#dfdfdf;padding:0 9px;}
+ul.pagination li.article-link a:hover,
+ul.pagination li.comments-link a:hover{background-color:#990101;color:#fff;}
+.column-padding{padding-left:10px;padding-right:10px;}
+.column-padding-left{padding-left:10px;}
+.column-padding-right{padding-right:10px;}
+.inner-box{padding:0 10px;}
+.issue-article-list{list-style-type:none;margin-left:160px;clear:both;float:left;margin-bottom:36px;}
+.issue-article-list li{clear:both;margin-bottom:18px;float:left;}
+.issue-article-list h3{float:right;width:430px;margin-bottom:0;}
+.issue-article-list h4{float:left;width:150px;margin-left:-160px;}
+.issue-article-list p,.article-list p{width:430px;margin-bottom:0;}
+.article-list a.read{margin-top:0px;}
+.article-list{margin:0 0 18px 0;list-style-type:none;}
+.article-list li{margin:0 0 36px 0;}
+.article-list.simple li{margin:0;color:#444;}
+.article-list.simple li a{color:#444;}
+.article-list.simple li a:hover{color:#990101;}
+.article-list.simple li strong a{color:#333;}
+.article-list h4{margin-bottom:0;}
+.article-list h5{font-weight:normal;margin-bottom:0;}
+.article-list h5 a{color:#888;}
+.article-list h5 a:hover{color:#990101;}
+.link-list{margin:0 0 18px 0;list-style-type:none;}
+.illustration-list{float:left;list-style-type:none;}
+.illustration-list li{float:left;width:190px;margin-right:10px;margin-bottom:18px;}
+.illustration-list li.first{clear:left;}
+.illustration-list li.last{margin-right:0;}
+.illustration-list li img{margin-bottom:0;height:300px;}
+.tag-list{/*font-variant:small-caps;*/
+list-style-type:none;float:left;margin:9px 0 27px 0;}
+.tag-list li{float:left;margin-right:10px;font-size:10px;font-weight:bold;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
+.tag-list li a{float:left;/*color:#888;*/
+color:#444;height:14px;line-height:13px;padding:0 5px;margin-bottom:4px;background-color:#dfdfdf;-webkit-border-radius:5px;-moz-border-radius:5px;text-shadow:0 1px 0 #fff;}
+.tag-list li a:hover{color:#fff;text-shadow:0 -1px 0 #666;background-color:#666;}
+ol.comment-list{float:left;clear:left;width:470px;list-style-type:none;margin:0 0 18px 0;}
+ol.comment-list li{/*margin:0 0 18px 0;*/
+padding-top:17px;border-top:1px solid #dfdfdf;float:left;}
+ol.comment-list dl{clear:left;float:left;width:350px;margin-left:120px;}
+ol.comment-list dt{width:110px;margin-left:-120px;float:left;}
+ol.comment-list dt span{display:block;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#888;font-weight:normal;font-size:10px;}
+ol.comment-list dt span.comment_author_name{font-weight:bold;font-size:12px;}
+/* styles for search form */
+#search-advanced-div{float:right;position:relative;top:-22px;padding-right:15px;}
+.search-advanced-link{color:#990101;font-size:10px;text-decoration:underline;}
+/* the comment textarea input */
+#id_comment{height:70px;min-height:70px;}
+.advertisement img{margin-top:0 !important;margin-bottom:0 !important;}
+.advertisement p{margin:0 0 18px 0 !important;font-family:"Helvetica Neue",Arial,sans-serif !important;color:#999 !important;font-size:11px !important;font-weight:bold !important;text-align:center !important;}
+p.advertisement{margin:0 0 18px 0 !important;font-family:"Helvetica Neue",Arial,sans-serif !important;color:#999 !important;font-size:11px !important;font-weight:bold !important;text-align:center !important;}
+table.shopping-cart{margin:18px 0;}
+table.shopping-cart th,td{margin-right:10px;}
+table.shopping-cart td{padding-top:9px;padding-bottom:9px;}
+table.shopping-cart td form{display:inline;}
+table.shopping-cart input#id_quantity{width:30px;text-align:right;}
+table.shopping-cart form.qtyform td input[type=submit]{width:auto;}
+h4 a:hover,h3 a:hover{color:#990101;}
+.inline-type-blog-image{float:right;text-align:center;}
+/*.inline-type-blog-image p{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}*/
+/* STYLES FROM SATCHMO
+---------------------------------------------- */
+#shipping ul li{list-style-type:none;text-decoration:none;padding-left:1em;text-indent:-1em;}
+#checkoutprogress{/*border-style:solid;border-width:1px;padding:3px;*/
+margin-bottom:25px;}
+#checkoutprogress ul{display:inline;margin-left:0;padding-left:0;border:none;}
+#checkoutprogress ul li{margin-left:0;padding-left:2px;display:inline;list-style:none;}
+#checkoutprogress ul li:before{content:"\0020 \0020 \0020 \00BB \0020";display:inline;list-style:none;}
+#checkoutprogress ul li.first:before{content:" ";}
+#checkoutprogress li.active{background-color:#ccc;}
+.inline-copyright{color:black;text-align:right;margin-bottom:3px;font-size:9px;font-family:"Times New Roman",Georgia,serif;line-height:1.33;}
+.inline-subject,.inline-caption{font-family:"Times New Roman",Georgia,serif;font-size:11px;font-style:italic;text-align:center;line-height:1.33;}
+.inline-caption i,.inline-caption em{font-style:normal;}
+/* styles for inline positioning */
+.inline-position-left{float:left;margin-right:10px;}
+.inline-position-center{float:none;width:100%;}
+.inline-position-right{float:right;margin-left:10px;}
+.inline-recenter{text-align:center;margin:0 auto;}
+/* newsletter quick signup */
+div#quick-signup,div#quick-signup-books{width:150px;height:100px;padding:5px;background-color:white;border:1px solid black;margin-bottom:15px;text-align:left;margin:auto;}
+div#quick-signup-books{width:180px;padding:5px 10px;}
+#quick-signup #title,#quick-signup-books #title{font-family:georgia;font-size:11px;font-weight:bold;color:#990101;text-transform:uppercase;letter-spacing:0;}
+#quick-signup-books #title{color:#0856A6;font-size:11px;}
+#quick-signup #description,#quick-signup-books #description{font-family:georgia;color:#444;font-size:10px;line-height:15px;margin:7px 0 10px 0;}
+#quick-signup-books #description{font-size:12px;}
+#quick-signup #id_email,#quick-signup-books #id_email{display:inline;float:left;font-family:georgia;font-size:10px;color:#666;width:96px;height:16px;padding:0 0 0 3px;margin:0 5px 0 0;border:1px solid #666;}
+#quick-signup-books #id_email{line-height:0;}
+#quick-signup-books #id_email{width:110px;}
+#quick-signup #submit,#quick-signup-books #submit{display:inline;float:left;font-size:9px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:500;letter-spacing:.5pt;width:44px;height:18px;border:0;margin:0;text-transform:uppercase;color:white;background-color:#990101;}
+#quick-signup-books #submit{background-color:#0856A6;}
+/* Sidebar lists */
+#sidebar .nav ul{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:normal;font-size:11px;padding:0;border-top:1px solid #dfdfdf;margin:0;}
+#sidebar .nav li{border-bottom:1px solid #dfdfdf;}
+#sidebar .nav li a{display:block;padding:5px;}
+#sidebar .nav li a:hover{background:#990101;color:#ffffff;}
+#sidebar .nav .selected{background:#990101;color:#ffffff;display:block;padding:5px;}
+#sidebar h3{padding:5px 0 10px 0;}
+/* Classifieds */
+body.classifieds h3{text-align:center;text-transform:uppercase;border-top:1px solid #dfdfdf;border-bottom:1px solid #dfdfdf;padding:9px 0;margin-bottom:17px;color:#444;}
+/* Contributor page */
+body.contributor #content{padding-top:0;padding-right:1px;width:629px;}
+div.bio{/*border-bottom:1px solid #990101;*/
+background-color:#F5F5F5;padding:15px 15px 0 15px;}
+div.bio p{margin:0;padding:0 0 18px;}
+body.contributor .ui-tabs-nav{background-color:#F5F5F5;}
+body.contributor .ui-tabs-panel{padding-top:15px;}
+body.contributor .contributor-image{margin:0 15px 0 0;float:left;border:solid 1px #000;}
+.latest-blog-title a{color:#990101;}
+.latest-blog-title a:hover{color:black;}
+.icons { display: block; float: right; margin-left: 3px; }
+.icons a { float: right; padding: 0 6px 0 18px; background-repeat: no-repeat; background-position: center left; }
+.icons a.facebook { background-image:url('/media/static/assets/images/social/16/facebook.png?f8ef0f557271'); }
+.icons a.twitter { background-image:url('/media/static/assets/images/social/16/twitter.png?f8ef0f557271'); }
+.icons a.rss { background-image: url('/media/static/assets/images/social/16/rss.png?f8ef0f557271'); }
+
+.bare { list-style-type: none; margin-left: 0; padding-left: 0; }
+.center { text-align: center; }
+
+/*- Main Navigation ----------------------------------------------------------*/
+
+div#navigation {
+	margin-top: 1px;
+	border-top: 1px solid #000;
+}
+
+#navigation {
+	padding: 0;
+	margin-bottom: 36px;
+}
+
+#navigation, #navigation ul {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	list-style: none;
+	z-index:5;
+}
+
+#navigation a, #navigation a:hover {
+	display: block;
+	text-decoration: none;
+	height: 23px;
+}
+
+#navigation li {
+	float: left;
+	width: 119px;
+	padding-right: 0;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+/* last item */
+#navigation .last {
+	padding-right: 0;
+	width: 108px;
+	border-right: 1px solid #ddd;
+	border-top: none;
+}
+
+#navigation img {
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+}
+
+
+#navigation a, #navigation a:visited {
+	display: block;
+	font-weight: 600;
+	color: #333;
+	padding: 6px 10px;
+}
+
+#navigation a:hover, #navigation a:active, .current_page_item a, #home .on {
+	color: #fff;
+	background: #990101;
+}
+
+#navigation .last a:hover {
+	color: #fff;
+	background: #0856a6;
+}
+
+#navigation li ul {
+	position: absolute;
+	width: 110px;
+	padding-right: 9px;
+	left: -999em;
+	height: auto;
+	/*background: #fff;*/
+	/*opacity: 0.95;*/
+	/* for IE */
+	/*filter:alpha(opacity=95);*/
+}
+
+#navigation li li {
+	border-bottom: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	background: #fff;
+	opacity: 0.95;
+	/* for IE */
+	filter:alpha(opacity=95);
+}
+
+/* secondary nav is as wide as two primary nav items */
+#navigation li li {
+	width:239px;
+}
+
+/* last one is a bit narrower */
+#navigation li#navSubscribe li {
+	width:228px;
+}
+
+#navigation li li a, #navigation li li a:visited {
+	font-weight: normal;
+	color: #333;
+}
+
+#navigation li li a:hover, #navigation li li a:active {
+	color: #fff;
+	background: #990101;
+}
+
+#navigation li:hover ul, #navigation li li:hover ul, #navigation li li li:hover ul {
+	left: auto;
+	margin-left: -1px;
+	border-top: 1px solid #ddd;
+}
+
+
+/* TABS */
+
+#alphalist
+{
+    margin-bottom: 40px;
+}
+
+#alphalist ul li
+{
+    list-style: none;
+    display: inline;
+    margin: 0;
+    float: left;
+    margin-left: 10px;
+}
+
+#alphalist ul li a
+{
+    text-decoration: underline;
+}
+
+/* make subscribe red */
+#navigation .navsubscribe .navsubscribe_a { color: #ffffff; background-color: #990101; }
+#navigation .navsubscribe:hover .navsubscribe_a,
+#navigation .navsubscribe.selected .navsubscribe_a { color: #990101; background-color: #ffffff; }
+/*
+.ui-wrapper { border: 1px solid #50A029; }
+.ui-wrapper input, .ui-wrapper textarea { border: 0; }
+*/
+
+/* Caution! Ensure accessibility in print and other media types... */
+@media projection, screen { /* Use class for showing/hiding tab content, so that visibility can be better controlled in different media types... */
+    .ui-tabs-hide {
+        display: none !important;
+    }
+}
+
+/* Hide useless elements in print layouts... */
+@media print {
+    .ui-tabs-nav {
+        display: none;
+    }
+}
+
+/* Skin */
+.ui-tabs-panel {
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12px;
+}
+.ui-tabs-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    font-family: "Trebuchet MS", Trebuchet, Verdana, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    color: #990101;
+}
+.ui-tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
+    display: block;
+    clear: both;
+    content: " ";
+}
+.ui-tabs-nav li {
+    float: left;
+    margin: 0 2px 0 0;
+    font-weight: bold;
+    background-color: #fff;
+    /*padding-left:5px;*/
+}
+.ui-tabs-nav a, .ui-tabs-nav a span {
+    float: left; /* fixes dir=ltr problem and other quirks IE */
+    padding: 0 12px;
+    /*background: url('/media/static/assets/styles/jquery/i/tabs.png?f8ef0f557271') no-repeat;*/
+}
+.ui-tabs-nav a {
+    margin: 5px 0 0; /* position: relative makes opacity fail for disabled tab in IE */
+    padding-left: 0;
+    background-position: 100% 0;
+    text-decoration: none;
+    white-space: nowrap; /* @ IE 6 */
+    outline: 0; /* @ Firefox, prevent dotted border after click */
+    background-color: #fff;
+    border-top:1px solid #990101;
+    border-left:1px solid #990101;
+    border-right:1px solid #990101;
+    margin-top: 0;
+    padding-top: 4px;
+}
+.ui-tabs-nav a:link, .ui-tabs-nav a:visited {
+    padding-left: 5px;
+}
+.ui-tabs-nav .ui-tabs-selected a,
+.ui-tabs-nav a:hover, .ui-tabs-nav a:focus {
+    color: #fff;
+    background-color: #990101;
+    /* background-position: 100% -23px;
+    position: relative;
+    top: 1px;
+    z-index: 2;
+    padding-left: 5px; */
+}
+.ui-tabs-nav a span {
+    padding-top: 1px;
+    padding-right: 0;
+    height: 20px;
+    background-position: 0 0;
+    line-height: 20px;
+}
+.ui-tabs-nav .ui-tabs-selected a span {
+    padding-top: 0;
+    height: 27px;
+    background-position: 0 -23px;
+    line-height: 27px;
+}
+.ui-tabs-nav .ui-tabs-selected a:link, .ui-tabs-nav .ui-tabs-selected a:visited,
+.ui-tabs-nav .ui-tabs-disabled a:link, .ui-tabs-nav .ui-tabs-disabled a:visited { /* @ Opera, use pseudo classes otherwise it confuses cursor... */
+    cursor: text;
+}
+.ui-tabs-nav a:hover, .ui-tabs-nav a:focus, .ui-tabs-nav a:active,
+.ui-tabs-nav .ui-tabs-unselect a:hover, .ui-tabs-nav .ui-tabs-unselect a:focus, .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
+    cursor: pointer;
+}
+.ui-tabs-disabled {
+    opacity: .4;
+    filter: alpha(opacity=40);
+}
+.ui-tabs-nav .ui-tabs-disabled a:link, .ui-tabs-nav .ui-tabs-disabled a:visited {
+    color: #000;
+}
+.ui-tabs-panel {
+    /*border: 1px solid #519e2d;*/
+    border-top: 1px solid #990101;
+    border-bottom: 1px solid #dfdfdf;
+    padding: 0 10px;
+    background: #fff; /* declare background color for container to avoid distorted fonts in IE while fading */
+}
+/*.ui-tabs-loading em {
+    padding: 0 0 0 20px;
+    background: url('/media/static/assets/styles/jquery/loading.gif?f8ef0f557271') no-repeat 0 50%;
+}*/
+
+/* Additional IE specific bug fixes... */
+* html .ui-tabs-nav { /* auto clear @ IE 6 & IE 7 Quirks Mode */
+    display: inline-block;
+}
+*:first-child+html .ui-tabs-nav  { /* auto clear @ IE 7 Standards Mode - do not group selectors, otherwise IE 6 will ignore complete rule (because of the unknown + combinator)... */
+    display: inline-block;
+}

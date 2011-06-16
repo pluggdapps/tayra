@@ -1,0 +1,19 @@
+#ecPoll_v3{text-align:left;width:180px;height:270px;background-color:#F6F6F6;font-family:Arial,Helvetica,sans-serif;font-size:12px;margin-bottom:5px;}
+.pollMainArea{padding-left:3px;height:231px;position:relative;left:0px;top:0px;width:180px;}
+#pollResults{z-index:0;display:none;}
+#pollDisplay{z-index:1;display:none;}
+#pollLoading{background:#F6F6F6 url('ajax-loader.gif') no-repeat center center;height:230px;width:175px;z-index:2;}
+.pollResultBar{background-image:url('http://static.earthcamcdn.com/images/percentBar.jpg');background-repeat:repeat-x;height:10px;float:left;margin-top:3px;margin-left:20px;}
+.pollResult{float:left;margin-left:3px;font-size:11px;font-weight:500;}
+#pollSubmit{float:right;}
+.pollFooter{position:relative;width:86px;height:14px;float:left;cursor:default;font-size:12px;font-weight:bold;}
+#pollSubmitVote, #pollPrior{left:1px;}
+.pollAnswer{font-size:11px;font-weight:500;}
+.pollQuestion{height:45px;}
+#pollVoteResults{position:static;}
+#pollVoteResults:hover, #pollNext:hover, #pollPrev:hover, #pollSubmitVote:hover{text-decoration:underline;}
+#pollPrev{float:left;}
+#pollNext{float:right;}
+#pollVoteResults, #pollSubmitVote, #pollPrev, #pollNext{cursor:pointer;}
+.pollGrayedOut{text-decoration:none;/*color:#9F9F9F;*/color:#81BDF3;display:none;cursor:default;}
+.pollAnswer a:link, .pollAnswer a:visited, .pollAnswer a:active, .pollResult a:link, .pollResult a:visited, .pollResult a:active{text-decoration:underline;}

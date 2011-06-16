@@ -1,0 +1,87 @@
+#container_home {
+	width:232px;
+	max-width:232px;
+	height:40px;
+	max-height:40px;
+	overflow:hidden;
+	background-image:url(http://www.vividseats.com/v2/newimages/searchbox/allmusic_232x40.jpg);
+	background-repeat:no-repeat;
+	background-color:#ffffff;
+	padding:0px 0px 10px 0px;
+	margin:0px;
+	}
+
+#container_genre{
+	width:232px;
+	max-width:232px;
+	height:40px;
+	max-height:40px;
+	overflow:hidden;
+	background-image:url(http://www.vividseats.com/v2/newimages/searchbox/allmusic_232x40.jpg);
+	background-repeat:no-repeat;
+	background-color:#4B817B;
+	padding-bottom:10px;
+	margin-top:10px;
+	}
+
+#title_home, #title_genre{
+	padding:4px 0px 0px 72px;
+	float:left;
+	width:195px;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#FFFFFF;
+	line-height:18px;
+	text-align:left;
+	}
+
+#title_home a, #title_genre a{
+	color:#FFF;
+	text-decoration:underline;
+	}
+
+#title_home a:hover, #title_genre a:hover{
+	color:#a1b73a;
+	text-decoration:underline;
+	}
+
+#content_home, #content_genre{
+	 padding:1px 0px 0px 74px;
+	 float:left;
+	 width:195px;
+	 font-size:11px;
+	 font-family:Arial, Helvetica, sans-serif;
+	 color:#222222;
+	 line-height:18px;
+	 text-align:left;
+	}
+
+#content_home a, #content_genre a{
+	 color:#222222;
+	 text-decoration:none;
+	}
+
+#content_home a:hover, #content_genre a:hover{
+	 font-weight:bold;
+	 letter-spacing:-1px;
+}
+
+#container_genre{
+	width:170px;
+	max-width:170px;
+	background-image:url(http://www.vividseats.com/v2/newimages/searchbox/allmusic_170x40.jpg);
+	}
+
+#title_genre{
+	padding:4px 0px 0px 53px;
+	width:150px;
+	font-size:11px;
+	}
+
+#content_genre{
+	 padding:1px 0px 0px 52px;
+	 width:150px;
+	}
+
+#content_genre a:hover{letter-spacing:-.75px}

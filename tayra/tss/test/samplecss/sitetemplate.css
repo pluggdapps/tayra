@@ -1,0 +1,563 @@
+body { margin: 0; padding: 0; }
+.cb_style { text-align: center; }
+.pnlInnerWrapper { text-align: center; margin: 0 auto; } 
+.cb_main { padding-top: 10px; padding-bottom: 40px; }
+.bounds { width: 770px; margin: 0 auto; clear: both; text-align: left; }
+.cb_leaderboard { text-align: center; padding: 5px 0; background: #fff; }
+.cb_PBar 
+{
+	height: 22px;
+	font: 11px arial, helvetica, sans-serif;
+	border-top: 1px solid #ffc453;
+	border-bottom: 1px solid #ffad61;
+    background: #f70 url(../../images/shell/bg_cb_pbar.gif) repeat-x;
+}
+.cb_PBar ul
+{
+	list-style: none;
+	margin: 0 12px;
+	font-weight: bold;
+	color: #fff;
+	padding: 3px 0;
+}
+.cb_PBar ul li { margin: 0; float: left; }
+.cb_PBar ul li a, .cb_PBar ul li a:visited { color: #fff; text-decoration: none; }
+.cb_PBar .cb_textonly { float: right; }
+.cb_header .clear, .cb_nav .clear, .cb_footer .clear { clear: both; }
+.cb_header a, .cb_footer a { color: #00C; }
+.cb_header a:active, .cb_footer a:active { color: #000; }
+.cb_header a:visited, .cb_footer a:visited { color: #666; }
+/* header styles */
+.cb_header { font: 11px arial, helvetica; color: #000; background-color: #FFF; }
+.cb_header .edge, .cb_nav .edge { clear:both; border-bottom: solid 1px #cedbfb; }
+.cb_header .sign_in
+{
+	padding-top: 4px;
+	padding-left: 10px;
+	font-size: 12px;
+	font-weight: bold;
+}
+/* Masthead */
+.cb_Masthead { border-top: 1px solid #f60; background: #fff url(../../images/shell/bg_cb_masthead.gif) repeat-x; }
+.cb_Masthead .cb_EmpNav, .cb_Masthead .cb_EmpNav a, .cb_Masthead .cb_EmpNav a:visited { color: #fff; text-decoration: none; }
+.cb_Masthead .cb_EmpNav
+{
+	float: right;
+	margin: 0;
+    background: transparent url(../../images/shell/bg_cb_empnav.gif) center bottom no-repeat;
+	font-family: Arial, helvetica, Sans-Serif;
+	font-size: 10px;
+	line-height: 10px;
+	font-weight: bold;
+	width: 290px;
+	padding: 2px 5px 5px;
+	text-align: center;
+	border-top: 1px solid #777;
+	height: 12px;
+	white-space: nowrap;
+}
+.cb_Masthead .cb_EmpNav ul 
+{
+	list-style: none;
+	margin: 0 auto;
+	display: inline;
+	padding: 0;
+}
+.cb_Masthead .cb_EmpNav ul li { display: inline; margin: 0; padding: 0; }
+.cb_Masthead .cb_EmpNav ul li ul li { padding: 0 5px 0 5px; border-right:#B8B8B8 1px solid; }
+.cb_Masthead .cb_EmpNav ul li ul li.l { background: none; border:none; }
+.cb_header .normal_ad { padding-top: 10px; text-align: right; }
+.cb_header .leaderboard_ad { padding-top: 10px; text-align: center; }
+.cb_header .cb_logo { height: 40px; }
+.cb_header .cb_logo img { width: 180px; height: 40px; margin: 0 14px 0 10px; }
+.cb_nav .cb_powered_by { display: block; float: right; }
+.cb_nav .cb_powered_by img { width: 192px; height: 34px; border: 0; }
+/* nav styles */
+.cb_nav
+{
+    background: #fff url(../../images/shell/bg_cb_mainnav.gif) left bottom repeat-x;
+	padding: 0 0 1px;
+	width: 100%;
+}
+.cb_nav .nav_wrapper
+{
+	/*width:590px;*/
+	width: 750px;
+	float:left;
+	/*margin-top: 15px;*/
+	position: relative;
+	z-index: 10500;
+}
+
+.cb_nav .nav_wrapper ul
+{
+	border: 0;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	float: left;
+	position: relative;
+}
+
+.cb_nav .nav_wrapper ul li
+{
+	display: block;
+	float: left;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	position:relative;
+background: transparent url(../../images/shell/bg_cb_mainnav-li.gif) right bottom no-repeat;
+}
+
+
+
+.cb_nav .nav_wrapper ul li a
+{
+	height: 18px;
+	padding: 8px 12px 6px 12px !important;
+	padding: 9px 12px 7px 12px ;
+	color: #363FB5;
+	text-decoration: none;
+	display: block;
+	text-align: center;
+	font: bold 11px arial, sans-serif;
+	float:left;
+}
+
+.cb_nav .nav_wrapper ul li a:visited,
+.cb_nav .nav_wrapper ul li a:link
+{
+	color: #363FB5;
+}
+
+.cb_nav .nav_wrapper ul li a:hover
+{
+	text-decoration: underline;
+}
+
+.cb_nav .nav_wrapper li.active
+{
+background: transparent url(../../images/shell/bg_cb_mainnav-li-active-a.gif) left bottom repeat-x;
+}
+
+.cb_nav .nav_wrapper li.active a:link,
+.cb_nav .nav_wrapper li.active a:visited
+{
+	color: #363FB5;
+}
+
+.cb_nav .nav_wrapper li.active a:hover
+{
+	color: #363FB5;
+}
+
+.cb_nav .nav_wrapper li.active ul li a
+{
+	background-color: #ffffff;
+	color: #ff6600;
+}
+
+.cb_nav .nav_wrapper li.active ul li a:hover
+{
+	color: #363FB5;
+}
+
+.cb_nav .nav_wrapper ul ul
+{
+	position: absolute;
+	z-index: 10500;
+	display: none;
+	border-bottom: 1px solid #bbbbbb;
+	top: -1px !important;
+	top: 0px;
+	left: -1px;
+}
+.cn_nav .nav_wrapper ul li ul li a
+{
+    padding:10px;
+}
+.cb_nav .nav_wrapper ul ul li
+{
+	width: 100%;
+	background-image: none;
+}
+
+.cb_nav .nav_wrapper ul ul li a {
+	display: block;
+	text-decoration: none;
+background: #fff url(../../images/shell/cb_mainnav-li-li-a.gif) 5px 10px no-repeat;
+	border-left: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+	border-top: 1px solid #eee;
+	border-bottom: 0;
+	float: none;
+	text-align: left;
+	font-size: 10px;
+	line-height: 12px;
+	padding:5px 0px 5px 0px;
+}
+
+
+.cb_nav .nav_wrapper ul ul.jobalerts
+{
+	width: 88px;
+}
+
+.cb_nav .nav_wrapper ul ul.advice
+{
+	width: 135px;
+	padding: 0 1px;
+}
+
+.cb_nav .nav_wrapper ul ul.postresumes
+{
+	width: 105px;
+	padding: 0 1px;
+}
+.cb_nav .nav_wrapper ul ul.postresumes li a, .cb_nav .nav_wrapper ul ul.FindJobs li a,
+.cb_nav .nav_wrapper ul ul.MyCB li a, .cb_nav .nav_wrapper ul ul.advice li a
+{
+    line-height:150%;
+    height:100%;
+    background: #fff url(../../images/shell/cb_mainnav-li-li-a.gif) 5px 12px no-repeat;
+}
+
+.cb_nav .nav_wrapper ul ul.postresumes li.first a, .cb_nav .nav_wrapper ul ul.FindJobs li.first a,
+.cb_nav .nav_wrapper ul ul.MyCB li.first a, .cb_nav .nav_wrapper ul ul.advice li.first a
+{
+    height:17px;
+}
+
+.cb_nav .nav_wrapper ul ul.MyCB
+{
+	width: 130px;
+	padding: 0 1px;
+}
+
+.cb_nav .nav_wrapper ul ul.FindJobs
+{
+	width: 78px;
+	padding: 0 1px;
+}
+
+.cb_nav .nav_wrapper ul ul.postresumes li.tootall a
+{
+	height: 43px;
+}
+
+.cb_nav .nav_wrapper ul ul li a:link,
+.cb_nav .nav_wrapper ul ul li a:visited
+{
+	color: #363FB5;
+}
+
+.cb_nav .nav_wrapper ul ul li a:hover
+{
+	color: #363FB5;
+	background-color: #ffffdd;
+}
+
+.cb_nav .nav_wrapper ul ul li.first a:link,
+.cb_nav .nav_wrapper ul ul li.first a:visited
+{
+	color: #363FB5;
+	font-size: 11px;
+	border: 0;
+	display: block;
+	text-decoration: none;
+	background:none;
+	background-color: #fff;
+	float:none;
+	text-align: left;
+	line-height: 14px;
+	white-space: nowrap;
+}
+
+.cb_nav .nav_wrapper ul ul li.first a:hover
+{
+	color: #363FB5;
+	text-decoration: underline;
+	
+}
+
+.cb_nav .nav_wrapper ul li:hover ul,
+.cb_nav .nav_wrapper ul li.over ul 
+{
+	display: block;
+}
+
+/* Fix IE. Hide from IE Mac \*/
+* .cb_nav .nav_wrapper html ul li { float: left; height: 1%; }
+* .cb_nav .nav_wrapper html ul li a { height: 1%; }
+/* End */
+
+
+/* Job Recommendations BAR styles */
+.jrbar
+{
+	height:24px;
+}
+
+#barcontents
+{
+	width:797px;
+	line-height:0px;
+	font-size:0px;
+background-image: url(../../images/JS/widgets/jrbar.gif);
+	background-repeat: no-repeat;
+	background-position: 0px -24px;
+	height:24px;
+	text-align:left;
+}
+
+#bartext
+{
+	padding-top:2px; 
+	padding-left:11px;
+	visibility: hidden;
+	color:navy;
+	line-height:18px;
+	font-size:11px;
+	font-family: arial;
+}
+
+
+#bartext a:link, #bartext a:visited, #bartext a:active
+{
+	color:navy;
+}
+
+/* JR BAR Ticker styles */
+#tickerright
+{
+	float:left;
+	width:88px;
+	height:23px;
+	padding-top:5px;
+background-image: url(../../images/JS/Widgets/jrbartickerright.gif);
+}
+
+#tickerrightmore
+{
+	padding-left:12px;
+}
+
+#tickerrightmore a
+{
+	color: navy;
+	font-size:11px;
+}
+
+a.tickerjob:link, a.tickerjob:active, a.tickerjob:visited
+{
+	font-family: Arial;
+	font-size:12px;
+}
+
+span.tickerjoblocation
+{
+	font-family: Arial;
+	font-size:11px;
+}
+
+/* New Footer Styles */
+
+.cb_footer
+{
+	margin:0;
+	padding: 0 0 15px 0;
+background: #405b9d url(../../images/shell/bg_cb_footer.gif) repeat-x;
+	font-family: Arial, helvetica, Sans-Serif;
+	font-size: 11px;
+	color: #9ba8c4;
+}
+
+.cb_footer hr { display: none; }
+
+.cb_footer dl 
+{
+	margin: 10px 0;
+	padding: 0;
+}
+
+.cb_footer dl dt
+{
+	float: left;
+	width: 185px;
+	text-align: left;
+	font-weight: bold;
+	display: inline;
+}
+
+.cb_footer dl dd ul 
+{
+	list-style: none;
+	float: left;
+	width: 82%;
+	text-align: left;
+	margin: 0 0 0 -40px !important;
+	margin: 0 0 0 -20px;
+	padding: 0;
+}
+
+.cb_footer dl dd ul li 
+{
+	width: auto;
+	text-align: left;
+	margin: 0 7px 0 0;
+	padding: 0 9px 0 1px;
+	white-space: nowrap;
+}
+
+.cb_footer dl dd ul li.l 
+{
+	background: none;
+}
+
+.cb_footer dl dd ul li, .cb_Footer dl dd ul li strong 
+{
+	color: #d8dde8;
+}
+
+.cb_footer a, .cb_footer a:visited
+{
+	color: #d8dde8;
+	text-decoration: none;
+}
+
+.cb_footer a:hover
+{
+	text-decoration: underline;
+}
+
+.cb_CBLinks { float: left; width: 185px; }
+.cb_JSSLinks { float: left; width: 185px;  } 
+.cb_IntlLinks { float: left; width: 185px;  }
+.cb_PartnerLinks { float: left; width: 185px;  }  
+.cb_footer_HelpLinks { margin: auto; padding: 10px 20px; background-color: #243861; width: 265px; }
+
+.footer_helplinks {
+	list-style: none;
+	padding: 10px 0;
+	color: #fff;
+	font-size: 14px;
+	line-height: 25px;
+	margin: 0;
+}
+.footer_helplinks li {
+	float: left;
+	padding: 0 0 0 28px;
+}
+.footer_helplinks li.social strong {
+	vertical-align: top;
+	display: block;
+	float: left
+}
+.footer_helplinks a {font-weight: bold;}
+.footer_helplinks li ul {
+	list-style: none;
+	padding: 0 0 0 8px;
+	margin: 0;
+	float: left;
+}
+.footer_helplinks li li {
+	float: left;
+	text-indent: -9999em;
+	width: 25px;
+	height: 25px;
+	margin: 0 4px 0 0;
+	padding: 0;
+}
+.footer_helplinks li li a {
+	display: block;
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	outline: 0;
+	background: url(http://img.icbdr.com/images/shared/img/common_icons.png) no-repeat;
+}
+.footer_helplinks li li.facebook a {
+	background-position: -118px 0;
+}
+.footer_helplinks li li.twitter a {
+	background-position: -89px 0;
+}
+.footer_helplinks li li.youtube a {
+	background-position: -30px 0;
+}
+
+/* Cobrand Specific */
+
+.cb_header .header_wrapper_cobranded
+{
+	width: 100%;
+}
+
+.cb_nav .nav_wrapper_cobranded
+{
+	/* most cobrands remove margin abov nav links */
+	margin-top: 0px;
+}
+
+.cb_nav .nav_wrapper_cobranded_powered_by
+{
+	/* comcast (and potentially others) using the "powered by" image will
+       have different margin size above the nav links */
+	margin-top: 6px;	
+}
+
+.cb_nav .nav_wrapper_cobranded ul li a, .cb_nav .nav_wrapper_cobranded_powered_by ul li a:hover,  .cb_nav .nav_wrapper_cobranded_powered_by ul li.first a:hover
+{
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.cb_nav .nav_wrapper_cobranded ul ul li a , .cb_nav .nav_wrapper_cobranded_powered_by ul ul li a 
+{
+	font-size: 10px;
+}
+
+.cb_nav .nav_wrapper_cobranded ul li li a:hover, .cb_nav .nav_wrapper_cobranded_powered_by ul li li a:hover
+{
+	color: #363FB5;
+	font-size: 10px;
+}
+
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+/* JCK - added this next line to remove the extra spacing in Safari and Firefox */
+
+.c\learfix:after { line-height: 0; }
+
+.clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+
+* html .clearfix {height: 1%;}
+
+.clearfix {display: block;}
+
+/* End hide from IE-mac */
+
+.hide
+{
+	display: none;
+}
+
+/*Resume Direct Styles*/
+
+.resumeTopLeft { float: left; width: 53%; }
+.resumeChatWrapper { float: right; padding: 0; margin: 0; }
+.betterJob { font-size: 24px; font-family: 'Arial Narrow'; color: #693; font-weight: bold; display: block; margin: 0 0 2px 0; }
+.ddlLeft{float:left; width:68%;}
+.ddlRight{float:left; width:26.5%; border:solid 1px #fee67a; background-color:#fffec6; padding:10px; margin:5px; color:#000066;}
+strong.chooseupto6{color:#ff6602;}
+.optionbox{position:relative;padding:5px 2px 3px 0px; margin-top:5px; }
+.optionbox a {color:#000000; border:none; text-decoration:none;}
+.optionbox a:hover {text-decoration:none;}
+.optionbox img {border:none;}
+.hideme{margin-top:5px;}
+#requiredfields input{background-color:#ffff9f;}
+
+.showing { display: block; }

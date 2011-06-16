@@ -1,0 +1,296 @@
+/* HOT URLS */
+
+ol.hoturls {
+}
+
+ol.hoturls li {
+	list-style: none;
+	margin: 0;
+	clear: both;
+}
+ol.hoturls .num {
+  background: url(/images/hoturls/circle-yellow.png) center center no-repeat;
+  float: left;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  padding:  0 0 9px 0;
+  margin: 0 6px 0px 0;
+}
+ol.hoturls .num.new {
+  background: url(/images/hoturls/circle-yellow-new.png) center center no-repeat;
+}
+
+ol.hoturls .favicon {
+	float: left;
+	width: 20px;
+	height: 26px;
+}
+ol.hoturls .favicon img {margin-top: 2px;}
+ol.hoturls .listing {
+	margin: 0 0 18px 34px;
+}
+#hoturls ol.hoturls .listing a {
+	font-size: 1.2em;
+}
+.hoturls p.snippet {
+	font-size: 0.9em;
+	margin-bottom: 0;	
+}
+
+.hoturls p.sub-url {
+	color: #777;
+	font-size: 0.8em;
+	margin-bottom: 0;	
+}
+
+.hoturls p.green {
+	color:green;	
+}
+
+.hoturls p.context {
+	margin-bottom: 0;
+}
+
+.hotsearches {
+	float: left;
+	margin: 0 1% 0 0;
+	padding: 0;
+	width: 24%;
+}
+.hotsearches li {
+	/*background: url(/images/layout/bullet.gif) 0 5px no-repeat;
+	padding: 0 0 0 16px;
+	*/
+	line-height: 1.2em;
+	/*margin: 0 0 3px 0;*/
+	margin-bottom:3px;
+}
+.hotsearches .more {float: none;}
+
+.hotsearches.homepage {width: 100%; margin-bottom: 8px;}
+.hotsearches.homepage li {
+	margin: 0 0 3px 0;
+	width: auto;
+	white-space: nowrap;
+}
+.hotsearches.homepage li span {
+	font-weight: 600;
+	padding: 0 8px;
+}
+
+.hotsearches.side {
+	width:100%;
+	margin:0;
+}
+
+.searches-column {
+	margin-right: 250px;
+}
+.find-column {
+	float: right;
+	width: 250px;
+}
+.updates {
+	background: url(/images/hoturls/hot-url-updates-transparent.gif) center left no-repeat;
+	float: right;
+	padding: 0 0 0 30px;
+	margin: 0 0 4px 0;
+	width: 90px;
+}
+.updates strong {display: block;}
+#hoturls-top .updates {margin-top: 6px;}
+#hoturls-top #hoturls {padding-left: 0;}
+#hoturls .updates {margin-top: 6px;}
+.gradientAd {
+	border: 0 !important;
+	margin-left: 0;
+	font-size: 1.1em;
+}
+
+/** Search box **/
+#hoturls-searchbox {     
+     background: url('/images/icons/searches_home_icon.gif') no-repeat;
+     padding-top: 0px;
+}
+ 
+#hoturls-searchbox {
+      padding-left: 46px;
+}
+
+#hoturls-searchbox .ac_input {
+     width: 298px;
+}
+/** New search bar **/
+div#hoturlsSearchBar {
+	text-align:center;
+	padding:4px 0;
+	margin-right:0;
+	width:984px;
+}
+
+div.nomargin {
+	/* Remove the margin on the search bar */
+	margin:0px;
+}
+
+div#more-searches-container {
+	width:974px;
+	margin:5px 20px;
+	text-align:center;
+	clear:both;
+}
+
+div#centering {
+	width:600px;
+	margin:0 auto;
+}
+
+div#hoturlsSearchBar h4 {
+	margin:3px 4px;
+	color:#000;
+	display:inline;
+	border-bottom:none;
+	float:left;
+}
+
+input#searchText {
+	float:left;	
+}
+
+input#searchBtnGrey {
+	margin:0 6px;
+	display:inline;
+	float:left;
+}
+
+/** New container div for search results and other content **/
+div#hoturls-top {
+	margin-left:10px;
+	padding-bottom:0;
+}
+
+div#main-container {
+	margin-left: 11px;
+	float:left;
+	padding-right:8px;
+}
+
+div#otherTopics {
+	padding:10px;
+}
+
+div#backBottom {
+	padding-top:10px;
+	margin-bottom:35px;
+	clear:both;
+	border-top:1px solid #eee;
+}
+
+/** New list styles for "More Searches" **/
+p#moreSearchesTitle {
+	font-weight:bold;
+	margin:0px;
+	float:left;
+}
+
+div#moreSearches {
+	margin:0 auto;
+	text-align:center;
+	width:100%;
+}
+
+/* Topics */
+
+div.side-content h2 {
+	padding:0;	
+}
+
+ul.side {
+	width:100%;	
+}
+
+#right-column ul.side {
+	margin:8px 0;
+	width:100%;	
+}
+#right-column ul.side li {
+	clear: both;
+}
+
+
+ul.underSearchbar {
+	width:100%;
+	margin:0;
+}
+
+ul.underSearchbar li {
+	display:inline;
+	margin: 0 8px;
+}
+
+ol.underSearchbar {
+	width:100%;
+	margin:0;
+}
+
+ol.underSearchbar li {
+	display:inline;
+	margin: 0 8px;
+}
+
+/* Products */
+ol.side {
+	float: left;
+	margin: 0 1% 0 0;
+}
+
+ol.side li {
+	list-style-type:decimal;	
+}
+
+#moreSearches ol.hoturls {
+	margin:0;
+}
+
+#moreSearches ol.hoturls li {
+	clear:none;
+	display:inline;
+	margin:0 8px;
+}
+
+/** put a bullet next to each ad **/
+div.hotads {
+	background: url(/images/layout/bullet.gif) no-repeat 0 12px;
+	padding-left: 14px;
+}
+
+div.hotads-narrow {
+	background: url(/images/layout/bullet.gif) no-repeat 0 15px;
+	padding-left: 14px;
+}
+
+/** New link styles for search results **/
+a.underline {
+	text-decoration:underline;	
+}
+
+/*** Adjusting toolbar ad margins ***/
+
+img#hoturls-firehair {
+	margin-top:0;	
+}
+
+img#hoturls-hot {
+	margin-top:0;	
+}
+
+.side li .count {
+	float: left;
+	width: 15px;
+}
+.side li .hotprods-results {
+	float: left;
+	width: 240px;
+}

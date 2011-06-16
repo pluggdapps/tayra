@@ -1,0 +1,101 @@
+body { background:#eee url(/xImages/body/bg.gif) repeat-x; overflow:auto; margin:0; padding:0; text-align:center; font-family:Tahoma }
+body { text-align:-moz-center }
+a { color:#0066CC }
+a, a:visited { text-decoration:none }
+a:hover { text-decoration:underline }
+a img { border:none }
+#foot a { color:#0066CC }
+#foot a, a:visited { text-decoration:none }
+#foot a:hover { text-decoration:underline }
+#foot a img { border:none }
+#foot { background-color:transparent; font-size:85%; border-top:1px solid #cccccc; padding:9px 10px 0 0 }
+#foot ul { list-style-type:none; margin:0; padding:0; text-align:left; font-size:80% }
+#foot ul#legal { float:left }
+#foot ul#support { text-align:right }
+#foot li { display:inline; height:1%; padding:0 0 0 12px; margin:0; text-align:left; }
+#foot a { color:#183390 }
+.copyright {font-size:70%;}
+.logocontleft, .logocontright {width:100%}
+.logocontleft {padding:0 0 0 12}
+.logocontright {text-align:right;margin:25px 10px 0 0;width:100%}
+.logosep{margin:0 10 0 10;width:1;height:22}
+.logo { clear: left; float: left; font-size: 22px; font-weight: normal; margin: 0; padding: 0; text-align: left; }
+.logo img { vertical-align: text-bottom; }
+.logo a:hover { text-decoration: none; }
+.links {clear:both; text-align:right;font-family:tahoma;font-size: 70%;COLOR: #07519A ;}
+.navlink A		{font:Bold 70% Tahoma,san-serif;COLOR: #ffffff; text-decoration: none; }
+.navlink A:hover {COLOR: #caebfd; text-decoration: underline; }
+.helplink		{font-size:70%; font-family: Tahoma,san-serif; color: #ffffff;  text-decoration: none;}
+.helplink A		{COLOR: #ffffff; text-decoration: none; }
+.helplink A:hover {COLOR: #caebfd; text-decoration: underline}
+.selected		{BACKGROUND-IMAGE: url(/xImages/header/select_db.gif); BACKGROUND-REPEAT: repeat-x; height: 25px; }
+.selected A,.selected A:hover {COLOR: #ffffff; text-decoration: none; }
+.selected A		{font-size:70%; font-weight:bold; font-family: Tahoma,san-serif}
+.acadnavlink A		{font:70% Tahoma,san-serif;COLOR: #388aff; text-decoration: none; }
+.acadnavlink A:hover {text-decoration: underline; }
+.acadselected A		{font-size:70%; font-weight:bold; font-family: Tahoma,san-serif; color:#388aff}
+.acadnavsep	{font-family:Tahoma;TEXT-DECORATION:none;font-size:70%;color:#388aff}
+.acadnavcont {background-color:#E2F1FF;border-collapse:collapse;}
+.moduletext,.moduletitle,.moduletitle_home{FONT-FAMILY:Verdana; FONT-SIZE:70%; color:#333333}
+.moduletitle,.moduletitle_home{padding:4 0 4 0;font-weight:bold}
+.moduletitle_home{color:#5D5F62;background-color:#ECEDEE}
+a.modulelink {font-family:Verdana,Tahoma; font-weight:normal; font-size:70%; color:#0066cc; text-decoration:none;}
+a.modulelink:hover {text-decoration:underline;}
+.moduletext a	{font-family: Verdana; text-decoration:none;color: #0066cc }
+.mftable { width:100%; border:solid 1 #D0E7FD; padding:8 11 8 11; background-color:#D0E7FD; filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#D0E7FD", EndColorStr="#FFFFFF") }
+.morefeatures { width:33%; font-family:Tahoma; font-size:70% }
+.morefeatures a { text-decoration:none; color:#0066CC; cursor:hand}
+.morefeatures a:hover { text-decoration:underline }
+.adtext			{font-family:Tahoma; font-size:70%; color:#666666; text-align:center;}
+.ModAdDiv { text-align:center; margin:8px 0 20px 0 }
+.Bullet,.modulebullet		{font-family:Verdana,Arial,Helvetica;font-size:8pt;font-weight:normal;color:#999999;position:relative;}
+.modulebullet				{padding-left:10}
+.moduleBulletCell			{font-family:Verdana,Arial,Helvetica; font-size:8pt; font-weight:normal; color:#999999;}
+.upsellLegend				{width:100%;height:34px;padding:0 0 0 0;}
+.upsellLegendAsterisk		{padding-left:5;padding-right:3;padding-top:12;padding-bottom:5;font-family:Tahoma, MS Reference Sans Serif; font-size: 11; color:#FF6600;}
+.upsellLegendLink			{padding-left:0;padding-right:5;padding-top:5;padding-bottom:5; font-family:Tahoma, MS Reference Sans Serif; font-size:11; color:#666666; text-decoration:none;}
+.upsellLegendLink a:hover	{text-decoration:underline;}
+.upsellLegendButtonSection	{padding-left:0;padding-right:5;padding-top:5;padding-bottom:5;border:0;width:25;}
+.upsellLegendLinkText		{font-family:Tahoma, MS Reference Sans Serif; font-size:11; color:#0066CC;}
+.Module_6,.Module_2{padding-bottom:10;}
+.Module_2{width:100%; border-style:solid;border-color:#7BAAD5;border-width:1px;border-right:solid #7BAAD5 1px;}
+table.LinkItem {margin-left:10;margin-right:10;margin-top:5;margin-bottom:5;}
+.Link_6 {font-family:Verdana,Arial,Helvetica;font-size:70%;font-weight:bold;line-height:125%;}
+.Title_6 {padding-left:0;padding-right:0;color:#666666;padding-left:5;padding-right:5;padding-top:5;padding-bottom:5;font-family:Verdana,Arial,Helvetica;font-size:70%;font-weight:bold;line-height:125%;}
+.HiddenLink	{font-family:Verdana,Arial,Helvetica;font-size:8pt; font-weight:bold;line-height:125%;margin-left:10;margin-right:10;margin-top:10;margin-bottom:10;display:none;}
+.encprodtitle { font-family: Tahoma, Verdana; font-size:140%; font-weight:normal; text-align:center; vertical-align:middle; width:100%; color:#000000; padding-left:0; padding-bottom:32; padding-right:0; padding-top:34;}
+.encprodline { width:1; height:100%; background-color:#999999; padding-left:0; padding-bottom:25; padding-right:0; padding-top:0;}
+.encprodcolumn { padding-left:33; padding-bottom:0; padding-right:30; padding-top:0}
+.encprodsubtitle { font-family: Tahoma, Verdana; font-size:120%; font-weight:normal; text-align:center; vertical-align:top; width:100%; color:#ff6600;min-height:4em;_height:4em;}
+.encproddemoimg { padding-left:0; padding-bottom:0; padding-right:15; padding-top:5; }
+.encprodimage { padding-left:0; padding-bottom:0; padding-right:0; padding-top:0; vertical-align:top; height:180px;}
+.encprodtext { padding-left:0; padding-bottom:20;  padding-top:21;}
+.encprodheadtext { font-family: Verdana, Tahoma; font-size:70%;	 font-weight:bold; color:#333333; padding-left:0; padding-bottom:5; padding-right:15; padding-top:0;}
+.encproddesctext { font-family:Verdana, Tahoma; font-size:70%; font-weight: normal; color:#333333; padding-left:0; padding-bottom:5; padding-right:15; padding-top:0;} 
+a.encprodlearntext {color:#0033ff; text-decoration:none;}
+a.encprodlearntext:hover { text-decoration:underline;}
+.encprodlink a{ font-family:Tahoma, Verdana; font-size:70%; font-weight:bold; padding-left:0; color:#0066cc; padding-bottom:17; padding-right:30;  padding-top:0; vertical-align:top; text-decoration:none;}
+.encprodlink a:hover{ text-decoration:underline;}
+.searchpromobar { background-color: #FFCC33; font-family: Tahoma, Arial, sans-serif; font-size: 70%; color: #000000; filter:progid:DXImageTransform.Microsoft.Gradient(GradientType="0", StartColorStr="#FFFB83", EndColorStr="#FFAE00");}
+.searchpromobar a { font-weight: bold; text-decoration: underline; color: #0066FF; }
+.countdown  { background-color: #000000; font-family: Tahoma, Arial, sans-serif; font-size: 80%; color: #FFFFFF; font-weight: bold; }
+.contenttable {border-left:1 solid #CCCCCC;border-right:1 solid #CCCCCC}
+.academicsitetitle { background-color:#fff }
+.academicsitetitle a {width:100%;padding-left:16;padding-top:12;padding-bottom:12;color:#519DFF;font:150% Verdana;text-decoration:none}
+.academicsitetitle a:hover {text-decoration:none}
+.academicsitetitle a:visited:hover {text-decoration:none}
+.fstxt { width:201px; height:22px; border:1px solid #000000; margin:0 1px 1px 0 }
+.fssel { font-family:verdana; font-size:80%; background-color:#FFFFCC }
+.fscnt { border:1px solid #000000 }
+.fssrch { height:20px; border:none; margin:0 0 2px 2px; padding:0 2px 0 2px; font-family:tahoma; font-weight:bold; font-size:75%; background-color:#FF9900; filter:progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#FFCC00,endColorStr=#FF7200) }
+.fssrch2 { height:23px; margin:0 0 0 2px; font-family:tahoma; font-weight:bold; font-size:75%; background-color:#FF9900 }
+.fsin { margin:0 6px 0 6px; vertical-align:middle; font-family:tahoma; font-size:70%; color:#666666 }
+.kids_ruby		{ ruby-position:above;}
+.kids_ruby_text		{ font-size:10px; }
+.inline_ruby		{ ruby-position:inline; }
+.inline_ruby_text	{ font-size:10px; }
+.dothistable {width:100%; margin:21 8 30 8; }
+.dothisfooter {border-top: solid 1 #999999; padding-top:6}
+.dothisfooterimage {padding-left:8;}
+.dothisfootertext {padding-left:4;}
+.blogThis {font-family: verdana; font-size: 70%; color: #999999;}

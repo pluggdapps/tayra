@@ -1,0 +1,799 @@
+/* Styles for MathWorld */
+
+body {
+	background-color: #ffffff;
+	color: #000000;
+	margin: 0px;
+	margin-bottom: 10px;
+}
+
+.title, h1, h1 a:visited {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 24px;
+	font-weight: normal;
+	color: #00a6a6;
+	white-space: nowrap;
+}
+
+/* Netscape 4.x */
+p, blockquote, .entry, .entry td, li, td, th {
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+	font-size: 12px;
+	line-height: 1.5em;
+}
+
+.mathworldtable, .mathworldtable tr, .mathworldtable td {
+	border-collapse: collapse;
+	border: 1px solid #E0E0E0;
+	padding: 5px;
+}
+
+.letters a {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 24px;
+}
+
+a, .index a, .index td {
+	text-decoration: none;
+	color: #009999;
+}
+
+a:hover, .index a:hover {
+	color: #00cccc;
+}
+
+a:visited {
+	color: #006699;
+}
+
+hr {
+	height: 1px;
+	color: #bbbbbb;
+}
+
+.last-updated, .last-updated a {
+	color: #999999;
+	font-size: 10px;
+	line-height: 1.1em;
+}
+
+.index a, .index td {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	line-height: 16px;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+h4, h5, h6 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-weight: normal;
+	color: #146a68;
+}
+
+/* Note that appending style information actually overwrites it in IE and Netscape 4.7. */
+h2 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-weight: normal;
+	color: #146a68;
+	font-size: 20px;
+}
+
+h3 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-weight: normal;
+	color: #146a68;
+	font-size: 16px;
+}
+
+h3, .references-head {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #146a68;
+}
+
+.smalltext {
+	font-size:10px;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+/* Subject link trail */
+
+.subjectnavbar {
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+	font-size: 10px;
+	line-height: 14px;
+}
+
+/*
+.navbar a:visited needed for IE
+*/
+.subjectnavbar a, .subjectnavbar a:visited {
+	color: #696969;
+}
+
+.subjectnavbar a:hover {
+	color:#999999;
+}
+
+/* References, etc. */
+
+/* Netscape 4.x */
+.references, .references p, .citation, .citation p {
+	font-size: 10px;
+/* line-height: 12px; */
+}
+
+.p2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 14px;
+	text-decoration: none;
+}
+
+/* Equations */
+
+.numberedequation, .displayformula {
+	padding-bottom: 5px;
+}
+
+/* Text */
+
+p.Text {}
+
+p.Reference {
+	font-size: 10px;
+	line-spacing: 1.5em;
+}
+
+/* Registration */
+
+.register {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #999999;
+}
+
+.register a, .register a:visited { /* .register a:visited needed for IE */
+	color: #999999;
+}
+
+.register a:hover {
+	color: #999999;
+}
+
+/* added by johnr */
+
+div.versionlink {
+	text-align: right;
+}
+
+td.letters {
+	text-align: center;
+}
+
+img.inlineformula {
+	vertical-align: middle;
+}
+
+/* What's New */
+
+li.new	{ color:#feb823; }
+li.mod	{ color:#999999; }
+li.subj	{ color:#00ff00; }
+
+/* Divisions in entry pages, e.g., see also */
+
+.crosslinkheader {
+	font-family: 'Lucida Grande',Tahoma,Verdana,Helvetica,sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #146a68;
+	border-bottom: 3px solid #ddf6b8;
+	line-height: 19px;
+/* margin-right: 0.5em; */
+}
+
+/* Sidebar */
+
+.mainindices a, .mainindices a:link {
+	color:#000000;
+	font-family: Tahoma,Verdana,Arial,'Lucida Grande',Helvetica,sans-serif;
+	font-size: 10px;
+	line-height: 160%;
+	margin-left: 20px;
+	white-space: nowrap;
+}
+
+.mainindices a:hover {
+	color:#00CCCC
+}
+
+.subindices a, .subindices a:link {
+	color:#666666;
+	font-family: Tahoma,Verdana,Arial,'Lucida Grande',Helvetica,sans-serif;
+	font-size: 10px;
+	line-height: 160%;
+	padding-left:20px;
+	white-space: nowrap;
+}
+
+.subindices a:hover {
+	color:#00CCCC
+}
+
+.rightline {
+	border:none 1px #67B2D0;
+	border-top-style:solid;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:4px;
+}
+	
+.rightline-sub {
+	border:none 1px #C6E3DB;
+	border-top-style:solid;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:4px;
+	width:200px;
+}
+	
+.divider {
+	border:none 1px #E0F3CD;
+	border-top-style:solid;
+	margin-top:3px;
+	margin-bottom:5px;
+}
+	
+.othersite, .othersite a {
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	margin-bottom: 6px;
+	font-size: 10px;
+	line-height: 1.2em;
+	color: #000000;
+}
+
+.othersite_heading {
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	margin-top: 6px;
+	margin-bottom: 6px;
+	font-size: 10px;
+	color: #009999;
+	font-weight:bold;
+}
+
+.borderImage img{
+	border: 1px solid #000000;
+}
+
+.borderImage:hover img{
+	border: 1px solid #00cccc;
+}
+
+/* Ads */
+
+.ad {
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	margin-bottom: 20px;
+	font-size: 10px;
+	line-height: 1.3em;
+	margin-left:10px;
+}
+
+.adtable {
+	border-style: solid;
+	border-color: #D7F3EA #D7F3EA #D7F3EA;
+	border-width: 1px;
+	padding: 5px 5px 5px 0px;
+	margin-top:15px;
+	margin-right:10px;
+	margin-left:30px;
+	align: center;
+}
+
+/* News */
+
+.news {
+	font-weight: bold;
+	font-size: 10px;
+	line-spacing: 1em;
+}
+
+.leftshadow {
+	background-image: url(/images/sidebar/side_shadow.jpg);
+	background-repeat: repeat-y;
+	
+}
+.bottomshadow {
+	background-image: url(/images/sidebar/bot_shadow.jpg);
+	background-repeat: no-repeat;
+}
+
+/* styles for main page */
+.centertable {
+	border-style: solid; 
+	border-color: #ABE668 #D7F3EA #D7F3EA; 
+	border-width: 5px 1px 1px; 
+	padding: 10px 40px 10px 40px;
+	margin-left:9px;
+/*	width:558px; */
+}
+
+.footer {
+	padding: 0px 5px 0px 20px;
+	margin-left:9px;
+	font-size: 10px;
+}
+
+.righttable {
+	border-style: solid; 
+	border-color: #ABE668 #D7F3EA #D7F3EA; 
+	border-width: 5px 1px 1px; 
+	padding: 10px 5px 5px 0px;
+	margin-left:30px;
+	margin-right:10px;
+}
+
+.leftsidebar {
+	border:#D7F3EA 1px solid;
+	border-top:#ABE668 5px solid;
+	background:#F3FFD9;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:5px;
+}
+
+.leftsidebar2 {
+	border:#D7F3EA 1px solid;
+	border-top:#ABE668 1px solid;
+	background:#F3FFD9;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:5px;
+}
+
+.leftsidebarfooter {
+	padding-top:10px;
+	padding-bottom:10px;
+	margin-left:20px;
+}
+
+/* Searchbox */
+
+.searchbox {
+	width:12px;
+	height:8px;
+	padding-left:3px;
+	padding-right:3px;
+	border:0px;
+}
+
+a.chevron {
+	color: #ff9600;
+	margin-left:3px;
+}
+
+.chevron {
+	color: #ff9600;
+	margin-left:3px;
+}
+
+.searchboxsub {
+	font-family: Geneva, Helvetica, Arial, sans-serif;
+	font-size: 9px;
+	color: #999999;
+	height: 14px;
+	width: 150px;
+	padding:1px 0px 0px 3px;
+	border:none 0px white;
+	margin:0px;
+}
+
+.searchboxsub-on {
+	font-family: Geneva, Helvetica, Arial, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	height: 14px;
+	width: 150px;
+	padding:0px 0px 0px 3px;
+	border:none 0px white;
+	margin:0px;
+}
+
+.searchboxborder {
+	/* blue */
+	border: 2px solid #52adc5;
+	/* green */
+	/* border: 2px solid #aee66c; */
+	/* gray */
+	/* border: 2px solid rgb(204, 204, 204); */
+	background-color: rgb(255, 255, 255);
+	margin-left:8px;
+	margin-top:0px;
+	padding:0px;
+}
+.formwrapper {
+	position:absolute;
+	left:660px; 
+	top:10px;
+}
+
+/* Demonstrations */
+
+.demonstrations {
+	background: #FFFFFF;
+	border-style:solid;
+	border-color:#ABE668 #ABE668 #ABE668 #ABE668;
+	border-width:2px 1px 1px 1px;
+	margin-top:0px;
+	margin-left:30px;
+	margin-right:10px;
+	margin-bottom:10px;
+	border-width:5px 1px 1px;
+}
+
+.demonstrationsborder {
+	border:none 1px #ABE668;
+	border-top-style:solid;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+}
+
+.demonstrationsline {
+	border:none 1px #ABE668;
+	border-top-style:solid;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.demoheader {
+	background:#FFFFFF;
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	font-size: 10px;
+	color: #000000;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	line-height:1.0em;
+}
+
+.demofooter {
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	font-size: 10px;
+	color: #000000;
+	margin-top:2px;
+	margin-bottom:2px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+.demolowerhalf {
+	border-top:2px #ABE668 solid;
+	background-color:#F9FCE7;
+	padding-top:8px;
+	padding-bottom:18px;
+	padding-left:7px;
+}
+
+.demoinsidetitle {
+	margin-left: 4px;
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	font-size: 10px;
+	font-weight:bold;
+}
+
+.demoinsidetext {
+	font-family: Arial,Tahoma,Verdana,'Lucida Grande',Helvetica,sans-serif;
+	font-size: 10px;
+}
+
+.demolink {
+	display:block;
+	position:relative;
+	border: 1px solid #999999;
+	width:44px;
+}
+
+.demolink:hover {
+	display:block;
+	position:relative;
+	border: 1px solid #00cccc
+}
+	
+.demorowleftTop {
+}
+	
+.demorowrightTop {
+	padding-left:7px;
+}
+	
+.demorowleftMiddle {
+	padding-top:18px;
+}
+	
+.demorowrightMiddle {
+	padding-top:18px;
+	padding-left:7px;
+}
+	
+.demorowleftBottom {
+	padding-top:18px;
+}
+	
+.demorowrightBottom {
+	padding-top:18px;
+	padding-left:7px;
+}
+
+.play {
+	position:absolute;
+	bottom:-6px;
+	left:30px
+}
+
+.leftmargin {
+	margin-left:10px;
+}
+
+/* other wolfram web resources pulldown menu */
+/* red pulldown */
+
+div.redwebmenuheader a {
+	display: block;
+	text-decoration: none;
+	color:#f73c18;
+	font-size:10px;
+	font-family:Arial;
+}
+
+div.redwebmenu div.redwebmenuheader a.aredmenuheader {
+	display: block;
+	text-decoration: none;
+	color:#f73c18;
+	font-size:10px;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+div.redwebmenuheader {
+	width:165px;
+}
+
+div.redwebmenu div.redwebsubmenu {
+	display: none;
+}
+
+div.redwebsubmenu div.redwebitem:hover {
+	background:#ffdaa4;
+}
+	
+div.redwebmenu:hover div.redwebmenuheader {
+	text-decoration: none;
+	color: black;
+	font-size:10px
+} 
+	
+div.redwebmenu:hover div.redwebmenuheader a.aredmenuheader {
+	text-decoration: none;
+	color:#ffffff;
+	background:#e43c1d;
+	font-size:10px;
+	font-weight:bold;
+} 
+
+div.redwebmenu:hover div.redwebsubmenu {
+	display: block;
+	background:#fcf3d0;
+	text-decoration: none;
+	width:209px;
+	border:1px solid #e41d1e;
+} 
+
+div.redwebmenuheader:hover {
+}
+		
+div.redwebitem a {
+	color:black;
+	margin-left:5px;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+div.redwebitem a:hover {
+	color:black;
+	margin-left:5px;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+div.redwebitem {
+	border-bottom:1px solid #dbcbb1;
+}
+
+/* green pulldown */
+
+div.greenwebmenuheader a {
+	display: block;
+	text-decoration: none;
+	color:#f73c18;
+	font-size:10px;
+	font-family:Arial;
+}
+
+div.greenwebmenu div.greenwebmenuheader a.agreenmenuheader {
+	display: block;
+	text-decoration: none;
+	color:#00a6a6;
+	font-size:10px;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+div.greenwebmenuheader {
+	width:165px;
+}
+
+div.greenwebmenu div.greenwebsubmenu {
+	display: none;
+}
+
+div.greenwebsubmenu div.greenwebitem:hover {
+	background:#c2ea8b;
+}
+	
+div.greenwebmenu:hover div.greenwebmenuheader {
+	text-decoration: none;
+	color: black;
+	font-size:10px
+} 
+	
+div.greenwebmenu:hover div.greenwebmenuheader a.agreenmenuheader {
+	text-decoration: none;
+	color:#ffffff;
+	background:#00a6a6;
+	font-size:10px;
+	font-weight:bold;
+} 
+
+div.greenwebmenu:hover div.greenwebsubmenu {
+	display: block;
+	background:#f9fce7;
+	text-decoration: none;
+	width:209px;
+	border:1px solid #00a6a6;
+} 
+
+div.greenwebmenuheader:hover {
+	background:#ffffff;
+}
+		
+div.greenwebitem a {
+	color:black;
+	margin-left:5px;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+div.greenwebitem a:hover {
+	color:black;
+	margin-left:5px;
+	font-weight:bold;
+	font-family:Arial;
+}
+
+div.greenwebitem {
+	border-bottom:1px solid #dbcbb1;
+}
+	
+	
+div.tshirt {
+	 border-bottom:1px solid #D9EDC8;
+	 border-right:1px solid #D9EDC8;
+	 border-left:1px solid #D9EDC8;
+	 padding-left:10px;
+	 padding-top:5px;
+	 padding-bottom:5px;
+	 font-size:12px;
+	 font-family:Arial;
+}
+
+div.tshirt a {
+	 color:#00a6a6;
+	 font-weight:bold;
+}
+
+/* Link trail (more.../less..) */
+
+.NS_Co .NS {
+	display:none;
+}
+
+.NS_Ex .more {
+	display:none;
+}
+
+.NS {
+	padding-top:1px;
+}
+
+.NotesSectionGroupCollapsed, .NotesSectionGroupC {
+	display:none;
+}
+
+.NSSpan {
+	background-color:#F8F8E5;
+	border:1px solid #F29B22;
+	color:#F29C22;
+	font-weight:bold;
+	margin-bottom:2px;
+	padding:0px 3px 2px;
+}
+
+.NSH, .NSH_MI6, .NotesSection, .ExtensionsSectionH {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:9px;
+	letter-spacing:0.05em;
+	margin-bottom:2px;
+	margin-top:0px;
+	text-transform:uppercase;
+}
+
+.NS_Co .NSH_MI6 {
+	background-color:#FFFDE0;
+	color:green;
+}
+
+.NSHHighlight {
+	color:red;
+}
+
+/* W|A Widget */
+
+.wawidget {
+	background: transparent url(/images/frontpage/mathworld-input.gif) no-repeat scroll 0 0;
+	height: 85px;
+	margin: 15px 5px;
+	padding: 0px;
+}
+
+.wawidget a.waheader {
+	position: absolute;
+	height: 22px;
+	width: 135px;
+}
+
+.wawidget #i {
+	border: 0px inset white;
+	font-size: 9px;
+	height: 10px;
+	position: relative;
+	top: -1px;
+	left: 9px;
+	width: 140px;
+}
+
+.wawidget #calculate {
+	position: relative;
+	margin-top: 33px;
+	right: -5px;
+}
+
+.wawidget p {
+	width: 155px;
+	margin: 12px 0 0 5px;
+}
+
+.wawidget p a{
+	font: 9px/13px Arial, sans-serif;
+	color: #000000;
+}

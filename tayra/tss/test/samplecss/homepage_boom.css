@@ -1,0 +1,149 @@
+﻿#jsHP {
+    margin: 0;
+    padding: 1px 0;
+    text-align: left;
+}
+#jsHP a {
+    color: #353FB5;
+}
+#jsHP h2 {
+    color: #1F2145;
+    font-size: 20px;
+    font-weight: bold;
+    border: 0;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+#jsHP h3 {
+    color: #0A0F5B;
+    font-size: 16px;   
+    font-weight: bold;
+    padding: 0;
+    margin: 0 0 8px 0;
+}
+#jsHP h3.other {
+    margin-top: 15px;
+}
+#jsHP .jsHomeSpotBanner {
+    clear: both;
+}
+#jsHP_left {
+    width: 426px;
+    float: left; 
+    padding: 0 0 15px 0;  
+}
+#jsHP_left #jobCenter {
+    margin: 0 0 20px 0;   
+}
+#jsHP_left #careersWrapper {
+    border: 1px solid #D2D2DB;
+    background: #f8f8f8;   
+}
+#jsHP_left #leftCareers {
+    float: left;
+    width: 50%;
+    padding: 0;
+    margin: 0;
+}
+#jsHP_left #rightCareers {
+    float: right;
+    width: 50%;
+    padding: 0;
+    margin: 0;
+}
+#jsHP_left #careersWrapper ul {
+    margin: 0 0 0 20px;
+    padding: 0;
+}
+#jsHP_left #careersWrapper ul li {
+    list-style-position: outside;
+    list-style-image: url(../../images/js/cb_mainnav-li-li-a_orange.gif);
+    margin: 0;
+    padding: 0;
+    line-height: 23px;
+}
+#jsHP_left #careersWrapper ul li a {
+    font-weight: bold;
+    color: #313BBF;
+    font-size: 12px;
+}
+#jsHP_right {
+    width: 305px;
+    float: right;
+    padding: 0 0 15px 0;
+}
+#jsSearchTools {
+    border: 1px solid #D2D2DB;
+}
+#jsSearchTools #featuredTool {
+    border-bottom: 1px solid #D2D2DB;
+    padding: 9px;
+    background: #f8f8f8;
+}
+#jsSearchTools #featuredTool .line {
+    height: 1px;
+    background: #D2D2DB;
+    margin: -7px 0 10px 35px;   
+}
+#jsSearchTools #featuredTool a {
+    font-weight: bold;
+}
+#jsSearchTools ul {
+    margin: 10px 0 5px 25px;
+    padding: 0;   
+}
+#jsSearchTools ul li {
+    list-style-image: url(../../images/js/green_bullet_arrow.gif);
+    list-style-position: outside;
+    margin: 0;
+    line-height: 22px;
+    color: #5F5F60;
+}
+#jsSearchTools ul li a {
+    color: #353FB5;
+    font-size: 12px; 
+    font-weight: bold;  
+}
+#jsSearchTools #featuredTool span {
+    font-size: 10px;
+    display: block;
+    color: #ccc;
+    margin: 0 0 5px 0;
+}
+#jsSearchTools #featuredTool img {
+    display: block;
+    margin: 0 0 5px 0;
+}
+#jsHP_right .adWrapper {
+    margin: 0 0 15px 0;
+}
+#jsHP_right .adWrapper span {
+    font-size: 10px;
+    display: block;
+    color: #ccc;
+}
+#jsHP_right #featEmps {
+    margin: 15px 0 0 0;
+}
+#jsHP_right #featEmps h2 {
+    float: left;
+    width: 200px;   
+}
+#jsHP_right #featEmps a.viewAll {
+    float: left;
+    text-decoration: underline;
+    font-size: 11px;
+    width: 50px;
+    line-height: 20px;
+}
+#jsHP_right #featEmps table {
+    clear: both;
+}
+#jsHP_right #featEmps .featEmps td {
+    width: 50%;
+}
+#jsHP_right #featEmps .featEmps td div {
+    border: 1px solid #ccc;
+    padding: 10px 0;
+    text-align: center;
+}

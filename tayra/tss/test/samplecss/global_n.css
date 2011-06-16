@@ -1,0 +1,352 @@
+
+html{color:#000;background:#F5F4F4;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
+body{height: 100%;font-family: Arial;background:#F5F4F4;text-align:center;}
+/**
+    Header Styles .
+    Most of the elements inside the header are absolute positioned so that we can move the elements without affecting other things
+
+    Please maintain the DOM order so that it is easy to find out the styles . If over riding is instituted using the order please specify so
+
+*/
+/*wrapper*/
+#wrp{
+    text-align: center;
+    background:url("http://sp.dictionary.com/dictionary/homepage/images/bg_1x1.png") repeat-x scroll 0 0 #F2F2F2;
+    height:137px;
+}
+/*shadow*/
+#wrp #sh{
+    background:url("http://sp.dictionary.com/dictionary/homepage/images/tp.png") no-repeat scroll 100% 0 transparent;
+    height:26px;
+    position:absolute;
+    right:0;
+    top:0;
+    width:857px;
+}
+/* Header and content wrapper have the same width so that we can have the them center aligned , the center aligning is done using the two properties
+ 1) In IE -> Text align center and width
+ 2) In Firefox and other browsers -> margin:auto
+*/
+#hdr,#cwrp{
+    position: relative;
+    width: 1000px;
+    margin: auto;
+    background:white;
+}
+#hdr span, #hdr a, #hdr div{font-family:Arial;}
+/*header top nav elements */
+
+#tpnv{
+    position: absolute;
+    right: 0px;
+    top:0px;
+}
+#tpnv a,#hdr #tpnv span{
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+    position: static;
+}
+#tpnv a+a{
+    border-left: 1px solid;
+    padding-left:4px;
+}
+.favL {
+    background: url("http://sp.dictionary.com/en/i/dictionary/hp/favorite_icon.png") no-repeat scroll 0 50% transparent;
+    padding-left: 13px;
+}
+/* The anchor surrounding the logo image */
+#hdr .diclogo{
+    left:0;
+    top:19px;
+    position:absolute;
+}
+
+#hdr form{
+    background: url("http://sp.dictionary.com/dictionary/homepage/images/sh_a.png") no-repeat scroll 0 0 transparent;
+    height: 48px;
+    width: 478px;
+    position: absolute;
+    text-align: left;
+    left: 211px;
+    top: 22px;
+}
+#hdr input{
+    position: relative;
+    top: 10px;
+    left:20px;
+    font:21px arial;
+    color:#CCCCCC;
+    width: 350px;
+    height: 28px;
+    outline: none;
+    border: 0;
+}
+#hdr #q{
+    background: url("http://sp.dictionary.com/dictionary/homepage/images/search_box_text.png") no-repeat scroll -806px -42px transparent;
+    padding: 0;
+}
+#hdr button{
+    background: url("http://sp.dictionary.com/dictionary/homepage/images/sh_a.png") no-repeat scroll -488px 0 transparent;
+    width: 89px;
+    height: 41px;
+    border: none;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    cursor:pointer;
+}
+#hdr button:hover{
+    background: url("http://sp.dictionary.com/dictionary/homepage/images/sh_a.png") no-repeat scroll -584px 0px transparent;
+}
+#hdr span{
+    position: absolute;
+    right:111px;
+    top: 35px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #6699CC;
+}
+
+
+/*content wrapper styles */
+#contouter{
+    width:1011px;
+    margin:auto;
+    background:transparent url("http://sp.dictionary.com/dictionary/homepage/images/hp_bg.png") repeat-y scroll 0 0;
+    position:relative;
+    top:-54px;
+	z-index:100;
+
+}
+
+#cwrp .nbl{
+    border-left:none;
+    padding-left: 0;
+}
+#cwrp .nbr{
+    border-right:none;
+}
+
+#dmain{
+top:0;
+width:auto;
+background-color:#ffffff;
+}
+
+/*main navigation tabs*/
+#hlin{
+    width:100%;
+    height:28px;
+    background:url("http://sp.dictionary.com/dictionary/homepage/images/bg_1x1.png") repeat scroll 0 -671px transparent;
+}
+#hlin a{
+    float:left;
+    color: #3366CC;
+    font: bold 17px/17px arial;
+    padding: 5px 27px;
+    text-decoration: none;
+    height:18px;
+    position:relative;
+}
+#hlin a{
+    border-right:1px solid #FFFFFF;
+    position:relative;
+}
+#hlin a:hover{
+    background:url("http://sp.dictionary.com/dictionary/homepage/images/bg_1x1.png") repeat scroll 0 -698px transparent;
+}
+#hlin a.sel{background:#ffffff;color: #666666;}
+.thesa {
+    background: url("http://sp.dictionary.com/dictionary/homepage/images/sh_a.png") no-repeat scroll -807px -9px transparent;
+}
+.hnew{  background: url("http://sp.dictionary.com/dictionary/homepage/images/sh_a.png") no-repeat scroll -85px -98px transparent;
+    display: inline-block;
+    height: 10px;
+    width: 22px;}
+/*sub navigation tabs*/
+#de{
+    margin:0 auto;
+    text-align: left;
+    width: 960px;
+	background-color:#ffffff;
+}
+#snv{
+    position:relative;
+    height:28px;
+    padding:0 0 0 11px;
+    display:inline-block;
+}
+#snv a{
+    font:13px/13px arial;
+    color:#666666;
+    text-decoration:none;
+    padding:0 17px;
+    margin:8px 0 8px;
+    border-right:1px solid #666666;
+    border-left:1px solid #d9d9d9;
+    float:left;
+}
+
+/*Inner content wrappers*/
+
+
+#icw{
+    border-top:4px solid #dad9d9;
+    display:inline-block;
+}
+
+
+
+/* footer styles*/
+
+
+#fotr{
+    width:1020px;
+    height:38px;
+    background: url("http://sp.dictionary.com/dictionary/homepage/images/sh_a.png") no-repeat scroll -11px -374px #FFFFFF;
+    margin:auto;
+    position:relative;
+    top:-54px;
+	padding:0;
+}
+#nfotr{width:974px;padding-top:80px;margin-bottom: -5px;display:inline-block;}
+
+#nfr{
+    height:35px;
+    background-color: #FFFFFF;
+    margin:auto;
+    position:relative;
+    padding:0;
+}
+
+
+.od{
+    float:right;
+}
+.brli a,.od a{
+    margin-right:9px;
+    text-decoration:none;
+    font:12px/12px arial;
+    color:#666666;
+}
+.brd{
+    padding:10px 0;
+    border-top: 1px solid #D6D6D6;
+}
+.od a{
+    margin-right:0;
+}
+.specdict{
+    border-right: 1px solid #666666;
+    padding-right:5px;
+    padding-left:5px;
+}
+.abbre{
+    padding-left:5px;
+}
+.spdict{
+    padding-right:2px;
+    padding-left:3px;
+}
+.brw{
+    font:bold 12px/12px arial;
+    color:#666666;
+    padding-bottom:5px;
+}
+#nn{
+    margin:0;
+    padding:0;
+}
+
+.ptn a,.ptn, #nfr a, #nfr .bllt{
+    margin-right: 0;
+    padding: 0 5px ;
+    color: #666666;
+    font: 12px/12px arial;
+    text-decoration:none;
+	font-weight:normal;
+	top:12px;
+}
+.ptn a+a, #nfr a+a{
+    border-left: 1px solid #666666;
+}
+.ptn{
+    text-align:right;
+    padding-right:0;
+	margin-top:3px;
+	font-weight:bold;
+}
+
+.brftr .npr,#fotr .npr{
+    padding-right:0;
+}
+
+.auth{
+    padding:0 0 8px 15px;
+    font:bold 14px arial;
+    color:#CCCCCC;
+}                                                        
+.brftr{
+    clear:both;
+	float:none;
+	width:auto;
+	padding:0 0 2px 0;
+	position:relative;
+	text-align:left;
+	display:block;
+}
+#nfotr .brftr{
+width: 942px;
+margin-left: 16px;
+padding-bottom: 10px;
+border-bottom: 1px solid #E4E4E4;
+}
+.bllt{
+    color: #FFFFFF;
+    font: 12px arial;
+    left: 30px;
+    top: 15px;
+    position: absolute;
+}
+#nfr .bllt{left:16px;padding:0;}
+.blf a{
+    color: #FFFFFF;
+    font: 12px/12px arial;
+    text-decoration:none;
+    padding:0px 5px;
+}
+.blf a+a{
+    border-left:1px solid white;
+}
+.blf{
+    position:absolute;
+    right:30px;
+    top:16px;
+	font: 12px/12px arial;
+}
+#nfr .blf{right:16px;padding:0;top:13px;}
+
+
+.fdic,.fask{
+    display: inline-block;
+    position: absolute;
+    z-index: 20000;
+    top:5px;
+    background:url('http://sp.dictionary.com/dictionary/homepage/images/sh_a.png') no-repeat;
+}
+.fdic{background-position: -316px -149px;height: 24px;width: 105px;}
+.fask{
+    left:110px;
+	height:19px;
+	width:24px;
+	top:8px;
+background-position: -427px -154px;
+}
+.er{
+    position:relative;
+    padding:10px 0 5px 0;
+	border-top:1px solid #D6D6D6;
+}
+
+

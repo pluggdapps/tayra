@@ -1,0 +1,79 @@
+
+
+h1.hc strong,
+#searchResults,
+.flag,
+#naviCenter h4 span {background-image:url(/imgs/spSearch.20110603102701.png) !important; background-repeat:no-repeat;}
+
+/* PRODUCT */
+.product {display:block; width:136px; padding:0 10px 0 11px; float:left; text-align:center; font-size:11px; line-height:14px; position:relative;}
+.product:hover {text-decoration:none;}
+
+br.clear {clear:both; display:block;}
+.product img {text-decoration:none; display:block;}
+.product span {display:block; text-decoration:underline;}
+
+.product .brandName {margin-top:10px; font-weight:bold;}
+.product .price {text-decoration:none; color:#585a5d; font-weight:bold;}
+.product .salePrice {text-decoration:none;}
+
+.product:hover .price {text-decoration:none;}
+
+.productImage {width:170px; height:198px; overflow:hidden; display:block;}
+
+.salePrice {color:#ff5300; font-weight:bold;}
+.salePrice span {display:inline; text-decoration:line-through; font-weight:normal; color:#585a5d;}
+
+.product .flag {position:absolute; top:0; left:0;}
+.flag {padding-left:28px; width:75px; background-position:0 -36px;}
+.first .flag, * html .flag {background:none !important;}
+.flag .sale {display:block; float:left; margin-right:2px; width:19px; height:41px; background:-114px -267px no-repeat;}
+.flag .new {display:block; float:left; margin-right:2px; width:20px; height:46px; background:-93px -267px no-repeat;}
+.product .stars {margin:0 auto;}
+#headerBanner, .header-promo {display:none;}
+#wrap {overflow:visible; z-index:1200; background:none; border-width:0;}
+#content {position:relative; z-index:1201; width:750px; float:left;}
+#content h1 {padding:0; height:30px;}
+#content h1.hc strong {text-indent:0; float:none; display:inline; margin:0; color:#369; font:normal normal bold 28px/normal Georgia, Times, serif; background-image:none !important;}
+#content h2 {width:304px; height:224px; text-indent:-9999px;}
+#sidebar {width:200px; float:right; margin:0 0 15px;}
+#sidebar .stripeInner {padding:15px 11px 14px;}
+
+/* CHOICESTREAM HEADERS FOR DEFAULT SIDEBAR */
+#errorChoiceStream a {margin:0 0 10px;}
+#errorChoiceStream h3.hc2 {background:#a4b344 right -169px no-repeat; float:left; position:relative; overflow:visible; left:-15px; margin:0 0 8px 0; padding:5px 16px 4px 20px; font-size:10px; color:#fff; text-indent:0; line-height:12px; text-transform:uppercase; text-shadow:rgba(122,136,37,.7) 1px 1px 0;}
+#errorChoiceStream h3.hc2 span {width:6px; height:4px; position:absolute; background-position:-127px -206px; top:-4px; left:0; text-indent:0; background-color:#000;}
+#errorChoiceStream .stripeInner {*height:1%;}
+
+#actionContainer {position:absolute; left:170px; top:215px;}
+
+#actionContainer .errorAction {display:block; margin:0 32px 0 0; padding:10px; float:left; color:#fff; text-align:center; font:bold 18px Georgia, Times, serif; letter-spacing:2px; -webkit-border-radius:5px; -moz-border-radius:5px;}
+
+#actionContainer #errorSearch {background:#ff7b3c; background-image: -moz-linear-gradient(top, #ff7b3c, #ff5200); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ff7b3c),color-stop(1, #ff5200)); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#ff7b3c', EndColorStr='#ff5200'); -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ff7b3c', EndColorStr='#ff5200')";} 
+
+#actionContainer #errorHome {background:#8a944c; background-image: -moz-linear-gradient(top, #a4b344, #8a944c); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #a4b344),color-stop(1, #8a944c)); filter:progid:DXImageTransform.Microsoft.gradient(startColorStr='#a4b344', EndColorStr='#8a944c'); -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#a4b344', EndColorStr='#8a944c')";} 
+
+#actionContainer #errorHelp {background:#264c73; background-image: -moz-linear-gradient(top, #376594, #264c73); background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #376594),color-stop(1, #264c73)); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#376594', EndColorStr='#264c73'); -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#376594', EndColorStr='#264c73')";} 
+
+/* Character styles */
+#character {position:absolute; left:-175px; top:-125px; z-index:-100; display:block;}
+#actionContainer .off {display:none;}
+#character #spanHomeLink {display:block; height:395px; text-indent:-9999px;}
+
+/* Penguin Styles */
+.fourOhFour #character {width:304px; height:224px; background-image:url(/imgs/errorPenguin.20110603102659.png);}
+.fourOhFour #actionContainer .errorSearch {left:10px; top:-340px; z-index:1101; width:141px; height:342px; background-position:right bottom;}
+.fourOhFour #actionContainer .errorHome {left:-216px; top:-387px; z-index:1101; width:513px; height:395px; background-position:left bottom;}
+.fourOhFour #actionContainer .errorHelp {left:360px; top:-396px; z-index:1101; width:443px; height:403px; background-position:right top;}
+
+/* Dog Styles */
+.fiveHundy #character {width:425px; height:224px; background-image:url(/imgs/errorDog.20110603102659.png);}
+.fiveHundy #actionContainer .errorSearch {left:10px; top:-340px; z-index:1101; width:141px; height:342px; background-position:right bottom;}
+.fiveHundy #actionContainer .errorHome {left:-206px; top:-397px; z-index:1101; width:530px; height:395px; background-position:left bottom;}
+.fiveHundy #actionContainer .errorHelp {left:360px; top:-396px; z-index:1101; width:425px; height:403px; background-position:right top;}
+
+/* Brand Recommendations */
+#relevantBrands {margin:80px 0 0;}
+#relevantBrands .stripeInner {overflow:hidden; *height:1%; clear:left; padding:10px;}
+#relevantBrands a {display:inline; float:left; overflow:hidden; width:48%; margin:0 0 15px; text-align:center;}
+

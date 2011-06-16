@@ -1,0 +1,19 @@
+.opsi,.opi,.opre{background-repeat:no-repeat;background-image:url(http://static2.orkut.com/img/presence-sprite-castro.png);width:12px;height:9px;display:none;vertical-align:middle}
+#gwtPanel .opsi,#gwtPanel .opi,#gwtPanel .opre{background-image:url(http://static1.orkut.com/img/presence-sprite-itauna.png);width:18px;height:18px}
+.opi,.opre{cursor:pointer}
+.opt{display:none;background-image:none!important}
+.opsi{display:inline;background-position:0 -18px}
+.roster_top{background:#73A6FF}
+.roster_button_h{background:#3072FE;width:16px;height:16px}
+.roster_header{color:#FFF;overflow:hidden;text-align:left;font:bold 12px arial,sans-serif;-moz-user-select:none;margin:0 10%}
+.roster-presence-bubble{width:18px;float:left;overflow:hidden;display:block;padding:1px}
+.roster_content{cursor:pointer}
+.talk_roster{overflow:hidden;width:100%;background-color:#FFF;padding:0 1px 1px}
+* html .roster_content{height:18px}
+.roster_control{width:18px;float:right;overflow:hidden;padding:0 0 2px}
+* html .roster_control{padding:0}
+* html .roster_header{width:111px}
+.talk_iframe{width:151px}
+.roster_and_top_hidden,.roster_and_top_visible{display:inline;position:absolute;bottom:0;width:153px;z-index:2}
+.roster_and_top_hidden{visibility:hidden}
+.roster_and_top_visible{visibility:visible}

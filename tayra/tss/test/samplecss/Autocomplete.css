@@ -1,0 +1,7 @@
+.ac_results li.ac_over {background-color: #D4080B;color:#FFFFFF;}
+.ac_results {padding: 0px;border: 1px solid #CECDBF;background-color:#F9F9F9;overflow: hidden;z-index:10000000;}
+.ac_results ul {width: 100%;list-style-position: outside;list-style: none;padding: 0;margin: 0;}
+.ac_results li {margin: 0px;padding: 2px 5px 2px 29px;cursor: default;display: block;font-family:Arial, sans-serif;font-size: 12px;line-height: 17px;overflow:hidden;color:#000000;}
+.ac_results strong {font-weight: bold;}
+.ac_loading {}
+.ac_suggest {display:block; font-size:10px; font-family:Arial, sans-serif; font-weight:bold;color:#CECDBF;padding-left:8px;margin-bottom:8px;margin-top:4px;}

@@ -1,0 +1,1826 @@
+/************************************
+*
+* General HTML related CSS
+*
+************************************/
+
+body {
+  color: #000000;
+}
+
+a {
+  color: #243C44;
+}
+
+a:hover {
+  color: #47A3D0;
+}
+
+h1,
+h1 span {
+  background: transparent;
+  color: #47A3D0;
+}
+h1#mapping {
+  margin-top: 5px;
+}
+h2,
+h2 span,
+h3,
+h3 span {
+  background: transparent;  
+  color: #243C44;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+h1 span,
+h2 span,
+h3 span {
+  display: inline;
+}
+
+/************************************
+*
+* Overall Layout
+*
+************************************/
+/* Note: body.brand-four_one_one is used to try limiting the usage of !important -- using the cascade instead */
+
+#top {
+  float: none;
+}
+
+#top div.area_zip_spacer {
+  height: 23px;
+  background: url(/four_one_one/images/sprite_subpages.png?2) -6px -717px no-repeat;
+}
+
+#left {
+  width: 655px;
+}
+
+#left div.horizontal_line {
+  clear: both;
+}
+
+#left div.vertical_line {
+  float: left;
+  margin-top: 50px;
+  height: 99px;
+}
+
+#left div.row_divider {
+  width: 100%;
+}
+
+/************************************
+*
+* Ads
+*
+************************************/
+
+#ad_block {
+  width: auto;
+  text-align: left;
+}
+
+.partner_searches .partner_box {
+  margin: 0 0 10px;
+}
+
+.partner_searches {
+  margin: 0 0 30px;
+  padding: 6px 0;
+}
+
+h3.partner_search_header {
+  font-size: 16px;
+  font-weight: bold;
+  color: #243C44;
+  margin: 0 0 0 18px;
+}
+
+#custom_panel_ad {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#local_info h4 {
+  margin: 7px 0 0;
+  color: #000000;
+}
+
+#local_info a {
+  margin: 0 0 4px 0;
+}
+
+#wpn_ad_content_bottom_rail {
+  text-align: center;
+  margin: 15px 0 0 0;
+}
+
+#wpn_ad_content_heading_text {
+  text-align: center;
+}
+
+#wpn_ad_content_top_rail_link a,
+#wpn_ad_content_heading_text a {
+  color: #4289B7 !important;
+}
+
+#ad_block #wpn_ad_content_landscape_module {
+  width: 638px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ad_block #wpn_ad_content_landscape_module,
+#ad_block #wpn_ad_content_endemic_module {
+  border: 1px solid #AACCEE;
+  margin-bottom: 0;
+}
+
+#wpn_ad_content_custom_panel {
+  margin-top: 10px;
+  text-align: center; 
+}
+
+#wpn_ad_content_house_module {
+  text-align: center;
+  height: auto;
+  width: auto;
+}
+
+
+.mr_sponsored_links .wpn_ad_content {
+  margin-bottom: 3px;
+}
+
+.brand-four_one_one .ad_label {
+  font-size: 9px;
+  color: #705F15;
+	margin: 0 5px 0 0 !important;
+} 
+
+/************************************
+*
+* Results Pages
+*
+************************************/
+
+div.search_results_header {
+  height: auto !important;
+}
+
+div.search_results_header h1 {
+  font-size: 22px;
+  float: none;
+}
+
+div.biz_search_results_header h1 span {
+  color: #47A3D0;
+}
+
+.search_options {
+  padding: 0px 0px 0px 5px;
+}
+
+.mr_top {
+  background-color: #E9EBEC;
+  height: 30px;
+}
+
+body.brand-four_one_one ol.result {
+  width: 320px;
+  display: inline;
+}
+
+body.brand-four_one_one ol.result li {
+  float: left;
+  width: auto;
+  margin: 0;
+  color: #243C44;
+  font-size: 13px;
+}
+
+body.brand-four_one_one ol.result li strong {
+  font-size: 11px;
+}
+
+body.brand-four_one_one ol.result li.col_address {
+  width: 148px;
+  padding: 0 16px 0 37px;
+}
+
+body.brand-four_one_one ol.result li.col_location {
+  width: 150px;
+}
+
+ol.result li.col_address div {
+  position: absolute;
+  width: 14px;
+  height: 12px;
+  left: 18px;
+  top: 42px;
+}
+
+ol.result li.col_address div.home_indicator {
+  background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll -384px -32px;
+}
+
+ol.result li.col_address div.work_indicator {
+  background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll -412px -32px;
+}
+
+.cell_email_phone {
+  float: right;
+  clear: left;
+  margin: 14px 20px 0 0;
+}
+
+.cell_email_phone ul {
+  list-style-image:none;
+  list-style-position:outside;
+  list-style-type:none;
+  margin:0;
+}
+
+.cell_email_phone ul li {
+  display: block;
+  float: left;
+  width: 39px;
+  height: 14px;
+  margin-left: 3px;
+}
+
+.cell_email_phone ul li span {
+  display: block;
+  width: 39px;
+  height: 14px;
+}
+
+/*
+.cell_email_phone ul li.cell_available {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -566px 0;
+}
+
+.cell_email_phone ul li.cell_not_available {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -566px -32px;
+}
+
+.cell_email_phone ul li.email_available {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -608px 0;
+}
+
+.cell_email_phone ul li.email_not_available {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -608px -32px;
+}
+*/
+.cell_email_phone ul li.landline_available {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -650px 0;
+}
+
+.cell_email_phone ul li.landline_not_available {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -650px -32px;
+}
+
+body.brand-four_one_one ol.result li.col_info {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  color: #243C44;
+  width: 285px;
+}
+
+ol.result li.col_info div.household_transparency {
+  background: url(/four_one_one/images/gradient-white.png) no-repeat;
+  position: absolute;
+  display: block;
+  width: 31px;
+  height: 30px;
+  top: 0;
+  right: -1px;
+  z-index: 99;
+}
+
+ol.result li.col_info div.household_transparency {
+  behavior: url(/four_one_one/javascripts/iepngfix.htc);
+}
+
+ol.result li.col_phone {
+  margin-bottom: 1em;
+}
+
+ol.result li.col_phone p {
+  font-weight: bold;
+  margin: 0;
+}
+
+ol.result li.col_details {
+  margin-top: 1em;
+}
+
+body.brand-four_one_one div.result {
+  background: #FFFFFF;
+  width: 653px;
+  padding: 0 0 15px;
+}
+
+body.brand-four_one_one div.result a {
+  color: #005ca7;
+}
+
+/* Business search results page */
+body.business_search_serp #left,
+body.business_search_serp #right {
+  margin-top: 24px;
+}
+
+/* Business Search Map & Directions Page */
+body.business_search_directions #map_and_directions .row_divider {
+  display: none;
+}
+
+/* Business search listings on Reverse Phone page */
+body.brand-four_one_one div.result.business_search_result {
+  padding-bottom: 0px; /* account for .clear used in bs result */
+}
+div.result.business_search_result ol.result li.col_address {
+	padding-left: 18px;
+}
+
+.highlighted {
+  border-color: #64BDE2 !important;
+}
+
+div.number {
+  display: none;
+}
+div.number, div.iyp_number {
+  color: #7c8a8f;
+}
+
+body.brand-four_one_one div.space {
+  background: transparent;
+  height: 10px;
+}
+
+body.brand-four_one_one div.divider {
+  border-bottom: 6px solid #E9EAEC;
+}
+
+.mr_sponsored_links {
+  float: right;
+  width: 318px;
+  margin: -30px 0 0;
+}
+
+.mr_sponsored_links h6 {
+  margin: 16px 0 0 0;
+  font-size: 9px;
+  color: #8b9db3;
+}
+
+body.brand-four_one_one .pagination {
+  padding: 0px;
+  margin: -4px 18px 0 0;
+  height: 22px;
+  font-weight: bold;
+  font-size: 13px;
+  display: inline;
+}
+
+.pagination a:hover {
+  text-decoration: underline;
+}
+
+body.brand-four_one_one .pagination a, body.brand-four_one_one .pagination span {
+  color: #243C44;
+  display:block;
+  float:left;
+  line-height:1;
+  margin-top: 2px;
+  padding:3px 5px;
+  text-decoration:none;
+}
+
+body.brand-four_one_one .pagination .current {
+  background-color: transparent;
+  border: 1px solid #47A3D0;
+  margin: 4px 3px 0 2px;
+  padding: 0 4px;
+}
+
+body.brand-four_one_one .pagination a.prev_button,
+body.brand-four_one_one .pagination a.next_button,
+body.brand-four_one_one .pagination span.prev_button_inactive,
+body.brand-four_one_one .pagination span.next_button_inactive {
+  width: 53px;
+  height: 22px;
+  margin: 0 4px 0 0;
+  padding: 0;
+  text-indent:-9000em;
+}
+
+body.brand-four_one_one .pagination a.next_button,
+body.brand-four_one_one .pagination span.next_button_inactive {
+  margin: 0 0 0 3px;
+}
+
+.pagination a.prev_button {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -440px 0;
+}
+
+.pagination a.next_button {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -503px 0;
+}
+
+.pagination span.prev_button_inactive {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -440px -32px;
+}
+
+.pagination span.next_button_inactive {
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -503px -32px;
+}
+
+body.brand-four_one_one .end_pagination {
+  padding: 0;
+  margin: 10px 20px 0 0;
+}
+
+.search_results_header h1 span,
+h1.search_results_count_single span {
+  color: #243C44;
+}
+
+.search_results_count_single {
+  background: transparent;
+  color: #47A3D0;
+  margin:0 0 0 16px;
+}
+
+body.brand-four_one_one p.name {
+  font-size: 17px;
+  padding: 9px 0 0 18px;
+  margin: 0 0 13px;
+}
+
+body.brand-four_one_one p.name a {
+  color: #243C44;
+}
+
+body.brand-four_one_one p.name a:hover {
+  color: #47A3D0;
+}
+
+h3.partner_ads {
+  font-size: 16px;
+  font-weight: bold;
+  color: #243C44;
+  margin: 15px 0 10px 20px;
+}
+
+
+   /* Single results details */
+
+.sr_top {
+  background-color: #E9EBEC;
+  height: 14px;
+}
+
+.sr_top_white_line {
+  height:2px;
+  line-height: 2px;
+  font-size: 1px;
+  background-color:#FFF;
+}
+
+.sr_top_gray_line {
+  height:2px;
+  line-height: 2px;
+  font-size: 1px;
+  background-color:#E9EBEC;
+}
+
+
+.listing_detail p.address span {
+  position: absolute;
+  display: block;
+  width: 14px;
+  height: 12px;
+  left: 18px;
+}
+
+.listing_detail p.address span.home_indicator {
+  background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll -384px -32px;
+}
+
+.listing_detail p.address span.work_indicator {
+  background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll -412px -32px;
+}
+
+body.brand-four_one_one .listing_detail .listing_detail_options {
+  margin: 8px 0 20px 19px;
+  width: 620px;
+  height: 24px;
+  border: none;
+  float: none;
+  background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll 0 -200px;
+
+}
+
+body.brand-four_one_one .listing_detail .listing_detail_options a,
+body.brand-four_one_one .listing_detail .listing_detail_options span  {
+  margin: 0;
+  padding: 0;
+  color: #506369;
+  float: left;
+  display: block;
+  height: 21px;
+  line-height: 21px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  outline: none;
+}
+
+.listing_detail .listing_detail_options span {
+  color: #A7B1B4;
+  line-height: 22px;
+}
+
+.listing_detail .listing_detail_options a:hover {
+  color: #47A3D0;
+}
+
+.listing_detail .listing_detail_options a#ld_print {
+  width: 72px;
+}
+
+.listing_detail .listing_detail_options a#send_phone {
+  width: 138px;
+}
+
+.listing_detail .listing_detail_options a#ld_save {
+  width: 144px;
+}
+
+.listing_detail .listing_detail_options a#ld_neighbors,
+.listing_detail .listing_detail_options span#ld_neighbors  {
+  width: 113px;
+}
+
+.listing_detail .listing_detail_options a#ld_map {
+  width: 152px;
+}
+
+body.brand-four_one_one .listing_detail {
+  border: none;
+  width: 653px;
+  color: #243C44;
+  margin-bottom: 20px;
+}
+
+.listing_detail .sponsor1 a {
+  line-height: auto;
+  padding: 0;
+  color: #4289B7;
+}
+
+.listing_detail .sponsor1 p {
+  color:#705F15;  
+}
+
+body.brand-four_one_one .listing_detail_top_bar {
+  width: 653px;
+  border: 0px;
+  background-color: #e0e7f6;
+}
+
+body.brand-four_one_one .listing_detail .data p.single_result_phone {
+  padding-left: 0;
+  background: transparent;
+}
+
+body.brand-four_one_one .listing_detail .sponsor2 {
+  margin: 1px 0 0 18px;
+  padding: 0;
+}
+
+#map_target {
+  margin: 0;
+  zoom: 1;
+}
+
+body.brand-four_one_one .listing_detail #map_content {
+  width: 313;
+  height: 220px;
+  border: 1px solid #D3D8DA;
+}
+
+.listing_detail .data .name_info .age_range strong,
+.listing_detail .data .name_info .helpful_info strong {
+  color: #243C44;
+  font-size: 11px;
+}
+
+.name_info p.landline {
+  margin-bottom: 12px;
+}
+
+#directions_destination {
+  margin: 15px 0 0;
+}
+
+body.brand-four_one_one .listing_detail .map .listing_date {
+  width: auto;
+}
+
+body.brand-four_one_one .listing_detail_top {
+  padding-left: 18px;
+}
+
+body.brand-four_one_one .listing_detail h3.listing_name {
+  font-size: 19px;
+  color: #243C44;
+  margin-bottom: 4px;
+}
+
+body.brand-four_one_one .listing_detail .data .name_info {
+  margin-left: 20px;
+}
+
+body.brand-four_one_one .listing_detail p.address {
+  margin: 2px 0 0;
+}
+
+body.brand-four_one_one .listing_detail .data p.single_result_phone,
+body.brand-four_one_one .listing_detail .data p.email {
+  padding-top: 0;
+  font-weight: normal;
+}
+
+body.brand-four_one_one .listing_detail .map {
+  margin-top: 1px;
+  margin-right: 15px;
+}
+
+.listing_detail_bottom {
+  float: none;
+  zoom: 1;
+}
+
+#left.business_error h1 span {
+ color:#FF0000;
+}
+
+#left .maintenance p {
+  margin-right: 0;
+}
+
+.error_explanation {
+ color: #243C44;
+}
+
+h1#error_title {
+  margin: 0 0 10px 15px;
+  padding: 5px 0 0 0;
+  display: inline;
+}
+
+
+.error_msg {
+  margin: 0 0 20px 18px;
+  float: none;
+  color: #000000;
+  padding: 0;
+  border: 3px solid #FF0000;
+  background: #FFF;
+}
+
+h2#error {
+  color: #243C44;
+  margin: 10px 0 0 0;
+}
+
+.error_msg #error {
+  /*top: 0;*/
+}
+
+.error_msg img {
+  float: left;
+  margin: 2px 10px 0 0;
+}
+#search_error {
+  border: none;
+}
+
+.print_link {
+  padding-left: 20px;
+  margin: 4px 5px 0 14px;
+  position: relative;
+  float: left;
+}
+
+.print_icon {
+  width: 15px;
+  height: 11px;
+  background: url('/generic/images/printer_icon.gif');
+  position: absolute;
+  top: 3px;
+  left: 1px;
+}
+
+.sort_dropdown {
+  margin: 1px 0 0 20px;
+  float: left;
+}
+
+.pagination_back_link {
+  margin: 0 0 11px;
+  padding:0 0 0 19px;
+  width: 200px;
+}
+
+div.standard_box {
+  border:6px solid #7C8A8F;
+}
+
+div.standard_box div.standard_box_inner {
+  border:1px solid #A7B1B4;
+}
+
+#sendListingDiv h4 {
+  color: #47A3D0;
+}
+
+#sendListingDiv p#to input,
+#sendListingDiv p#from input,
+#sendListingDiv p#message textarea {
+  border: 1px solid #47A3D0;
+}
+
+#sendListingDiv #scroll_cover {
+  border-left: 1px solid #47A3D0;
+  height: 91px;
+  top: -91px;
+}
+
+#sendListingDiv div#innerTextArea {
+  background-color: #D3D8DA;
+  border-left: 1px solid #47A3D0;
+  border-right: 1px solid #47A3D0;
+  border-bottom: 1px solid #47A3D0;
+  color: #506369;
+  font-size: 11px;
+}
+
+#sendListingDiv input#sendToListing {
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -485px -90px;
+  width: 70px;
+  height: 30px;
+  text-indent: -9000em;
+  margin-bottom: 12px;
+  margin-left: 197px;
+  border: none;
+}
+
+#sendListingDiv p label {
+  color: #506369;
+}
+
+#sendListingDiv #sendListingFooter,
+#sendListingDiv #sendListingFooter a {
+  color: #7C8A8F;
+}
+
+
+#sendListingDiv a {
+  color: #243C44;
+}
+
+#sendListingDiv a:hover {
+  color: #47A3D0;
+}
+
+#close_wp_popup {
+  color: #243C44;
+  background:transparent url(/four_one_one/images/tiny_X_Close.gif) no-repeat scroll 26px 1px;
+}
+
+/************************************
+*
+* Area Code Results
+*
+************************************/
+
+#area_code_search h1.nounderline, 
+#area_code_search h3 {
+  background:transparent none repeat scroll 0 0;
+}
+
+div.module.left_module.wide_module h3 {
+  color: #243c44;
+}
+
+.area_code_module h3 {
+  color: #243c44;
+}
+
+h1.code_results_count {
+  margin: 20px 0px 11px 18px;
+}
+
+#code_results {
+  width: 599px;
+  border-collapse: collapse;
+  margin: 0px 0px 20px 14px;
+}
+
+#code_results tr td {
+  height: 24px;
+  padding-left: 5px;
+  font: normal 12px Arial;
+}
+
+#code_results tr.odd td {
+  background: #efebec none repeat scroll 0% 50%;
+}
+
+#code_results tr.spacer{
+  display: block;
+  height: 22px;
+}
+
+#code_results tr.country_codes td {
+  background: #efe9e5 none repeat scroll 0% 50%;
+}
+
+#code_results tr th {
+  font: bold 16px Arial;
+  color: #243c44;
+  padding: 0 0 0 4px;
+  padding-bottom: 6px;
+  text-align: left;
+}
+
+#code_results tr th.col1 {
+  width: 225px;
+}
+
+#code_results tr th.col3 {
+  width: 171px;
+}
+
+#code_results .table_title {
+  font-size: 13px;
+  font-weight: bold;
+  padding-bottom: 4px;
+}
+
+#code_results .other_cities {
+  padding-top: 16px;
+}
+
+#area_code_search ol,
+#zip_code_search ol {
+  width: 290px;
+}
+
+#area_code_search ol.vertical,
+#zip_code_search ol.vertical {
+  width: auto;
+}
+
+/************************************
+*
+* Footer
+*
+************************************/
+
+#footer {
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.footer_section {
+  width:19%;
+  float: left;
+  color: #8E8E8E;
+  text-align: left;
+}
+.footer_section a {
+  color: #8E8E8E;
+  font-size: 11px;
+  text-decoration: underline !important;
+}
+.footer_section_header {
+  font-size: 11px;
+  font-weight: bold;
+}
+#footer .footer_section ul {
+  text-align: left;
+  padding: 0;
+}
+#footer .footer_section ul li {
+  display: block;
+  padding-left: 0;
+}
+
+.footer_section#footer_section_1 { width: 236px; }
+.footer_section#footer_section_2 { width: 171px; }
+.footer_section#footer_section_3 { width: 205px; }
+.footer_section#footer_section_4 { width: 131px; }
+.footer_section#footer_section_5 { width: 201px; }
+
+.footer_bar {
+  height: 1px;
+  border-top: 1px solid #D8D8D8;
+  border-bottom: 1px solid #D8D8D8;
+  margin: 0 0 20px 0;
+}
+
+#footer_logo {
+  width: 150px;
+  height: 50px;
+  background: transparent url(/four_one_one/images/sprite_interface.png)  no-repeat scroll -225px 0;
+  margin: 0 0 0 20px;
+}
+
+#footer_yellow_div.footer_whiteyellow_div {
+  margin-left: 455px;
+  margin-top: -59px;
+}
+
+#footer_white_div.footer_whiteyellow_div {
+  margin-left: 455px;
+  margin-top: -45px;
+}
+
+.footer_whiteyellow_div h2 {
+  color: #47A3D0;
+}
+
+.footer_whiteyellow_div p.state_search {
+  right: 10px;
+  top: 4px;
+}
+
+#footer li a {
+  color:#92918D;
+  text-decoration:none;
+}
+
+#footer li a:hover {
+  color:#433F3A;
+  text-decoration:underline;
+}
+
+#footer p a {
+  color:#92918D;
+  text-decoration:none;  
+}
+
+#footer p a:hover {
+  color:#433F3A;
+  text-decoration:underline;  
+}
+
+#footer span.horizontal_line {
+  display: block;
+  clear: both;
+  width: auto;
+  padding: 25px 0;
+}
+
+p.copyright, p.copyright a {
+  color: #666;
+}
+
+/************************************
+*
+* Header
+*
+************************************/
+
+div#logo a {
+  background: transparent url(/four_one_one/images/sprite_common.png?2) no-repeat scroll 0 8px;
+  width: 205px;
+}
+
+#header {
+  width: auto;
+  float: none;
+  border-bottom: 1px solid #64BDE2;
+}
+
+#header ul {
+  margin: 0;
+  overflow: hidden;
+}
+
+#header a#help_link {
+  color: #243C44;
+}
+
+/* Non-selected tabs */
+#header li.business a {
+	background: url("/four_one_one/images/sprite_common.png?2") -208px -12px no-repeat;
+	width: 141px;
+}
+#header li.people a {
+	background: url("/four_one_one/images/sprite_common.png?2") -349px -12px no-repeat;
+	width: 141px;
+}
+#header li.reverse_phone a {
+	background: url("/four_one_one/images/sprite_common.png?2") -490px -12px no-repeat;
+	width: 141px;
+}
+#header li.reverse_address a {
+	background: url("/four_one_one/images/sprite_common.png?2") -631px -12px no-repeat;
+	width: 141px;
+}
+#header li.area_zip a {
+	background: url("/four_one_one/images/sprite_common.png?2") -772px -12px no-repeat;
+	width: 141px;
+}
+#left #reverse_phone_search ol li input.submit {
+  margin-top: 20px;
+  *margin-top: 21px;
+}
+
+/* Selected Tabs */
+/* Rules for tabs when one tab is selected */
+#header ul.people li,
+#header ul.business li,
+#header ul.reverse_phone li,
+#header ul.reverse_address li,
+#header ul.area_zip li {
+  padding-top: 8px;
+}
+
+#header ul.business li.business a {
+  background: url(/four_one_one/images/sprite_subpages.png?2) -6px -9px no-repeat;
+  width: 171px;
+  height: 40px;
+}
+
+#header ul.people li.people a {
+  background: url(/four_one_one/images/sprite_subpages.png?2) -147px -154px no-repeat;
+  width: 171px;
+  height: 40px;
+}
+
+#header ul.reverse_phone li.reverse_phone a {
+  background: url(/four_one_one/images/sprite_subpages.png?2) -288px -303px no-repeat;
+  width: 171px;
+  height: 40px;
+}
+
+#header ul.reverse_address li.reverse_address a {
+  background: url(/four_one_one/images/sprite_subpages.png?2) -429px -453px no-repeat;
+  width: 171px;
+  height: 40px;
+}
+
+#header ul.area_zip li.area_zip a {
+  background: url(/four_one_one/images/sprite_subpages.png?2) -570px -673px no-repeat;
+  width: 171px;
+  height: 40px;
+}
+
+/************************************
+*
+* Forms
+*
+************************************/
+.search_box {
+  float: none;
+  width: auto;
+  height: 40px;
+  background-image: url(/four_one_one/images/sprite_subpages.png?2);
+  background-position: -6px -49px;
+  text-align: left;
+}
+
+.search ol li input {
+  color: #000000;
+  border-color: #A5C2D5;
+}
+
+.search ol li.title {
+  background-image: url(/four_one_one/images/sprite_subpages.png?2);
+}
+
+.search ol li.last input.submit {
+  background-image: url(/four_one_one/images/sprite_common.png?2);
+}
+
+.business_main_results .error_explanation {
+  float: none;
+}
+
+.sr_top .top, .mr_top .top {
+  background: url("/four_one_one/images/sprite_forms.gif") no-repeat scroll -485px -30px #E9EBEC;
+  height: 8px;
+}
+
+.search_box #area_code_maps_link {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -835px -180px !important;
+  height: 27px;
+  padding: 10px 0px 0px 40px;
+  margin: 0px 0px 0px 154px;
+  /*float: left;*/
+  top: 20px;
+  position: absolute;
+  z-index: 20;
+}
+
+#zip_code_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 -210px !important;
+}
+
+#area_code_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 -180px !important;
+}
+
+#zip_code_search .find_zip {
+  height: 9px;
+  width: 210px;
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -485px -180px !important;
+}
+
+#zip_code_search .find_by_zip {
+  height: 9px;
+  width: 210px;
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -485px -240px !important;
+}
+
+#area_code_search .find_area {
+  height: 9px;
+  width: 210px;
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -485px -150px !important;
+}
+
+#area_code_search .find_by_area {
+  height: 9px;
+  width: 210px;
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -485px -210px !important;
+}
+
+.search_box h1 {
+  color: #2C4F53;
+  font-size: 20px;
+  height: 30px !important;
+  margin: 0 0 17px 0;
+  width: 210px !important;
+  text-indent: -9000em;
+}
+
+.persistent .search_box h1,
+.persistent .search h3 {
+  height: 23px !important;
+  margin: 0 0 10px 0;
+  text-indent: -9000em;
+}
+
+#findbusiness_home h3, #findperson_home h3 {
+  background-image: url(/four_one_one/images/sprite_common.png?2);
+}
+#findbusiness_home h3 {
+  background-position: -804px -118px;
+}
+#findperson_home h3 {
+  background-position: -803px -85px;
+}
+
+#business_search h3, 
+#business_search_home h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 6px !important;
+}
+
+#business_search .new, #business_search_home .new {
+	background-image: url(/four_one_one/images/new_burst.gif);
+	background-repeat: no-repeat;
+	background-position: 182px 0; 
+}
+
+#findperson_advanced h3,
+#findperson_basic h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 -25px !important;
+}
+#neighbor_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 -60px !important;
+}
+
+form#neighbor_search,
+form#persistent_area_code_search,
+form#area_code_search_by_location,
+form#persistent_zip_code_search,
+form#zip_code_search_by_location {
+  width: auto;
+}
+/* forms.css puts an image in our form, we don't need it showing up.*/
+form#reverse_phone_search{
+  background: none;
+}
+
+#reverse_phone_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 -90px !important;
+}
+
+#reverse_address_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 -120px !important;
+}
+
+/* Persistent */
+#person_search_advanced h3,
+.persistent #person_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -269px -30px !important;
+}
+
+.persistent #business_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll 0 0 !important;
+}
+
+
+.persistent #neighbor_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -269px -60px !important;
+}
+
+.persistent #reverse_phone_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -270px -90px !important;
+}
+.persistent #reverse_address_search h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -270px -120px !important;
+}
+
+.persistent #zip_code_search_by_location h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -270px -240px !important;
+}
+
+.persistent #area_code_search_by_location h3 {
+  background: transparent url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -270px -210px !important;
+}
+
+.persistent #neighbor_search,
+.persistent #business_search,
+.persistent #business_search_home,
+.persistent #reverse_address_search,
+.persistent #area_code_search,
+.persistent #reverse_phone_search,
+.persistent #zip_code_search {
+  padding-bottom: 0;
+}
+
+.persistent .person_search_advanced ol {
+  margin-bottom: -20px;
+}
+
+
+.search_results_header .search_results_count {
+  margin: 0 0 0 15px;
+  color: #47A3D0;
+}
+.biz_search_results_header .search_results_count {
+  color: #47A3D0;
+}
+
+.search_results_header h1.no_results span,
+.biz_search_results_header h1.no_results span {
+  color: #ad0104;  
+}
+
+.search_msg {
+  font-size: 16px;
+}
+
+.search ol li label, .search ol li label.infield {
+  color: #243C44;
+  font-style: normal;
+}
+
+.search ol li label.checkbox {
+  color: #333333 !important;
+  font-size: 11px !important;
+  line-height: 15px;
+}
+
+#findperson_search.search ol#findperson_list_basic {
+  margin: 0;
+}
+
+#person_search_advanced #findperson_list_advanced,
+#findperson_advanced #findperson_list_advanced {
+  display: block;
+  z-index: 999;
+  overflow: visible;
+  position: relative;
+}
+
+#persistent_advanced .bottom {
+  z-index: -1;
+}
+
+#findperson_advanced #findperson_list_advanced input.text,
+#person_search_advanced input.text {
+	width: 116px !important;
+}
+
+#person_search_advanced input#firstname,
+#person_search_advanced input#name,
+#person_search_advanced input#location {
+	width: 117px !important;
+}
+
+
+#business_search_home input#bus_type { width: 288px; }
+#business_search input#bus_type { width: 262px; }
+
+#business_search #bus_location,
+#business_search_home #bus_location {
+	width: 214px;
+}
+
+.persistent .search ol li input#firstname,
+.persistent .search ol li input#name {
+  width: 138px;
+}
+
+.search ol li input#location,
+.search ol li input#rev_address {
+  width: 209px !important;
+}
+
+.reverse_phone_more_info {
+  display: none;
+}
+
+#findperson_home #findperson_list_advanced input#advanced_firstname,
+#findperson_home #findperson_list_advanced input#advanced_name,
+#findperson_home #findperson_list_advanced input#advanced_address,
+#findperson_home #findperson_list_advanced input#advanced_location {
+  width:115px !important;
+}
+
+#findperson_home #findperson_list_advanced input.checkbox {
+  width: auto !important;
+}
+
+input#metro_area {
+  width: auto !important;
+}
+
+.search input#pers_advanced_findperson_submit {
+  margin-left: 5px;
+}
+
+.search ol li input.checkbox {
+  border: none !important;
+}
+
+.search div.form_divider {
+  width: 1px;
+  height: 83px;
+  float: left;
+  margin: -10px 20px 0;
+}
+
+.search div.form_divider.vertical {
+  margin: 8px 0 18px;
+  width: 100%;
+}
+
+
+div.ss {
+  margin: 10px 0 8px 18px;
+  font-size: 13px;
+}
+
+p#ss_header {
+  font-weight: normal;
+  color: #243C44;
+  margin: 0 9px 0 0;
+}
+
+div.ss p {
+  float: left;
+  margin: 0 5px 0 0;
+}
+
+.persistent .search ol {
+  width: auto;
+}
+
+.autocomplete_results {
+  z-index: 2000;
+}
+
+.autocomplete_results ul {
+  padding: 10px 0;
+}
+
+.autocomplete_results li {
+  color: #243C44;
+}
+
+.autocomplete_over {
+  background-color: #D0EBF6;
+  color: #243C44;
+  text-decoration: underline;
+}
+
+h1.location_only {
+  margin-left: 17px;
+}
+
+#location_only_left {
+  width: 280px;
+}
+
+#location_only_left h3,
+#location_only_left p {
+  color: #243c44;  
+}
+
+#location_only_data {
+  padding: 0 0 0 16px;
+}
+
+#location_only_unavailable h3,
+#location_only_unavailable,
+#location_only_mlook h3,
+#location_only_offer,
+.location_mobile_disclaimer,
+.location_learn_more #location_std_msg {
+  color: #243c44;
+}
+
+#location_only_offer {
+  padding-top: 12px;
+}
+
+.location_mobile_disclaimer {
+  padding-top: 6px;
+}
+
+.location_sub  {
+  background:url("/four_one_one/images/send_button_small.gif") no-repeat scroll left top transparent;
+}
+
+#location_help_text {
+  color: #243C44;
+  font-size: 12px;
+}
+
+#location_only_offer_aform input {
+  border: 1px solid #739CCF;
+  padding: 2px 0 3px 2px;
+  margin-bottom: 3px;
+  height: 16px;
+  color: #948A7C;
+  font-size: 13px;
+}
+
+.location_sub {
+  height: 24px;
+}
+
+#wp_popup_inner {
+  padding: 15px 10px 10px 10px;
+}
+
+#location_reply_go,
+#location_thanks {
+  color: #243C44;
+}
+
+/************************************
+*
+* Map and Directions
+*
+************************************/
+#map_and_directions {
+  margin-bottom: 10px;
+}
+
+#map_and_directions .top {
+  height: 8px;
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -485px -30px #E9EBEC;
+}
+
+#map_and_directions .bottom {
+  height: 26px;
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -485px 0 #E9EBEC;
+}
+
+#directions_form {
+  padding: 18px;
+  background-color: #E9EBEC;
+}
+
+#directions_form h4 {
+  color: #47A3D0;
+  font-size: 17px;
+}
+
+#directions_form h4.start-pin {
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -695px -180px;
+}
+
+#directions_form h4.end-pin {
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -765px -180px;
+}
+
+#directions_switch_link {
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -695px -120px !important;
+  top: 32px;
+  right: 13px;
+  width: 58px;
+  height: 44px;
+}
+
+#directions_form ol {
+  height:93px;
+}
+
+#directions_form #get_directions_button {
+  height: 30px;
+  width: 138px;
+  background: url(/four_one_one/images/sprite_forms.gif)  no-repeat scroll -695px -60px !important;
+}
+
+#directions_steps h2.start_label {
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -695px -180px !important;
+  width: 42px;
+}
+
+#directions_steps h2.end_label {
+  background: url(/four_one_one/images/sprite_forms.gif) no-repeat scroll -765px -180px !important;
+  width: 42px;
+}
+
+#left #footer_white_div { display: block; }
+
+.static_content_wrap, .static_content {
+  border: none;
+}
+.static_content {
+  color: #243C44;
+  padding: 0 21px 18px 21px;  
+}
+
+.static_content h1 {
+  margin-top: 26px;
+  line-height: 22px;
+}
+
+.static_content h3 {
+  color: #243C44;
+}
+
+div.single_pin #map_target a.VEAPI_Pushpin div.pinLink {
+  background: url(/four_one_one/images/mapping/PIN_ListingDetails.gif) no-repeat top left;
+  width: 25px;
+  height: 29px;
+  filter: none !important;
+}
+
+.MSVE_Map img.startIcon {
+  background: url(/four_one_one/images/mapping/PIN_startDriving.gif) no-repeat top left;
+  width: 25px;
+  height: 29px;  
+}
+
+.MSVE_Map img.stopIcon {
+  background: url(/four_one_one/images/mapping/PIN_stopDriving.gif) no-repeat top left;
+  width: 25px;
+  height: 29px;  
+}
+
+.interstitial_close_button {
+   background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll -690px -32px;
+   width: 80px;
+   height: 30px;
+   display: block;
+}
+
+/******** Remove Listing ***********/
+
+#connectory_wrapper,
+#connectory_inner_wrapper {
+  border: none;
+}
+
+#connectory_inner_wrapper  {
+  min-height: 0;
+  _height: 0;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent {
+  width: 531px;
+  min-height: 228px;
+  _height: 228px;
+  padding-right: 30px;
+  border-right:1px dotted #D3D8DA;
+}
+
+.remove_listing #connectory_inner_wrapper h1.connectory {
+  float: none; 
+  margin: 0 0 2px 0;
+  padding: 0;
+}
+
+#removal_info h2 {
+  margin-top: 0;
+}
+
+#connectory_wrapper #remove_actions { 
+  margin: 0;
+}
+
+.remove_listing #connectory_inner_wrapper #captcha_code_word {
+  margin-bottom: 20px;
+}
+
+#captcha_image img {
+  border: 1px solid #45A3D0;
+}
+
+#connectory_wrapper input {
+  border: 1px solid #45A3D0;
+}
+
+#connectory_wrapper #removal_form button {
+   background: url(/four_one_one/images/sprite_interface.png) no-repeat scroll -776px -32px;
+   margin: 0;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent p#please_verify,
+.remove_listing #connectory_inner_wrapper #rcontent p.confirmation_copy {
+  font-weight: bold; 
+  font-size: 13px;
+}
+
+#connectory_wrapper #remove_actions .link {
+  width: 135px;
+  _width: 138px;
+  padding-right: 5px;
+  font-size: 11px;
+  text-align: right;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent p.single_result_phone {
+  background: none;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent .listing_detail_top {
+  padding-left: 0 !important;
+  margin: 20px 0 20px 140px;
+}
+
+.remove_listing #connectory_inner_wrapper #captcha_wrapper .left {
+  font-size: 13px;
+  width: 135px;
+  padding-right: 5px;
+  float: left;
+}
+
+.remove_listing #connectory_inner_wrapper #captcha_image {
+  margin:10px 0 10px 0;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent p.captcha_copy {
+  margin-left: 0;
+}
+
+.remove_listing #connectory_inner_wrapper .listing_detail_top h3.listing_name {
+  color: #243C44;
+  font-size: 19px !important;
+  margin: 0 0 4px 0;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent .data .name_info {
+  margin-left: 20px !important;
+  color: #433F3A;
+  font-size: 13px !important;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent p.address {
+  margin:2px 0 0 !important;
+  font-size: 13px !important;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent .data .name_info p.single_result_phone {
+  background: none;
+  margin: 2px 0 12px 0 !important;
+  padding: 0;
+  font-weight: normal;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent p.address span.home_indicator {
+  background: transparent url(/four_one_one/images/sprite_interface.png) no-repeat scroll -384px -32px;
+  display: block;
+  height: 12px;
+  left: 167px;
+  position: absolute;
+  width: 14px;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent p.address span.work_indicator {
+  background: transparent url(/four_one_one/images/sprite_interface.png) no-repeat scroll -412px -32px;
+  display: block;
+  height: 12px;
+  left: 167px;
+  position: absolute;
+  width: 14px;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent .data .name_info p {
+  color: #433F3A;
+  font-size: 13px !important;
+  margin: 0 !important;
+}
+
+.remove_listing #connectory_inner_wrapper #rcontent .data .name_info p.age_range strong,
+.remove_listing #connectory_inner_wrapper #rcontent .data .name_info p.helpful_info strong {
+  color: #243C44;
+  font-size: 11px !important;
+}
+
+#connectory_footer {
+  margin-bottom: 10px;
+  position: relative;
+  width: 638px;
+}
+
+#etrust {
+  margin: 30px 36px 0 28px;
+  position: static;
+}
+
+.remove_listing #half_rect_ad_positions {
+  margin-top: 30px;
+}
+
+#remove_listing {
+  margin:0 0 0 23px;
+  width: 200px;
+}
+
+.city_whitepages #left_column,
+.city_whitepages #right_column,
+.city_yellowpages #left_column,
+.city_yellowpages #right_column {
+  width: 290px;
+}
+
+.city_whitepages #left_column,
+.city_yellowpages #left_column {
+  _display: inline;
+}
+
+.city_whitepages h2,
+.city_yellowpages h2 {
+  white-space: nowrap;
+}
+
+.breadcrumbs,
+.breadcrumbs a {
+  color: #243C44;
+}
+
+h1.city_title {
+  color: #47A3D0;
+  display: block;
+  _display: inline;
+}
+
+.clear {
+  margin: 0;
+}
+
+/************************************
+*
+* Business Search Map pins
+* 
+************************************/
+
+/* Business Search */
+#pop_chains h2 {
+  margin-top: 0;
+}
+/************************************
+*
+* Reverse Phone location only
+* 
+************************************/
+.location_alternate_locations dt {
+  color: #000;
+}
+

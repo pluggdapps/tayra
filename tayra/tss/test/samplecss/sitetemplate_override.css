@@ -1,0 +1,231 @@
+﻿.cb_style .jsWhiteBoxWrapper {
+    margin: 0;   
+}
+#cbHeader {
+    text-align: center;
+    margin-top: -2px;
+}
+#cbHeader #cbHeader_grad {
+    background: #D7DEF0 url(../../images/js/h_grad.jpg) repeat-y scroll center center;
+    width: 100%;   
+}
+.headerAdWrapper {
+    text-align: center;
+    background: #fff;  
+    padding: 1px 0; 
+}
+.headerAdWidth {
+    width: 728px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+#mainHeader {
+    height: 58px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background: transparent url(../../images/js/header_grad1.png) repeat-x;
+}
+#mainHeader #mainHeaderInner {
+    width: 750px;
+    margin: 0 auto;   
+    text-align: left;
+}
+#mainHeader #mainHeaderInner .logoHomeLink {
+    float: left;
+    width: 180px;
+    height: 40px;   
+    padding: 0;
+    margin: 9px 0 0 0;
+}
+#mainHeaderInner #empLink {
+    float: right;
+    border: 1px solid #2B7300;
+    border-top: none;
+    height: 24px;
+    text-align: center;    
+    padding: 0 15px;
+    margin-top: 2px;
+    background: #4BA100 url(../../images/js/hp_quick_grn_grad.jpg) repeat-x;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    line-height: 24px;
+}
+#mainHeaderInner #empLink a {
+    color: #fff;
+    font-family: Arial;
+    font-weight: bold;   
+    font-size: 12px;
+    text-decoration: none;
+}
+#mainHeaderInner #empLink a:hover {
+    text-decoration: underline;   
+}
+#mainHeaderInner #welcomeWrapper {
+    margin: 8px 0 0 0;
+    clear: right;
+    float: right;    
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    color: #878787;
+}
+#mainHeaderInner #welcomeWrapper a {
+    color: #878787;
+    text-decoration: none; 
+    font-size: 11px; 
+}
+#mainHeaderInner #welcomeWrapper a:hover {
+    text-decoration: underline;   
+}
+.cb_nav {
+    background: #fff url(../../images/js/nav_grad.jpg) repeat-x;
+    padding: 0;
+}
+.cb_nav .nav_wrapper ul li a {
+    font-size: 12px;
+    padding: 6px 12px 2px !important;   
+}
+.cb_nav .nav_wrapper li.active a:link, 
+.cb_nav .nav_wrapper li.active a:visited,
+.cb_nav .nav_wrapper ul li a:visited, 
+.cb_nav .nav_wrapper ul li a:link {
+    color: #fff;
+}
+.cb_nav .nav_wrapper ul li {
+    position: relative;
+    background: transparent url(../../images/js/bg_cb_mainnav-li.jpg) no-repeat scroll right bottom;
+}
+.cb_nav .nav_wrapper ul li:hover {
+    background: transparent url(../../images/js/bg_cb_mainnav-li-active-a.jpg) repeat-x;
+}
+.cb_nav .nav_wrapper li.active {
+    background: transparent url(../../images/js/bg_cb_mainnav-li-active-a.jpg) repeat-x scroll left bottom;
+    color: #fff;   
+}
+.cb_nav .nav_wrapper ul ul li.first,
+.cb_nav .nav_wrapper ul li.active ul li.first {
+    background: #fff url(../../images/js/cb_mainnav-li-li-a_orange.gif) 3px 9px no-repeat;
+    color: #363FB5;
+    font-size: 12px;
+    margin-top: 1px;
+}
+.cb_nav .nav_wrapper ul ul {
+    background: #fff;
+}
+.cb_nav .nav_wrapper ul ul li a,
+.cb_nav .nav_wrapper ul ul li a:link,
+.cb_nav .nav_wrapper ul ul li a:visited,
+.cb_nav .nav_wrapper ul li.active ul li a,
+.cb_nav .nav_wrapper ul li.active ul li a:link,
+.cb_nav .nav_wrapper ul li.active ul li a:visited 
+.cb_nav .nav_wrapper ul ul.postresumes li a, 
+.cb_nav .nav_wrapper ul ul.FindJobs li a,
+.cb_nav .nav_wrapper ul ul.MyCB li a,
+.cb_nav .nav_wrapper ul ul li,
+.cb_nav .nav_wrapper ul ul.MyCB li,
+.cb_nav .nav_wrapper ul ul li.first a:link, 
+.cb_nav .nav_wrapper ul ul li.first a:visited {    
+    background: #fff url(../../images/js/cb_mainnav-li-li-a_orange.gif) 3px 9px no-repeat;
+    font-size: 11px;
+    color: #363FB5 !important;
+    display: block;
+}
+.cb_nav .nav_wrapper ul ul li a {
+    border-color:#EEEEEE #BBBBBB -moz-use-text-color;
+    border-style:solid solid none;
+    border-width:1px 0 1px 0;
+}
+.cb_nav .nav_wrapper ul ul li.first {
+    padding: 0 0 1px 0;    
+}
+.cb_nav .nav_wrapper ul ul li a:hover,
+.cb_nav .nav_wrapper ul li.active ul li a:hover,
+.cb_nav .nav_wrapper ul ul.postresumes li a:hover, 
+.cb_nav .nav_wrapper ul ul.FindJobs li a:hover,
+.cb_nav .nav_wrapper ul ul.MyCB li a:hover {
+    background-color: #EEF3F9;
+    background: #EEF3F9 url(../../images/js/cb_mainnav-li-li-a_orange.gif) 3px 9px no-repeat !important;
+}
+.cb_nav .nav_wrapper ul li.l a,
+.cb_nav .nav_wrapper ul li.l a:link,
+.cb_nav .nav_wrapper ul li.l a:visited {
+    width: 29px;
+    background: transparent url(../../images/js/home_link_inactive.jpg) no-repeat scroll left bottom;
+    padding: 7px 0px 2px !important;
+}
+.cb_nav .nav_wrapper ul ul.advice {
+    width: 137px;   
+}
+.cb_nav .nav_wrapper ul li.active_home a,
+.cb_nav .nav_wrapper ul li.l a:hover {
+    width: 29px;
+    background: transparent url(../../images/js/home_link_standard.jpg) no-repeat scroll left bottom;
+    padding: 7px 0px 2px !important;
+}
+.cb_nav .nav_wrapper .dropShadow {
+	display: none;
+}
+
+.cb_nav .nav_wrapper ul li:hover .dropShadow {
+	display: block;
+}
+#bottomGrad {
+    background: transparent url(../../images/js/bottom_grad1.png) repeat-x;
+    height: 15px;  
+    padding: 0;
+    margin: -15px 0 0 0;
+    clear: both; 
+}
+#bottomShadow {
+    background: transparent url(../../images/js/bottom_shadow.png) repeat-x;
+    height: 15px;
+    padding: 0;
+    clear: both;   
+}
+.cb_footer { 
+    background: #405B9D;
+    background-image: none;
+    text-align: center;
+}
+.bounds {
+    text-align: left;
+}
+.cb_footer .bounds {
+    margin: -15px auto 0px auto;
+}
+.csWrapper {
+    text-align: center;   
+    background: #243861;
+}
+.cb_footer_HelpLinks {
+    width: 485px;
+    margin: 0 auto;
+    background: 0;
+    font-size: 14px;    
+    color: #fff;
+    line-height: 16px;
+}
+.cb_footer_HelpLinks a {
+    font-weight: bold;
+}
+.cb_nav .nav_wrapper ul li.hireINSIDER .hiHire {
+    color: #8a1616;
+    font-weight: bold;
+    float: left;
+    cursor: pointer;
+}
+.cb_nav .nav_wrapper ul li.hireINSIDER .hiINSIDER {
+    font-weight: bold;
+    color: #312626;
+    float: left;
+    cursor: pointer;
+}
+.cb_nav .nav_wrapper ul li.hireINSIDER img {
+    margin: -2px 5px 3px 0;   
+    float: left;
+    cursor: pointer;
+}
+    

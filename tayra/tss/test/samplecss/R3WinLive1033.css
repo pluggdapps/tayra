@@ -1,0 +1,262 @@
+*
+{font-size:100%;font-family:Segoe UI,Tahoma,Verdana,Arial;letter-spacing:.03em;line-height:default;}
+body
+{font-size:8.12pt;color:#444;background-color:#FFF;margin:0;overflow:auto;}
+form
+{margin:0;}
+a
+{text-decoration:none;color:#06c;}
+a:hover
+{text-decoration:underline;color:#06c;}
+img
+{border:0;}
+h1
+{font-size:133%;font-weight:normal;margin:0 0 18px 0;}
+p
+{margin:5px 0 4px 0;}
+ul
+{padding:0;margin:0 0 8px 18px;}
+li
+{margin:0 0 5px 0;}
+.cssLogo
+{margin:0 20px 0 0;vertical-align:middle;}
+.cssFooterPadding
+{padding:4px 8px 4px 8px;}
+.cssFooterPadding *
+{line-height:default;}
+.cssFooterRightA
+{color:#666;padding:0 8px 0 8px;border-right:1px solid #666;}
+.cssLastFooterRightA
+{color:#666;padding-left:8px;padding-right:0px;}
+.cssFooterLeftA
+{color:#666;padding:0 8px 0 8px;border-left:1px solid #666;}
+.cssFirstFooterLeft
+{padding-right:4px;padding-left:0px;}
+.cssFooterLeft a
+{color:#666;padding-left:14px;}
+td#footerTD
+{width:100%;border-top:1px solid #CDDDF4;color:#666;}
+.cssFooterLeft
+{text-align:left;}
+.cssFooterRight
+{text-align:right;}
+td#productTD
+{text-align:left;vertical-align:top;width:475px;}
+td#rightTD, td#moreTD
+{}
+td#rightTD
+{vertical-align:top;}
+td#moreTD
+{text-indent:4px;}
+td#separatorTD
+{border-left:1px solid #DDD;height:236px;width:20px;}
+.topTD
+{padding:10px 0 32px 0;}
+table#AppHeaderInfo
+{border:1px solid #eea;background-color:#ffc;margin:0 0 10px 0;}
+div#idOtherAcctTtl
+{width:100%;padding-top:20px;}
+div#idOtherAcctLinkMore
+{border-bottom:1px solid #DDD;margin-bottom:10px;}
+.cssCBImg
+{width:130px;padding-bottom:30px;vertical-align:top;}
+.cssCBImgR3
+{padding:0 24px 30px 0;vertical-align:top;}
+.cssCBSubtitle
+{padding-bottom:30px;vertical-align:top;}
+.cssSignupTbl
+{padding-bottom:8px;}
+.cssSignupBtn
+{font-size:13pt;}
+.cssSignupText
+{padding-right:8px;font-size:13pt;color:#06c;}
+.cssAppBigBold
+{font-size:133%;color:#444;font-weight:bold;}
+.cssContainerTextBold
+{letter-spacing:.03em;font-weight:bold;}
+.cssContainerTextSmallCenter
+{letter-spacing:.03em;font-size:92%;vertical-align:middle;}
+.cssContainerTextSmallest
+{letter-spacing:.03em;font-size:92%;}
+.cssError, .csshError
+{color:#E00500;padding:0 2px 8px;width:100%;}
+.cssWarning
+{padding:0 2px 8px;width:100%;}
+#pwd .cssImageTD,#pwd .cssLTButtonTD,.cssErrorImg,.csshErrorImg
+{vertical-align:top;}
+.cssHelpText
+{color:#666;padding:1px 0 2px 0;}
+.cssHelpText p
+{margin:0;}
+.cssHelpDiv
+{margin:4px 0 0 3px;font-size:100%;width:75%;cursor:text;}
+.cssUsername
+{margin:2px 0;}
+a.cssBlackLink
+{color:#444;}
+a.cssHiddenLink
+{text-decoration:none;color:#444;cursor:default;}
+a.cssHiddenLink:hover
+{text-decoration:none;color:#444;cursor:default;}
+a.cssHiddenLink:visited
+{text-decoration:none;color:#444;cursor:default;}
+a.cssHiddenLink:active
+{text-decoration:none;color:#444;cursor:default;}
+a.cssMenuLink
+{text-decoration:none;color:#444;}
+a.cssMenuLink:hover
+{text-decoration:none;color:#444;}
+a.cssMenuLink:visited
+{text-decoration:none;color:#444;}
+a.cssMenuLink:active
+{text-decoration:none;color:#444;}
+.cssPointerCursor
+{cursor:pointer;}
+.cssBtn
+{font-size:92%;letter-spacing:.03em;border:0;}
+.cssBtnBorder
+{padding:1px;}
+.cssBtnRest
+{border:1px solid #666;}
+.cssBtnRest input
+{background:#F1F1F1 repeat-x center left;}
+.cssBtnDefault
+{border:1px solid #4a95c9;}
+.cssBtnHot
+{border:1px solid #2059a5;}
+.cssBtnDefault input,table.cssBtn,.cssBtnHot input
+{background:#cfe8f5 repeat-x center left;}
+.cssTextInputTD
+{padding:2px 0px 2px 0px;vertical-align:middle;}
+.cssCheckbox
+{text-indent:-4px;margin-left:0;margin-top:0px;margin-bottom:0px;height:13px;}
+.cssHIPImage
+{border:solid 1px #444;}
+.cssHIPButton
+{padding:0 5px;width:100%;}
+.cssLTButtonTD
+{padding:3px 4px 2px 4px;text-index:0;}
+.cssImageTD
+{padding:4px 8px 4px 0;-ms-interpolation-mode:bicubic;}
+div.cssImage
+{padding:7px;background:none;}
+div.cssImageBig
+{padding:10px;width:114px;}
+div.cssASpacer
+{margin:4px 0;}
+td.cssASpacer
+{padding:8px 0 4px 0;}
+.cssLabel
+{padding:3px 3px 16px 0;width:0;vertical-align:top;text-align:right;}
+.cssTextBoxTD
+{width:100%;padding:0 0 15px;}
+.cssIndent
+{text-indent:4px;}
+.cssUpgFlavor
+{padding-left:60px;}
+.cssSigning
+{color:#06c;letter-spacing:.03em;font-size:92%;margin:0;}
+.cssUsernameTD,.cssTextInputTD,.cssHIPTable
+{width:100%;}
+.cssTextInput
+{width:75%;}
+.cssUserBtn
+{width:100%;background:none;border:0;margin-left:-4px;padding:0;}
+.cssUserBtnR3
+{background:none;border:0;padding:5px;}
+.cssUserBtnHoverR3
+{background:#f2f6fd;border:1px solid #bad8fb;padding:4px;}
+.cssUsernameHover
+{color:#000;}
+.cssUT
+{background:none;width:100%;}
+.cssUTMore
+{background:none;width:100%;padding-left:3px;}
+.cssLT
+{background:#cfe8f5 repeat-x center left;width:100%;}
+.cssLTMore
+{background:#cfe8f5 repeat-x center left;width:100%;padding-left:3px;}
+.cssLT #ut
+{filter:progid:DXImageTransform.Microsoft.DropShadow(color='#88B4C6',offX=2,offY=2);}
+.cssUT #ut
+{filter:progid:DXImageTransform.Microsoft.DropShadow(color='#DDDDDD',offX=2,offY=2);}
+.cssDisable
+{filter:alpha(opacity=25);}
+.cssWLIDLogo16
+{margin-right:2px;vertical-align:middle;}
+.cssWLGradientCommon
+{margin:0;padding:0;}
+.cssWLGradientIMG,.cssWLGradientIMGSSL
+{background: repeat-x top left;top:0;height:86px;}
+.cssWLGradientNoIMG
+{height:86px;}
+.cssPMargin
+{margin:12px 0;}
+.cssAlertTextBox
+{border:1px solid #E9EAF1;background-color:#FFFFAE;padding:8px;}
+.cssSubHeader
+{color:#444;font-size:29pt;padding-bottom:43px;}
+div.ddMenu
+{border:1px solid #bbb;background-color: #fff;position:absolute;z-index:15;}
+table.ddMenu
+{margin:4px;min-width:102px;_width:102px;}
+table.msngrMenu
+{margin:4px;min-width:175px;_width:175px;}
+table.ddRowOff
+{border:1px solid #fff;}
+table.ddRowOn
+{border: 1px solid #cee2fb;background-color:#f3f7fd;}
+div.comboMenuShadow
+{position:absolute;top:3px;left:3px;z-index:10;background-color:#bbb;}
+a.newUserOption
+{font-size:133%;padding:0 4px;}
+div.newUserPicker
+{margin:0;padding:0 0 18px;zoom:1;width:auto;font-weight:normal;float:left;}
+.CredArrow
+{margin-bottom:1px;margin-left:-7px;vertical-align:10%;}
+.SUFedHelp
+{display:none;float:right;}
+.SUPicker
+{display:none;float:left;}
+.cssLT .SUPicker,.cssLT .SUFedHelp
+{display:block;}
+table#FedConversion p
+{margin:0;}
+table#FedConversion td
+{padding:6px 0;}
+table#FedConversion td td
+{padding:1px;}
+table#upgrade
+{margin:14px 0 0;width:75%;}
+table#upgrade td
+{padding:8px 5px 8px 0;font-weight:bold;}
+.higbutton, .higbuttonblue
+{min-width: 7em;overflow: visible;padding: 0px 1em;border:.1em solid #00156E;font-size:95%;line-height: 1.4;text-align:center;}
+.higbutton
+{background: #F1F1F1 center repeat-x;}
+.higbuttonblue
+{background: #cfe8f5 center repeat-x;}
+.LightText
+{color:#666;}
+.cssHeaderText
+{font-size:133%;color:#444;}
+.infoTD
+{padding:0 0 10px 0;}
+#mainTD
+{padding:0 0 30px 0;}
+#ctTBL
+{width:100%;}
+#shellTBL
+{width:890px;}
+ul.adv
+{list-style:none;padding-left:0;margin-left:0;}
+li
+{min-height:20px;padding-left:26px;margin-bottom:13px;background:left top no-repeat;}
+cssTextLogo
+{font-size:115%;font-weight:bold;}
+.cssInputLabelTD
+{padding-right:4px;text-align:right;}
+.SecurityLink
+{padding-top:20px;}
+.cssSignedInLbl
+{float:right;}

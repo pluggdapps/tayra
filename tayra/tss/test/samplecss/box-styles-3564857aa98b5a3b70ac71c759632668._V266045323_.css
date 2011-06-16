@@ -1,0 +1,416 @@
+/* Rounded corner boxes general */
+table.box {  
+    border-collapse:collapse;
+}
+.box .topLeft {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box/box-tl.gif');
+    background-position:left top;
+    background-repeat:no-repeat;
+    font-size:4px;
+    width:12px;
+}
+.box .topCenter {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box/box-tc.gif');
+    background-position:top;
+    background-repeat:repeat-x;
+    padding-top:12px;
+}
+.box .topRight {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box/box-tr.gif');
+    background-position:right top;
+    background-repeat:no-repeat;
+    font-size:4px;
+    width:12px;
+}
+.box .bottomLeft {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box/box-bl.gif');
+    background-position:left bottom;
+    background-repeat:no-repeat;
+    font-size:4px;
+    width:12px;
+}
+.box .bottomCenter {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box/box-bc.gif');
+    background-position:bottom;
+    background-repeat:repeat-x;
+    font-size:4px;
+    height:12px;
+}
+.box .bottomRight {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box/box-br.gif');
+    background-position:right bottom;
+    background-repeat:no-repeat;
+    font-size:4px;
+    width:12px;
+}
+    
+/* Rounded corner boxes special: message */
+.boxMessage .box  {
+    background-color:#ffd;
+}
+.boxMessage .box .topLeft {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_message/box-tl.gif');
+}
+.boxMessage .box .topCenter {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_message/box-tc.gif');
+}
+.boxMessage .box .topRight {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_message/box-tr.gif');
+}
+.boxMessage .box .bottomLeft {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_message/box-bl.gif');
+}
+.boxMessage .box .bottomCenter {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_message/box-bc.gif');
+}
+.boxMessage .box .bottomRight {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_message/box-br.gif');
+}
+    
+/* Rounded corner boxes special: fill */
+.boxFill .box  {
+    background-color:#EFF5F9;
+}
+.boxFill .box .topLeft {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_fill/box-tl.gif');
+}
+.boxFill .box .topCenter {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_fill/box-tc.gif');
+}
+.boxFill .box .topRight {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_fill/box-tr.gif');
+}
+.boxFill .box .bottomLeft {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_fill/box-bl.gif');
+}
+.boxFill .box .bottomCenter {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_fill/box-bc.gif');
+    height:20px;
+}
+.boxFill .box .bottomRight {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/box_fill/box-br.gif');
+}
+
+.boxFill.secure .box .topLeft {
+    background-image:url('https://images-na.ssl-images-amazon.com/images/G/01/associates/box-images/box_fill/box-tl.gif');
+}
+.boxFill.secure .box .topCenter {
+    background-image:url('https://images-na.ssl-images-amazon.com/images/G/01/associates/box-images/box_fill/box-tc.gif');
+}
+.boxFill.secure .box .topRight {
+    background-image:url('https://images-na.ssl-images-amazon.com/images/G/01/associates/box-images/box_fill/box-tr.gif');
+}
+.boxFill.secure .box .bottomLeft {
+    background-image:url('https://images-na.ssl-images-amazon.com/images/G/01/associates/box-images/box_fill/box-bl.gif');
+}
+.boxFill.secure .box .bottomCenter {
+    background-image:url('https://images-na.ssl-images-amazon.com/images/G/01/associates/box-images/box_fill/box-bc.gif');
+}
+.boxFill.secure .box .bottomRight {
+    background-image:url('https://images-na.ssl-images-amazon.com/images/G/01/associates/box-images/box_fill/box-br.gif');
+}
+
+/* Sliced box default */
+.slicedBoxTop {
+    background-image:none;
+    background-position:bottom;
+    background-repeat:repeat-x;
+}
+.slicedBoxTop .left {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-tl.gif');
+    background-position:top left;
+    background-repeat:no-repeat;
+    font-size:1px;
+    width:12px;
+}
+.slicedBoxTop .center {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-tc.gif');
+    background-position:top;
+    background-repeat:repeat-x;
+}
+.slicedBoxTop .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-tr.gif');
+    background-position:top right;
+    background-repeat:no-repeat;
+    font-size:1px;
+    width:12px;
+}
+.slicedBoxMiddle,
+.slicedBoxBottom {
+    background-image:none;
+    background-position:top;
+    background-repeat:repeat-x;
+}
+.slicedBoxMiddle .left  {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-vertical-l.gif');
+    background-position:left;
+    background-repeat:repeat-y;
+    font-size:1px;
+    width:12px;
+}
+.slicedBoxMiddle .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-vertical-r.gif');
+    background-position:right;
+    background-repeat:repeat-y;
+    font-size:1px;
+    width:12px;
+}
+.slicedBoxBottom .left {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-bl.gif');
+    background-position:bottom left;
+    background-repeat:no-repeat;
+    font-size:1px;
+    width:12px;
+}
+.slicedBoxBottom .center {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-bc.gif');
+    background-position:bottom;
+    background-repeat:repeat-x;
+}
+.slicedBoxBottom .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box/sliced-box-br.gif');
+    background-position:bottom right;
+    background-repeat:no-repeat;
+    font-size:1px;
+    width:12px;
+}
+
+    
+    
+/* Sliced Box: fill */
+.boxFill .slicedBoxTop,
+.boxFill .slicedBoxMiddle,
+.boxFill .slicedBoxBottom {
+    background-color:#EFF5F9;
+}
+.boxFill .slicedBoxTop {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-tbevel.gif');
+}
+.boxFill .slicedBoxTop .left {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-tl.gif');
+}
+.boxFill .slicedBoxTop .center {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-tc.gif');
+}
+.boxFill .slicedBoxTop .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-tr.gif');
+}
+.boxFill .slicedBoxMiddle,
+.boxFill .slicedBoxBottom {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-divider.gif');
+}
+.boxFill .slicedBoxMiddle .left  {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-vertical-l.gif');
+}
+.boxFill .slicedBoxMiddle .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-vertical-r.gif');
+}
+.boxFill .slicedBoxBottom .left {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-bl.gif');
+}
+.boxFill .slicedBoxBottom .center {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-bc.gif');
+}
+.boxFill .slicedBoxBottom .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_fill/sliced-box-br.gif');
+}
+
+/* Sliced box: message */
+.boxMessage .slicedBoxTop,
+.boxMessage .slicedBoxMiddle,
+.boxMessage .slicedBoxBottom {
+    background-color:#ffffdd;
+}
+.boxMessage .slicedBoxTop {
+    background-image:none;
+}
+.boxMessage .slicedBoxTop .left {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-tl.gif');
+}
+.boxMessage .slicedBoxTop .center {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-tc.gif');
+}
+.boxMessage .slicedBoxTop .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-tr.gif');
+}
+.boxMessage .slicedBoxMiddle,
+.boxMessage .slicedBoxBottom {
+    background-image:none;
+}
+.boxMessage .slicedBoxMiddle .left  {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-vertical-l.gif');
+}
+.boxMessage .slicedBoxMiddle .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-vertical-r.gif');
+}
+.boxMessage .slicedBoxBottom .left {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-bl.gif');
+}
+.boxMessage .slicedBoxBottom .center {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-bc.gif');
+}
+.boxMessage .slicedBoxBottom .right {
+    background-image:url('http://g-ec2.images-amazon.com/images/G/01/associates/box-images/sliced_box_message/sliced-box-br.gif');
+}
+
+/* White box, rounded corners, no tables */
+/* Corner images defined inline to match protocol of requested page */
+div.whiteBox
+{
+    position:relative;
+    border:1px solid #c1c1c1; 
+    padding:10px;
+    background-color:#FFFFFF;
+    /* New style for proper IE rendering */
+    height:100%;
+}
+div.whiteBox div.corner
+{
+    position:absolute;
+    width:10px;
+    height:10px;
+    background-repeat:no-repeat;
+}
+div.whiteBox div.upperLeft
+{
+    top:-1px;
+    left:-1px;
+    background-position:top;
+}
+div.whiteBox div.upperRight
+{
+    top:-1px;
+    right:-1px;
+    background-position:top;
+}
+div.whiteBox div.lowerLeft
+{
+    bottom:-1px;
+    left:-1px;
+    background-position:bottom;
+}
+div.whiteBox div.lowerRight
+{
+    bottom:-1px;
+    right:-1px;
+    background-position:bottom;
+}
+/* IE6 has a degraded experience due to their rendering 
+ * engine! This hack will remove rounded corners in IE6
+ */
+* html div.corner
+{
+    visibility: hidden;
+    display:none;
+}
+
+/* "Star HTML hack" to work around a rendering bug in MSIE 6.
+    See http://www.positioniseverything.net/articles/ie7-dehacker.html */
+* html div.whiteBox div.lowerRight
+{
+    bottom:-2px;
+}
+* html div.whiteBox div.lowerLeft
+{
+    bottom:-2px;
+}
+* html div#navMenuBox div.lowerRight
+{
+    bottom:-1px;
+}
+* html div#navMenuBox div.lowerLeft
+{
+    bottom:-1px;
+}
+
+
+
+/* New styles - top margins for left column boxes */
+div.leftColBox
+{
+    margin-bottom: 8px;
+}
+
+/* Blue wire outline box, rounded corners, no tables */
+/* Corner images defined inline to match protocol of requested page */
+div.BlueWireBox
+{
+    position:relative;
+    border:1px solid #9dc4d8;
+    background-color: #ffffff;
+    padding:10px;
+}
+div.BlueWireBox div.corner
+{
+    position:absolute;
+    width:10px;
+    height:10px;
+    background-repeat:no-repeat;
+}
+div.BlueWireBox div.upperLeft
+{
+    top:-1px;
+    left:-1px;
+    background-position:top;
+}
+div.BlueWireBox div.upperRight
+{
+    top:-1px;
+    right:-1px;
+    background-position:top;
+}
+div.BlueWireBox div.lowerLeft
+{
+    bottom:-1px;
+    left:-1px;
+    background-position:bottom;
+}
+div.BlueWireBox div.lowerRight
+{
+    bottom:-1px;
+    right:-1px;
+    background-position:bottom;
+}
+/* "Star HTML hack" to work around a rendering bug in MSIE 6.
+    See http://www.positioniseverything.net/articles/ie7-dehacker.html */
+* html div.BlueWireBox div.lowerRight
+{
+    bottom:-2px;
+}
+* html div.BlueWireBox div.lowerLeft
+{
+    bottom:-2px;
+}
+
+/* What's New box styles */
+/* Corner images defined inline to match protocol of requested page */
+div.wnBlueWireBox
+{
+    position:relative;
+    border:1px solid #9dc4d8;
+    padding:0px;
+    height:98px;
+}
+div.wnBlueWireBox div.wnCorner
+{
+    position:absolute;
+    width:18px;
+    height:100px;
+    background-repeat:no-repeat;
+}
+div.wnBlueWireBox div.wnUpperLeft
+{
+    top:-1px;
+    left:-1px;
+    background-position:top;
+}
+div.wnBlueWireBox div.wnUpperRight
+{
+    top:-1px;
+    right:-1px;
+    background-position:top;
+}
+.wnContent 
+{
+    padding:8px 22px 8px 22px;
+}

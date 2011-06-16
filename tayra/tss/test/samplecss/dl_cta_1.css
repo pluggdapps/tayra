@@ -1,0 +1,23 @@
+.cta-w,.cta-c,.cta-s,.cta-h { background:transparent no-repeat top left;color:#000;text-decoration:none;text-align:center;cursor:hand;display:block;width:9em;vertical-align:middle;font:bold 123%/1.5em arial;margin: 1em auto 0;}
+.cta-w strong strong strong { font-weight:bold;}
+.cta-w:hover,.cta-c:hover,.cta-s:hover,.cta-h:hover{cursor:hand;}
+.cta-w strong,.cta-c strong,.cta-s strong,.cta-h strong{background:transparent no-repeat top right;right:-4px;position:relative;display:block;}
+.cta-w strong strong,.cta-c strong strong,.cta-s strong strong,.cta-h strong strong{background:transparent no-repeat bottom left;top:5px;left:-4px;right:0;}
+.cta-w strong strong strong,.cta-c strong strong strong,.cta-s strong strong strong,.cta-h strong strong strong{background:transparent no-repeat bottom right;padding:.2em 0 .5em;top:auto;right:-4px;left:auto;text-indent:-5px;}
+.cta-w em,.cta-c em,.cta-s em,.cta-h em{display:block;font:70% arial;}
+.cta-w{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/yel_tl2.gif);}
+.cta-w strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/yel_tr.gif);}
+.cta-w strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/yel_bl.gif);}
+.cta-w strong strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/yel_br.gif);}
+.cta-c{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/pur_tl.gif);color:#fff;}
+.cta-c strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/pur_tr.gif);}
+.cta-c strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/pur_bl.gif);}
+.cta-c strong strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/pur_br.gif);}
+.cta-s{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/gry_tl.gif);}
+.cta-s strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/gry_tr.gif);}
+.cta-s strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/gry_bl.gif);}
+.cta-s strong strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/gry_br.gif);}
+.cta-h,.cta-w:hover,.cta-c:hover,.cta-s:hover{color:#000;background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/grn_tl.gif);}
+.cta-h strong,.cta-w:hover strong,.cta-c:hover strong,.cta-s:hover strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/grn_tr.gif);}
+.cta-h strong strong,.cta-w:hover strong strong,.cta-c:hover strong strong,.cta-s:hover strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/grn_bl.gif);}
+.cta-h strong strong strong,.cta-w:hover strong strong strong,.cta-c:hover strong strong strong,.cta-s:hover strong strong strong{background-image:url(http://l.yimg.com/a/i/us/nt/bn/cta/grn_br.gif);}

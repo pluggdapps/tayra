@@ -1,0 +1,134 @@
+﻿.clock_holder {
+	font-family: courier new;
+	font-size:33px;
+	line-height:33px;
+	font-weight:bold;
+}
+.countdown_rtl {
+	direction: rtl;
+}
+.countdown_row {
+	clear: both;
+	display:block;
+}
+.counter_subcat {
+	font-family: Trebuchet MS, trebuchet, Helvetica, serif;
+	font-size: 11px;
+	font-weight:bold;
+	text-transform:uppercase;
+	display:block;
+	width:47px;	
+	text-align:center;
+}
+.countdown_amount {
+	letter-spacing:2px;
+}
+#march_clock .countdown_amount {
+	letter-spacing:3px;
+}
+/* site specific styles */
+#jokes_clock,
+#landing_clock,
+#preshow_clock {
+	width:300px;
+	height:215px;
+	margin-bottom:8px;
+}
+#jokes_clock:hover {
+	cursor:pointer;
+}
+#combo_clock,
+#march_clock,
+#rally_clock {
+	width:606px;
+	height:125px;
+}
+#jokes_clock {
+	background-image:url("http://www.comedycentral.com/images/jokes_vertical/promos/countdown_clocks/bonnaroo_ccsu_countdown.jpg");
+}
+#landing_clock {
+	background-image:url("http://www.comedycentral.com/images/jokes_vertical/promos/countdown_clocks/bonnaroo_ccsu_countdown.jpg");
+}
+#preshow_clock {
+	background-image:url("http://www.comedycentral.com/images/jokes_vertical/promos/jokesLive_clock/JokesStreamPG_CountStandUp_300.jpg");
+}
+#combo_clock {
+	background-image:url("http://www.comedycentral.com/images/rally/countdown_images/combo/Combo_top_Clock.jpg");
+}
+#march_clock {
+	background-image:url("http://www.comedycentral.com/images/rally/countdown_images/march/CN_banner_top_clock.jpg");
+}
+#rally_clock {
+	background-image:url("http://www.comedycentral.com/images/rally/countdown_images/rally/TDS_banner_top_clock.jpg");
+}
+#jokes_clock .countdown_show4 {
+	margin-left:24px;
+}
+#landing_clock .countdown_show4,
+#preshow_clock .countdown_show4 {
+	margin-left:22px;
+}
+#combo_clock .countdown_show4,
+#rally_clock .countdown_show4 {
+	margin-left:169px;
+}
+#march_clock .countdown_show4 {
+	margin-left:171px;
+}
+#jokes_clock .countdown_section,
+#landing_clock .countdown_section,
+#preshow_clock .countdown_section,
+#combo_clock .countdown_section,
+#march_clock .countdown_section,
+#rally_clock .countdown_section {
+	display: block;
+	float: left;
+	width:47px;
+	text-align:right;
+	padding:0 4px 0 0;
+}
+#jokes_clock .countdown_section,
+#landing_clock .countdown_section,
+#preshow_clock .countdown_section {
+	margin:148px 18px 0 0;
+}
+#combo_clock .countdown_section,
+#march_clock .countdown_section,
+#rally_clock .countdown_section {
+	margin:56px 20px 0 0;
+}
+#combo_clock .countdown_section,
+#march_clock .countdown_section,
+#rally_clock .countdown_section {
+	margin:56px 20px 0 0;
+}
+#jokes_clock #postRallyTime,
+#landing_clock #postRallyTime, 
+#preshow_clock #postRallyTime,
+#combo_clock #postRallyTime,
+#march_clock #postRallyTime,
+#rally_clock #postRallyTime {
+	width: 300px; 
+	height: 215px; 
+	display:none;
+}
+#combo_clock .counter_subcat,
+#landing_clock .counter_subcat {
+	color:#ffffff;	
+}
+#march_clock .counter_subcat,
+#rally_clock .counter_subcat,
+#jokes_clock .counter_subcat,
+#preshow_clock .counter_subcat {
+	color:#fff;	
+}
+#combo_clock .counter_subcat,
+#march_clock .counter_subcat,
+#rally_clock .counter_subcat {
+	margin:-4px 0;
+}
+#jokes_clock .counter_subcat,
+#landing_clock .counter_subcat,
+#preshow_clock .counter_subcat {
+	margin:-5px 0;
+}

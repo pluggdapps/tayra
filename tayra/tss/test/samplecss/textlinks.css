@@ -1,0 +1,297 @@
+﻿
+.noTextLinks { display:none }
+.hasTextLinks { display:block }
+
+.slate_textlinks {
+background-color:#F0F0F0;
+font-family:Georgia;
+font-size:0.75em;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:1.3em;
+margin:6px;
+padding:0pt;
+text-align:center;
+}
+
+.slate_textlinks a, .slate_textlinks a:visited {
+color:#336699;
+text-decoration:none;
+}
+
+.slate_textlinks a:hover {
+text-decoration:underline;
+}
+
+.slate_textlinks .header {
+background-color:#336699;
+color:#FFFFFF;
+font-family:Arial;
+font-size:0.8em;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:bold;
+height:1%;
+letter-spacing:0.12em;
+line-height:1.3em;
+margin:0pt;
+padding:10px 6px;
+text-transform:uppercase;
+}
+
+.slate_textlinks ul {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0pt;
+padding:6px;
+}
+
+.slate_textlinks .divider {
+	background-image:url('http://www.washingtonpost.com/wp-srv/ad/textlinks/images/dash.gif');
+	background-repeat:no-repeat;
+	height:14px;
+	margin:0px;
+	background-position:center;
+	text-align:center;
+	vertical-align:middle;
+	padding:0px;
+	margin:0px;
+}
+
+.slate_textlinks .arrow {
+	display:none
+}
+
+
+
+.bt_textlinks {
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:11px;
+line-height:12px;
+border-top:1px #ccccbb solid;
+border-bottom:1px #ccccbb solid
+}
+
+.bt_textlinks a, .bt_textlinks a:visited {
+color:#005D57;
+text-decoration:none;
+}
+
+.bt_textlinks a:hover {
+color:#339999;
+text-decoration:underline;
+}
+
+.bt_textlinks .header {
+background-color:#fff;
+color:#AAAA99;
+font-family:Arial,Helvetica,sans-serif;
+font-size:11px;
+margin:0px;
+padding:6px 0 6px 0;
+text-align:center;
+text-transform:uppercase
+}
+
+.bt_textlinks ul {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0pt;
+padding:6px 0px;
+background-image:url('http://www.washingtonpost.com/wp-srv/ad/textlinks/images/dot.gif');
+background-repeat:repeat-x;
+background-position:top left;
+}
+
+.bt_textlinks li {
+text-align:left;
+padding:0 6px 0 6px
+}
+
+
+.bt_textlinks .divider {
+background-image:url('http://www.washingtonpost.com/wp-srv/ad/textlinks/images/dot.gif');
+background-repeat:repeat-x;
+font-size:1px;
+height:1px;
+margin:5px 0 5px 0;
+}
+
+.bt_textlinks .arrow {
+	visibility:visible;
+	font-family:"Trebuchet MS";
+	font-size:10px;
+	letter-spacing:-3px;
+	padding-left:1px;
+}
+
+
+.wp_hp_textlinks {
+font-family:Arial;
+font-size:11px;
+line-height:12px;
+text-align:left;
+}
+
+.wp_hp_textlinks a, .wp_hp_textlinks a:visited {
+font-weight:normal;
+color:#305cb6;
+text-decoration:none
+}
+
+.wp_hp_textlinks a:hover {
+color:#cc0000;
+text-decoration:underline
+}
+
+.wp_hp_textlinks .header {
+color:#000;
+font-family:Arial;
+font-size:11px;
+font-weight:bold;
+margin:0px;
+padding:0px;
+}
+
+.wp_hp_textlinks ul {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0px;
+padding:0px;
+}
+
+.wp_hp_textlinks ul li {
+background:transparent url(http://media.washingtonpost.com/wp-srv/images/bullet_3x3_999999.gif) no-repeat scroll 0pt 7px;
+padding:0pt 0pt 0pt 6px;
+line-height:1.4;
+}
+
+.wp_hp_textlinks .divider, .wp_hp_textlinks .nomar, .wp_hp_textlinks .arrow {
+display:none
+}
+
+
+
+.wp_textlinks {
+font-family:arial, sans-serif;
+font-weight:bold;
+font-size:8pt;
+line-height:1.3;
+background-color:#F1F8FF;
+border-top:1px solid #0c4790;
+border-bottom:1px #ccccbb solid;
+text-align:left;
+}
+
+.wp_textlinks a, .wp_textlinks a:visited {
+color:#0C4790;
+text-decoration:none;
+}
+
+.wp_textlinks a:hover {
+color:#CC0000;
+text-decoration:none;
+}
+
+.wp_textlinks .header {
+background-color:#DDEAF3;
+color:#0C4790;
+font-size:8pt;
+line-height:1.3;
+margin:0px;
+padding:2px 2px 2px 6px;
+border-left:1px #ccccbb solid;
+border-right:1px #ccccbb solid;
+border-bottom:1px solid #ccc;
+text-transform:uppercase;
+}
+
+.wp_textlinks {
+	border-top:2px solid #0c4790;
+}
+
+.wp_textlinks ul {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+border-left:1px #ccccbb solid;
+border-right:1px #ccccbb solid;
+margin:0px;
+padding:4px 0 4px 6px;
+line-height:1.3;
+}
+
+.wp_textlinks ul li {
+padding:4px 0 4px 0;
+}
+
+.wp_textlinks .divider, .wp_textlinks .arrow  {
+display:none
+}
+
+
+.nw_textlinks {
+font-size:11px;
+font-weight:bold;
+line-height:20px;
+font-family:Arial;
+text-align:left;
+}
+
+.nw_textlinks a, .nw_textlinks a:visited {
+color:#084278;
+text-decoration:none;
+}
+
+.nw_textlinks a:hover {
+color:#084278;
+text-decoration:underline;
+}
+
+.nw_textlinks .header {
+color:#9C998C;
+text-transform:uppercase;
+}
+
+.nw_textlinks ul {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0px;
+padding:0px;
+}
+
+.nw_textlinks .divider, .nw_textlinks .arrow {
+display:none
+}
+
+.slate_textlinks .off, .bt_textlinks .off, .nw_textlinks .off, .wp_textlinks .off, .wp_hp_textlinks .off  {
+	display:none
+}
+
+#divOff {
+	display:none
+}
+#comma {
+	display:inline
+}
+
+.spacer {
+	line-height:0pt
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+.featureheader{margin:6px 0 4px 0;border-bottom:1px solid #6A86A4;padding:4px;font:bold 16px Arial,Helvetica,Verdana,sans-serif;color:#000;text-align:left}
+.cobrandinsert{margin:6px 0 0 0;border-top:1px solid #9999cc;border-left:1px solid #9999cc;background-color:#ffcc99;padding:4px;height:14px;font:bold 11pt Arial,Helvetica,Verdana,sans-serif;color:#666666;text-align:left}
+.featureheaderright{float:right;font:bold 9pt Arial,Helvetica,Verdana,sans-serif;color:#000}
+.featureheaderright a,.featureheaderright a:visited{color:#000;text-decoration:none}
+.featureheaderright a:hover{color:#999999;text-decoration:underline}
+.featureheaderleft{font:bold 16px Arial,Helvetica,Verdana,sans-serif;color:#000;text-align:left}
+.featureheaderleft a,.featureheaderleft a:visited{text-decoration:none;color:#000}
+.featureheaderleft a:hover{text-decoration:none;color:#333333}
+.featureaarea{margin:4px 0 0 4px;padding:4px}
+.featurebarea{margin:0 0 0 4px;padding:4px;width:98%}
+#featurebarea{margin:16px 0 4px 0}
+#featurecarea{margin:16px 0 4px 0}
+#featureaimage{margin:0 0 0 12px;float:right}
+div.featureaarea h3.featuretext{margin-top:0;text-align:left}
+div.featureaarea ul{margin-left:0;padding-left:0;list-style:none}
+#linksandpackage{margin-left:4px;padding:4px}
+#packagearea{padding-top:0px;text-align:left}
+#packagelinks{width:138px;padding:0px;background-color:#f4f4f6;border:1px solid #330099;margin-top:0px}
+.packagelink{padding:8px 4px 6px 4px;border-bottom:1px solid #ffffff;font:bold 9pt Helvetica,Arial,sans-serif}
+.packagelink a{color:#3399cc}
+.packagebullet{padding:2px 4px 8px 2px}
+#packageimage{padding-bottom:0px}
+.featuretext{font:normal 10pt Verdana,Helvetica,Arial,sans-serif;color:#333333}
+.featuretext a{font-weight:bold;color:#330099}
+.interactivelink{font:bold 9pt Verdana,Helvetica,Arial,sans-serif;color:#CC3333;padding-bottom:8px}
+.interactivelink a{text-decoration:underline;color:#330099}
+.firstil{padding-top:12px}
+.yearborn{font:normal 9pt Verdana,Helvetica,Arial,sans-serif;color:#330099;padding-top:0px;padding-bottom:0px}
+.newtext{margin-top:4px;max-width:490px;font:normal 9pt Verdana,Helvetica,Arial,sans-serif;color:#666699}
+.newtext a{color:#666699;text-decoration:none}
+.newtext a:hover{color:#666699;text-decoration:underline}
+.sourcestext{margin:0 4px 0 4px;padding:4px;width:98%;font:normal 9pt Verdana,Helvetica,Arial,sans-serif;color:#333333}
+.sourcestext a{font-weight:bold;color:#330099}
+.sourcestext li{list-style:circle outside url("/images/02ip_bulletORNG.gif");margin-left:0px;padding-right:12px}
+a.hpalmanaclink{font-weight:normal;color:#330099;text-decoration:underline}
+a.hpalmanacheader{color:#330099;font-weight:bold;text-decoration:none}
+.sourcestextalt{margin:0 0 0 4px;padding:4px;width:98%;font:normal 9pt Verdana,Helvetica,Arial,sans-serif;color:#333333}
+#dailyalmanac{margin:20px 0 0;border-top:1px solid #7992ad;border-left:1px solid #7992ad;border-bottom:1px solid #7992ad;font-size:9pt;font-family:Verdana,Helvetica,Arial,sans-serif;vertical-align:top;;width:212px}
+#dailyalmanac,#dailyalmanac .datext{background:#eaf3f9}
+.datext,#dailyalmanac dt{text-align:right;font:bold 9pt Verdana,Helvetica,Arial,sans-serif;color:#993300;margin:6px 10px 6px 4px}
+.datext b{font-weight:bold;color:#330099}
+.datext a{font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#330099}
+#dailyalmanac dd{font-family:Arial,Helvetica,sans-serif;font-weight:normal;color:#330099;text-align:right;margin:4px 10px 4px 4px}
+.datext2{text-align:right;font:bold 9pt Verdana,Helvetica,Arial,sans-serif;color:#330099;margin:6px 10px 6px 4px}
+.datext2 a{font-weight:normal;color:#330099}
+.dapipe{font-weight:normal;color:#330099}
+.darule{margin:8px 0 8px 0}
+#datoprule{padding:0 0 0 0;margin:0px}
+.bod{font-size:9pt;font-family:Verdana,Helvetica,Arial,sans-serif;margin:6px 8px 6px 0px}
+.bod .bodtext{float:left;margin:4px;width:47%;max-width:75px}
+.bod a{font:bold 9pt Arial,Helvetica,sans-serif;color:#330099}
+.bodtext b{font-weight:bold;color:#993300;font-family:Arial,Helvetica,sans-serif}
+.bod .years{font-size:9pt;font-weight:normal;color:#000000;font-style:italic}
+.bod .bodimage{border:1px solid #9999cc;margin-left:4px;float:right}
+.searchbios{padding:10px 0 0 0;margin:6px 10px 6px 10px;text-align:left;font-size:9pt;font-family:Verdana,Helvetica,Arial,sans-serif;color:#993300}
+.dadynamictext{text-align:left;font:normal 9pt Verdana,Helvetica,Arial,sans-serif;color:#330099;margin:6px 0px;padding-left:10px}
+.dadynamictext a{text-decoration:none;color:#330099}
+.dadynamictext a:hover{text-decoration:underline}
+.dadynamictext h4{font-size:9pt;margin-top:6px;margin-bottom:0}
+h4.close{margin-top:6px;margin-bottom:0}
+.dadynamictext h4,.dadynamictext h4 a,.dadynamictext b a,.dadynamictext h4 a:visited,.dadynamictext b a:visited{color:#993300}
+#moreda{text-align:right;font-size:9pt;font-family:Verdana,Helvetica,Arial,sans-serif;margin:16px 10px 6px 4px}
+#moreda a{color:#330099;text-decoration:none;font-weight:bold}
+#moreda a:hover{color:#330099;text-decoration:underline;font-weight:bold}
+#adarea{margin-right:1px}
+#adbox{width:165px;border:1px solid #666666;padding:0px;margin-right:2px}
+.adtitle{color:#ffffff;font:bold 10px Verdana,Arial,Helvetica,sans-serif}
+.adtext{color:#000000;font:normal 11px Arial,Verdana,sans-serif}
+#adid{padding-top:8px;padding-right:8px;font:bold 9px Helvetica,Arial,sans-serif;color:#cccccc}
+#linksandpackage{margin:0 4px;padding:0;clear:both}
+#linksandpackage table{width:100%}
+#linksandpackage td{width:50%;vertical-align:top}
+.packagearea{margin:0 0 10px;padding:0;text-align:center}
+.packagearea img{margin:2px 0;border:none}
+#A-PACKAGE{margin-right:10px}
+#B-PACKAGE{margin-left:10px}
+.packagearea ul{margin:2px 0 0;padding:0;text-align:left;background-color:#f4f4f6;border:1px solid #309}
+.packagearea ul li{padding:6px 18px;font-weight:bold;color:#140085;list-style:none;background:url("/images/02ip_bulletORNG.gif") 5px 12px no-repeat;border:solid #fff;border-width:1px 0 0}
+.packagearea ul li a{color:#39c}
+.packagearea.w_title h4{margin:2px 0 0;padding:6px 2px 2px;text-align:left;background-color:#f4f4f6;border:solid #309;border-width:1px 1px 0}
+.packagearea.w_title ul{margin:0;padding:0;border-width:0 1px 1px}
+.packagearea.w_title ul li{padding:6px 18px 6px 24px;background:url("/images/02ip_bulletORNG.gif") 12px 12px no-repeat;border:solid #fff;border-width:1px 0 0}
+.packagearea.w_title ul li a{color:#39c}
+.interactivelinks{margin:10px 4px 0;padding:0;border-top:1px solid #ccc}
+.interactivelinks ul{margin:0;padding:0;list-style:none}
+.interactivelinks ul li{padding:10px 0 0;font-weight:bold;color:#c33}
+.interactivelinks ul li a,.interactivelinks label{color:#309}
+.interactivelinks form,.interactivelinks fieldset{margin:6px 0 0;padding:0}
+.interactivelinks fieldset{border-width:0;border-style:solid}
+.interactivelinks input{vertical-align:middle}
+#QUICKPOLL{text-align:left;margin:0px;padding:0 4px 4px;border-left:1px solid #7992ad;border-bottom:1px solid #7992ad;background-color:#eaf3f9;width:204px;font-size:9pt;font-family:Verdana,Helvetica,Arial,sans-serif;text-align:left}
+#QUICKPOLL h3{font-size:10pt;font-weight:bold;margin-top:4px}
+#QUICKPOLL ul{font-size:9pt;list-style-type:none;margin:0 2px;padding:0}
+#QUICKPOLL .submit{display:block;float:left;overflow:hidden;text-decoration:none;width:20px;height:20px;background:url("/images/animated-radio.png") no-repeat left -20px}
+#QUICKPOLL a{font:normal 9pt Verdana,Helvetica,Arial,sans-serif;text-decoration:none;color:#330099}
+#QUICKPOLL a:hover{background-position:left top;text-decoration:underline}
+#contentarea{width:100%}
+hr.darule2{color:#ccc;width:164px;height:1px;text-align:center;border-top:1px solid #ccc}
+div.featuretext{padding-bottom:1em}
+#Wn #Pg{padding:0px 0px 10px}
+#Pg #contentarea td{margin-top:0}
+#Pg #dailyalmanac h4{color:#930}

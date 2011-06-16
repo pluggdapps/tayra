@@ -1,0 +1,163 @@
+
+
+h1.hc strong,
+#searchResults,
+.flag,
+#naviCenter h4 span {background-image:url(/imgs/spSearch.20110525093726.png) !important; background-repeat:no-repeat;}
+
+/* PRODUCT */
+.product {display:block; width:136px; padding:0 10px 0 11px; float:left; text-align:center; font-size:11px; line-height:14px; position:relative;}
+.product:hover {text-decoration:none;}
+
+br.clear {clear:both; display:block;}
+.product img {text-decoration:none; display:block;}
+.product span {display:block; text-decoration:underline;}
+
+.product .brandName {margin-top:10px; font-weight:bold;}
+.product .price {text-decoration:none; color:#585a5d; font-weight:bold;}
+.product .salePrice {text-decoration:none;}
+
+.product:hover .price {text-decoration:none;}
+
+.productImage {width:170px; height:198px; overflow:hidden; display:block;}
+
+.salePrice {color:#ff5300; font-weight:bold;}
+.salePrice span {display:inline; text-decoration:line-through; font-weight:normal; color:#585a5d;}
+
+.product .flag {position:absolute; top:0; left:0;}
+.flag {padding-left:28px; width:75px; background-position:0 -36px;}
+.first .flag, * html .flag {background:none !important;}
+.flag .sale {display:block; float:left; margin-right:2px; width:19px; height:41px; background:-114px -267px no-repeat;}
+.flag .new {display:block; float:left; margin-right:2px; width:20px; height:46px; background:-93px -267px no-repeat;}
+.product .stars {margin:0 auto;}
+.heroGallery {position:relative; z-index:10; margin-bottom:18px;}
+.heroGallery a {position:absolute; display:block;}
+.heroGallery a.heroAlternate {display:none;}
+.heroGallery #heroControlPanel  {position:absolute; right:10px; bottom:10px; padding:7px 0px 7px 7px;}
+.heroGallery .heroControlSwitch {position:relative; float:left; margin-right:7px; padding:1px 4px; background:#F3F3F3; border:1px solid #000; cursor:pointer;}
+.heroGallery .heroControlSwitchActive {background:#D9EEFA; border-color:#2C5987;}
+.heroGallery .heroControlSwitchOverlay {position:absolute; top:-1px; left:-1px; height:15px; background:#F8F8EE; border:1px solid #2C5987; border-right:0px;}
+.heroGallery .heroControlSwitchLabel {display:block; font-size:11px; position:relative; z-index:10;}
+
+@-webkit-keyframes overlayTransition {
+  from {
+    width:0px;
+    border-color:#FF5400;
+  }
+  
+  to {
+    width:25px;
+    border-color:#FF5400;
+  }
+}
+
+#content {width:auto; float:none;}
+#content .alt {float:right;}
+
+.subCallout,
+.primaryCallout,
+.letterBanner,
+.brandRegion,
+#footerPromos {margin-bottom:12px;}
+
+.subCallout {width:196px; float:left;}
+.subCallout h3 {margin-bottom:14px;}
+.subCallout h4 {font-size:11px; font-weight:bold; text-transform:uppercase; margin:0;}
+.subCallout h4,
+.subCallout a {display:block; margin:7px 0 7px 11px; line-height:15px;}
+.subCallout h4 a {margin:0;}
+.subCallout .single {margin-top:7px; margin-bottom:7px;}
+.subCallout .groupingLast {margin-bottom:0px;}
+.subCallout .first {margin-top:14px;}
+.subCallout .last {margin-bottom:28px;}
+
+.primaryCallout {display:inline; width:539px; float:left; margin-left:14px; margin-right:14px;}
+.primaryCallout img {display:block; margin:0 auto 10px;}
+.primaryCallout .stripeOuter img {display:inline;}
+.primaryCallout .heroGallery img {margin-bottom:0;}
+
+.letterBanner {clear:left; margin-right:11px; margin-left:11px; padding:1px 0 1px 50px; list-style:none; background-color:#d9eefa; background-position:0 -866px; background-repeat:no-repeat; font:normal 18px/2.3em georgia, times, "times new roman", serif; color:#27527f;}
+.letterBanner li {display:inline; float:left; margin-left:25px; white-space:nowrap;}
+
+#departments {display:inline-block;}
+#departments:after {content:'.'; display:block; height:0; clear:both; visibility:hidden;}
+#departments .innerShadow {position:relative; padding:9px 0; height:130px; width:517px; float:left;}
+#departments img {display:block;} /* Kills the 5px margin bug, if needed */
+#departments .section {width:518px; height:110px; float:left;}
+#departments .section a {width:129px; height:110px; float:left; text-indent:-9999em;}
+.departmentsSliderWrap {width:1000em; position:absolute; top:18px;}
+.departmentsSliderWrap, 
+.departmentsSliderWrap a:hover {background:url(/imgs/homepage/departmentsSlider.20110525093725.png);}
+
+a#dept1:hover {background-position:0 -110px;}
+a#dept2:hover {background-position:-129px -110px;}
+a#dept3:hover {background-position:-258px -110px;}
+a#dept4:hover {background-position:-387px -110px;}
+/*dept Due to border differences, add 2 to position*/
+a#dept5:hover {background-position:-518px -110px;}
+a#dept6:hover {background-position:-647px -110px;}
+a#dept7:hover {background-position:-776px  -110px;}
+a#dept8:hover {background-position:-905px -110px;}
+a#dept9:hover {background-position:-1036px -110px;}
+a#dept10:hover {background-position:-1165px -110px;}
+a#dept11:hover {background-position:-1294px -110px;}
+
+.recommenders .stripeOuter {float:left; width:519px;}
+.recommenders .stripeInner {height:auto !important; height:1%;}
+.recommenders .brandName {margin-top:20px;}
+.recommenders .oldPrice {display:block;}
+/* overflow:hidden needed for IE6 because its browser education level is comparable to a kindergartener. */ /* hey. kindergartners are smart. */
+.recommenders .product {display:inline; overflow:visible !important; overflow:hidden; width:47%; margin:2px 15px 24px 0; padding:12px 0 0;}
+.recommenders .product span {margin-left:152px;}
+.recommenders .product .flag,
+.recommenders .product span span {margin-left:0;}
+.recommenders .product .flag {height:auto !important; height:1%; top:-2px;}
+.recommenders .initialRow .flag {background-image:none !important;}
+.recommenders img {float:left; margin:0 8px;}
+
+.brandRegion {position:relative; display:inline-block; clear:both; overflow:visible; margin-left:5px;}
+.brandRegion .alt {position:absolute; top:18px; right:9px; width:47.6%;}
+
+.brandRegion .alt h3 {float:left; padding:4px; font-size:10px; font-weight:bold; text-transform:uppercase;}
+.brandRegion .alt .innerShadow {height:auto !important; height:1%; padding:10px 0 5px; clear:both; text-align:center;}
+.brandRegion .alt .innerShadow a {margin:0 7px;}
+
+.brandSearchForm {width:452px; float:left; overflow:visible; background:#fff;} /* Thanks IE!!!!!!!!!!!!! */
+
+/* SEARCH SUGGEST styles specific to brand search, positioned relatively from the input. global search suggestion styles in zappos.css */
+#searchSuggest-brandSearch ul {width:452px; top:18px; left:-20px;}
+
+.productReviews h2.hc {margin-bottom:0; background-position:100% -224px; padding-right:34px;}
+.reviews {list-style:none;}
+.hreview blockquote {margin-right:230px;}
+
+#footerPromos {clear:both;}
+#footerPromos div {float:left;}
+
+#footerPromos .promo1, #footerPromos .promo3 {width:196px; margin-right:0;}
+#footerPromos .promo2 {width:540px; margin:0 14px;}
+#footerPromos .promo2 img {display:block; margin-bottom:10px;}
+#footerPromos .promo3 {float:right;}
+/*=Global Styles */
+#wrap {width:960px; padding:0; border:none; background:none;}
+.priContent p {margin:16px 0; line-height:1.8em;}
+.priContent table {margin:16px 0;}
+.priContent tbody {border:none;}
+.priContent h1.hc {margin-bottom:12px; color:#369; font-size:24px;}
+
+.pagePage .teethWhiteInner,
+.pageEditorial .teethWhiteInner {padding-top:0; padding-bottom:0;}
+
+/*=Admin Navigation*/
+ul.primary {list-style:none; border:none; margin:0 1em 1em 0; padding:0; line-height:3em; overflow:hidden;}
+ul.primary li {margin:0 1em 1em 0; float:left;}
+ul.primary li a {border:none; padding:0 .8em; float:left; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; box-shadow:3px  3px 3px #ccc; -moz-box-shadow:3px 3px 3px #ccc; -webkit-box-shadow:3px 3px 3px #ccc;}
+ul.primary li.active a {border:none; border:1px solid #999;}
+ul.primary li a:active {box-shadow:none; -moz-box-shadow:none; -webkit-box-shadow:none;}
+
+/*=Login Form*/
+#user-login,
+#user-login input {font-size:1em;}
+#user-login .form-item {margin-bottom:1em; font-size:1.1em;}
+#user-login .form-item label {display:block; margin-bottom:2px; font-weight:bold;}
+#user-login .form-item input {padding:1px;}

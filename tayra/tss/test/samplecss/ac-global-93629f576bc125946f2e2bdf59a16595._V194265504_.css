@@ -1,0 +1,908 @@
+/* Styles for specific parts of Associates Central. */
+/* ------------------------------------------------ */
+
+/* Top navigation styles */
+
+#primaryNav {
+	
+	z-index: 10;
+}
+
+#toplinks
+{
+    font-size:10px !important;
+    text-align:right;
+    position:absolute;
+    top:1px;
+    right:3px;
+}
+.toplinksText 
+{
+    padding-top:6px;
+}
+#toplinks a
+{
+    text-decoration:none;
+}
+#toplinks a:hover
+{
+    color:#E47911 !important;
+}
+#toplinks a:visited
+{
+    color:#003399 !important;
+}
+#toplinks img.icon
+{
+    position:relative;
+    top:4px;
+}
+/* Style for tips icon that should be placed on every page */
+div#tips 
+{
+    float:right;
+}
+/* Breadcrumb */
+.breadcrumb{
+    font-size:11px;
+    margin-bottom:4px;
+}
+.breadcrumb a,.breadcrumb a:link,.breadcrumb a:visited,.breadcrumb a:active{
+    text-decoration:none;
+    color:#039;
+}
+.breadcrumb a:hover{
+    text-decoration:underline;
+    color:#C60;
+}
+
+/* style the locale selector */
+div#locale_selector_selector 
+{
+    float:right;
+    text-align:left;
+    padding:3px 2px 3px 3px;
+    margin-left:2px;
+    width:105px;
+    height:12px;
+    margin-top:2px;
+    border-color:#aaa;
+}
+
+/* noscript case */
+form#locale_selector_selector *
+{
+    vertical-align:middle;
+}
+
+#locale_selector_list 
+{
+    width:140px;
+    z-index: 100;
+}
+
+#locale_selector_list .dynamic_listbox_element
+{
+    font-size:10px;
+    padding:3px 0px 3px 6px;
+}
+
+/* Identity box */
+div#identitybox .box
+{
+    margin:5px 0px 5px 0px;
+    padding:0px 10px;
+    font-size:11px;
+    width:180px;
+    color:#999999;
+}
+div#identitybox form
+{
+    width:160px;
+    margin:5px 0px;
+}
+div#identitybox form *
+{
+    vertical-align:bottom;
+}
+div#identitybox select
+{ 
+    width:130px;
+}
+div#identitybox input.text
+{
+    width:150px;
+}
+div#identitybox hr
+{
+    background-color:#9DC4D8;
+    border:0pt none;
+    height:1px;
+    margin:5px 0px;
+}
+div#identitybox h4
+{
+    margin:3px 0px;
+    font-size:11px;
+    color:#666666;
+}
+div#identitybox a
+{
+    text-decoration:none;
+}
+div#identitybox a img
+{
+    border:none;
+}
+div#identitybox p
+{
+    margin:3px 0px;
+}
+div#identitybox p#signin
+{
+    margin:5px 0px;
+    position:relative;
+}
+div#identitybox p#signin *
+{
+    vertical-align:middle;
+}
+div#identitybox p#signin a#needHelp
+{
+    font-size:11px;
+    text-decoration:underline;
+}
+div#identitybox .noAccount
+{
+    font-size:11px;
+    color:#000000;
+    font-weight:bold;
+}
+div#identitybox p#currentTrackingId
+{
+    font-weight:bold;
+    margin:3px 0px 0px 0px;
+    clear: both;
+}
+div#identitybox p#combinedReports
+{
+    margin:5px 0px;
+    line-height:1.5em;
+}
+div#identitybox p#combinedReports input
+{
+    margin:0px;
+    vertical-align:text-bottom;
+}
+div#identitybox .left-float
+{
+    float:left;
+    font-size:11px;
+    zoom:100%;
+    padding-bottom:2px;
+}
+div#identitybox .right-float
+{
+    float:right;
+    font-size:11px;
+    padding-bottom:2px;
+    white-space:nowrap;
+}
+div#identitybox div.line 
+{ 
+    clear:both;
+    border-bottom:#d0e0e8 solid 1px;
+    margin:6px 0px 6px 0px;
+}
+
+div#identitybox .formLabel {
+    padding:4px 0px 1px;
+}
+div#identitybox .formInput {
+    padding:0px 0px 4px;
+}
+div#identitybox h4 {
+    margin:4px 0px;
+}
+
+/* hide the signin browser check */
+div#mercury0 
+{ 
+    display:none;
+}
+div#mercury1 
+{ 
+    display:none;
+}
+
+/* Left-hand navigation styles */
+#navigation
+{
+    width: 160px;
+    padding:0px;
+}
+
+#navigation h3
+{
+    font-size:13px;
+    font-weight:bold;
+    padding:0px 0px; 
+    margin-bottom:1px;
+    height:2.3em;
+    line-height:2.3em;
+}
+
+.topLevelNavItem a 
+{
+    color:#CC66FF
+}
+#navigation li
+{
+    margin: 4px 0px 4px 0px;
+    padding-left:0px;
+}
+#navigation ul.nav
+{
+    padding-left: 0px;
+    margin: 0px;
+    list-style-type: none;
+    font-size:13px;
+}
+#navigation ul.nav li
+{
+    margin: 0px;
+    padding-left:0px;
+    border-bottom:1px solid #ffffff;
+}
+#navigation ul.nav ul
+{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+#navigation ul.nav a
+{
+    display: block;
+    padding: 5px 4px; 
+    text-decoration: none;
+    color: #003399 !important;
+    font-weight: bold;
+    white-space:normal;
+}
+#navigation ul.nav ul li
+{
+}
+#navigation ul.nav ul a
+{
+    padding-left: 12px; 
+    font-weight:normal;
+}
+#navigation ul.nav ul ul a
+{
+    padding-left: 24px;
+    font-weight:normal;
+}
+#navigation ul.nav a:hover
+{
+    color: #000000 !important; 
+    background-color: #F1F1DA; 
+    zoom:100%;
+}
+#navigation ul.nav ul a.active
+{
+    color: #E47911 !important;
+    background-color: #ffffff;
+}
+#navigation a, #navigation li
+{
+    background-color: #ffffff;
+}
+#navigation a.selected
+{
+    background-color: #F1F1DA; 
+    color:#000000;
+    zoom:100%
+}
+#navigation li#my_widgets_nav
+{ 
+  border-top:1px dashed #CCCCCC;
+  border-bottom:1px dashed #CCCCCC;
+}
+#navigation ul.nav  a.selected
+{
+    color: #000000 !important;
+}
+
+/* Alert box */
+div.alert
+{
+    position:relative;
+    background-color:#fdfad6;
+    padding:8px 12px 12px 12px;
+    margin:-20px -10px 10px -20px;
+    font-weight:bold;
+}
+div.alert img.icon,
+div.main_alert img.icon
+{
+    position:absolute;
+}
+div.alert div.message
+{
+    margin:0px 0px 0px 30px;
+    padding:5px 0px 0px 0px;
+}
+
+div.main_alert
+{
+    margin:30px auto;
+    border: 1px solid #E47911;
+    position:relative;
+    background-color:#fdfad6;
+    padding:8px 12px 12px 12px;
+}
+
+div.main_alert div.message
+{
+    margin:0px 0px 0px 30px;
+    font-family: 'Verdana', 'Arial', 'Helvetica', sans-serif;
+    font-size:11px;
+}
+
+/* Site stripe styles */
+#sitestripe,
+#sitestripe td
+{
+    font-size:10px;
+}
+#sitestripe a
+{
+    color:#fff;
+}
+
+
+/* Cool headings */
+h1.mainpage,h1.managedcontent
+{
+    color:#4c94b7;
+    font-size:24px;
+    font-weight:lighter;
+    margin:0px;
+    margin-bottom:10px;
+    padding:0px;
+}
+hr.mainPageSpacer
+{
+    visibility:hidden;
+    margin:15px 0px;
+    clear:both;
+}
+
+div#content.withSidebar hr.mainPageSpacer
+{
+    clear:left;
+}
+
+div#promoContentWithSidebar hr.mainPageSpacer
+{
+    clear:left;
+}
+
+/* Managed content */
+
+
+	
+div.managedContent
+{
+    clear:both;
+    margin-bottom: 2em; 
+}
+div#content.withSidebar div.managedContent
+{
+    clear:left;
+}
+div#promoContentWithSidebar div.managedContent
+{
+    clear:left;
+}
+div.managedContent img
+{
+    padding-right:5px;
+    padding-bottom:10px;
+}
+div.managedContent h3
+{
+    margin-top:0px; 
+}
+div.managedContent h2
+{
+    margin-top:10px;
+    color:#E47911;
+    font-size:16px;
+    font-weight:bold;
+}
+div.managedContentSeparator 
+{
+    border-top:1px dashed #CCCCCC;
+    height:1px;
+    clear:both;
+}
+
+
+/* Help landing page */
+table#helpContent
+{
+    width:95%;
+}
+table#helpContent td
+{
+    width:33%;
+    padding:5px;
+}
+table#helpContent td h3
+{
+    background-color:#f4f4f4;
+    padding:5px;
+}
+
+
+/* Product Previews beta */
+div#productPreviewsContent h3
+{
+    border-top:1px solid #d7d7d7;
+    border-bottom:1px solid #d7d7d7;
+    font-size:14px;
+    padding:5px;
+    margin-top:30px;
+}
+
+
+/* yellow-box styles */
+div.yellow-box
+{
+    border: 1px solid #E47911;
+    background-color: #FFFFD5;
+    padding:10px;
+    color: #990000;
+    margin:20px auto;
+}
+div.yellow-box h1
+{
+    font-size: 14px;
+    margin:0px;
+    padding:0px;
+}
+div.yellow-box p { margin:10px 0 0 0; }
+div.yellow-box p.confirm,
+div.yellow-box h1.confirm
+{
+    color: #009900;
+}
+
+
+/* Build links pages? */
+body#dynamic a#rotating-links,
+body#individual a#product-links,
+body#banner a#banner-links,
+body#text a#text-links,
+body#searchbox a#searchbox-links
+{
+    color: #E47911 !important;
+    background-color: #ffffff;
+}
+
+p.copyPaste
+{
+    /* Defaults to hidden, shown by script */
+    display:none;
+}
+p.copyPaste img
+{
+    cursor:pointer;
+}
+
+
+/* Styles used in apply pipeline as notes to user */
+.assocValidation-MissingData,
+.assocValidation-InvalidData,
+.small-note
+{
+    color:red;
+    font-weight:bold;
+}
+.small-note
+{
+    font-size: 10px;
+}
+.disabled
+{
+  color: #666666;
+}
+
+
+/* A blue box for highlighting a message or feature */
+div.blue-box
+{
+    margin:10px 0px 20px 0px;
+    padding:5px;
+    background-color:#E3EEF4;
+}
+
+
+/* Content boxes */
+
+
+div.section
+{
+    min-width:90%;
+    margin:20px auto;
+    border: 1px solid #aaa;
+    background-color: #f4f4f4;
+    position:relative; 
+}
+div.section .sectionHeading
+{
+    font-size:13px !important;
+    font-weight: bold;
+    color: #E47911;
+    background-color:#ffffff;
+    border-bottom:1px solid #aaa;
+    margin:0px;
+    padding:5px;
+}
+div.section div.sectionContent
+{
+    padding:10px;
+    vertical-align:top;
+}
+
+
+/* Nicely formatted sections */
+table.section
+{
+    width:90%;
+    margin:20px auto;
+    border-collapse:collapse;
+}
+table.section th
+{
+    font-size:13px !important;
+    font-weight: bold;
+    color: #E47911;
+    background-color:#ffffff;
+    border: 1px solid #aaa;
+    padding:5px;
+    text-align:left;
+}
+table.section td
+{
+    background-color:#f4f4f4;
+    border: 1px solid #aaa;
+    padding:0px;
+    vertical-align:top;
+}
+
+
+/* An option grid, as on the Omakase page */
+table.optiongrid
+{
+    margin:0px auto;
+}
+table.optiongrid td
+{
+    border:none !important;
+    padding:2px !important;
+}
+table.optiongrid td.label
+{
+    font-weight:bold;
+    text-align:right;
+    width:50%;
+}
+
+
+/* Footer styles (should appear on nearly every page) */
+#footer
+{
+    font-size:11px;
+    text-align:center;
+}
+#footer p
+{
+    margin:5px 0px;
+}
+
+/* left nav */
+/* give product previews an indent */
+td#navcontainer a#product_previews
+{
+    margin-left:15px;
+}
+
+div.feedback
+{
+    background-color:#f1f1da; 
+    color:#333333; 
+    font-size:11px; 
+    line-height:18px;
+    padding:6px;
+    text-align:center;
+    margin: 30px -10px -10px -10px;
+    clear:both;
+}
+div.feedback_nobg
+{
+    background-color: #E8E8E8; 
+}
+div.feedback p
+{
+    margin:2px 0px;
+}
+/* Support Box Styles */
+.supportBox
+{
+    font-size:11px;
+}
+.supportBox h4 
+{
+    color:#666666;
+    font-size:11px;
+    margin:0px 0px 3px 0px;
+}
+.supportBox li
+{
+    
+}
+.supportBox ul
+{
+    margin:0px 0px 12px 24px;
+    padding:0px;
+    font-size:11px;
+    line-height:1.5em;
+}
+.supportBox a,
+.supportBox a:visited,
+.supportBox a:active 
+{
+    text-decoration:none;
+}
+/* specifically for the right menu on join landing page */
+.supportBox div.managedContent
+{
+    padding-left: 0px;
+    margin-bottom: 0em;
+}
+.seeMore {
+    float:right;
+    margin-top:2px;
+}
+
+/* Tabbed nav styles */
+
+#primaryNav {
+    float:left;
+    width:100%;
+    background:repeat-x bottom;
+    font-size:93%;
+    line-height:normal;
+    min-width:998px;
+}
+#primaryNav ul {
+    margin:0;
+    padding:34px 0px 0px 204px;
+    list-style:none;
+}
+#primaryNav li {
+    float:left;
+    background: no-repeat right top;    
+    margin:0;
+    height:23px;
+}   
+#primaryNav a {
+    float:left;
+    display:block;
+    background: no-repeat left top;
+    padding:5px 15px 4px;
+    text-decoration:none;
+    font-weight:bold;
+    color:#e3e2e2;
+    height:14px;
+}
+
+#primaryNav a span.droparrow {
+font-size: 9px;
+}
+
+/* Commented Backslash Hack
+ hides rule from IE5-Mac \*/
+#primaryNav a {
+    float:none;
+}
+/* End IE5-Mac hack */  
+#primaryNav a:hover {
+    color:#FFFFFF;
+}
+#primaryNav #current {
+    height: 24px;
+}
+#primaryNav #current a {
+    padding-bottom:5px;
+    color:#000000;
+}
+
+/* Styles for Managed Content as delivered by AssociateContent */
+h3.managedcontent {
+    color:#E47911;
+    font-size:13px !important;
+    font-weight:bold;
+}
+
+table.feature-table {
+    margin: 20px 20px 0px;
+    cellspacing:0px;
+    cellpadding:0px;
+}
+table.feature-table td{
+    vertical-align: top;
+}
+table.feature-table td.leftcell{
+    padding: 10px 10px 10px 0px;
+}
+table.feature-table td.rightcell{
+    padding: 10px 0px;
+}
+table.fancyRight td.rightcell {
+    border-top:1px dashed #CCCCCC;
+}
+table.tightLeft td.leftcell {
+    width: 1%;
+}
+table.tightRight td.rightcell {
+    width: 1%;
+}
+
+/* Styles for the back-to-retail stripe */
+#ac_site_stripe {
+    background-color:#828282;
+    color:white;
+    margin:0px;
+    padding:0px;
+    min-height:26px;
+    height:auto !important;
+    height:26px;
+    font-size:10px;
+}
+#ac_site_stripe #stripe_logo {
+    float:right;
+}
+#ac_site_stripe #stripe_back_btn {
+    margin:2px 2px 0px;
+}
+/* Used on landing page*/
+div.mainGraphic div.managedContent {
+    padding-left: 0px;
+}
+
+/*Affiliate Programs */
+
+.programLogo {
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+h2 {
+	clear: left;
+}
+
+hr.divider {
+	background-color: #fff;
+	height: 1px;
+	border-top: 1px dashed #c1c1c1;
+	border-bottom: #fff;
+	clear: both;
+	margin: 10px 0;
+}
+
+
+
+/*-------drop down menu---------------------------------------------------------------------*/
+
+#header, #primaryNav { z-index: 99; }
+
+
+
+.parent {
+	position: relative;
+	top: 23px !important;
+	left: 0;
+	width: auto;
+	padding: 0;
+	margin: 0;
+}
+
+/* Selected Tab */
+
+.dropdownlinks	{
+	display: block;
+	background-color: #136BAF;
+	border-bottom: 1px solid #0D5288;
+	border-left: 1px solid #0D5288;
+	border-right: 1px solid #0D5288;
+	border-top: 1px solid #1C66A1;
+	position: absolute; 
+	left: 0;
+	padding-top: 10px !important;
+	padding-bottom: 10px;
+	-moz-border-radius-bottomleft: 5px;  
+	-webkit-border-bottom-left-radius: 5px;  
+	-moz-border-radius-bottomright: 5px;  
+	-webkit-border-bottom-right-radius: 5px; 
+	-moz-border-radius-topright: 5px;  
+	-webkit-border-top-right-radius: 5px; 
+	-moz-box-shadow: 1px 1px 2px #888;
+	-webkit-box-shadow: 1px 1px 2px #888;
+}
+
+
+.dropdownlinks .subitem a, .dropdownlinks .subitem a:link {
+	color: #fff !importantf;
+}
+
+.dropdownlinks .subitem a:hover {
+	color: #E47911 !important;
+}
+
+/* Unselected Tab */
+
+#current .dropdownlinks {
+	background-color: #E8E8E8 !important;
+	border-bottom: 1px solid #c1c1c1;
+	border-left: 1px solid #c1c1c1;
+	border-right: 1px solid #c1c1c1;
+	border-top: 1px dotted #d9d9d9;
+}
+
+#current .dropdownlinks .subitem a, #current .dropdownlinks .subitem a:link {
+	color: #039 !important;
+}
+
+#current .dropdownlinks .subitem a:hover {
+	color: #E47911 !important;
+}
+
+
+/* menu on mouse-over  */
+.parent .subitem					
+	{
+		padding-top:0;
+		margin-top: 0;
+		margin-bottom: 5px;
+		background-repeat:no-repeat !important;
+		font-size: 11px;
+		line-height: 12px;
+		padding-left: 10px !important;
+		padding-right: 10px !important;
+		white-space: nowrap;
+	}
+	
+
+
+	
+
+#menuh ul div.parent
+	{
+
+	display:none;
+
+}
+
+div#menuh li:hover div.parent,
+div#menuh li li:hover div.parent,
+div#menuh li li li:hover div.parent,
+div#menuh li li li li:hover div.parent
+{display:block;
+}
+
+                                /*---------------------------------------------------- end  menus --------------------------------------------------------*/
+

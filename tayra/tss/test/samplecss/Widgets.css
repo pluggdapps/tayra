@@ -1,0 +1,949 @@
+/* widgets common */
+
+div.sideBar div.widget div.header {
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 100%;
+	padding: 6px 10px 7px 10px;
+	background-image: url(../images/widgets/side-bar-header.png?771);
+	background-position: left top;
+	background-repeat: no-repeat; }
+
+div.sideBar div.widget div.header .toggler {
+	float: left;
+	padding:0px 6px;
+	height:10px;
+	background-image: url(../images/widgets/toggler.png?771);
+	background-repeat:no-repeat;
+	background-position:-23px 3px;
+	cursor:pointer; }
+
+div.sideBar div.widget div.header div.name {
+	float: left; }
+
+div.sideBar div.widget div.header div.selector {
+	float: right; }
+
+div.sideBar div.widget {
+	margin-bottom: 15px; }
+
+div.sideBar div.widget  a {
+	color: #9BE;
+	text-decoration: none; }
+
+div.sideBar div.widget div.header a {
+	color: #FFF; }
+
+div.sideBar div.widget a:hover {
+	text-decoration: underline; }
+
+div.sideBar div.widget ul.simple {
+	margin: 5px 15px 0px 25px;
+	padding: 0px; }
+
+div.sideBar div.widget ul.simple li {
+	margin: 0px;
+	padding: 0px }
+
+div.sideBar div.widget div.seeMore {
+	text-align: right;
+	width: 280px;
+	margin: 0 auto; }
+
+div.sideBar div.widget div.roundBoxTop {
+	background-image: url(../images/widgets/round-box-top.png?771);
+	background-position: left top;
+	background-repeat: no-repeat; }
+
+div.sideBar div.widget div.roundBoxBottom {
+	background-image: url(../images/widgets/round-box-bottom.png?771);
+	background-position: left bottom;
+	background-repeat: no-repeat; }
+
+
+/* newsletter */
+
+div.sideBar div.widget.newsletter div.header {
+    background-image: none;
+    margin: 0px;
+    padding: 0px 0px 5px 0px; }
+    
+div.sideBar div.widget.newsletter p.into {    
+    color: #888;
+    margin: 0px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #666; }
+
+div.sideBar div.widget.newsletter div.form {
+    padding: 10px; }
+
+
+/* common paging */
+
+div.featured div.paging div.left,
+div.sideBar div.widget div.paging div.left {
+	left: -13px;
+	background-image: url(../images/nav-arrow-left-normal.png?771); }
+
+div.featured div.paging div.right,
+div.sideBar div.widget div.paging div.right {
+	right: -13px;
+	background-image: url(../images/nav-arrow-right-normal.png?771); }
+
+div.featured div.paging div.left:hover,
+div.sideBar div.widget div.paging div.left:hover {
+	background-image: url(../images/nav-arrow-left-active.png?771); }
+
+div.featured div.paging div.right:hover,
+div.sideBar div.widget div.paging div.right:hover {
+	background-image: url(../images/nav-arrow-right-active.png?771); }
+
+div.sideBar div.widget div.paging {
+	position: relative; }
+
+div.sideBar div.widget div.paging div,
+div.featured div.paging div {
+	position: absolute;
+	width: 12px;
+	height: 17px;
+	background-repeat: no-repeat;
+	cursor: pointer; }
+
+
+/* common dotted selector */ 
+
+#homepageFeatured .selector {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	height: 10px; }
+
+#homepageFeatured div.dottedSelector {
+	text-align: center; }
+
+div.dottedSelector span {
+	cursor: pointer;
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-image: url(../images/dottedSelector/grey.png?771); }
+
+div.sideBar div.widget div.dottedSelector span {
+	background-image: url(../images/dottedSelector/darkgrey.png?771); }
+
+div.dottedSelector span.visible,
+div.sideBar div.widget div.dottedSelector span.visible {
+	background-image: url(../images/dottedSelector/white.png?771); }
+
+
+/* widget tabs */
+
+div.mainTabs div.tabs,
+div.sideBar div.widget div.tabs {
+	margin-top: 10px;
+	background-image: url(../images/widgets/tab-bg.png?771);
+	background-position: left bottom;
+	background-repeat: repeat-x; }
+
+div.mainTabs div.tabs td,
+div.sideBar div.widget div.tabs td {
+	vertical-align: top;
+	padding-right: 5px; }
+
+div.mainTabs div.tabs div.tab,
+div.sideBar div.widget div.tabs div.tab {
+	cursor: pointer; }
+
+div.mainTabs div.tabs div.tab div.left,
+div.sideBar div.widget div.tabs div.tab div.left {
+	background-image: url(../images/widgets/tab-left.png?771);
+	background-position: left top;
+	background-repeat: no-repeat;
+	padding-left: 5px; }
+
+div.mainTabs div.tabs div.tab div.right,
+div.sideBar div.widget div.tabs div.tab div.right {
+	background-image: url(../images/widgets/tab-right.png?771);
+	background-position: right top;
+	background-repeat: no-repeat;
+	padding-right: 5px; }
+
+div.mainTabs div.tabs div.tab div.middle,
+div.sideBar div.widget div.tabs div.tab div.middle {
+	background-image: url(../images/widgets/tab-middle.png?771);
+	background-position: left top;
+	background-repeat: repeat-x;
+	padding: 3px 5px; }
+
+div.mainTabs div.tabs div.tab.selected div.middle,
+div.sideBar div.widget div.tabs div.tab.selected div.middle {
+	padding-bottom: 4px; }
+
+
+/* simple graph widget  */
+
+div.sideBar div.widget ul.barGraph {
+	display: block;
+	margin: 10px;
+	padding: 0px; }
+
+div.sideBar div.widget ul.barGraph li {
+	list-style: none;
+	display: block;
+	margin: 0px;
+	padding: 0px; }
+
+div.sideBar div.widget ul.barGraph li span.bar {
+	display: block;
+	position: relative; 
+	height: 11px; }
+
+div.sideBar div.widget ul.barGraph li span.bar span.frame {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 5px;
+	overflow: hidden;
+	width: 100%; }
+
+div.sideBar div.widget ul.barGraph li span.bar span.frame span.gauge {
+	display: block;
+	background-image: url(../images/widgets/widget-barchart-silver-bar-bg.png?771);
+	height: 5px;
+	overflow: hidden; }
+	
+div.sideBar div.widget ul.barGraph.blueBarGraph li span.bar span.frame span.gauge {
+	background-image: url(../images/widgets/widget-barchart-blue-bar-bg.png?771); }
+
+div.sideBar div.widget ul.barGraph li span.bar span.value {
+	display: block;
+	line-height: 11px;
+	padding-left: 5px;
+	top: -4px;
+	position: absolute; }
+
+
+/* simple graph widget - two lines */
+
+div.sideBar div.widget ul.barGraph.barsBelowText li {
+	padding: 0px; }
+
+div.sideBar div.widget ul.barGraph.barsBelowText li span.label {
+	padding-bottom: 3px; }
+
+div.sideBar div.widget ul.barGraph.barsBelowText li span.bar {
+	margin-top: 5px;
+	width: 250px; }
+
+
+/* simple graph widget - single line */
+
+div.sideBar div.widget ul.barGraph.singleLine li {
+	position: relative;
+	line-height: 16px; }
+	
+div.sideBar div.widget ul.barGraph.singleLine li:first-child {
+	}
+	
+div.sideBar div.widget ul.barGraph.singleLine li:last-child {
+	}
+
+div.sideBar div.widget ul.barGraph.singleLine li span.bar {
+	position: absolute;
+	top: 7px; }
+
+
+/* user widget */
+
+div.sideBar div.widget.login {
+    }
+
+div.sideBar div.widget.login a {
+    color: White;
+    text-decoration: underline; }
+
+div.sideBar div.widget.login div.header {
+    background-image: none;
+    margin: 0px;
+    padding: 0px 0px 5px 0px; }
+
+div.sideBar div.widget.login div.boxTop {
+    background-image: url(../images/user/login-top.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.login div.boxBtm {
+    background-image: url(../images/user/login-btm.png?771);
+    background-position: left bottom;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.login td.loginPane {
+    vertical-align: top;
+    padding: 10px; }
+
+div.sideBar div.widget.login td.registrationPane {
+    vertical-align: top;
+    padding: 10px;
+    background-image: url(../images/user/login-sep.png?771);
+    background-position: left top;
+    background-repeat: repeat-y; }
+
+div.sideBar div.widget.login input.emailAndPassword {
+    width: 120px; }
+    
+div.sideBar div.widget.login input.remember {
+    margin: 0px; }
+    
+div.sideBar div.widget.user {
+    background-image: url(../images/user/user-box.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user {
+    width: 300px;
+    height: 40px; }
+
+div.sideBar div.widget.user table.user td.gravatar {
+    width: 40px; }
+
+div.sideBar div.widget.user table.user td.gravatar a {
+    display: block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    overflow: hidden; }
+    
+div.sideBar div.widget.user table.user td.gravatar a img {
+    position: absolute;
+    left: 0px;
+    top: 0px; }
+    
+div.sideBar div.widget.user table.user td.gravatar a span {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background-image: url(../images/user/gvaratar-mask.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user td.user {
+	}
+
+div.sideBar div.widget.user table.user td.user div.wrapper {
+	background-image: url(../images/user/popup-arrow.png?771);
+	background-position: 5px center;
+	background-repeat: no-repeat;
+	height: 14px;
+	position: relative;
+    padding-left: 20px;
+    padding-top: 13px;
+    padding-bottom: 13px; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper a.name {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: bold;
+    color: White; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup {
+	top: 30px;
+	left: -20px;
+	position: absolute;
+	visibility: hidden;
+	z-index:1000; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper:hover table.popup {
+	visibility: visible; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow11 {
+	width: 10px;
+	height: 20px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-11.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow11 div {
+	width: 10px;
+	height: 20px;
+	overflow: hidden; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow12 {
+	height: 20px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-12.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow13 {
+	width: 10px;
+	height: 20px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-13.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow13 div {
+	width: 10px;
+	height: 10px;
+	overflow: hidden; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow21 {
+	vertical-align: top;
+	width: 10px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-21.png?771);
+    background-repeat: repeat-y; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow22 {
+	background-color: #46A; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow23 {
+	width: 10px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-23.png?771);
+    background-position: left top;
+    background-repeat: repeat-y; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow31 {
+	width: 10px;
+	height: 10px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-31.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow32 {
+	height: 10px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-32.png?771);
+    background-position: left top;
+    background-repeat: repeat-x; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup td.shadow33 {
+	width: 10px;
+	height: 10px;
+	overflow: hidden;
+    background-image: url(../images/user/user-menu-flyout-33.png?771);
+    background-position: left top;
+    background-repeat: no-repeat; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup div.group.first {
+	padding-bottom: 2px;
+	border-bottom: 1px solid #359; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup div.group.middle {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-top: 1px solid #57B;
+	border-bottom: 1px solid #359; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup div.group.last {
+	padding-top: 2px;
+	border-top: 1px solid #57B; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup a {
+	display: block;
+	padding: 3px 6px;
+	color: White;
+	text-decoration: none;
+	white-space: nowrap; }
+
+div.sideBar div.widget.user table.user td.user div.wrapper table.popup a:hover {
+	background-color: #358; }
+
+div.sideBar div.widget.user table.user td.tools {
+    padding-right: 8px;
+    text-align: right; }
+
+div.sideBar div.widget.user table.user td.tools span.tool {
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+	background-image: url(../images/user/tool-icons.png?771); }
+    
+div.sideBar div.widget.user table.user td.tools span.tool.messages {
+	background-position: 0px 0px; }
+
+div.sideBar div.widget.user table.user td.tools span.tool.logout {
+	background-position: -24px 0px; }
+
+div.sideBar div.widget.user table.user td.tools span.tool.messages:hover {
+	background-position: 0px -24px; }
+
+div.sideBar div.widget.user table.user td.tools span.tool.logout:hover {
+	background-position: -24px -24px; }
+
+div.sideBar div.widget.user table.user td.tools span.tool.messages span.count {
+    display: inline-block;
+    position: absolute;
+    padding: 2px 4px;
+	font-size: 9px;
+	line-height: 9px;
+	top: -4px;
+	left: -4px;
+	font-weight: bold;
+	background: #F13338;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px; }
+
+
+/* challenge winners */
+
+div.sideBar div.widget.challengesWinners div.paging div {
+	top: 150px; }
+
+div.sideBar div.widget.challengesWinners  div.items {
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+	position: relative; }
+
+div.sideBar div.widget.challengesWinners div.pane {
+	position: absolute; }
+
+div.sideBar div.widget.challengesWinners div.item {
+	width: 300px;
+	top: 0px;
+	position: absolute; }
+	
+div.sideBar div.widget.challengesWinners div.image {
+	margin: 10px 0px;
+	height: 240px;
+	text-align: center; }
+
+div.sideBar div.widget.challengesWinners div.image img {
+	border: 2px solid #222; }
+
+div.sideBar div.widget.challengesWinners div.caption {
+	text-align: center;
+	margin: 5px 20px 0px 20px; }
+
+
+/* challenges open for voting and submissions */
+
+div.sideBar div.widget.challengesSimple table {
+	margin-left: 10px;
+	margin-right: 10px;	}
+
+div.sideBar div.widget.challengesSimple table td {
+	vertical-align: top;
+	padding-top: 3px;
+	padding-bottom: 3px; }
+
+div.sideBar div.widget.challengesSimple table td.group {
+	padding-top: 10px;
+	font-weight: bold;
+	border-bottom: 1px solid #444; }
+	
+div.sideBar div.widget.challengesSimple table td.title,
+div.sideBar div.widget.challengesSimple table td.info {
+	border-bottom: 1px dotted #444; }
+
+div.sideBar div.widget.challengesSimple table td.info {
+	color: #AAA;
+	white-space: nowrap;
+	text-align: right;
+	padding-left: 10px; }
+
+
+/* news archive */
+
+div.sideBar div.widget.newsArchive div.paging div {
+	top:80px; }
+
+div.sideBar div.widget.newsArchive div.archive {
+	position: relative;
+	margin: 10px auto 10px auto;
+	overflow: hidden;
+	width: 280px; }
+
+div.sideBar div.widget.newsArchive div.archive table.years {
+	position: relative; }
+
+div.sideBar div.widget.newsArchive div.archive table.years td.year {
+	vertical-align: top;
+	text-align:center; }
+
+div.sideBar div.widget.newsArchive div.archive table.years td.year div.year {
+	width: 46px;
+	font-weight: bold }
+
+div.sideBar div.widget.newsArchive div.archive table.years td.year ul.months {
+	margin: 0px;
+	padding: 0px; }
+
+div.sideBar div.widget.newsArchive div.archive table.years td.year ul.months li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px; }
+
+div.sideBar div.widget.newsArchive div.archive table.years td.year ul.months li span.empty {
+	color: #444; }
+
+div.sideBar div.relatedNews div.seeMore {
+	margin-top: 5px; }
+
+
+/* top cameras */
+
+div.sideBar div.widget.topCameras {
+	}
+
+div.sideBar div.widget.topCameras table.top-camera {
+	margin: 10px 10px 0px 10px; }
+
+div.sideBar div.widget.topCameras table.top-camera td.image {
+	vertical-align: top;
+	padding-right: 15px; }
+
+div.sideBar div.widget.topCameras table.top-camera td.info {
+	vertical-align: top; }
+
+div.sideBar div.widget.topCameras table.top-camera div.name {
+	font-size: 14px; }
+
+div.sideBar div.widget.topCameras table.top-camera div.links {
+	padding-top: 3px; }
+
+div.sideBar div.widget.topCameras table.top-camera div.links div {
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 16px;
+	padding-top: 1px;
+	padding-bottom: 2px;
+	line-height: 11px; }
+
+div.sideBar div.widget.topCameras table.top-camera div.links div.review,
+div.sideBar div.widget.topCameras table.top-camera div.links div.preview {
+	background-image: url(../images/widgets/top-cameras-icon-review.png?771); }
+
+div.sideBar div.widget.topCameras table.top-camera div.links div.shop {
+	background-image: url(../images/widgets/top-cameras-icon-shop.png?771); }
+
+div.sideBar div.widget.topCameras table.top-camera div.links div.specs {
+	background-image: url(../images/widgets/top-cameras-icon-specs.png?771); }
+
+div.sideBar div.widget.topCameras table.top-camera div.links div.forums {
+	background-image: url(../images/widgets/top-cameras-icon-forum.png?771); }
+
+div.sideBar div.widget.topCameras ul.barGraph {
+	margin: 10px 10px 5px 10px; }
+
+div.sideBar div.widget.topCameras div.note {
+	border-top: 1px dotted #444;
+	padding-top: 5px;
+	margin: 0px 10px 0px 10px; }
+
+
+/* latest cameras */
+
+div.widget.latestCameras table.cameras {
+    border-collapse: collapse;
+    width: 280px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #444; }
+
+div.widget.latestCameras table.cameras td {
+    vertical-align: top;
+    padding: 3px 0px; }
+
+div.widget.latestCameras table.cameras tr.month td {
+	font-weight: bold;
+    border-bottom: 1px solid #444; }
+
+div.widget.latestCameras table.cameras tr.camera td {
+    border-bottom: 1px dotted #444; }
+
+div.widget.latestCameras table.cameras tr.camera td.name {
+    }
+
+div.widget.latestCameras table.cameras tr.camera div.specs {
+    background-image: url(/resources/images/widgets/top-cameras-icon-specs.png?771);
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 16px; }
+
+div.widget.latestCameras table.cameras tr.camera div.review,
+div.widget.latestCameras table.cameras tr.camera div.preview {
+    background-image: url(/resources/images/widgets/top-cameras-icon-review.png?771);
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 16px; }
+
+div.widget.latestCameras div.footer {
+    border-top-width: 0px;
+    width: 280px;
+    padding-top: 5px;
+    margin: 0px 10px;
+    text-align: right; }
+
+
+/* top messages */
+
+div.sideBar div.widget.topMessagesWithCounts table {
+	width: 280px;
+	margin: 5px 10px 0px 10px; }
+
+div.sideBar div.widget.topMessagesWithCounts table td {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #444;
+	vertical-align: top; }
+
+div.sideBar div.widget.topMessagesWithCounts table td.subject {
+	padding-right: 15px; }
+
+div.sideBar div.widget.topMessagesWithCounts table td.count {
+	text-align: right; }
+
+	
+/* top posters */
+
+div.sideBar div.widget.topPosters ul.barGraph.singleLine li span.bar {
+	left: 120px; 
+	width: 130px; }
+	
+	
+/* gallery tags */
+
+div.sideBar div.widget.tagCloud div.tags {
+	text-align: justify;
+	margin: 5px 10px 0px 10px; }
+
+
+/* gallery latset */
+
+div.sideBar div.widget.latestGalleries div.thumbnails a {
+	margin:5px;
+	display:inline-block }
+
+div.sideBar div.widget.latestGalleries div.thumbnails {
+	margin:10px; }
+
+div.sideBar div.widget.latestGalleries div.thumbnails a {
+	margin:2px; }
+	
+div.sideBar div.widget.latestGalleries div.info {
+	text-align:center;
+	color:#777 }
+
+div.sideBar div.widget.latestGalleries div.info strong {
+	color:#fff }
+
+
+/* latest reviews */
+
+div.sideBar div.widget.latestReviews ul.cameraList {
+	list-style: none;
+	margin: 10px;
+	padding: 0px; }
+	
+div.sideBar div.widget.latestReviews a {
+	font-weight: bold; }
+	
+div.sideBar div.widget.latestReviews div.seeMore a{
+	font-weight: normal; }
+	
+div.sideBar div.widget.latestReviews img {
+	float: left;
+	margin-right: 10px; }
+
+div.sideBar div.widget.latestReviews div.reviewInfo {
+	padding-top: 10px; }
+	
+div.sideBar div.widget.latestReviews div.score {
+	font-size: 250%; }
+
+div.sideBar div.widget.latestReviews div.preview {
+    margin: 3px 0px; }
+
+div.sideBar div.widget.latestReviews div.preview span {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 4px;
+    background-color: #666;
+    font-weight: bold;
+    border-radius: 2px; 
+    -webkit-border-radius: 2px; 
+    -moz-border-radius: 2px; }
+
+
+/* side bar and main featured */
+
+div.side-featured {
+	position: relative; }
+
+div.sideBar div.widget.side-featured div.featuredItem {
+	margin:10px 0;
+	float: left;
+	margin-right:10px; }
+
+div.sideBar div.widget.side-featured div.featuredItem:last-child {
+	margin-bottom: 0px; }
+
+div.mainContent div.featured div.items div.pane,
+div.side-featured div.items div.pane {
+	position: absolute;
+	top: 0px;
+	left: 0px; }
+
+div.side-featured div.items {
+	width: 300px;
+	position: relative;
+	overflow: hidden;
+	height: 130px; }
+	
+div.side-featured div.pane {
+	width: 6000px; }
+
+div.side-featured div.paging div {
+	top: 55px; }
+
+
+/* latest news */
+
+div.sideBar div.widget.latest-news div.newsOneDay {
+	margin-top: 5px;
+	margin-left: 10px;
+	margin-right: 10px; }
+	
+div.sideBar div.widget.latest-news div.newsOneDay div.date {
+	font-weight: bold; }
+
+
+/* polls */
+
+div.sideBar div.widget.poll div.widgetContent {
+    padding: 10px 10px 0px 10px; }
+
+div.sideBar div.widget.poll div.widgetContent div.question {
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #666; }
+    
+div.sideBar div.widget.poll div.widgetContent div.answers {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dotted #666; }
+
+div.sideBar div.widget.poll div.widgetContent div.answers form {
+    margin: 0px; }
+
+div.sideBar div.widget.poll div.widgetContent div.answers td {
+    vertical-align: top;
+    padding-top: 5px; }
+
+div.sideBar div.widget.poll div.widgetContent div.answers td.radio input {
+    margin: 0px; }
+
+div.sideBar div.widget.poll div.widgetContent div.answers td.text {
+    padding-left: 5px; }
+    
+div.sideBar div.widget.poll div.widgetContent div.voteButton {    
+    }
+
+div.sideBar div.widget.poll div.widgetContent div.voteButton span.submissionInProcess {    
+    display: inline-block;
+    background-image: url(/resources/images/ajax-loader-selftimer-000.gif?771);
+    background-repeat: no-repeat;
+    height: 16px;
+    padding-left: 20px;
+    line-height: 11px; 
+    padding-top: 2px;
+    margin-left: 5px; }
+
+div.sideBar div.widget.poll ul.answers.barGraph {
+    padding-top: 3px;
+    padding-bottom: 5px;
+    margin: 0px; }
+
+div.sideBar div.widget.poll ul.barGraph.barsBelowText li {
+    padding-top: 2px; }
+
+div.sideBar div.widget.poll ul.barGraph.barsBelowText li span.bar {
+    width: 200px; }
+
+div.sideBar div.widget.poll ul.barGraph.barsBelowText li span.bar span.value {
+    color: #AAA; }
+
+div.sideBar div.widget.poll ul.answers.barGraph span.text {
+    padding-bottom: 3px; }
+
+div.sideBar div.widget.poll div.footer {
+    padding-top: 5px;
+    border-top: 1px dotted #666; }
+
+div.sideBar div.widget div.footer table.footer {
+    width: 280px; }
+
+div.sideBar div.widget div.footer td.votes span.label {
+    color: #AAA; }
+
+div.sideBar div.widget div.footer td.suggest {
+    text-align: right; }
+
+
+/* review thumbnails */
+
+div.sideBar > div.widget.thumbnail div.pages {
+    width: 280px;
+    margin: auto;
+    padding: 10px 2px; }
+
+div.sideBar > div.widget.thumbnail div.page {
+    text-align: center;
+    margin: 5px 0px;
+    float: left; }
+
+div.sideBar > div.widget.thumbnail div.page img {
+    border: solid 1px #444;
+    margin: 5px; }
+
+div.sideBar > div.widget.thumbnail div.currentpage img {
+    border: solid 1px #9BE; }
+    
+/* featured challenge widget for canon */
+.sideBar .featuredChallenge {
+	margin:10px;
+	font-size:14px;
+}
+.sideBar .widget .canonChallengeHeader span{
+	color:#FFFF88;
+}
+.sideBar .widget .canonChallengeFooter img {
+	vertical-align:text-bottom;
+	float:right;
+}
+.sideBar .widget .imageGrid {
+	margin:4px -4px
+}
+.sideBar .widget .imageGrid a {
+	margin:4px;
+	display:inline-block;
+	overflow:hidden;
+	width:40px;
+	height:40px;
+}
+.sideBar .widget .canonChallengeFooter span {
+	float:left;
+} 
+.sideBar .widget .canonChallengeHeader a,
+.sideBar .widget .canonChallengeFooter a,
+.sideBar .widget .canonChallengeHeader a:hover,
+.sideBar .widget .canonChallengeFooter a:hover{
+	color:#fff;
+	text-decoration:none;
+}

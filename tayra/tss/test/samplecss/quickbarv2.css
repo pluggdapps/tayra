@@ -1,0 +1,196 @@
+﻿#cbHeader, #pnlOuterWrapper {
+    width: 100%;
+    background: #D7DEF0 url(../../images/js/h_grad.jpg) repeat-y;   
+    background-position: center;
+}
+.jsBodyBlueGrad {
+    background: 0;   
+}
+.cb_style .regular_content_container {
+    background: #fff;
+}
+.stdInnerContent {
+    margin: 10px;   
+}
+#quickSearchBar { 
+    background: #5A7CC3 url(../../images/js/quick_blue_grad.jpg) repeat-x;
+    text-align: center;
+    color: #fff;
+    font-family: Arial;
+    font-size: 12px;
+    width: 100%;
+}
+#quickSearchBar a {
+    color: #fff;   
+}
+#quickSearchBar #quickbar_inner {
+    margin: 0 auto;
+    text-align: left;   
+    width: 750px;
+}
+#quickSearchBar #quickbar_inner form { margin: 0; }
+#quickSearchBar #searchBox {
+    float: left;
+    width: 425px; 
+    margin: 10px 0;  
+}
+
+#quickSearchBar #searchBox h1,
+#quickSearchBar #searchBox .heading {
+    padding: 0;
+    margin: 5px 0 10px 0;
+    font-size: 20px;
+    color: #fff;
+    text-align: left;
+}
+#quickSearchBar #searchBox .heading {
+    float: left;
+    width: 70px;
+    margin: 24px 0 0 0;
+}
+#quickSearchBar #searchBox label {
+    font-weight: bold;
+    display: block;
+    margin: 0 0 2px 0;       
+}
+#quickSearchBar #searchBox .example {    
+    font-style: italic;
+    font-weight: normal;
+    font-size: 10px;   
+}
+#quickSearchBar #searchBox .inputWrapper {
+    float: left;
+    width: 49%; 
+    margin: 0 0 10px 0;  
+}
+#quickSearchBar #searchBox .rightWrapper {
+    float: right;
+}
+#quickSearchBar #searchBox .submitWrapper {
+    text-align: right;
+    padding-top: 17px;   
+}
+#quickSearchBar #searchBox .inputWrapper input {
+    width: 95%;  
+    padding: 3px 0;
+    font-size: 12px;
+    margin: 0; 
+    border: 1px solid #3C5482;
+    background: #fff url(../../images/js/input_grad.jpg) repeat-x 0 0;
+}
+#quickSearchBar #searchBox .inputWrapper input.btn {
+    background: #FF7D00 url(../../images/js/btn_grad.jpg) repeat-x;
+    border: 1px solid #FF9C00;
+    width: 80px;
+    color: #fff;
+    font-weight: bold;
+    font-style: italic;
+    margin: 0 10px;
+    height: 22px;
+    font-size: 12px;
+    padding: 0 0 3px 0;
+}
+#quickSearchBar #searchBox .inputWrapper input.btn:hover {
+    cursor: pointer;   
+}
+#quickSearchBar #searchBox .inputWrapper select {
+    width: 95%;  
+    padding: 1px 0;
+    font-size: 12px;
+    margin: 0;
+    border: 1px solid #3C5482;
+    background: #fff;   
+}
+#quickSearchBar #searchBox .inputWrapper a {
+    font-size: 10px;
+}
+#quickSearchBar #searchBox .inputWrapper a:hover {
+    text-decoration: none;
+}
+#quickbar_shadow {
+    height: 15px;
+    background: transparent url(../../images/js/drop_shadow_quickbar.png) repeat-x;
+}
+#quickSearchBar #resumeStats {
+    width: 313px;
+    height: 165px;
+    float: right;   
+    background: #fff url(../../images/js/stats_bottom_grad.jpg) repeat-x bottom;
+    border-top: 1px solid #D3D7DA;
+    font-size: 10px;
+    color: #787879;
+}
+#quickSearchBar #resumeStats #leftShadow {
+    float: left;
+    margin-left: -44px;
+    height: 165px;
+    width: 44px;
+    background: transparent url(../../images/js/white_left_shadow.png) repeat-y;
+}
+#quickSearchBar #resumeStats #rightShadow {
+    float: right;
+    height: 165px;
+    width: 44px;
+    margin-right: -44px;
+    background: transparent url(../../images/js/white_right_shadow.png) repeat-y;
+}
+#resumeStats .statsHeading {
+    color: #1F2145;
+    font-size: 20px;
+    display: block;
+    margin: 0 0 5px 0;
+    font-weight: bold;
+}
+#resumeStats .statsSubHeading,
+#resumeStats .statsSubHeading a {
+    color: #353FB5;
+    font-size: 12px;
+    display: block;
+    margin: 0;
+    font-weight: bold;    
+}
+#resumeStats .unknownStats a:hover {
+    text-decoration: none;
+}
+#resumeStats .unknownStats .statsSubHeading a {
+    text-decoration: none;   
+}
+#resumeStats .unknownStats .statsSubHeading a:hover {
+    text-decoration: underline;   
+}
+#resumeStats .knownStats .statsSubHeading a {
+    background: transparent url(../../images/js/cb_mainnav-li-li-a_orange.gif) no-repeat scroll 70px 4px;   
+}
+#resumeStats .statsItem {
+    color: #23274F;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 0 0;
+}
+#resumeStats .knownStats .statsItem {
+    margin: 0;   
+}
+#resumeStats a {
+    color: #353FB5;
+}
+#resumeStats .numberWrapper {
+    border: 1px solid #D7D7E3;
+    font-size: 20px;
+    color: #353FB5;
+    text-align: center;
+    padding: 0 6px;
+}
+#resumeStats .spacer {
+    height: 10px;   
+}
+#resumeStats .statsInfo {
+ padding: 0 0 0 10px; 
+ vertical-align: middle;  
+}
+#resumeStats select {
+    margin: 8px 0;
+}
+#quickSearchBar .savedSearchesWrapper {
+    display: none;
+}

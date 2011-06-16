@@ -1,0 +1,151 @@
+/* ================
+   The following classes are used for color customization of page components
+   via server side assignment. The classes are to be hard coded within the
+   page header.
+   ================
+*/
+   
+/* begin dynamic menu */
+#ygrp-menu {
+  border-color:#7b9ebd;
+  background-color:#e7eff7; 
+  color:#666;
+}
+#ygrp-menu .menulist-hr {
+  border-bottom:1px solid #7d9ebf;
+}
+#ygrp-menu .active {
+  background-color:#fff;
+}
+#ygrp-menu .corner-top, #ygrp-menu .corner-left, #ygrp-menu .corner-bottom {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_menu.gif);
+}
+/* end dynamic menu */
+
+
+/* CORNERS:
+    Corner images' outer color must match page background color, border color
+    matches content-block.ygrp-container-border's border color, and inner color
+    matches content-block.ygrp-container-border's background color.
+
+ */
+.corner-top, .corner-left, .corner-bottom {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_blue.gif);
+}
+
+/* Container with Rounded Corner Border */
+div.ygrp-container-border {
+  border-color:#7b9ebd;
+  background-color:#fff;
+}
+.ygrp-container-border .headaction {
+  background-color:#e7eff7;
+}
+
+.ygrp-container-border .footaction {
+  background-color:#e7eff7;
+}
+/* END corner/container stuff */
+
+/* Page Title Container */
+#ygrp-title .top {
+  border-color:#7b9ebd;
+  background-color:#fff;
+}
+#ygrp-title .bottom {
+  border-color:#295c7d;
+  background-color:#295c7d;
+  color:#fff;
+}
+#ygrp-title .bottom .corner-top, #ygrp-title .bottom .corner-left, #ygrp-title .bottom .corner-bottom {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_title.gif);
+}
+
+#ygrp-titlebarhr {
+  border-bottom:1px solid #7b9ebd;
+}
+.ygrp-titlebar h3 {
+  color:#628c2a;
+}
+
+h3 {       
+  color:#628c2a;
+}
+
+/* start tabs */
+.ygrp-tabs a {
+  color:#247cd4;
+}
+.ygrp-tabbed-container .corner-top, .ygrp-tabbed-container .corner-top .corner-left {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_tabt.gif);
+}
+.ygrp-tabbed-container .corner-bottom, .ygrp-tabbed-container .corner-bottom .corner-left {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_tabb.gif);
+}
+.ygrp-tabs .ygrp-active-tab .corner-top, .ygrp-tabs .ygrp-active-tab .corner-left {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_taba.gif);
+}
+.ygrp-tabs .ygrp-active-tab {
+  border-color:#295c7d;
+  background-color:#2181a3;
+}
+.ygrp-tabs .ygrp-active-tab a {
+  color:#fff;
+  background:transparent url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/ptr_profile_1.gif) no-repeat bottom center;
+}
+/* end tabs */
+
+.ygrp-container-border .headaction .corner-top, .ygrp-container-border .headaction .corner-left, .ygrp-container-border .footaction .corner-bottom, .ygrp-container-border .footaction .corner-left {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_menu.gif);
+}
+
+/* 'no action' containers */
+#nested-container .corner-top, #nested-container .corner-left, #nested-container .corner-bottom {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_blue.gif);
+}
+
+/* action containers */
+#nested-container .headaction .corner-top, #nested-container .headaction .corner-left, #nested-container .footaction .corner-bottom, #nested-container .footaction .corner-left {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_menu.gif);
+}
+
+/* body background color  */
+body {
+  background-color:#fff;
+}
+
+.datatable td.checks, .datatable th.checks {
+  background-color:#e7eff7;
+}
+.wide td.checks, .wide th.checks {
+  background-color:#e7eff7;
+}
+
+/* Pollbar */
+.pollbar-outer {
+  border:1px solid #7b9ebd;
+}
+.pollbar-inner {
+  background-color:#cef7ff;
+}
+
+/* begin promo */
+#ygrp-mgl-promo {
+    text-align: left;
+    border: 1px solid #d4d4d4;
+    background: #f7f3ff;
+    width: auto;
+    margin:0 0 5px 0;
+    margin-bottom: 13px;
+}
+
+#ygrp-mgl-promo h4 {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+#ygrp-mgl-promo .corner-top, #ygrp-mgl-promo .corner-left, #ygrp-mgl-promo .corner-bottom {
+  background-image:url(http://us.i1.yimg.com/us.yimg.com/i/yg/img/ui/cr_mglpromo.gif);
+}
+/* end promo */
+td.content, td.env{ border-top: 1px solid #7b9ebd;}

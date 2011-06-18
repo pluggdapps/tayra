@@ -122,3 +122,9 @@ Confirmance issues :
     ....
   }
   ----
+
+
+CSS3 Base parser revision :
+---------------------------
+
+  8:f63d2d1dcbe3

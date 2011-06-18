@@ -7,6 +7,7 @@ tayra-env
 eggs/
 .vim_maindev
 yacctab.py
+tayra.egg-info/
 # switch to regexp syntax.
 syntax: regexp
 ^\.pc/

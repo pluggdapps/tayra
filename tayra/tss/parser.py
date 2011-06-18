@@ -198,18 +198,20 @@ class TSSParser( object ):
         p[0] = StyleSheet( p.parser, p[1] )
 
     def p_statement( self, p ) :
-        """statement    : ruleset
+        """statement    : rulesets
                         | media
                         | atrule
                         | page
                         | font_face
+                        | functiondef
                         | wc"""
         p[0] = Statement( p.parser, p[1] )
 
     #---- @charset 
 
     def p_charset( self, p ) :
-        """charset      : charset_sym string SEMICOLON"""
+        """charset      : charset_sym string SEMICOLON
+                        | charset_sym extn_expr SEMICOLON"""
         p[0] = Charset( p.parser, p[1], p[2], SEMICOLON(p.parser, p[3]) )
 
     #---- @import
@@ -218,7 +220,9 @@ class TSSParser( object ):
         """import       : import_sym string mediums SEMICOLON
                         | import_sym string SEMICOLON
                         | import_sym uri mediums SEMICOLON
-                        | import_sym uri SEMICOLON"""
+                        | import_sym uri SEMICOLON
+                        | import_sym extn_expr mediums SEMICOLON
+                        | import_sym extn_expr SEMICOLON"""
         args = [ p[1], p[2], p[3], SEMICOLON(p.parser, p[4])
                ] if len(p) == 5 else [ p[1],p[2],None,SEMICOLON(p.parser,p[3]) ]
         p[0] = Import( p.parser, *args )
@@ -227,18 +231,21 @@ class TSSParser( object ):
 
     def p_namespace_1( self, p ) :
         """namespace    : namespace_sym nmprefix string SEMICOLON
-                        | namespace_sym nmprefix uri SEMICOLON"""
+                        | namespace_sym nmprefix uri SEMICOLON
+                        | namespace_sym nmprefix extn_expr SEMICOLON"""
         x = SEMICOLON(p.parser, p[4])
         p[0] = Namespace( p.parser, p[1], p[2], p[3], x )
 
     def p_namespace_2( self, p ) :
         """namespace    : namespace_sym string SEMICOLON
-                        | namespace_sym uri SEMICOLON"""
+                        | namespace_sym uri SEMICOLON
+                        | namespace_sym extn_expr SEMICOLON"""
         x = SEMICOLON(p.parser, p[4])
         p[0] = Namespace( p.parser, p[1], None, p[2], x )
 
     def p_nmprefix( self, p ) :
-        """nmprefix : ident"""
+        """nmprefix : ident
+                    | extn_expr"""
         p[0] = Nameprefix( p.parser, p[1] )
 
     #---- atrule
@@ -330,15 +337,25 @@ class TSSParser( object ):
         args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
         p[0] = RuleSets( p.parser, *args )
 
-    def p_ruleset( self, p ) :
-        """ruleset      : block 
-                        | selectors block"""
-        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
-        p[0] = RuleSet( p.parser, *args )
+    def p_ruleset_1( self, p ) :
+        """ruleset      : block """
+        p[0] = RuleSet( p.parser, p[1] )
+
+    def p_ruleset_2( self, p ) :
+        """ruleset      : selectors block"""
+        p[0] = RuleSet( p.parser, p[1], p[2] )
+
+    def p_ruleset_3( self, p ) :
+        """ruleset      : PERCENT ident block
+                        | PERCENT ident expr block"""
+        perc = PERCENT( p.parser, p[1] )
+        args = [ perc, p[2], p[3], p[4] 
+               ] if len(p) == 5 else [ perc, p[2], None, p[3] ]
+        p[0] = RuleSet( p.parser, *args, namespace_ext=True )
 
     def p_selectors_1( self, p ) :
         """selectors    : selector"""
-        p[0] = Selectors( p.parser, p[1], None, None )
+        p[0] = Selectors( p.parser, None, None, p[1] )
 
     def p_selectors_2( self, p ) :
         """selectors    : selectors comma"""
@@ -348,17 +365,17 @@ class TSSParser( object ):
         """selectors    : selectors comma selector"""
         p[0] = Selectors( p.parser, p[1], p[2], p[3] )
 
-    def p_selector( self, p ) :
-        """selector     : simple_selector
-                        | selector simple_selector
-                        | selector combinator simple_selector"""
-        if len(p) == 4 :
-            args = [ p[1], p[2], p[3] ]
-        elif len(p) == 3 :
-            args = [ p[1], None, p[2] ]
-        else :
-            args = [ None, None, p[1] ]
-        p[0] = Selector( p.parser, *args )
+    def p_selector_1( self, p ) :
+        """selector     : simple_selector"""
+        p[0] = Selector( p.parser, None, None, p[1] )
+
+    def p_selector_2( self, p ) :
+        """selector     : selector simple_selector"""
+        p[0] = Selector( p.parser, p[1], None, p[2] )
+
+    def p_selector_3( self, p ) :
+        """selector     : selector combinator simple_selector"""
+        p[0] = Selector( p.parser, p[1], p[2], p[3] )
 
     def p_simple_selector_1( self, p ) :
         """simple_selector  : element_name"""
@@ -369,15 +386,19 @@ class TSSParser( object ):
         p[0] = SimpleSelector( p.parser, None, None, p[1] )
 
     def p_simple_selector_3( self, p ) :
+        """simple_selector  : extn_expr"""
+        p[0] = SimpleSelector( p.parser, None, None, p[1] )
+
+    def p_simple_selector_4( self, p ) :
         """simple_selector  : simple_selector extender"""
         p[0] = SimpleSelector( p.parser, p[1], None, p[2] )
 
-    def p_element_name_1( self, p ) :
-        """element_name : ident"""
-        p[0] = ElementName( p.parser, p[1] )
-
-    def p_element_name_2( self, p ) :
-        """element_name : star"""
+    def p_element_name( self, p ) :
+        """element_name : ident
+                        | star
+                        | DLIMIT"""
+        # only `&` is allowd in DLIMIT terminal, this constraint should be
+        # checked inside `ElementName` class
         p[0] = ElementName( p.parser, p[1] )
 
     def p_extender( self, p ) :
@@ -449,8 +470,10 @@ class TSSParser( object ):
 
     def p_declarations( self, p ) :
         """declarations : declaration
+                        | rulesets
                         | declarations semicolon
-                        | declarations semicolon declaration"""
+                        | declarations semicolon declaration
+                        | declarations semicolon rulesets"""
         if len(p) == 4 :
             args = [ p[1], p[2], p[3] ]
         elif len(p) == 3 :
@@ -467,6 +490,13 @@ class TSSParser( object ):
         p[0] = Declaration( p.parser, *args )
 
     def p_declaration_2( self, p ) :
+        """declaration  : extn_expr colon expr prio
+                        | extn_expr colon expr"""
+        args = [ None, p[1], p[2], p[3], p[4] 
+               ] if len(p) == 5 else [ None, p[1], p[2], p[3], None ]
+        p[0] = Declaration( p.parser, *args )
+
+    def p_declaration_3( self, p ) :
         """declaration  : star ident colon expr prio
                         | star ident colon expr"""
         args = [ p[1], p[2], p[3], p[4], p[5] 
@@ -488,6 +518,7 @@ class TSSParser( object ):
     def p_binaryexpr( self, p ) :
         """binaryexpr   : term
                         | unaryexpr
+                        | extn_expr
                         | binaryexpr operator binaryexpr"""
         args = [ None, None, None, p[1] 
                ] if len(p) == 2 else [ p[1], p[2], p[3], None ]
@@ -522,7 +553,7 @@ class TSSParser( object ):
                         | angle
                         | time
                         | freq
-                        | func"""
+                        | func_call"""
         p[0] = TermVal( p.parser, p[1] )
                          
     #def p_term_dimen( self, p ) :
@@ -530,10 +561,10 @@ class TSSParser( object ):
     #    p[0] = TermVal( p.parser, p[1] )
 
     def p_func( self, p ) :
-        """func         : function expr closeparan
+        """func_call    : function expr closeparan
                         | function closeparan"""
         args = [ p[1], p[2], p[3] ] if len(p) == 4 else [ p[1], None, p[2] ]
-        p[0] = Func( p.parser, *args )
+        p[0] = FuncCall( p.parser, *args )
 
     # Note : `operator` should never be a `SEMICOLON`,
     #        as per CSS3 grammar only, fwdslash and comma are real operators
@@ -938,6 +969,32 @@ class TSSParser( object ):
         t = CDC( p.parser, p[1] )
         wc = p[2] if len(p) == 3 else None
         p[0] = TerminalS( p.parser, t, wc )
+
+    #---- Extension language specific grammars
+
+    def p_functionstart( self, p ) :
+        """functionstart    : FUNCTIONSTART wc
+                            | FUNCTIONSTART"""
+        t = FUNCTIONSTART( p.parser, p[1] )
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, t, wc )
+
+    def p_functionbody( self, p ) :
+        """functionbody : FUNCTIONBODY wc
+                        | FUNCTIONBODY"""
+        t = FUNCTIONBODY( p.parser, p[1] )
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, t, wc )
+
+    def p_functiondef( self, p ) :
+        """functiondef  : functionstart functionbody"""
+        p[0] = FunctionDef( p.parser, p[1], p[2] )
+
+    def p_extn_expr( self, p ) :
+        """extn_expr    : EXTN_EXPR wc
+                        | EXTN_EXPR"""
+        wc = p[2] if len(p) == 3 else None
+        p[0] = ExtnExpr( p.parser, EXTN_EXPR(p.parser, p[1]), wc )
 
     #---- For confirmance with forward compatible CSS
 

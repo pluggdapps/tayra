@@ -98,7 +98,9 @@ class TSSLexer( object ) :
         return tok 
 
     # States
-    states = ()
+    states = (
+               ( 'fnbody', 'exclusive' ),
+             )
 
     ## Tokens recognized by the TSSLexer
     tokens = (
@@ -120,6 +122,9 @@ class TSSLexer( object ) :
         'STAR', 'SEMICOLON', 'FWDSLASH',
         'OPENBRACE', 'CLOSEBRACE', 'OPENSQR', 'CLOSESQR',
         'OPENPARAN', 'CLOSEPARAN',
+
+        # Extension tokens
+        'EXTN_EXPR', 'PERCENT', 'FUNCTIONSTART', 'FUNCTIONBODY'
     )
     
     # CSS3 tokens
@@ -198,6 +203,10 @@ class TSSLexer( object ) :
 
     def t_CDC( self, t ) :
         r'-->'
+        return t
+
+    def t_EXTN_EXPR( self, t ) :
+        r'\$\{([^}])*\}'
         return t
 
     def t_INCLUDES( self, t ) :
@@ -347,6 +356,20 @@ class TSSLexer( object ) :
         t.value = t.value
         return t
 
+    def t_FUNCTIONSTART( self, t ) :
+        r'@def'
+        t.lexer.push_state('fnbody')
+        return t
+
+    def t_fnbody_FUNCTIONSTART( self, t ):
+        r'@def'
+        return t
+
+    def t_fnbody_FUNCTIONBODY( self, t ):
+        r'.*@end'
+        t.lexer.pop_state()
+        return t
+
     t_PLUS          = r'\+'
     t_GT            = r'>'
     t_LT            = r'<'
@@ -358,6 +381,7 @@ class TSSLexer( object ) :
     t_DOT           = r'\.'
     t_STAR          = r'\*'
     t_SEMICOLON     = r';'
+    t_PERCENT       = r'%'
     t_FWDSLASH      = r'\/'
     t_OPENBRACE     = r'\{'
     t_CLOSEBRACE    = r'\}'
@@ -371,13 +395,17 @@ class TSSLexer( object ) :
         msg = 'Illegal character %s' % repr(t.value[0])
         self._error(msg, t)
 
+    def t_fnbody_error( self, t ):
+        msg = 'Illegal character %s' % repr(t.value[0])
+        self._error(msg, t)
+
 
 def _fetchtoken( tsslex, stats ) :
     tok = tsslex.token()
     if tok :
         val = tok.value[1] if isinstance(tok.value, tuple) else tok.value
-        #print "- %20r " % val,
-        #print tok.type, tok.lineno, tok.lexpos
+        print "- %20r " % val,
+        print tok.type, tok.lineno, tok.lexpos
         stats.setdefault( tok.type, [] ).append( tok.value )
     return tok
 

@@ -603,7 +603,7 @@ class RuleSets( Node ):
         pass
 
     def dump( self ):
-        return ''.join([ c.dump() for c in self.children() ])
+        return ''.join([ c.dump() for c in self.rsetlist() ])
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -612,20 +612,39 @@ class RuleSets( Node ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
-        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.rsetlist() ]
+
+    def rsetlist( self ) :
+        node, l = self, []
+        while node :
+            l.append( node.ruleset )
+            node = node.rulesets
+        l.reverse()
+        return l
+
 
 
 class RuleSet( Node ):
     """class to handle `ruleset` grammar."""
 
-    def __init__( self, parser, selectors, block ) :
-        Node.__init__( self, parser, selectors, block )
+    def __init__( self, parser, *args, **kwargs ) :
+        Node.__init__( self, parser, *args, **kwargs )
         self.parser = parser
-        self._nonterms = self.selectors, self.block = selectors, block
-        self._nonterms = filter( None, self._nonterms )
+        self.namespace_ext = kwargs.get( 'namespace_ext', None )
+        if self.namespace_ext == True :
+            self.PERCENT = args[0]
+            self.ident, self.expr, self.block = args[1:]
+            self._terms = (self.PERCENT,)
+            self._nonterms = self.ident, self.expr, self.block
+        else :
+            self._nonterms = self.selectors, self.block = args[0], args[1]
+            self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
-        return self._nonterms
+        if self.namespace_ext :
+            return self._terms + self._nonterms
+        else :
+            return self._nonterms
 
     def tohtml( self ):
         pass
@@ -935,11 +954,11 @@ class Pseudo( Node ):
 class PseudoName( Node ):
     """class to handle `pseudo_name` grammar."""
 
-    def __init__( self, parser, func, ident, cparan ) :
-        Node.__init__( self, parser, func, ident, cparan )
+    def __init__( self, parser, function, ident, cparan ) :
+        Node.__init__( self, parser, function, ident, cparan )
         self.parser = parser
-        self._nonterms = self.func, self.ident, self.closeparan = \
-                func, ident, cparan
+        self._nonterms = self.function, self.ident, self.closeparan = \
+                function, ident, cparan
         self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
@@ -1279,8 +1298,8 @@ class TermVal( Node ):
         [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
 
 
-class Func( Node ):
-    """class to handle `func` grammar."""
+class FuncCall( Node ):
+    """class to handle `func_call` grammar."""
 
     def __init__( self, parser, function, expr, closeparan ) :
         Node.__init__( self, parser, function, expr, closeparan )
@@ -1301,7 +1320,7 @@ class Func( Node ):
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         lead = ' ' * offset
-        buf.write( lead + 'func: ' )
+        buf.write( lead + 'func_call: ' )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
@@ -1583,6 +1602,62 @@ class Any( Node ):
         [ c.show(buf, offset, attrnames, showcoord) for c in self.children() ]
 
 
+class ExtnExpr( Node ):
+    """class to handle `extn_expr` grammar."""
+
+    def __init__( self, parser, extn_expr, ws ) :
+        Node.__init__( self, parser, extn_expr, ws )
+        self.parser = parser
+        self._terms = self.EXTN_EXPR, self.S = extn_expr, ws
+        self._terms = filter( None, self._terms )
+
+    def children( self ):
+        return self._terms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'extn_expr: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class FunctionDef( Node ):
+    """class to handle `functiondef` grammar."""
+
+    def __init__( self, parser, functionstart, functionbody ) :
+        Node.__init__( self, parser, functionstart, functionbody )
+        self.parser = parser
+        self._nonterms = self.functionstart, self.functionbody = \
+                functionstart, functionbody
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'functiondef: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
 #-------------------------- AST Terminals -------------------------
 
 class CHARSET_SYM( Terminal ) : pass
@@ -1592,6 +1667,8 @@ class MEDIA_SYM( Terminal ) : pass
 class PAGE_SYM( Terminal ) : pass
 class FONT_FACE_SYM( Terminal ) : pass
 class IMPORTANT_SYM( Terminal ) : pass
+class FUNCTIONSTART( Terminal ) : pass
+class FUNCTIONEND( Terminal ) : pass
 class ATKEYWORD( Terminal ) : pass
 class URI( Terminal ) : pass
 class CDO( Terminal ) : pass
@@ -1636,6 +1713,7 @@ class DOT( Terminal ) : pass
 class STAR( Terminal ) : pass
 class HASH( Terminal ) : pass
 class SEMICOLON( Terminal ) : pass
+class PERCENT( Terminal ) : pass
 class FWDSLASH( Terminal ) : pass
 class TILDA( Terminal ) : pass
 class DLIMIT( Terminal ) : pass

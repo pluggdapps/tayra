@@ -1,0 +1,45 @@
+* { display : none; }
+E { display : none; }
+E[foo] { display : none; }
+E[foo="bar"] { display : none; }
+E[foo~="bar"] { display : none; }
+E[foo^="bar"] { display : none; }
+E[foo$="bar"] { display : none; }
+E[foo*="bar"] { display : none; }
+E[hreflang|="en"] { display : none; }
+E:root { display : none; }
+E:nth-child(n) { display : none; }
+E:nth-last-child(n) { display : none; }
+E:nth-of-type(n) { display : none; }
+E:nth-last-of-type(n) { display : none; }
+E:first-child { display : none; }
+E:last-child { display : none; }
+E:first-of-type { display : none; }
+E:last-of-type { display : none; }
+E:only-child { display : none; }
+E:only-of-type { display : none; }
+E:empty { display : none; }
+E:link { display : none; }
+E:visited { display : none; }
+E:active { display : none; }
+E:hover { display : none; }
+E:focus { display : none; }
+E:target { display : none; }
+E:lang(fr) { display : none; }
+E:enabled { display : none; }
+E:disabled  { display : none; }
+E:checked { display : none; }
+E:indeterminate { display : none; }
+E:contains("foo") { display : none; }
+E::first-line { display : none; }
+E::first-letter { display : none; }
+E::selection { display : none; }
+E::before { display : none; }
+E::after { display : none; }
+E.warning { display : none; }
+E#myid { display : none; }
+E:not(s) { display : none; }
+E F { display : none; }
+E > F { display : none; }
+E + F { display : none; }
+E ~ F { display : none; }

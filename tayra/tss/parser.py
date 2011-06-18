@@ -158,7 +158,7 @@ class TSSParser( object ):
 
     precedence = (
         ('left', 'PLUS', 'MINUS'),
-        ('right', 'UNARY'),            # Unary minus operator
+        ('right', 'UNARY'),
     )
 
     def _buildterms( self, p, terms ) :
@@ -191,25 +191,39 @@ class TSSParser( object ):
 
     def p_stylesheet( self, p ) :
         """stylesheet   : charset
-                        | cdatas
                         | import
                         | namespace
-                        | statement"""
+                        | statement
+                        | cdatas"""
         p[0] = StyleSheet( p.parser, p[1] )
+
+    def p_statement( self, p ) :
+        """statement    : ruleset
+                        | media
+                        | atrule
+                        | page
+                        | font_face
+                        | wc"""
+        p[0] = Statement( p.parser, p[1] )
+
+    #---- @charset 
 
     def p_charset( self, p ) :
         """charset      : charset_sym string SEMICOLON"""
         p[0] = Charset( p.parser, p[1], p[2], SEMICOLON(p.parser, p[3]) )
+
+    #---- @import
 
     def p_import( self, p ) :
         """import       : import_sym string mediums SEMICOLON
                         | import_sym string SEMICOLON
                         | import_sym uri mediums SEMICOLON
                         | import_sym uri SEMICOLON"""
-        args = [ p[1], p[2], p[3] ] if len(p) == 5 else [ p[1], p[2], None ]
-        _semi = p[4] if len(p) == 5 else p[3]
-        args.append( SEMICOLON(p.parser, _semi) )
+        args = [ p[1], p[2], p[3], SEMICOLON(p.parser, p[4])
+               ] if len(p) == 5 else [ p[1],p[2],None,SEMICOLON(p.parser,p[3]) ]
         p[0] = Import( p.parser, *args )
+
+    #---- @namespace
 
     def p_namespace_1( self, p ) :
         """namespace    : namespace_sym nmprefix string SEMICOLON
@@ -226,15 +240,6 @@ class TSSParser( object ):
     def p_nmprefix( self, p ) :
         """nmprefix : ident"""
         p[0] = Nameprefix( p.parser, p[1] )
-
-    def p_statement( self, p ) :
-        """statement    : ruleset
-                        | media
-                        | atrule
-                        | page
-                        | font_face
-                        | wc"""
-        p[0] = Statement( p.parser, p[1] )
 
     #---- atrule
 
@@ -285,7 +290,7 @@ class TSSParser( object ):
                         | mediums medium
                         | mediums comma medium"""
         if len(p) == 4 :
-            args = [ p[1], p[2], p[3] ] 
+            args = [ p[1], p[2], p[3] ]
         else :
             args = [ p[1], None, p[2] ] if len(p) == 3 else [ None, None, p[1] ]
         p[0] = Mediums( p.parser, *args )

@@ -189,7 +189,7 @@ li.reverse_address a {
   width: 141px;
 }
 #content .header_reverse_address li.reverse_address a {
-  background-position-x: --630px;
+  background-position-x: -630px;
 }
 .reverse_address_border {
   display: none;

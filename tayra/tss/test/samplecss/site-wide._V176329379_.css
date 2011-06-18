@@ -449,7 +449,7 @@ padding: 4px 20px 6px 10px;
 	font-weight:bold;
 }
 .tab-links {
-	font-family: Verdana, Arial,;
+	font-family: Verdana, Arial;
 	font-size:11px;
 	font-weight:bold;
 	color:#ffffff;
@@ -464,7 +464,7 @@ padding: 4px 20px 6px 10px;
 	text-decoration:underline;
 }
 .tab-links1 {
-	font-family: Verdana, Arial,;
+	font-family: Verdana, Arial;
 	font-size:11px;
 	font-weight:bold;
 	color:#ffffff;
@@ -491,7 +491,7 @@ padding: 4px 20px 6px 10px;
 	color:#003466;
 }
 .tab-links2 {
-	font-family: Verdana, Arial,;
+	font-family: Verdana, Arial;
 	font-size:11px;
 	font-weight:bold;
 	color:#ffffff;
@@ -541,7 +541,7 @@ padding:7px 4px 7px 15px;
 .wba-tabletext b {color:#000000;}
 */
 .soa-links {
-	font-family: Verdana, Arial,;
+	font-family: Verdana, Arial;
 	font-size:11px;
 	color:#000000;
 	padding-top:12px;
@@ -571,7 +571,7 @@ padding:7px 4px 7px 15px;
 	padding: 15px 0px 0px 15px;
 }
 /*
-.wba-tabletextgray {font-family: Verdana,Arial,;
+.wba-tabletextgray {font-family: Verdana,Arial;
 font-size:11px;
 color:#000000;
 padding-top:2px;

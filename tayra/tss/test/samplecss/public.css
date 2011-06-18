@@ -1063,7 +1063,7 @@ h2
 .wrap
 {
 	left:-0.5px;
-	*+left:-1px;
+	left:-1px;
     width: 970px;
     margin: 0 auto;
     padding:10px 8px 0;
@@ -1073,7 +1073,7 @@ h2
 .wrapOut
 {
 	left:0.5px;
-	*+left:1px;
+	left:1px;
 }
 /*main content*/
 .mainbox{

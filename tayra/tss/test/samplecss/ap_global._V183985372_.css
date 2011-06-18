@@ -235,9 +235,9 @@ ul li {background-image:url(https://images-na.ssl-images-amazon.com/images/G/01/
 
  /* CNEP Page */
 .ap_cnep_form_row{width: 500px;text-align:left; padding: 5px 0 5px 0; clear:both;}
-.ap_cnep_label{ background:; float: left;width: 120px; text-align:right; vertical-align: bottom;font-weight:bold;}
+.ap_cnep_label{ background: red; float: left;width: 120px; text-align:right; vertical-align: bottom;font-weight:bold;}
 .ap_cnep_val{ display:inline-block; float:right; text-align:left; vertical-align:bottom; width:260px;}
-.ap_cnep_edit{ display:inline-block; vertical-align:bottom; float:right; width: 100px;background:;}
+.ap_cnep_edit{ display:inline-block; vertical-align:bottom; float:right; width: 100px;background:red;}
 #ap_cnep_birthdate_input{ padding: 12px 0 6px 0;}
 #ap_cnep_finished_button { margin-top:30px; padding-top:6px;}
 #ap_cnep_subtitle{ margin-bottom:5px; }

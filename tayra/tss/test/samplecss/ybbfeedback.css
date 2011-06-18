@@ -56,8 +56,8 @@ textarea { font-size: 1em; font-family: Arial,sans-serif; color: #404040; width:
 .button-group strong {
    *position:relative;
    behavior:expression(
-      void(	this.style.top = (this.parentNode.offsetHeight - this.offsetHeight) / 2 + 'px' ), // valign middle
-      void(	this.runtimeStyle.behavior = 'none' )  // only eval onload, otherwise performance suffers
+      void(	this.style.top = (this.parentNode.offsetHeight - this.offsetHeight) / 2 + 'px' ),
+      void(	this.runtimeStyle.behavior = 'none' )
    );
 }
 

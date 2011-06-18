@@ -150,8 +150,8 @@ overflow:hidden;
 .moduleSearch a:link, .moduleSearch a:visited {color: #0094af;text-decoration: none;}
 .moduleSearch a:hover {color: #d40807;text-decoration: none;}
 
-.moduleSearch h2 {font-size:12px; font-weight:bold; color:#0094af; padding:0px; margin:5px 0 3px; 0; width: 434px;}
-.moduleSearch input.cleardefault { background:url(/sitewide/images/video/SearchField_RightCol.gif) top left no-repeat; border: 0px; width: 260px; height: 22px; padding: 3px; 0px 0px 3px;}
+.moduleSearch h2 {font-size:12px; font-weight:bold; color:#0094af; padding:0px; margin:5px 0 3px; width: 434px;}
+.moduleSearch input.cleardefault { background:url(/sitewide/images/video/SearchField_RightCol.gif) top left no-repeat; border: 0px; width: 260px; height: 22px; padding: 3px 0px 0px 3px;}
 
 .moduleSearch .goButton { display: block; width: 33px; height: 20px; background: url(/sitewide/images/video/Button_Go.gif) no-repeat 0 0; margin-top: 1px;}
 .moduleSearch .goButton:hover { background-position: 0 -20px; }

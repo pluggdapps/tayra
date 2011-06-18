@@ -401,11 +401,11 @@
   padding:0px;
   margin:0px;
   display:inline-block !important;
-  #height:18px;
-  #display:inline-block;
+  height:18px;
+  display:inline-block;
   position:relative;
   vertical-align:bottom;
-  #vertical-align: middle !important;
+  vertical-align: middle !important;
 }
 .tafSocialLink{
   vertical-align: middle;

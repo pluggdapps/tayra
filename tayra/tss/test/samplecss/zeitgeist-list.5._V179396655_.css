@@ -88,7 +88,7 @@
 #zg .zg_itemCommunity{margin:5px 0 0 0;line-height:13px;}
 #zg .zg_itemCommunity *{font-size:11px;line-height:13px;}
 #zg .zg_releaseDate{margin:5px 0 0 0;}
-#zg .zg_releaseDate span{font-size:}
+#zg .zg_releaseDate span{font-size: 10px}
 #zg .zg_futureRelease{color:#900;}
 #zg .zg_itemAvailability{margin:8px 0 0 0;color:#666;font-size:12px;}
 #zg .zg_itemPriceBlock{margin:14px 0 0 0;}
@@ -102,7 +102,7 @@
 #zg .zg_itemRankBlock .notRanked{color:#666;font-style:italic;}
 #zg #zg_freeList .zg_daysInList{display:none;}
 #zg #zg_freeList .zg_arrowSprite{display:none;}
-#zg .zg_mp3Play{position:absolute;width:100%;height:24px;#CCC;bottom:0;left:0;cursor:pointer;}
+#zg .zg_mp3Play{position:absolute;width:100%;height:24px;bottom:0;left:0;cursor:pointer;}
 #zg .zg_mp3PlayButton{position:absolute;height:22px;width:22px;left:5px;bottom:2px;background:url(http://g-ecx.images-amazon.com/images/G/01/zeitgeist/mp3player/playbutton._V189045547_.png)}
 #zg .zg_mp3PlayText{font-size:11px;padding:0 0 0 30px;line-height:24px;text-align:left;display:none;}
 #zg .zg_mp3PlayHover{background:#FFF;opacity:0.9;}

@@ -20,7 +20,7 @@ body{margin:0px !important; background-color:#2d58a5; background-image:url(http:
 #common-header #univ .sgnout {background-position:100% 2px !important; padding:0 0.8em 0 0.8em !important; background-image:url(http://l.yimg.com/a/i/in/promos/mday/images/sp.jpg) !important; padding-left:1px !important;}
 #common-header #univ .sgnin {background-position:100% 2px !important; padding:0 0.8em 0 0.8em !important; background-image:url(http://l.yimg.com/a/i/in/promos/mday/images/sp.jpg) !important;  padding-left:1px !important;}
 #common-header #univ .sgnup {background-position:100% 2px !important; padding:0 0.8em 0 0.8em !important; background-image:url(http://l.yimg.com/a/i/in/promos/mday/images/sp.jpg) !important; background-repeat:no-repeat;}
-#common-header #univusername {background-image:url(http://l.yimg.com/a/i/in/promos/mday/images/sp.jpg); ) !important; background-repeat:no-repeat; background-position:100% 2px; }
+#common-header #univusername {background-image:url(http://l.yimg.com/a/i/in/promos/mday/images/sp.jpg) !important; background-repeat:no-repeat; background-position:100% 2px; }
 /*#common-header #univ #univuserinfo em span {background-image:none !important;}*/
 #common-header #univ #univuserinfo span {background-image:none !important;}
 #common-header #univ .delim {padding:0 0.6em 0 0.2em !important;}
@@ -128,7 +128,7 @@ body{margin:0px !important; background-color:#2d58a5; background-image:url(http:
 #hp-right-wishlist .hd {border:0px;}
 /* #hp-right-wishlist .bd ul {background:url(http://l.yimg.com/t/i/in/promos/dove/insidepage-rightnav-module-tilable-300px.gif) repeat-y;background-position:left top;padding-left:10px;padding-top:15px;} */
 #hp-right-wishlist .bd ul {background:url(http://l.yimg.com/t/i/in/promos/realbeauty/2/homepage-indulge-bottom-line.gif) no-repeat;background-position:left top;padding-left:10px;padding-top:15px;}
-#hp-right-wishlist .bd {border:medium none !important;padding:0px;no-repeat;background-position:bottom;}
+#hp-right-wishlist .bd {border:medium none !important;padding:0px no-repeat;background-position:bottom;}
 #hp-right-wishlist .ft {border:medium none !important;padding:0px;padding-right:10px;padding-bottom:10px;padding-top:8px;}
 #hp-right-wishlist .ft a{text-decoration:none;background:url(http://l.yimg.com/a/i/in/promos/realbeauty/images/gray-arroy-pop.jpg) no-repeat;background-position:right;padding-right:20px;font-family:arial;font-size:12px; color: #143d77;font-weight:normal;}
 #hp-right-wishlist .ft a:hover{text-decoration:underline;}

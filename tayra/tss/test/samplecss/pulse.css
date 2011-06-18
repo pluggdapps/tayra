@@ -13,7 +13,7 @@
 /* With JS */
 .pulse-pop {margin:0;position:absolute; top:80px; left:40%; width:250px; z-index:9999; text-align:center}
 .pulse-pop #pulse-q {padding:25px 0 20px 0; background:url(../img/pulse_bg.png) no-repeat}
-.pulse-pop #pulse-a {background:url(../img/pulse_bg.png) bottom no-repeat; text align:center; zoom:1} 
+.pulse-pop #pulse-a {background:url(../img/pulse_bg.png) bottom no-repeat; text-align:center; zoom:1} 
 .pulse-pop p {margin:0; padding: 10px 10px 0 10px}
 .pulse-pop ul {margin:0; padding:0 50px}
 .pulse-pop #pulse-accept, .pulse-pop #pulse-reject {background: url(../img/pulse_btn.gif) no-repeat; width:66px; height:22px; color:#000; text-decoration:none; margin-bottom:10px; padding-top:5px}

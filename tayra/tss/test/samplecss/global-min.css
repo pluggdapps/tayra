@@ -68,7 +68,7 @@ input
 .events-module-top {background-image:url(/images/backgrounds/events-top-small.png) !important;}
 /* end section color globals */
 
-#player {position:fixed;top:400px;z-index:1000;width:160px;100px;background:red;padding:10px;}
+#player {position:fixed;top:400px;z-index:1000;width:160px;background:red;padding:10px;}
 #player a {float:left;}
 #player #clock {float:left;font-size:22px;font-weight:bold;display:block;margin:10px;}
 
@@ -367,7 +367,7 @@ padding-right: 10px;
 #email-forgot-sent-forums{display:none; float:left;}
 
 .forums .header {margin-bottom:5px;}
-.icon {background:url(/images/buttons/sprite.png) left top no-repeat;)}
+.icon {background:url(/images/buttons/sprite.png) left top no-repeat;}
 .rss .icon {background-position:0 0;}
 .twitter .icon {background-position:0 -16px;}
 .lala {padding-left:3px;vertical-align:bottom;}
@@ -426,7 +426,7 @@ div.clickable {cursor:pointer;}
 
 .ad-unit-728 { clear:both;}
 .ad-unit-anchor {clear:both;width:962px;text-align:center;background-color:#ffffff;margin-bottom:1px;padding-top:14px;padding-bottom:14px;}
-.ad-unit-top {clear:both;text-align:center;background-color:;}
+.ad-unit-top {clear:both;text-align:center;background-color:red;}
 .ad-unit-hp_top {background-color:#FFFFFF;clear:both;margin-bottom:3px;padding-top:0;text-align:center;width:962px;}
 
 .ad-unit-floating {clear:both;text-align:center;width:962px;}
@@ -1411,7 +1411,7 @@ table#grammy-table th.song-album {
 .feedbackIntro { width: 300px; }
 #feedback h2{ font-size: 2em;}
 #feedback h3{ font-size: 16px;font-weight:normal;color:#333333;margin-bottom:5px;}
-#feedback p{ font-size: 12px;normal;color:#333333;line-height:1.5em;}
+#feedback p{ font-size: 12px;color:#333333;line-height:1.5em;}
 .feedbackForm p {font-weight:bold;font-size:10px;}
 .feedback-button {margin-right:18px;margin-bottom:5px;font-size:9px;font-weight:bold;text-align:center;padding:3px;color:#FFFFFF ;background-color:#7d7d7d;height:20px;border: 0px solid #000000;}
 .feedback-input {width:280px;height:20px;border: 1px solid #CCCCCC;margin-bottom:10px;}
@@ -5261,7 +5261,7 @@ a.trash { display: none; }
 .profile-settings .display-info {clear:both;height:1%;overflow:hidden;}
 .setting-row .setting-text { font-size: 16px; color: #333; font-weight:bold;}
 .setting-row .setting-edit { position:absolute;top:0;right:0;width:21px;height:21px;overflow:hidden;}
-.setting-row .setting-edit span { width:100%;height:100%;position:absolute;top:0;left;background:url(/images/buttons/actions-sprite.gif) 0 -40px no-repeat;width:21px;height:21px;cursor:pointer;}
+.setting-row .setting-edit span { width:100%;height:100%;position:absolute;top:0;background:url(/images/buttons/actions-sprite.gif) 0 -40px no-repeat;width:21px;height:21px;cursor:pointer;}
 .setting-row p.setting-message { font-size: 11px; font-style:italic; color: #333;width:256px;}
 .setting-row input
 ,.setting-row select { margin-bottom: 7px;}

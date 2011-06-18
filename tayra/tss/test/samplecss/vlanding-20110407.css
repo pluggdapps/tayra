@@ -79,7 +79,7 @@ sup{font-weight:normal;font-size:65%;}
 #info .features li#pkgs ul li.vid-li a.vid-a{background:transparent url(http://l.yimg.com/nt/i/tb/ydf/sprite_play_video-20101112.png) no-repeat 0 center;height:60px;width:78px;float:left;}
 #info .features li#pkgs ul li.vid-li a.spt-vid{background-position:0 0;}
 #info .features li#pkgs ul li.vid-li a.v8-vid{background-position:0 -107px;}
-#info .features li#pkgs ul li.vid-li a.vid-a{margin:0 5px 0 0;i;}
+#info .features li#pkgs ul li.vid-li a.vid-a{margin:0 5px 0 0;}
 #info .features li#pkgs ul li.vid-li span{margin-top:10px;}
 #txt-link-hldr{padding-top:14px;}
 .vid-bg{position:absolute;width:100%;height:100%;to\p:0;lef\t:0;righ\t:0;botto\m:0;w\idth:auto;he\ight:auto;display:none;background:#000;}

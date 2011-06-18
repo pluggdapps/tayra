@@ -157,6 +157,8 @@ class TSSParser( object ):
     # ---------- Precedence and associativity of operators --------------------
 
     precedence = (
+        ('left', 'PLUS', 'MINUS'),
+        ('right', 'UNARY'),            # Unary minus operator
     )
 
     def _buildterms( self, p, terms ) :
@@ -192,7 +194,6 @@ class TSSParser( object ):
                         | cdatas
                         | import
                         | namespace
-                        | atrule
                         | statement"""
         p[0] = StyleSheet( p.parser, p[1] )
 
@@ -229,6 +230,7 @@ class TSSParser( object ):
     def p_statement( self, p ) :
         """statement    : ruleset
                         | media
+                        | atrule
                         | page
                         | font_face
                         | wc"""
@@ -239,30 +241,42 @@ class TSSParser( object ):
     # Gotcha : Handle generic at-rules
     def p_atrule_1( self, p ) :
         """atrule       : atkeyword expr block"""
-        p[0] = AtRule( p.parser, p[1], p[2], p[3], None )
+        p[0] = AtRule( p.parser, p[1], expr=p[2], block=p[3] )
 
     def p_atrule_2( self, p ) :
         """atrule       : atkeyword expr SEMICOLON"""
-        p[0] = AtRule( p.parser, p[1], p[2], None, SEMICOLON(p.parser, p[3]) )
+        p[0] = AtRule( p.parser, p[1], expr=p[2],
+                       semicolon=SEMICOLON(p.parser, p[3]) )
 
     def p_atrule_3( self, p ) :
         """atrule       : atkeyword block"""
-        p[0] = AtRule( p.parser, p[1], None, p[2], None )
+        p[0] = AtRule( p.parser, p[1], block=p[2] )
 
     def p_atrule_4( self, p ) :
         """atrule       : atkeyword SEMICOLON"""
-        p[0] = AtRule( p.parser, p[1], None, None, SEMICOLON(p.parser, p[2]) )
+        p[0] = AtRule( p.parser, p[1], semicolon=SEMICOLON(p.parser, p[2]) )
+
+    def p_atrule_5( self, p ) :
+        """atrule       : atkeyword expr openbrace rulesets CLOSEBRACE"""
+        c = CLOSEBRACE( p.parser, p[5] )
+        p[0] = AtRule( p.parser, p[1], expr=p[2], obrace=p[3], rulesets=p[4],
+                       cbrace=c )
+
+    def p_atrule_6( self, p ) :
+        """atrule       : atkeyword openbrace rulesets CLOSEBRACE"""
+        c = CLOSEBRACE( p.parser, p[4] )
+        p[0] = AtRule( p.parser, p[1], obrace=p[2], rulesets=p[3], cbrace=c )
 
     #---- media
 
     def p_media_1( self, p ) :
-        """media        : media_sym mediums openbrace ruleset CLOSEBRACE"""
+        """media        : media_sym mediums openbrace rulesets CLOSEBRACE"""
         cbrc = CLOSEBRACE( p.parser, p[5] )
         p[0] = Media( p.parser, p[1], p[2], p[3], p[4], cbrc )
 
     def p_media_2( self, p ) :
         """media        : media_sym mediums openbrace CLOSEBRACE"""
-        cbrc = CLOSEBRACE( p.parser, p[5] )
+        cbrc = CLOSEBRACE( p.parser, p[4] )
         p[0] = Media( p.parser, p[1], p[2], p[3], None, cbrc )
 
 
@@ -278,7 +292,7 @@ class TSSParser( object ):
 
 
     def p_medium( self, p ) :
-        """medium       : ident
+        """medium       : expr
                         | any"""
         p[0] = Medium( p.parser, p[1] )
 
@@ -304,6 +318,12 @@ class TSSParser( object ):
         p[0] = FontFace( p.parser, p[1], p[2] )
 
     #---- ruleset
+
+    def p_rulesets( self, p ) :
+        """rulesets     : ruleset 
+                        | rulesets ruleset"""
+        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
+        p[0] = RuleSets( p.parser, *args )
 
     def p_ruleset( self, p ) :
         """ruleset      : block 
@@ -380,7 +400,10 @@ class TSSParser( object ):
     def p_attroper( self, p ) :
         """attr_oper    : equal
                         | includes
-                        | dashmatch"""
+                        | dashmatch
+                        | beginmatch
+                        | endmatch
+                        | contain"""
         p[0] = AttrOper( p.parser, p[1] )
 
     def p_attrval( self, p ) :
@@ -400,12 +423,20 @@ class TSSParser( object ):
         p[0] = PseudoName( p.parser, None, p[1], None )
 
     def p_pseudoname_2( self, p ) :
-        """pseudo_name  : function simple_selector closeparan"""
+        """pseudo_name  : function simple_selector closeparan
+                        | function string closeparan
+                        | function number closeparan"""
         p[0] = PseudoName( p.parser, p[1], p[2], p[3] )
 
     #---- block
 
-    def p_block_1( self, p ) :
+    #def p_blocks( self, p ) :
+    #    """blocks       : block
+    #                    | blocks block"""
+    #    args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
+    #    p[0] = Blocks( p.parser, *args )
+
+    def p_block( self, p ) :
         """block        : openbrace declarations closebrace
                         | openbrace closebrace"""
         args = [ p[1], p[2], p[3] ] if len(p) == 4 else [ p[1], None, p[2] ]
@@ -423,20 +454,19 @@ class TSSParser( object ):
             args = [ None, None, p[1] ]
         p[0] = Declarations( p.parser, *args )
 
-    def p_declaration( self, p ) :
-        """declaration  : property colon expr
-                        | property colon expr prio"""
-        args = [ p[1], p[2], p[3], p[4] ] if len(p) == 5 else [p[1], p[2], p[3], None]
+    def p_declaration_1( self, p ) :
+        """declaration  : ident colon expr prio
+                        | ident colon expr"""
+        args = [ None, p[1], p[2], p[3], p[4] 
+               ] if len(p) == 5 else [ None, p[1], p[2], p[3], None ]
         p[0] = Declaration( p.parser, *args )
 
-    def p_property( self, p ) :
-        """property     : star ident
-                        | ident"""
-        if len(p) == 3 :
-            # Note : As per CSS grammar, *-prefix is not expected for a property
-            p[0] = Property( p.parser, p[2], starprefix=p[1] )
-        else :
-            p[0] = Property( p.parser, p[1] )
+    def p_declaration_2( self, p ) :
+        """declaration  : star ident colon expr prio
+                        | star ident colon expr"""
+        args = [ p[1], p[2], p[3], p[4], p[5] 
+               ] if len(p) == 6 else [ p[1], p[2], p[3], p[4], None ]
+        p[0] = Declaration( p.parser, *args )
 
     def p_prio( self, p ) :
         """prio         : important_sym"""
@@ -445,31 +475,38 @@ class TSSParser( object ):
     #---- expr
 
     def p_expr( self, p ) :
-        """expr         : term
-                        | expr term
-                        | expr operator term"""
-        if len(p) == 4 :
-            args = [ p[1], p[2], p[3] ]
-        elif len(p) == 3 :
-            args = [ p[1], None, p[2] ]
-        else :
-            args = [ None, None, p[1] ]
+        """expr         : binaryexpr
+                        | expr binaryexpr"""
+        args = [ p[1], p[2] ] if len(p) == 3 else [ None,  p[1] ]
         p[0] = Expr( p.parser, *args )
 
+    def p_binaryexpr( self, p ) :
+        """binaryexpr   : term
+                        | unaryexpr
+                        | binaryexpr operator binaryexpr"""
+        args = [ None, None, None, p[1] 
+               ] if len(p) == 2 else [ p[1], p[2], p[3], None ]
+        p[0] = BinaryExpr( p.parser, *args )
+
+    def p_unaryexpr_1( self, p ) :
+        """unaryexpr    : openparan expr closeparan"""
+        p[0] = UnaryExpr( p.parser, None, None, (p[1], p[2], p[3]) )
+
+    def p_unaryexpr_2( self, p ) :
+        """unaryexpr    : plus term_val %prec UNARY
+                        | minus term_val %prec UNARY"""
+        p[0] = UnaryExpr( p.parser, p[1], p[2], None )
+
     def p_term( self, p ) :
-        """term         : term_data
+        """term         : term_val
                         | string
                         | ident
                         | uri
                         | unicoderange
                         | hash"""
+        # Note : here hash should be hex-color #[0-9a-z]{3} or #[0-9a-z]{6}
+        # Perform the contstraint check inside the `Term` class
         p[0] = Term( p.parser, p[1])
-
-    def p_term_data( self, p ) :
-        """term_data    : term_val
-                        | unary_oper term_val"""
-        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
-        p[0] = TermData( p.parser, *args )
 
     def p_term_val( self, p ) :
         """term_val     : number
@@ -503,16 +540,16 @@ class TSSParser( object ):
                         | equal
                         | gt
                         | lt
+                        | plus
+                        | minus
+                        | star
                         | dlimit"""
         p[0] = Operator( p.parser, p[1] )
 
-    def p_unary_oper_1( self, p ) :
-        """unary_oper   : PLUS"""
-        p[0] = Unary( p.parser, PLUS(p.parser, p[1]) )
-
-    def p_unary_oper_2( self, p ) :
-        """unary_oper   : MINUS"""
-        p[0] = Unary( p.parser, MINUS(p.parser, p[1]) )
+    #def p_unary_oper( self, p ) :
+    #    """unary_oper   : plus
+    #                    | minus"""
+    #    p[0] = Unary( p.parser, p[1] )
 
     def p_combinator( self, p ) :
         """combinator   : plus
@@ -528,9 +565,22 @@ class TSSParser( object ):
 
     def p_cdata( self, p ) :
         """cdata        : cdo cdc
-                        | cdo expr cdc"""
+                        | cdo cdata_conts cdc"""
         args = [ p[1], p[2], p[3] ] if len(p) == 4 else [ p[1], None, p[2] ]
         p[0] = Cdata( p.parser, *args )
+
+    def p_cdata_conts( self, p ) :
+        """cdata_conts  : cdata_cont
+                        | cdata_conts cdata_cont"""
+        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
+        p[0] = CdataConts( p.parser, *args )
+
+    def p_cdata_cont( self, p ) :
+        """cdata_cont   : expr
+                        | any
+                        | operator
+                        | block"""
+        p[0] = CdataCont( p.parser, p[1] )
 
     #---- Terminals with whitespace
 
@@ -723,10 +773,38 @@ class TSSParser( object ):
         wc = p[2] if len(p) == 3 else None
         p[0] = TerminalS( p.parser, t, wc )
 
+    def p_beginmatch( self, p ) :
+        """beginmatch   : BEGINMATCH wc
+                        | BEGINMATCH"""
+        t = BEGINMATCH( p.parser, p[1] )
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, t, wc )
+
+    def p_endmatch( self, p ) :
+        """endmatch     : ENDMATCH wc
+                        | ENDMATCH"""
+        t = ENDMATCH( p.parser, p[1] )
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, t, wc )
+
+    def p_contain( self, p ) :
+        """contain      : CONTAIN wc
+                        | CONTAIN"""
+        t = CONTAIN( p.parser, p[1] )
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, t, wc )
+
     def p_plus( self, p ) :
         """plus         : PLUS wc
                         | PLUS"""
         t = PLUS( p.parser, p[1] )
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, t, wc )
+
+    def p_minus( self, p ) :
+        """minus        : MINUS wc
+                        | MINUS"""
+        t = MINUS( p.parser, p[1] )
         wc = p[2] if len(p) == 3 else None
         p[0] = TerminalS( p.parser, t, wc )
 
@@ -858,11 +936,7 @@ class TSSParser( object ):
 
     #---- For confirmance with forward compatible CSS
 
-    def p_any_1( self, p) :
-        """any          : openparan expr closeparan"""
-        p[0] = Any( p.parser, p[1], p[2], p[3] )
-
-    def p_any_2( self, p) :
+    def p_any( self, p) :
         """any          : opensqr   expr closesqr"""
         p[0] = Any( p.parser, p[1], p[2], p[3] )
 

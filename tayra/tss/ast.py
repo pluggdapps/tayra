@@ -190,7 +190,6 @@ class StyleSheets( Node ):
               showcoord=False ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
-        buf.write('\n')
         [ c.show(buf, offset, attrnames, showcoord) for c in self.sslist() ]
 
     def sslist( self ) :
@@ -558,14 +557,16 @@ class FontFace( Node ) :
 class AtRule( Node ) :
     """class to handle `atrule` grammar."""
 
-    def __init__( self, parser, atkeyword, expr, block, semicolon ) :
-        Node.__init__( self, parser, atkeyword, expr, block, semicolon )
+    def __init__( self, parser, atkeyword, expr=None, block=None,
+                  semicolon=None, obrace=None, rulesets=None, cbrace=None ) :
+        Node.__init__( self, parser, atkeyword )
         self.parser = parser
-        self.SEMICOLON = semicolon
-        self._nonterms = self.atkeyword, self.expr, self.block = \
-                atkeyword, expr, block
+        self._terms = self.SEMICOLON, self.CLOSEBRACE = semicolon, cbrace
+        self._nonterms = \
+            self.atkeyword, self.expr, self.block, self.obrace, self.rulesets =\
+                atkeyword, expr, block, obrace, rulesets
         self._nonterms = filter( None, self._nonterms )
-        self._terms = (self.SEMICOLON,)
+        self._terms = filter( None, self._terms )
 
     def children( self ):
         return self._nonterms + self._terms
@@ -586,6 +587,34 @@ class AtRule( Node ) :
         [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
 
 
+class RuleSets( Node ):
+    """class to handle `rulesets` grammar."""
+
+    def __init__( self, parser, rulesets, ruleset ) :
+        Node.__init__( self, parser, rulesets, ruleset )
+        self.parser = parser
+        self._nonterms = self.rulesets, self.ruleset = rulesets, ruleset
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'rulesets: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
 class RuleSet( Node ):
     """class to handle `ruleset` grammar."""
 
@@ -596,7 +625,7 @@ class RuleSet( Node ):
         self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
-        return tuple(self._nonterms)
+        return self._nonterms
 
     def tohtml( self ):
         pass
@@ -932,6 +961,34 @@ class PseudoName( Node ):
         [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
 
 
+#class Blocks( Node ):
+#    """class to handle `blocks` grammar."""
+#
+#    def __init__( self, parser, blocks, block ) :
+#        Node.__init__( self, parser, blocks, block )
+#        self.parser = parser
+#        self._nonterms = self.blocks, self.block = blocks, block
+#        self._nonterms = filter( None, self._nonterms )
+#
+#    def children( self ):
+#        return self._nonterms
+#
+#    def tohtml( self ):
+#        pass
+#
+#    def dump( self ):
+#        return ''.join([ c.dump() for c in self.children() ])
+#
+#    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+#              showcoord=False ):
+#        lead = ' ' * offset
+#        buf.write( lead + 'blocks: ' )
+#        if showcoord:
+#            buf.write( ' (at %s)' % self.coord )
+#        buf.write('\n')
+#        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
 class Block( Node ):
     """class to handle `block` grammar."""
 
@@ -993,11 +1050,12 @@ class Declarations( Node ):
 class Declaration( Node ):
     """class to handle `declaration` grammar."""
 
-    def __init__( self, parser, proprty, colon, expr, prio ) :
-        Node.__init__( self, parser, proprty, colon, expr, prio )
+    def __init__( self, parser, prefix, ident, colon, expr, prio ) :
+        Node.__init__( self, parser, prefix, ident, colon, expr, prio )
         self.parser = parser
-        self._nonterms = self.proprty, self.colon, self.expr, self.prio = \
-                proprty, colon, expr, prio
+        self._nonterms = \
+            self.prefix, self.ident, self.colon, self.expr, self.prio = \
+                prefix, ident, colon, expr, prio
         self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
@@ -1022,10 +1080,10 @@ class Declaration( Node ):
 class Property( Node ):
     """class to handle `property` grammar."""
 
-    def __init__( self, parser, ident, starprefix=None ) :
-        Node.__init__( self, parser, ident )
+    def __init__( self, parser, prefix, ident ) :
+        Node.__init__( self, parser, prefix, ident )
         self.parser = parser
-        self._nonterms = self.starprefix, self.ident = starprefix, ident
+        self._nonterms = self.prefix, self.ident = prefix, ident
         self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
@@ -1078,14 +1136,14 @@ class Priority( Node ):
 class Expr( Node ):
     """class to handle `expr` grammar."""
 
-    def __init__( self, parser, expr, op, term) :
-        Node.__init__( self, parser, expr, op, term )
+    def __init__( self, parser, expr, binaryexpr ) :
+        Node.__init__( self, parser, expr, binaryexpr )
         self.parser = parser
-        self._nonterms = self.expr, self.op, self.term = expr, op, term
+        self._nonterms = self.expr, self.binaryexpr = expr, binaryexpr
         self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
-        return tuple(self._nonterms)
+        return self._nonterms
 
     def tohtml( self ):
         pass
@@ -1097,6 +1155,68 @@ class Expr( Node ):
               showcoord=False ):
         lead = ' ' * offset
         buf.write( lead + 'expr: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class BinaryExpr( Node ):
+    """class to handle `binaryexpr` grammar."""
+
+    def __init__( self, parser, binaryexpr1, op, binaryexpr2, item ) :
+        Node.__init__( self, parser )
+        self.parser = parser
+        self._nonterms = \
+            self.binaryexpr1, self.operator, self.binaryexpr2, self.item = \
+                binaryexpr1, op, binaryexpr2, item
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'binaryexpr: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class UnaryExpr( Node ):
+    """class to handle `unaryexpr` grammar."""
+
+    def __init__( self, parser, unaryop, term_val, paran_expr ) :
+        Node.__init__( self, parser, unaryop, term_val )
+        self.parser = parser
+        if paran_expr :
+            self.openparan, self.expr, self.closeparan = paran_expr
+            self._nonterms = paran_expr
+        else :
+            self._nonterms = self.unaryop, self.term_val = unaryop, term_val
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'unaryexpr: ' )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
@@ -1125,34 +1245,6 @@ class Term( Node ):
               showcoord=False ):
         lead = ' ' * offset
         buf.write( lead + 'term: ' )
-        if showcoord:
-            buf.write( ' (at %s)' % self.coord )
-        buf.write('\n')
-        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
-
-
-class TermData( Node ):
-    """class to handle `term_data` grammar."""
-
-    def __init__( self, parser, unary_oper, termval ) :
-        Node.__init__( self, parser, unary_oper, termval )
-        self.parser = parser
-        self._nonterms = self.unary_oper, self.termval = unary_oper, termval
-        self._nonterms = filter( None, self._nonterms )
-
-    def children( self ):
-        return self._nonterms
-
-    def tohtml( self ):
-        pass
-
-    def dump( self ):
-        return ''.join([ c.dump() for c in self.children() ])
-
-    def show( self, buf=sys.stdout, offset=0, attrnames=False,
-              showcoord=False ):
-        lead = ' ' * offset
-        buf.write( lead + 'term_data: ' )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
@@ -1331,10 +1423,11 @@ class Cdatas( Node ):
 class Cdata( Node ):
     """class to handle `cdata` grammar."""
 
-    def __init__( self, parser, cdo, expr, cdc ) :
-        Node.__init__( self, parser, cdo, expr, cdc )
+    def __init__( self, parser, cdo, cdata_conts, cdc ) :
+        Node.__init__( self, parser, cdo, cdata_conts, cdc )
         self.parser = parser
-        self._nonterms = self.cdo, self.expr, self.cdc = cdo, expr, cdc
+        self._nonterms = self.cdo, self.cdata_conts, self.cdc = \
+                cdo, cdata_conts, cdc
         self._nonterms = filter( None, self._nonterms )
 
     def children( self ):
@@ -1350,6 +1443,63 @@ class Cdata( Node ):
               showcoord=False ):
         lead = ' ' * offset
         buf.write( lead + 'cdata: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class CdataConts( Node ):
+    """class to handle `cdata_conts` grammar."""
+
+    def __init__( self, parser, cdata_conts, cdata_cont ) :
+        Node.__init__( self, parser, cdata_conts, cdata_cont )
+        self.parser = parser
+        self._nonterms = self.cdata_conts, self.cdata_cont = \
+                cdata_conts, cdata_cont
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'cdata_conts: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class CdataCont( Node ):
+    """class to handle `cdata_cont` grammar."""
+
+    def __init__( self, parser, item ) :
+        Node.__init__( self, parser, item )
+        self.parser = parser
+        self.item = item
+        self._nonterms = (self.item,)
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'cdata_cont: ' )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
@@ -1448,8 +1598,10 @@ class CDO( Terminal ) : pass
 class CDC( Terminal ) : pass
 class INCLUDES( Terminal ) : pass
 class DASHMATCH( Terminal ) : pass
+class BEGINMATCH( Terminal ) : pass
+class ENDMATCH( Terminal ) : pass
+class CONTAIN( Terminal ) : pass
 class HEXCOLOR( Terminal ) : pass
-class HASH( Terminal ) : pass
 class PERCENTAGE( Terminal ) : pass
 class NUMBER( Terminal ) : pass
 class EMS( Terminal ) : pass
@@ -1470,6 +1622,7 @@ class FREQ_KHZ( Terminal ) : pass
 class STRING( Terminal ) : pass
 class FUNCTION( Terminal ) : pass
 class IDENT( Terminal ) : pass
+class NAME( Terminal ) : pass
 class UNICODERANGE( Terminal ) : pass
 
 class PLUS( Terminal ) : pass
@@ -1481,8 +1634,10 @@ class MINUS( Terminal ) : pass
 class EQUAL( Terminal ) : pass
 class DOT( Terminal ) : pass
 class STAR( Terminal ) : pass
+class HASH( Terminal ) : pass
 class SEMICOLON( Terminal ) : pass
 class FWDSLASH( Terminal ) : pass
+class TILDA( Terminal ) : pass
 class DLIMIT( Terminal ) : pass
 
 class OPENBRACE( Terminal ) : pass

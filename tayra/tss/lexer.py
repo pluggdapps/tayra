@@ -105,7 +105,8 @@ class TSSLexer( object ) :
         'S', 'COMMENT', 'IMPORT_SYM', 'PAGE_SYM', 'MEDIA_SYM',
         'FONT_FACE_SYM', 'CHARSET_SYM', 'NAMESPACE_SYM', 'IMPORTANT_SYM',
         'ATKEYWORD',
-        'URI', 'CDO', 'CDC', 'INCLUDES', 'DASHMATCH',
+        'URI', 'CDO', 'CDC', 'INCLUDES', 'DASHMATCH', 'BEGINMATCH',
+        'ENDMATCH', 'CONTAIN',
         'HASH',
         'PERCENTAGE', 'NUMBER', 'EMS', 'EXS',
         'LENGTH', 'ANGLE', 'TIME', 'FREQ',
@@ -205,6 +206,18 @@ class TSSLexer( object ) :
 
     def t_DASHMATCH( self, t ) :
         r'\|='
+        return t
+
+    def t_BEGINMATCH( self, t ) :
+        r'\^='
+        return t
+
+    def t_ENDMATCH( self, t ) :
+        r'\$='
+        return t
+
+    def t_CONTAIN( self, t ) :
+        r'\*='
         return t
 
     @TOKEN( r'\#' + name )

@@ -10,6 +10,9 @@ Confirmance issues :
   takes JS expression returning a string that can be substituted in the
   style-sheet.
 
+  The current implementation of TSS parses the JS string inside the expression
+  call, but does not recognise comments.
+
 * -----
   Sometimes `identifiers` start with or contains '_' character. But the CSS3
   lexer rules does not explain them.
@@ -59,4 +62,63 @@ Confirmance issues :
   There seem to be browser specific @-rules, like,
     @-webkit-keyframes overlayTransition {
     }
+    @-webkit-keyframes all and(min-width:0) {
+    }
 
+* ----
+  Is the following like legal,
+    div {
+      color : red ; !important;
+    }
+  Is the semicolon before `!important` valid ?
+  ----
+
+* ----
+  Is this legal ?
+    div {
+      color : red ; !important;
+    }
+  note semicolon before `!important` valid ?
+
+    div { 
+      #color : red;
+    }
+  note the HASH prefix for property name. 
+
+    div :first-child { 
+      #color : red;
+    }
+  note the whitespace between element-name and pseudoclass
+
+    +*html #hd-bar{ background-color:#ccc; }
+  note the + and * prefix to element
+  ----
+
+* ----
+  declaration like this,
+    div {
+      background : efefef url(http://l.yimg.com/us.yimg.com/i/us/yc/sp/arrow_1640.gif) repeat-x left -1500px
+    }
+
+* ----
+  Media at-rule can contain multiple rulesets within.
+  @media print {
+	#blq-obit, #blq-mast, #blq-mast p, { display:none; }
+	#blq-acc { border-bottom: 1px solid #000; }
+  }
+  ----
+
+* ----
+  .recommendations p:nth-of-type(3) {
+    font-size:11px;
+  }
+  ----
+
+* ----
+  Page at-rule nesting inside other atrules, like,
+  @media print {
+    *{background:transparent!important;color:#444!important;text-shadow:none!important}
+    @page{margin:.5cm}
+    ....
+  }
+  ----

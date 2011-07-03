@@ -1602,6 +1602,8 @@ class Any( Node ):
         [ c.show(buf, offset, attrnames, showcoord) for c in self.children() ]
 
 
+#---- Extension language
+
 class ExtnExpr( Node ):
     """class to handle `extn_expr` grammar."""
 
@@ -1652,6 +1654,181 @@ class FunctionDef( Node ):
               showcoord=False ):
         lead = ' ' * offset
         buf.write( lead + 'functiondef: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class IfelfiBlock( Node ):
+    """class to handle `ifelfiblock` grammar."""
+
+    def __init__( self, parser, ifblock, ifelfiblock, controlblock ) :
+        Node.__init__( self, parser, ifblock, ifelfiblock, controlblock )
+        self.parser = parser
+        self._nonterms = self.ifblock, self.ifelfiblock, self.controlblock = \
+                ifblock, ifelfiblock, controlblock
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'ifelfiblock: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class IfBlock( Node ):
+    """class to handle `ifblock` grammar."""
+
+    def __init__( self, parser, ifcontrol, declarations, closebrace ) :
+        Node.__init__( self, parser, ifcontrol, declarations, closebrace )
+        self.parser = parser
+        self._nonterms = self.ifcontrol, self.declarations, self.closebrace = \
+                ifcontrol, declarations, closebrace
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'ifblock: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class ElifBlock( Node ):
+    """class to handle `elifblock` grammar."""
+
+    def __init__( self, parser, elifcontrol, declarations, closebrace ) :
+        Node.__init__( self, parser, elifcontrol, declarations, closebrace )
+        self.parser = parser
+        self._nonterms = self.elifcontrol, self.declarations, self.closebrace = \
+                elifcontrol, declarations, closebrace
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'elifblock: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class ElseBlock( Node ):
+    """class to handle `elseblock` grammar."""
+
+    def __init__( self, parser, elsecontrol, declarations, closebrace ) :
+        Node.__init__( self, parser, elsecontrol, declarations, closebrace )
+        self.parser = parser
+        self._nonterms = self.elsecontrol, self.declarations, self.closebrace = \
+                elsecontrol, declarations, closebrace
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'elseblock: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class ForBlock( Node ):
+    """class to handle `forblock` grammar."""
+
+    def __init__( self, parser, forcontrol, declaration, closebrace ) :
+        Node.__init__( self, parser, forcontrol, declarations, closebrace )
+        self.parser = parser
+        self._nonterms = self.forcontrol, self.declarations, self.closebrace = \
+                forcontrol, declarations, closebrace
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'functiondef: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ c.show(buf, offset+2, attrnames, showcoord) for c in self.children() ]
+
+
+class WhileBlock( Node ):
+    """class to handle `whileblock` grammar."""
+
+    def __init__( self, parser, whilecontrol, declarations, closebrace ) :
+        Node.__init__( self, parser, whilecontrol, declarations, closebrace )
+        self.parser = parser
+        self._nonterms = \
+            self.whilecontrol, self.declarations, self.closebrace = \
+                whilecontrol, declarations, closebrace
+        self._nonterms = filter( None, self._nonterms )
+
+    def children( self ):
+        return self._nonterms
+
+    def tohtml( self ):
+        pass
+
+    def dump( self ):
+        return ''.join([ c.dump() for c in self.children() ])
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'whileblock: ' )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
@@ -1713,7 +1890,6 @@ class DOT( Terminal ) : pass
 class STAR( Terminal ) : pass
 class HASH( Terminal ) : pass
 class SEMICOLON( Terminal ) : pass
-class PERCENT( Terminal ) : pass
 class FWDSLASH( Terminal ) : pass
 class TILDA( Terminal ) : pass
 class DLIMIT( Terminal ) : pass
@@ -1727,3 +1903,14 @@ class CLOSEPARAN( Terminal ) : pass
 
 class S( Terminal ) : pass
 class COMMENT( Terminal ) : pass
+
+class PERCENT( Terminal ) : pass
+class EXTN_EXPR( Terminal ) : pass
+class FUNCTIONSTART( Terminal ) : pass
+class FUNCTIONBODY( Terminal ) : pass
+class EXTN_STATEMENT( Terminal ) : pass
+class IFCONTROL( Terminal ) : pass
+class ELIFCONTROL( Terminal ) : pass
+class ELSECONTROL( Terminal ) : pass
+class FORCONTROL( Terminal ) : pass
+class WHILECONTROL( Terminal ) : pass

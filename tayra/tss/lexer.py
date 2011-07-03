@@ -124,9 +124,11 @@ class TSSLexer( object ) :
         'OPENPARAN', 'CLOSEPARAN',
 
         # Extension tokens
-        'EXTN_EXPR', 'PERCENT', 'FUNCTIONSTART', 'FUNCTIONBODY'
+        'EXTN_EXPR', 'PERCENT', 'FUNCTIONSTART', 'FUNCTIONBODY',
+        'EXTN_STATEMENT', 'IFCONTROL','ELIFCONTROL',  'ELSECONTROL',
+        'FORCONTROL', 'WHILECONTROL',
     )
-    
+
     # CSS3 tokens
 
     h           = r'[0-9a-f]'
@@ -185,6 +187,36 @@ class TSSLexer( object ) :
         self._incrlineno( t )
         return t
 
+    def t_FUNCTIONSTART( self, t ) :
+        r'@def'
+        t.lexer.push_state('fnbody')
+        return t
+
+    def t_IFCONTROL( self, t ) :
+        r'@if[^{]*\{'
+        t.lexer.push_state('fnbody')
+        return t
+
+    def t_ELIFCONTROL( self, t ) :
+        r'@elif[^{]*\{'
+        t.lexer.push_state('fnbody')
+        return t
+
+    def t_ELSECONTROL( self, t ) :
+        r'@else[^{]*\{'
+        t.lexer.push_state('fnbody')
+        return t
+
+    def t_FORCONTROL( self, t ) :
+        r'@for[^{]*\{'
+        t.lexer.push_state('fnbody')
+        return t
+
+    def t_WHILECONTROL( self, t ) :
+        r'@while[^{]*\{'
+        t.lexer.push_state('fnbody')
+        return t
+
     # Gotcha : Browser specific @-rules
     @TOKEN( r'@' + ident )
     def t_ATKEYWORD( self, t ) :
@@ -203,6 +235,10 @@ class TSSLexer( object ) :
 
     def t_CDC( self, t ) :
         r'-->'
+        return t
+
+    def t_EXTN_STATEMENT( self, t ) :
+        r'^[ ]*\$.*$'
         return t
 
     def t_EXTN_EXPR( self, t ) :
@@ -356,11 +392,6 @@ class TSSLexer( object ) :
         t.value = t.value
         return t
 
-    def t_FUNCTIONSTART( self, t ) :
-        r'@def'
-        t.lexer.push_state('fnbody')
-        return t
-
     def t_fnbody_FUNCTIONSTART( self, t ):
         r'@def'
         return t
@@ -424,7 +455,3 @@ if __name__ == "__main__":
             tok = _fetchtoken( tsslex, stats )
             while tok :
                 tok = _fetchtoken( tsslex, stats )
-
-        #for k, v in stats.items() :
-        #    print k
-        #    print v

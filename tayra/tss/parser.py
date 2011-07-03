@@ -108,10 +108,10 @@ class TSSParser( object ):
         self._initialize()
 
     def _initialize( self ) :
-        self.error_propertyname_prefix = None
+        pass
 
     def parse( self, text, filename='', debuglevel=0 ):
-        """Parses Tayra Style Sheet and creates an AST tree. For every
+        """Parse Tayra Style Sheet and creates an AST tree. For every
         parsing invocation, the same lex, yacc, app options and objects will
         be used.
 
@@ -204,6 +204,7 @@ class TSSParser( object ):
                         | page
                         | font_face
                         | functiondef
+                        | extn_statement
                         | wc"""
         p[0] = Statement( p.parser, p[1] )
 
@@ -338,7 +339,10 @@ class TSSParser( object ):
         p[0] = RuleSets( p.parser, *args )
 
     def p_ruleset_1( self, p ) :
-        """ruleset      : block """
+        """ruleset      : block
+                        | ifelfiblock
+                        | forblock
+                        | whileblock"""
         p[0] = RuleSet( p.parser, p[1] )
 
     def p_ruleset_2( self, p ) :
@@ -471,9 +475,11 @@ class TSSParser( object ):
     def p_declarations( self, p ) :
         """declarations : declaration
                         | rulesets
+                        | extn_statement
                         | declarations semicolon
                         | declarations semicolon declaration
-                        | declarations semicolon rulesets"""
+                        | declarations semicolon rulesets
+                        | declarations semicolon extn_statement"""
         if len(p) == 4 :
             args = [ p[1], p[2], p[3] ]
         elif len(p) == 3 :
@@ -986,15 +992,77 @@ class TSSParser( object ):
         wc = p[2] if len(p) == 3 else None
         p[0] = TerminalS( p.parser, t, wc )
 
-    def p_functiondef( self, p ) :
-        """functiondef  : functionstart functionbody"""
-        p[0] = FunctionDef( p.parser, p[1], p[2] )
-
     def p_extn_expr( self, p ) :
         """extn_expr    : EXTN_EXPR wc
                         | EXTN_EXPR"""
         wc = p[2] if len(p) == 3 else None
         p[0] = ExtnExpr( p.parser, EXTN_EXPR(p.parser, p[1]), wc )
+
+    def p_extn_statement( self, p ) :
+        """extn_statement   : EXTN_STATEMENT wc
+                            | EXTN_STATEMENT"""
+        wc = p[2] if len(p) == 3 else None
+        p[0] = ExtnStatement( p.parser, EXTN_STATEMENT(p.parser, p[1]), wc )
+
+    def p_ifcontrol( self, p ) :
+        """ifcontrol    : IFCONTROL wc
+                        | IFCONTROL"""
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, IFCONTROL(p.parser, p[1]), wc )
+
+    def p_elifcontrol( self, p ) :
+        """elifcontrol  : ELIFCONTROL wc
+                        | ELIFCONTROL"""
+        wc = p[2] if len(p) == 3 else None
+        p[0] = TerminalS( p.parser, ELIFCONTROL(p.parser, p[1]), wc )
+
+    def p_elsecontrol( self, p ) :
+        """elsecontrol  : ELSECONTROL wc
+                        | ELSECONTROL"""
+        p[0] = TerminalS( p.parser, ELSECONTROL(p.parser, p[1]), wc )
+
+    def p_forcontrol( self, p ) :
+        """forcontrol   : FORCONTROL wc
+                        | FORCONTROL"""
+        p[0] = TerminalS( p.parser, FORCONTROL(p.parser, p[1]), wc )
+
+    def p_whilecontrol( self, p ) :
+        """whilecontrol : WHILECONTROL wc
+                        | WHILECONTROL"""
+        p[0] = TerminalS( p.parser, WHILECONTROL(p.parser, p[1]), wc )
+
+    def p_functiondef( self, p ) :
+        """functiondef  : functionstart functionbody"""
+        p[0] = FunctionDef( p.parser, p[1], p[2] )
+
+    def p_ifelfiblock_1( self, p ) :
+        """ifelfiblock  : ifblock"""
+        p[0] = IfelfiBlock( p.parser, p[1], None, None )
+
+    def p_ifelfiblock_2( self, p ) :
+        """ifelfiblock  : ifelfiblock elifblock
+                        | ifelfiblock elseblock"""
+        p[0] = IfelfiBlock( p.parser, None, p[1], p[2] )
+
+    def p_ifblock( self, p ) :
+        """ifblock      : ifcontrol declarations closebrace"""
+        p[0] = IfBlock( p.parser, p[1], p[2], p[3] )
+
+    def p_elifblock( self, p ) :
+        """elifblock    : elifcontrol declarations closebrace"""
+        p[0] = ElifBlock( p.parser, p[1], p[2], p[3] )
+
+    def p_elseblock( self, p ) :
+        """elseblock    : elsecontrol declarations closebrace"""
+        p[0] = ElseBlock( p.parser, p[1], p[2], p[3] )
+
+    def p_forblock( self, p ) :
+        """forblock     : forcontrol declarations closebrace"""
+        p[0] = ForBlock( p.parser, p[1], p[2], p[3] )
+
+    def p_whileblock( self, p ) :
+        """whileblock   : whilecontrol declarations closebrace"""
+        p[0] = WhileBlock( p.parser, p[1], p[2], p[3] )
 
     #---- For confirmance with forward compatible CSS
 

@@ -5,8 +5,10 @@ syntax: glob
 *~
 tayra-env
 eggs/
-.vim_maindev
 yacctab.py
+parser.out
+distribute-0.6.10.tar.gz
+.vim_maindev
 tayra.egg-info/
 # switch to regexp syntax.
 syntax: regexp

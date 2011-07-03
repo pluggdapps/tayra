@@ -46,8 +46,9 @@ setup(
     },
     install_requires=[                      # setuptools
         'ply==3.4',
-        'lxml==2.3',
-        'nose==1.0.0',
+        'zope.component',
+        'zope.interface',
+        'paste'
     ],
     extras_require={},                      # setuptools
     setup_requires={},                      # setuptools

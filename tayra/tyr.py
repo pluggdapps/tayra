@@ -15,16 +15,13 @@
 # Notes  : None
 # Todo   : None
 
-import unittest, os, re
-import difflib          as diff
-from   random           import choice, randint, shuffle
-from   optparse         import OptionParser
-from   os.path          import isfile, splitext
+import os, re
+from   optparse             import OptionParser
+from   os.path              import isfile, splitext
+from   StringIO             import StringIO
 
-from   tayra            import __version__ as VERSION
-from   tayra            import TTL_EXTNAME, TSS_EXTNAME
-from   tayra.tss.parser import TSSParser
-#from   tayra.h.parser import TTLParser
+import tayra
+from   tayra                import __version__ as VERSION
 
 def _option_parse() :
     '''Parse the options and check whether the semantics are correct.'''
@@ -33,11 +30,11 @@ def _option_parse() :
                        help='Output html file to store translated result' )
     parser.add_option( '-d', action='store_true', dest='dump',
                        help='Dump translation' )
-    parser.add_option( '-g', action='store_true', dest='debug',
-                       help='Debug' )
     parser.add_option( '-s', action='store_true', dest='show',
                        help='Show AST parse tree' )
-    parser.add_option( '-l', dest='debuglevel', default='0',
+    parser.add_option( '-t', action='store_true', dest='generate',
+                       help='Generate python executable' )
+    parser.add_option( '-g', dest='debug', default='0',
                        help='Debug level for PLY parser' )
     parser.add_option( '--version', action='store_true', dest='version',
                        help='Version information of the package' )
@@ -48,34 +45,17 @@ def _option_parse() :
 
 def main() :
     options, args = _option_parse()
-    #ttlparser = TTLParser( debug=options.debug )
-    tssparser = TSSParser( debug=options.debug )
     tu = None
+
+    # Parse
     if options.version :
         print VERSION
     if args and isfile( args[0] ) :
-        ifile, ttl, tss = args[0], None, None
-        if splitext(ifile)[0] == TTL_EXTNAME :
-            ttl = open( ifile ).read()
-        elif splitext(ifile)[0] == TSS_EXTNAME :
-            tss = open( ifile ).read()
-        else :
-            tss = open( ifile ).read()
-        debuglevel = int(options.debuglevel)
-        print "Parsing ...",
-        tu = tssparser.parse( tss, debuglevel=debuglevel )
-        print "Done"
-    if tu and options.dump :
-        print tu.dump()
-    elif tu and options.show :
-        print "AST tree ..."
-        tu.show()
-    elif tu :
-        ofile = options.ofile or (os.path.splitext(ifile)[0] + '.html')
-        print "Translation ...",
-        html = '<html><body>' + tu.tohtml() + '</body></html>'
-        print "Done"
-        open( ofile, 'w' ).write( html )
-
+        tayra.ttl_render( args[0],
+                          inplace=True,
+                          debuglevel=int(options.debug),
+                          show=options.show,
+                          dump=options.dump,
+                        )
 if __name__ == '__main__' :
     main()

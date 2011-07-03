@@ -1,0 +1,12 @@
+@body x, y, a=10, b=20;
+
+!!! xml ;
+!!! html5 ;
+
+<html>
+  ${x+y}
+  <head#id.cls1.${cls2.strip()} "title" {color:red} ; lang="en" data="hello">
+    <title>
+  <body>
+    <h1/> I am the space station
+    <p> Sign my guestbook

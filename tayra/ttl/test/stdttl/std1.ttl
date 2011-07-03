@@ -1,2 +1,10 @@
-<b style="color : red">
-  <em> hello world
+!!! xhtml+rdfa 1.0 ;
+!!! xhtml 1.1 mobile ;
+!!! xhtml 1.1 basic ;
+!!! xhtml 1.1 ;
+!!! xhtml 1.0 frameset ;
+!!! xhtml 1.0 strict ;
+!!! xhtml 1.0 transitional ;
+!!! html4.01 frameset ;
+!!! html4.01 strict ;
+!!! html4.01 transitional ;

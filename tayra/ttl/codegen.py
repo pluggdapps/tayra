@@ -4,9 +4,125 @@
 
 # -*- coding: utf-8 -*-
 
-from   os.path      import basename
+from   os.path      import join, splitext, isfile, abspath, basename
 from   StringIO     import StringIO
 from   copy         import deepcopy
+from   hashlib      import sha1
+
+class Template( object ) :
+    TMPLHASH = {}
+
+    def __init__( self,
+                  ttlloc,
+                  ttlparser,
+                  pyfile=None,
+                  htmlfile=None,
+                  ttldir=None,
+                  cachedir=None,
+                ):
+        self.ttlloc, self.ttldir, self.cachedir = ttlloc, ttldir, cachedir
+        self.tmplcache = join( cachedir, 'ttltemplates' ) if cachedir else None
+        self.ttlfile = self.locatettl()
+        self.pyfile = pyfile or self.locatepy() or StringIO()
+        self.ttltext = open( self.ttlfile ).read()
+        self.ttlparser = ttlparser
+        self.pytext, self.code, self.igen = None, None, InstrGen(self.pyfile)
+        if isinstance( self.pyfile, basestring ) :
+            self.htmlfile = self.pyfile.rsplit( '.', 2 )[0] + '.html'
+
+    def __call__( self, ttlloc ):
+        clone = Template( ttlloc, self.ttlparser, self.ttldir, self.cachedir )
+        return clone
+        
+    def _pyfromcache( self, pyfile, hashref ):
+        pytext = open( pyfile ).read()
+        s = re.search( r"__ttlhash = '([0-9a-f])'\n", pytext )
+        try :
+            hashval = int( s.groups[0], 16 )
+            if hashval == hashref :
+                return pytext
+        except :
+            return None
+        return None
+
+    def execmod( self, module, code=None ):
+        """Execute the template code (python compiled) under module's context
+        `module`. If `code` is None, it will generated from the
+        ttl translated file.
+        """
+        self.code = code or self.code or self.loadcode()
+        exec code in module.__dict__, module.__dict__
+        return module
+
+    def loadcode( self, igen=None ):
+        """Code loading involves, picking up the intermediate python file from
+        the cache (if disk persistence is enabled and the file is available)
+        or, generate afresh using `igen` Instruction Generator.
+        """
+        igen = igen or self.igen
+        hashval = sha1(self.ttltext).hexdigest()
+        filename = self.pyfile \
+                   if isinstance(self.pyfile, basestring) else self.ttlfile
+        if hashval in self.TMPLHASH :
+            _, self.code = self.TMPLHASH[hashval]
+        elif isinstance( self.pyfile, basestring ) :
+            self.pytext = self._pyfromcache( self.pyfile, hashval )
+            if not self.pytext :  # Generate afresh
+                self.pytext = self.topy()
+                self.TMPLHASH[hashval] = ( self.ttlfile, self.code )
+                open( self.pyfile, 'w' ).write( self.pytext )    # Cache file
+            self.code = compile(self.pytext, filename, 'exec')
+        else :
+            self.pytext = self.topy()
+            self.TMPLHASH[hashval] = ( self.ttlfile, self.code )
+            self.code = compile(self.pytext, filename, 'exec')
+        return self.code
+
+    def toast( self, *args, **kwargs ):
+        tu = self.ttlparser.parse(
+                self.ttltext, ttlfile=self.ttlfile, *args, **kwargs
+            )
+        return tu
+
+    def topy( self, *args, **kwargs ):
+        igen = kwargs.pop( 'igen', self.igen )
+        tu = self.toast( *args, **kwargs )
+        tu.preprocess( self.igen )                # Pre-process with igen
+        tu.generate( self.igen, *args, **kwargs ) # Generate intermediate python
+        return self.igen.codetext()
+
+    def locatettl( self ):
+        uri = self.ttlloc
+        if isfile( abspath(uri) ) :
+            ttlfile = abspath(uri)
+        elif uri.startswith('/') :
+            ttlfile = join(self.ttldir, uri[1:]) if self.ttldir else uri
+            if not isfile(ttlfile) :
+                raise Exception( 'TTL file not found %r' % uri )
+        else :
+            try :
+                mod, loc = uri.split(':', 1)
+                _file, path, _descr = imp.find_module( mod )
+                ttlfile = join( path, parts[1] )
+            except :
+                raise Exception( 'Error locating TTL file %r' % uri )
+        return ttlfile if isfile(ttlfile) else None
+
+    def locatepy( self ):
+        pyfile, uri = None, self.ttlloc
+        if self.tmplcache :
+            ttlloc_ = uri[1:] if uri.startswith('/') else uri 
+            pyfile = join( self.tmplcache, ttlloc_+'.py' )
+        return pyfile if pyfile and isfile(pyfile) else None
+
+    def modulename( self ):
+        return basename( self.ttlfile ).split('.', 1)[0]
+
+    def supermost( self, module ):
+        parmod = module.parent
+        while parmod : module, parmod = parmod, parmod.parent
+        return module
+
 
 prolog = """# -*- encoding:utf-8 -*-
 
@@ -28,8 +144,8 @@ from   tayra.ttl.runtime    import StackMachine
 """
 
 footer = """
-__ttlhash = %s
-__ttlfile = %s
+__ttlhash = %r
+__ttlfile = %r
 """
 
 interfaceClass = """
@@ -41,9 +157,10 @@ class %s( object ):
 class InstrGen( object ) :
     machname = '__m'
 
-    def __init__( self, outfile=None ):
+    def __init__( self, outfile ):
         self.outfile = outfile
-        self.fd = open( outfile, 'w' ) if outfile else StringIO()
+        self.fd = open( outfile, 'w' 
+                  ) if isinstance(outfile, basestring) else outfile
         self.pyindent = ''
         self.optimaltext = []
         self.pytext = None
@@ -89,10 +206,9 @@ class InstrGen( object ) :
             self.optimaltext = []
 
     def puttext( self, text, force=False ) :
-        if sum(map( lambda x : len(x), self.optimaltext)) > 100 or force :
+        self.optimaltext.append( text )
+        if force or sum(map( lambda x : len(x), self.optimaltext)) > 100 :
             self.flushtext()
-        else :
-            self.optimaltext.append( text )
 
     def putvar( self, var ) :
         self.flushtext()
@@ -185,7 +301,6 @@ class InstrGen( object ) :
     def footer( self, ttlhash, ttlfile ):
         self.cr()
         self.fd.write( footer % (ttlhash, ttlfile) )
-        self.cr()
         if isinstance(self.fd, StringIO):
             self.pytext = self.fd.getvalue()
         else :

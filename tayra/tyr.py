@@ -34,6 +34,8 @@ def _option_parse() :
                        help='Show AST parse tree' )
     parser.add_option( '-t', action='store_true', dest='generate',
                        help='Generate python executable' )
+    parser.add_option( '-x', action='store_true', dest='execute',
+                       help='Executable and generate html' )
     parser.add_option( '-g', dest='debug', default='0',
                        help='Debug level for PLY parser' )
     parser.add_option( '--version', action='store_true', dest='version',
@@ -50,7 +52,14 @@ def main() :
     # Parse
     if options.version :
         print VERSION
-    if args and isfile( args[0] ) :
+    if args and isfile( args[0] ) and options.generate :
+        tayra.ttl_render( args[0],
+                          inplace=True,
+                          debuglevel=int(options.debug),
+                          show=options.show,
+                          dump=options.dump,
+                        )
+    elif args and isfile( args[0] ) and options.generate :
         tayra.ttl_render( args[0],
                           inplace=True,
                           debuglevel=int(options.debug),

@@ -219,22 +219,26 @@ class Template( NonTerminal ):
         self.bodysignature = None   # Will be bubbleup during `preprocess`
         self.implements = []        # [ (interface, pluginname), ...]
         self.interfaces = []        # [ (interface, method), ... ]
+        self.doctypes = []          # [ html, html, ... ]
 
-    def _genbodyfun( self, igen, signature ):
-        signature = signature.strip(', \t') 
+    def _genbodyfun( self, igen, signature='' ):
+        signature = signature and signature.strip(', \t') or ''
         ', '.join([ signature, '*args', '**kwargs' ])
         line = "def body( %s ) :" % signature
-        igen.blockbegin( line, pyindent=bool(self.siblings) )
+        igen.blockbegin( line, pyindent=bool(self.children()) )
 
     def children( self ):
         return self._nonterms
 
     def generate( self, igen, *args, **kwargs ):
-        if self.bodysignature :
-            self._genbodyfun( igen, self.bodysignature )
-        NonTerminal.generate( self, igen, *args, **kwargs )
+        self._genbodyfun( igen, self.bodysignature )
+        self.prologs and self.prologs.generate( igen, *args, **kwargs )
+        for html in self.doctypes :
+            igen.puttext( html+'\n', force=True )
+        self.siblings and self.siblings.generate( igen, *args, **kwargs )
         # finish
         igen.finish()
+        igen.popreturn( astext=True )
         # Handle interface implementations
         if self.implements and self.interfaces :
             igen.implement_interface( self.implements, self.interfaces )
@@ -390,8 +394,7 @@ class DocType( NonTerminal ):
         self.html = ttl2doctype( self.DOCTYPE.dump(None) )
 
     def generate( self, igen, *args, **kwargs ) :
-        igen.puttext( self.html )
-        self.whitespace.generate( igen, *args, **kwargs )
+        self.bubbleupaccum( 'doctypes', self.html )
 
     def children( self ):
         return self._terms + self._nonterms

@@ -436,14 +436,18 @@ class TTLParser( object ):
         p[0] = Content( p.parser, TEXT(p.parser, p[1]), None )
 
     def p_content_2( self, p ) :
+        """content      : SPECIALCHARS"""
+        p[0] = Content( p.parser, SPECIALCHARS(p.parser, p[1]), None )
+
+    def p_content_3( self, p ) :
         """content      : ATOM"""
         p[0] = Content( p.parser, ATOM(p.parser, p[1]), None )
 
-    def p_content_3( self, p ) :
+    def p_content_4( self, p ) :
         """content      : S"""
         p[0] = Content( p.parser, S(p.parser, p[1]), None )
 
-    def p_content_4( self, p ) :
+    def p_content_5( self, p ) :
         """content      : exprs"""
         p[0] = Content( p.parser, None, p[1] )
 
@@ -506,14 +510,18 @@ class TTLParser( object ):
         p[0] = StrContent( p.parser, TEXT(p.parser, p[1]), None )
 
     def p_strcontent_2( self, p ) :
+        """strcontent   : SPECIALCHARS"""
+        p[0] = StrContent( p.parser, SPECIALCHARS(p.parser, p[1]), None )
+
+    def p_strcontent_3( self, p ) :
         """strcontent   : ATOM"""
         p[0] = StrContent( p.parser, ATOM(p.parser, p[1]), None )
 
-    def p_strcontent_3( self, p ) :
+    def p_strcontent_4( self, p ) :
         """strcontent   : whitespace"""
         p[0] = StrContent( p.parser, None, p[1] )
 
-    def p_strcontent_4( self, p ) :
+    def p_strcontent_5( self, p ) :
         """strcontent   : exprs"""
         p[0] = StrContent( p.parser, None, p[1] )
 
@@ -547,6 +555,11 @@ class TTLParser( object ):
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
                         
     def p_style_content_4( self, p ) :
+        """style_content    : SPECIALCHARS"""
+        terms = [ None, None, (SPECIALCHARS,1), None ]
+        p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
+                        
+    def p_style_content_5( self, p ) :
         """style_content    : exprs"""
         terms = [ None, None, None, p[1] ]
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
@@ -582,6 +595,11 @@ class TTLParser( object ):
     def p_exprs_content_4( self, p ) :
         """exprs_content    : TEXT"""
         terms = [ None, None, None, (TEXT,1) ]
+        p[0] = ExprsContent( p.parser, *self._buildterms(p, terms) )
+
+    def p_exprs_content_5( self, p ) :
+        """exprs_content    : SPECIALCHARS"""
+        terms = [ None, None, None, (SPECIALCHARS,1) ]
         p[0] = ExprsContent( p.parser, *self._buildterms(p, terms) )
 
     #----

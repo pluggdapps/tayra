@@ -324,10 +324,11 @@ class Siblings( NonTerminal ):
         [ x.preprocess( igen ) for x in self.flatten() ]
 
     def generate( self, igen, *args, **kwargs ) :
-        compute = lambda : [
-            x.generate( igen, *args, **kwargs ) for x in self.flatten()
-        ]
-        self.stackcompute( igen, compute, astext=True )
+        #compute = lambda : [
+        #    x.generate( igen, *args, **kwargs ) for x in self.flatten()
+        #]
+        #self.stackcompute( igen, compute, astext=True )
+        [ x.generate( igen, *args, **kwargs ) for x in self.flatten() ]
 
     def dump( self, context ) :
         return ''.join([ x.dump(context) for x in self.flatten() ])
@@ -423,7 +424,7 @@ class Body( NonTerminal ):
         return self._terms + self._nonterms
 
     def preprocess( self, igen ):
-        self.signature = self.BODY.dump(None)[5:]
+        self.signature = self.BODY.dump(None)[5:].strip(' \t').rstrip(';')
         self.bubbleup( 'bodysignature', self.signature )
 
     def generate( self, igen, *args, **kwargs ):
@@ -1019,8 +1020,8 @@ class TagLine( NonTerminal ):
         return self._nonterms + self._terms
 
     def generate( self, igen, *args, **kwargs ):
-        igen.indent()
         igen.comment( self.dump( Context() ))
+        igen.indent()
         NonTerminal.generate( self, igen, *args, **kwargs )
 
     def dump( self, context ) :
@@ -1461,6 +1462,7 @@ class StyleContent( NonTerminal ):
     """class to handle `stylecontent` grammar."""
 
     def __init__( self, parser, newlines, s, text, exprs ) :
+        # `text` can also be `specialchars`
         NonTerminal.__init__( self, parser, newlines, s, text, exprs )
         self._terms = self.NEWLINES, self.S, self.TEXT = newlines, s, text
         self._nonterms = (self.exprs,) = (exprs,)
@@ -1549,6 +1551,7 @@ class ExprsContent( NonTerminal ):
     """class to handle `exprs_content` grammar."""
 
     def __init__( self, parser, newlines, s, string, text ) :
+        # `text` can also be `specialchars`
         NonTerminal.__init__( self, parser, newlines, s, string, text )
         self._terms = self.NEWLINES, self.S, self.STRING, self.TEXT = \
                 newlines, s, string, text
@@ -1635,6 +1638,7 @@ class WHILE( Terminal ) : pass
 class STRING( Terminal ) : pass
 class ATOM( Terminal ) : pass
 class TEXT( Terminal ) : pass
+class SPECIALCHARS( Terminal ) : pass
 
 #---- Markup
 

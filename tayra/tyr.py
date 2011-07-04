@@ -59,7 +59,7 @@ def main() :
                           show=options.show,
                           dump=options.dump,
                         )
-    elif args and isfile( args[0] ) and options.generate :
+    elif args and isfile( args[0] ) :
         tayra.ttl_render( args[0],
                           inplace=True,
                           debuglevel=int(options.debug),

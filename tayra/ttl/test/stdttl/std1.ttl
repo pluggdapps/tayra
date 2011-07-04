@@ -8,3 +8,8 @@
 !!! html4.01 frameset ;
 !!! html4.01 strict ;
 !!! html4.01 transitional ;
+
+@body z="10" ;
+
+<html> 
+  <head>

@@ -132,15 +132,6 @@ from   zope.component       import getGlobalSiteManager
 import tayra
 from   tayra.ttl.runtime    import StackMachine
 
-#UNDEFINED = runtime.UNDEFINED
-#__M_dict_builtin = dict
-#__M_locals_builtin = locals
-#_magic_number = 6
-#_template_filename=u'/home/pratap/mybzr/pratap/dev/pluggdapps/bootstrap/bootstrap/templates/_base/base.mak'
-#_template_uri=u'bootstrap:templates/_base/base.mak'
-#_template_cache=cache.Cache(__name__, _modified_time)
-#_source_encoding='utf-8'
-#_exports = []
 """
 
 footer = """
@@ -190,12 +181,17 @@ class InstrGen( object ) :
         self.fd.write( '__m.indent()' )
 
     def upindent( self, up='' ):
+        self.flushtext()
+        self.cr()
         self.fd.write( '__m.upindent( up=%r )' % up )
 
     def downindent( self, down='' ):
+        self.flushtext()
+        self.cr()
         self.fd.write( '__m.downindent( down=%r )' % down )
 
     def comment( self, comment ) :
+        self.flushtext()
         self.cr()
         self.fd.write( '#' + comment.rstrip('\r\n') )
 

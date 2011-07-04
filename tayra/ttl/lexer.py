@@ -155,7 +155,8 @@ class TTLLexer( object ) :
         'IF', 'ELIF', 'ELSE', 'FOR', 'WHILE',
 
         #
-        'SQUOTE', 'DQUOTE', 'NEWLINES', 'S', 'ATOM', 'TEXT', 'CLOSEBRACE',
+        'SPECIALCHARS', 'SQUOTE', 'DQUOTE', 'NEWLINES', 'S', 'ATOM', 'TEXT',
+        'CLOSEBRACE',
     )
     
     comment     = r'^[ \t]*\#.*(\n|\r\n)'
@@ -168,9 +169,10 @@ class TTLLexer( object ) :
     whitespace  = r'[\r\n\t ]+'
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9]+'
-    text        = r'.+'
-    style_text  = r'[^}]+'
-    exprs_text  = r'[^}]+'
+    text        = r'[^ \t\n${]+'
+    exprs_text  = r'[^ \t\n}]+'
+    tag_text    = r"""[^ \t\n'=";${/>]+"""
+    style_text  = r'[^ \t\n}${]+'
     string      = r"""(".*")|('.*')"""
 
     doctype     = r'^!!!([^;]|[\r\n])*;'
@@ -199,6 +201,8 @@ class TTLLexer( object ) :
     semicolon   = r';'
     openbrace   = r'\{'
     closebrace  = r'\}'
+
+    specialchars= r'[${}/>]'
 
     tagopen     = lt+tagname+whitespac
     wssemicolonws = whitespac+semicolon+whitespac
@@ -324,6 +328,10 @@ class TTLLexer( object ) :
         t.lexer.push_state( 'exprs' )
         return t
 
+    @TOKEN( specialchars )
+    def t_SPECIALCHARS( self, t ) :
+        return t
+
     @TOKEN( nl )
     def t_NEWLINES( self, t ) :
         self._incrlineno(t)
@@ -356,6 +364,10 @@ class TTLLexer( object ) :
 
     @TOKEN( space )
     def t_exprs_S( self, t ) :
+        return t
+
+    @TOKEN( specialchars )
+    def t_exprs_SPECIALCHARS( self, t ) :
         return t
 
     @TOKEN( string )
@@ -417,11 +429,15 @@ class TTLLexer( object ) :
     def t_tag_S( self, t ) :
         return t
 
+    @TOKEN( specialchars )
+    def t_tag_SPECIALCHARS( self, t ) :
+        return t
+
     @TOKEN( atom )
     def t_tag_ATOM( self, t ) :
         return t
 
-    @TOKEN( text )
+    @TOKEN( tag_text )
     def t_tag_TEXT( self, t ) :
         return t
 
@@ -445,6 +461,10 @@ class TTLLexer( object ) :
 
     @TOKEN( space )
     def t_style_S( self, t ) :
+        return t
+
+    @TOKEN( specialchars )
+    def t_style_SPECIALCHARS( self, t ) :
         return t
 
     @TOKEN( style_text )

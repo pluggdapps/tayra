@@ -71,7 +71,10 @@ def ttl_cmdline( ttlloc, debuglevel, show, dump ):
     tmpl = Template( ttlloc, ttlparser, pyfile=StringIO() )
     pyfile, ttltext = (tmpl.ttlfile+'.py'), open(tmpl.ttlfile).read()
     htmlfile = tmpl.ttlfile.rsplit('.', 1)[0] + '.html'
-    if show :
+    if debuglevel :
+        print "AST tree ..."
+        tu = tmpl.toast( debuglevel=debuglevel )
+    elif show :
         print "AST tree ..."
         tu = tmpl.toast()
         tu.show()

@@ -144,7 +144,7 @@ class TTLLexer( object ) :
         'OPENEXPRS', 'STRING',
         
         # `tag` state
-        'TAGOPEN', 'TAGEND', 'TAGCLOSE', 'EQUAL', 'SEMICOLON',
+        'TAGOPEN', 'TAGEND', 'TAGCLOSE', 'EQUAL', 
 
         # `style` state
         'OPENBRACE',
@@ -171,7 +171,7 @@ class TTLLexer( object ) :
     tagname     = r'[a-zA-Z0-9]+'
     text        = r'[^ \t\n${]+'
     exprs_text  = r'[^ \t\n}]+'
-    tag_text    = r"""[^ \t\n'=";${/>]+"""
+    tag_text    = r"""[^ \t\n'="${/>]+"""
     style_text  = r'[^ \t\n}${]+'
     string      = r"""(".*")|('.*')"""
 
@@ -399,10 +399,10 @@ class TTLLexer( object ) :
         t.lexer.push_state( 'exprs' )
         return t
 
-    @TOKEN( wssemicolonws )
-    def t_tag_SEMICOLON( self, t ) :
-        self._incrlineno(t)
-        return t
+    #@TOKEN( wssemicolonws )
+    #def t_tag_SEMICOLON( self, t ) :
+    #    self._incrlineno(t)
+    #    return t
 
     @TOKEN( squote )
     def t_tag_SQUOTE( self, t ) :

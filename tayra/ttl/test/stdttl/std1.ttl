@@ -9,7 +9,10 @@
 !!! html4.01 strict ;
 !!! html4.01 transitional ;
 
-@body z="10" ;
+@body z=10 ;
 
-<html> 
-  <head>
+<html#std1.testcase.sample { color: red; font-size : ${z*2}px } title="hello world">
+  <head/>
+  <body>
+    <abbr "World Health Organisation"> WHO
+    <button#id_ reset disabled makefriend "button value"/>

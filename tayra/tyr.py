@@ -21,7 +21,8 @@ from   os.path              import isfile, splitext
 from   StringIO             import StringIO
 
 import tayra
-from   tayra                import __version__ as VERSION
+import tayra.ttl
+import tayra.ttl.tags
 
 def _option_parse() :
     '''Parse the options and check whether the semantics are correct.'''
@@ -47,21 +48,12 @@ def _option_parse() :
 
 def main() :
     options, args = _option_parse()
-    tu = None
 
-    # Parse
     if options.version :
-        print VERSION
-    if args and isfile( args[0] ) and options.generate :
-        tayra.ttl_render( args[0],
-                          inplace=True,
-                          debuglevel=int(options.debug),
-                          show=options.show,
-                          dump=options.dump,
-                        )
+        print tayra.__version__
+
     elif args and isfile( args[0] ) :
-        tayra.ttl_render( args[0],
-                          inplace=True,
+        tayra.ttl.render( args[0], inplace=True,
                           debuglevel=int(options.debug),
                           show=options.show,
                           dump=options.dump,

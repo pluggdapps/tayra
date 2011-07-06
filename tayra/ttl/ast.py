@@ -235,9 +235,10 @@ class Template( NonTerminal ):
         self.prologs and self.prologs.generate( igen, *args, **kwargs )
         for html in self.doctypes :
             igen.puttext( html+'\n', force=True )
+        igen.puttext('\n')
         self.siblings and self.siblings.generate( igen, *args, **kwargs )
-        # finish
-        igen.finish()
+        # finish body function
+        igen.flushtext()
         igen.popreturn( astext=True )
         # Handle interface implementations
         if self.implements and self.interfaces :
@@ -357,14 +358,6 @@ class Sibling( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         NonTerminal.generate( self, igen, *args, **kwargs )
-        tag = None
-        if isinstance( self.nonterm, TagBlock ) :
-            tag = self.nonterm.tagline.tag
-        elif isinstance( self.nonterm, TagLine ) :
-            tag = self.nonterm.tag
-        if tag != None and tag.TAGCLOSE :
-            igen.indent()
-            igen.puttext( tag.closetag(igen) + '\n' )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -643,6 +636,10 @@ class TagBlock( NonTerminal ):
         igen.upindent( up=self.INDENT.dump(None) )
         self.siblings.generate( igen, *args, **kwargs )
         igen.downindent( down=self.DEDENT.dump(None) )
+        tag = self.tagline.tag
+        if tag.TAGCLOSE :
+            igen.indent()
+            igen.puttext( tag.closetag(igen) + '\n' )
         return None
 
     def dump( self, context ) :
@@ -1022,7 +1019,13 @@ class TagLine( NonTerminal ):
     def generate( self, igen, *args, **kwargs ):
         igen.comment( self.dump( Context() ))
         igen.indent()
-        NonTerminal.generate( self, igen, *args, **kwargs )
+        # Generate tag
+        children = filter( None, [self.tag, self.content] )
+        [ x.generate( igen, *args, **kwargs ) for x in children ]
+        # Generate closing tag
+        if isinstance( self.parent, Sibling ) and self.tag.TAGCLOSE :
+            igen.puttext( self.tag.closetag(igen) )
+        self.NEWLINES and self.NEWLINES.generate( igen, *args, **kwargs )
 
     def dump( self, context ) :
         return context.htmlindent + NonTerminal.dump( self, context )
@@ -1074,15 +1077,13 @@ class Textline( NonTerminal ):
 class Tag( NonTerminal ):
     """class to handle `tag` grammar."""
 
-    def __init__( self, parser, tagopen, specifiers, style, semicolon,
-                  attributes, tagend, tagclose ) :
+    def __init__( self, parser, tagopen, specifiers, style, attributes,
+                  tagend, tagclose ) :
         NonTerminal.__init__(
-            self, parser, tagopen, specifiers, style, semicolon, attributes,
-            tagend
+            self, parser, tagopen, specifiers, style, attributes, tagend
         )
         self._terms = \
-            self.TAGOPEN, self.SEMICOLON, self.TAGEND, self.TAGCLOSE = \
-                tagopen, semicolon, tagend, tagclose
+            self.TAGOPEN, self.TAGEND, self.TAGCLOSE = tagopen, tagend, tagclose
         self._nonterms = self.specifiers, self.style, self.attributes = \
             specifiers, style, attributes
         self._terms = filter( None, self._terms )
@@ -1091,8 +1092,8 @@ class Tag( NonTerminal ):
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.TAGOPEN, self.specifiers, self.style, self.SEMICOLON, 
-              self.attributes, self.TAGEND, self.TAGCLOSE )
+        x = ( self.TAGOPEN, self.specifiers, self.style, self.attributes,
+              self.TAGEND, self.TAGCLOSE )
         return filter( None, x )
 
     def generate( self, igen, *args, **kwargs ):
@@ -1113,7 +1114,7 @@ class Tag( NonTerminal ):
         igen.computetag()
 
     def closetag( self, igen ):
-        tagname = self.TAGOPEN.dump(None)[1:]
+        tagname = self.TAGOPEN.dump(None)[1:].rstrip(' ')
         return '</%s>' % tagname
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
@@ -1435,14 +1436,13 @@ class StyleContents( NonTerminal ):
     def generate( self, igen, *args, **kwargs ):
         contents = self.flatten()
         #contents = filter( lambda x : not isinstance(x, NEWLINES), contents )
-        text = '"'
+        text = ''
         for cont in contents :
-            if isinstance(cont, Exprs) :
+            if cont.exprs:
                 igen.puttext(text); cont.generate(igen, *args, **kwargs);
                 text = ''
             else :
                 text += cont.dump( Context() )
-        text += '"'
         text and igen.puttext(text)
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
@@ -1647,7 +1647,6 @@ class TAGEND( Terminal ) : pass
 class TAGCLOSE( Terminal ) : pass
 class OPENEXPRS( Terminal ) : pass
 class EQUAL( Terminal ) : pass
-class SEMICOLON( Terminal ) : pass
 class SQUOTE( Terminal ) : pass
 class DQUOTE( Terminal ) : pass
 class OPENBRACE( Terminal ) : pass

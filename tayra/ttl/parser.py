@@ -148,6 +148,8 @@ class TTLParser( object ):
     # ---------- Precedence and associativity of operators --------------------
 
     precedence = (
+        ('left', 'SPECIFIER'),
+        ('left', 'EQUAL')
     )
 
     def _buildterms( self, p, terms ) :
@@ -330,83 +332,83 @@ class TTLParser( object ):
     #---- Tag
 
     def p_tag_1( self, p ) :
-        """tag      : TAGOPEN specifiers style SEMICOLON attributes TAGEND"""
-        terms = [ (TAGOPEN,1), p[2], p[3], (SEMICOLON,4), p[5], (TAGEND,6), None ]
+        """tag      : TAGOPEN specifiers style attributes TAGEND"""
+        terms = [ (TAGOPEN,1), p[2], p[3], p[4], (TAGEND,5), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_2( self, p ) :
-        """tag      : TAGOPEN specifiers style SEMICOLON attributes TAGCLOSE"""
-        terms = [ (TAGOPEN,1), p[2], p[3], (SEMICOLON,4), p[5], None, (TAGCLOSE,6) ]
+        """tag      : TAGOPEN specifiers style attributes TAGCLOSE"""
+        terms = [ (TAGOPEN,1), p[2], p[3], p[4], None, (TAGCLOSE,5) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_3( self, p ) :
-        """tag      : TAGOPEN style SEMICOLON attributes TAGEND"""
-        terms = [ (TAGOPEN,1), None, p[2], (SEMICOLON,3), p[4], (TAGEND,5), None ]
+        """tag      : TAGOPEN style attributes TAGEND"""
+        terms = [ (TAGOPEN,1), None, p[2], p[3], (TAGEND,4), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_4( self, p ) :
-        """tag      : TAGOPEN style SEMICOLON attributes TAGCLOSE"""
-        terms = [ (TAGOPEN,1), None, p[2], (SEMICOLON,3), p[4], None, (TAGCLOSE,5) ]
+        """tag      : TAGOPEN style attributes TAGCLOSE"""
+        terms = [ (TAGOPEN,1), None, p[2], p[3], None, (TAGCLOSE,4) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_5( self, p ) :
-        """tag      : TAGOPEN specifiers SEMICOLON attributes TAGEND"""
-        terms = [ (TAGOPEN,1), p[2], None, (SEMICOLON,3), p[4], (TAGEND,5), None ]
+        """tag      : TAGOPEN specifiers attributes TAGEND"""
+        terms = [ (TAGOPEN,1), p[2], None, p[3], (TAGEND,4), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_6( self, p ) :
-        """tag      : TAGOPEN specifiers SEMICOLON attributes TAGCLOSE"""
-        terms = [ (TAGOPEN,1), p[2], None, (SEMICOLON,3), p[4], None, (TAGCLOSE,5) ]
+        """tag      : TAGOPEN specifiers attributes TAGCLOSE"""
+        terms = [ (TAGOPEN,1), p[2], None, p[3], None, (TAGCLOSE,4) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_7( self, p ) :
         """tag      : TAGOPEN specifiers style TAGEND"""
-        terms = [ (TAGOPEN,1), p[2], p[3], None,          None, (TAGEND,4), None ]
+        terms = [ (TAGOPEN,1), p[2], p[3], None, (TAGEND,4), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_8( self, p ) :
         """tag      : TAGOPEN specifiers style TAGCLOSE"""
-        terms = [ (TAGOPEN,1), p[2], p[3], None,          None, None, (TAGCLOSE,4) ]
+        terms = [ (TAGOPEN,1), p[2], p[3], None, None, (TAGCLOSE,4) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_9( self, p ) :
         """tag      : TAGOPEN style TAGEND"""
-        terms = [ (TAGOPEN,1), None, p[2], None,          None, (TAGEND,3), None ]
+        terms = [ (TAGOPEN,1), None, p[2], None, (TAGEND,3), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_10( self, p ) :
         """tag      : TAGOPEN style TAGCLOSE"""
-        terms = [ (TAGOPEN,1), None, p[2], None,          None, None, (TAGCLOSE,3) ]
+        terms = [ (TAGOPEN,1), None, p[2], None, None, (TAGCLOSE,3) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_11( self, p ) :
         """tag      : TAGOPEN specifiers TAGEND"""
-        terms = [ (TAGOPEN,1), p[2], None, None,          None, (TAGEND,3), None ]
+        terms = [ (TAGOPEN,1), p[2], None, None, (TAGEND,3), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_12( self, p ) :
         """tag      : TAGOPEN specifiers TAGCLOSE"""
-        terms = [ (TAGOPEN,1), p[2], None, None,          None, None, (TAGCLOSE,3) ]
+        terms = [ (TAGOPEN,1), p[2], None, None, None, (TAGCLOSE,3) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_13( self, p ) :
-        """tag      : TAGOPEN SEMICOLON attributes TAGEND"""
-        terms = [ (TAGOPEN,1), None, None, (SEMICOLON,2), p[3], (TAGEND,4), None ]
+        """tag      : TAGOPEN attributes TAGEND"""
+        terms = [ (TAGOPEN,1), None, None, p[2], (TAGEND,3), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_14( self, p ) :
-        """tag      : TAGOPEN SEMICOLON attributes TAGCLOSE"""
-        terms = [ (TAGOPEN,1), None, None, (SEMICOLON,2), p[3], None, (TAGCLOSE,4) ]
+        """tag      : TAGOPEN attributes TAGCLOSE"""
+        terms = [ (TAGOPEN,1), None, None, p[2], None, (TAGCLOSE,3) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_15( self, p ) :
         """tag      : TAGOPEN TAGEND"""
-        terms = [ (TAGOPEN,1), None, None, None,          None, (TAGEND,2), None ]
+        terms = [ (TAGOPEN,1), None, None, None, (TAGEND,2), None ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     def p_tag_16( self, p ) :
         """tag      : TAGOPEN TAGCLOSE"""
-        terms = [ (TAGOPEN,1), None, None, None,          None, None, (TAGCLOSE,2) ]
+        terms = [ (TAGOPEN,1), None, None, None, None, (TAGCLOSE,2) ]
         p[0] = Tag( p.parser, *self._buildterms(p, terms) )
 
     #---- Attributes
@@ -418,7 +420,7 @@ class TTLParser( object ):
         p[0] = Attributes( p.parser, *args )
 
     def p_attr( self, p ) :
-        """attr         : specifiers EQUAL smartstring"""
+        """attr         : specifiers EQUAL smartstring %prec EQUAL"""
         p[0] = Attr( p.parser, p[1], EQUAL(p.parser, p[2]), p[3] )
 
     #---- Content
@@ -458,11 +460,11 @@ class TTLParser( object ):
         p[0] = Specifiers( p.parser, None, None, p[1] )
 
     def p_specifiers_2( self, p ) :
-        """specifiers   : specifiers specifier"""
+        """specifiers   : specifiers specifier %prec SPECIFIER"""
         p[0] = Specifiers( p.parser, p[1], None, p[2] )
 
     def p_specifiers_3( self, p ) :
-        """specifiers   : specifiers whitespace specifier"""
+        """specifiers   : specifiers whitespace specifier %prec SPECIFIER"""
         p[0] = Specifiers( p.parser, p[1], p[2], p[3] )
 
     def p_specifier_1( self, p ) :

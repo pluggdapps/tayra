@@ -13,30 +13,20 @@ from   zope.component           import getUtility
 
 from   paste.util.import_string import eval_import
 from   tayra.ttl.interfaces     import ITayraTags
-from   tayra.ttl.lexer          import TTLLexer
 from   tayra.ttl.codegen        import InstrGen
-import tayra
-
-# Fetch all the tag handlers from registered plugins.
-tagplugins = dict([ 
-    ( name, (obj, obj.handlers()) )
-    for name, obj in tayra.plugins.get( ITayraTags, {} ).items()
-    if not isinstance( obj, list )
-])
+from   tayra.ttl                import tagplugins
 
 class StackMachine( dict ) :
     def __init__( self,
                   ifile,
-                  igen,
-                  tmpl,
-                  usetagplugins=[ 'html' ],
+                  compiler,
+                  usetagplugins=[ 'html', 'customhtml', 'forms' ],
                   encoding='utf-8'
                 ):
         self.taghandlers = {}
-        [ self.taghandlers.update( tagplugins[k][1] )
-          for k in usetagplugins ]
+        [ self.taghandlers.update( tagplugins[k][1] ) for k in usetagplugins ]
         self.bufstack = [ [] ]
-        self.ifile, self.usetagplugins, self.igen = ifile, usetagplugins, igen
+        self.ifile, self.usetagplugins, = ifile, usetagplugins
         self.encoding = 'utf-8'
         self.htmlindent = ''
 
@@ -83,41 +73,29 @@ class StackMachine( dict ) :
 
     def handletag( self, tagname, specifiers, style, attrs, tagfinish ) :
         """Entry point to handle tags"""
-        tagnm = tagname.strip(TTLLexer.whitespac)[1:]
-        handler = self.taghandlers.get( tagnm, None )
-        if handler :
-            html = handler( tagname, specifiers, style, attrs, tagfinish )
-            self.append( html )
-        else :
-            Exception( 'Handler not known for %r' % tagnm )
+        from   tayra.ttl.tags       import handle_default
+        tagnm = tagname.strip(' \t\r\n')[1:]
+        handler = self.taghandlers.get( tagnm, None ) or handle_default
+        self.append( handler( tagname, specifiers, style, attrs, tagfinish ))
 
-    def importas( self, ttlloc, modname ):
-        tmpl = self.tmpl( ttlloc )
-        igen = self.igen( tmpl.pyfile )
-        __m  = StackMachine( tmpl.ttlfile, igen, tmpl )
-        # import module
-        module = imp.new_module( modname )
-        code = tmpl.loadcode()
-        tmpl.execmod( module, code )
+    def importas( self, ttlloc ):
+        compiler = self.compiler( ttlloc )
+        module = compiler.execttl()
         return module
 
-    def inherit( self, ttlloc, currglobals ):
-        tmpl = self.tmpl( ttlloc )
-        modname = basename( tmpl.ttlfile ).split('.', 1)[0]
-        igen = self.igen( tmpl.pyfile )
-        __m  = StackMachine( tmpl.ttlfile, igen, tmpl )
+    def inherit( self, ttlloc, childglobals ):
+        compiler = self.compiler( ttlloc )
         # inherit module
-        module = imp.new_module( tmpl.modulename() )
-        currglobals['local'].parent = module
-        module.__dict__.update({ 
-            igen.machname : __m,
-            'self'   : currglobals['self'],
-            'local'  : module,
+        parent_context = {
+            compiler.igen.machname : __m,
+            'self'   : childglobals['self'],
             'parent' : None,
-            'next'   : currglobals['local'],
-        })
-        code = tmpl.loadcode()
-        tmpl.execmod( module, code )
+            'next'   : childglobals['local'],
+        }
+        module = compiler.execttl( context=parent_context )
+        childglobals['self'].__linkparent( Namespace( None, module ))
+        childglobals['local'].parent = module
+        return module
 
     def register( self, obj, interface, pluginname ):
         gsm.registerUtility( obj, interface, pluginname )
@@ -129,5 +107,29 @@ class StackMachine( dict ) :
         return fnhitched.__get__( obj, cls )
 
     def use( self, interface, pluginname='' ):
-        return tayra.queryplugin( interface, pluginname )
+        return tayra.query_ttlplugin( interface, pluginname )
 
+
+class Namespace( object ):
+    def __init__( self, parentnm, localmod ):
+        self._parentnm = parentnm
+        self._localmod = localmod
+
+    def __getattr__( self, name ):
+        if self._parentnm :
+            return self._localmod.get( name, self._parentnm.get( name, None ))
+        else :
+            return self._localmod.get( name, None )
+        
+    def __setattr__( self, name, value ):
+        if name in [ '_parentnm', '_localmod' ] :
+            self.__dict__[name] = value
+        else :
+            setattr( self._localmod, name, value )
+        return value
+
+    def __linkparent( self, parentnm ):
+        nm, parnm = self, self._parentnm
+        while parnm : nm, parnm = parnm, parnm._parentnm
+        nm._parentnm = parentnm
+        return parentnm

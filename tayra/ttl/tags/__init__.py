@@ -82,7 +82,7 @@ def stdspecifiers( spectokens ):
             specattrs.append( 'multiple="multiple"' )
             continue
         leftover.append( tok )
-    return leftover, specattrs
+    return filter(None, leftover), specattrs
 
 def composetag( tagopen, specattrs, style, attrs, tagfinish ):
     tagopen = tagopen.rstrip(' ')

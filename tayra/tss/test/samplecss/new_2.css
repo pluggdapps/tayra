@@ -1,0 +1,256 @@
+/* archive calendar */
+
+div.mainContent div.newsArchive {
+    }
+
+div.mainContent div.newsArchive div.title {
+    background: url(../images/main-content-bar.png?771) no-repeat;
+    padding: 6px 10px 7px 10px;
+    font-weight: bold;
+    line-height: 11px; }
+
+div.mainContent div.newsArchive div.archive {
+    margin: 5px 10px; }
+
+div.mainContent div.newsArchive div.archive table.years {
+    width: 100%; }
+
+div.mainContent div.newsArchive div.archive table.years td.year {
+    text-align: center;
+    vertical-align: top; }
+
+div.mainContent div.newsArchive div.archive table.years td.year div.year {
+    font-weight: bold }
+
+div.mainContent div.newsArchive div.archive table.years td.year ul.months {
+    margin: 0px;
+    padding: 0px; }
+
+div.mainContent div.newsArchive div.archive table.years td.year ul.months li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px; }
+
+div.mainContent div.newsArchive div.archive table.years td.year ul.months li span.empty {
+    color: #444; }
+
+
+/* news tags picker */
+
+div.newsTagPicker {
+    position: relative;
+    margin-bottom: 10px;
+    height: 24px;
+    background-image: url(../images/main-content-bar.png?771);
+    background-repeat: no-repeat; }
+
+div.newsTagPicker td.mainLabel {    
+    color: #AAA;
+    height: 24px;
+    padding-left: 10px; }
+    
+div.newsTagPicker td.pickerContainer {
+    height: 24px;
+    padding-left: 5px; }
+    
+div.newsTagPicker td.pickerContainer div.picker {
+    position: relative; }
+    
+div.newsTagPicker td.pickerContainer #newsPickerButton {
+    background-image: url(../images/arrow-down.png?771);
+    background-repeat: no-repeat;
+    background-position: 2px center;
+    padding-left: 16px; }
+
+div.newsTagPicker td.pickerContainer div.picker div.button {
+    cursor: pointer; }
+
+div.newsTagPicker td.pickerContainer div.picker table.dropdownMenu {
+    display: none;
+    left: -24px;
+    top: 14px; }
+
+div.newsTagPicker td.pickerContainer div.picker table.dropdownMenu td.shadow12 {
+    background-position: -480px 0px; }
+
+div.newsTagPicker td.pickerContainer div.picker span.saving {
+    display: inline-block;
+    background-image: url(../images/ajax-loader-selftimer-333.gif?771);
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 25px;
+    line-height: 16px; }
+
+div.newsTagPicker td.pickerContainer div.picker div.buttons span.textButton {
+    cursor: pointer; }
+
+div.newsTagPicker td.pickerContainer div.picker div.buttons span.textButton:hover {
+    color: #BBB; }
+    
+div.newsTagPicker td.pickerContainer div.picker div.basicMode {
+    }
+
+div.newsTagPicker td.pickerContainer div.picker div.basicMode div.tags {
+    padding: 4px; }
+
+div.newsTagPicker td.pickerContainer div.picker div.basicMode div.tags div.tag {
+    padding: 1px 0px 1px 0px;
+    white-space: nowrap; }
+
+div.newsTagPicker td.pickerContainer div.picker div.basicMode div.tags div.tag span {
+    cursor: pointer; }
+
+div.newsTagPicker td.pickerContainer div.picker div.basicMode div.buttons {
+    padding: 5px 4px 2px 5px; }
+
+div.newsTagPicker td.pickerContainer div.picker {
+    }
+    
+div.newsTagPicker td.pickerContainer div.picker div.advancedMode div.tags {
+    padding: 5px; }
+
+div.newsTagPicker td.pickerContainer div.picker div.advancedMode div.tags td.checkbox {
+    padding: 2px 0px 2px 0px; }
+
+div.newsTagPicker td.pickerContainer div.picker div.advancedMode div.tags td.checkbox input {
+    margin: 0px; }
+
+div.newsTagPicker td.pickerContainer div.picker div.advancedMode div.tags td.tag {
+    padding: 0px 0px 2px 5px;
+    white-space: nowrap; }
+
+div.newsTagPicker td.pickerContainer div.picker div.advancedMode div.buttons {
+    padding: 5px 5px 0px 5px; }
+
+div.newsTagPicker a.rss {
+    position: absolute;
+    right: 4px;
+    top: 4px; }
+
+
+/* news list */
+
+div.mainContent div.news {
+    }
+
+div.mainContent div.news div.day {
+    clear: both;
+    /*position: relative;*/ }
+
+div.mainContent div.news div.day div.calendar {
+    background-image: url(../images/news-calendar.png?771);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    float:left;
+    overflow: hidden; }
+
+div.mainContent div.news div.day div.calendar span.month {
+    display: block;
+    width: 40px;
+    text-align: center;
+    line-height: 100%;
+    padding-top: 2px;
+    padding-bottom: 2px; }
+
+div.mainContent div.news div.day div.calendar span.dayOfMonth {
+    color: #222;
+    display: block;
+    width: 40px;
+    text-align: center;
+    line-height: 100%;
+    padding-top: 3px;
+    font-size: 18px;
+    font-weight: bold; }
+
+div.mainContent div.news div.day div.articles div.article {
+    border-top: 1px dotted #666;
+    margin-left: 60px; }
+
+div.mainContent div.news div.day div.articles div.article div.headline {
+    padding-top: 5px; }
+
+div.mainContent div.news div.day div.articles div.article div.headline span.title {
+    font-size: 14px;
+    font-weight: bold; }
+
+div.mainContent span.tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    color: White;
+    padding: 2px 4px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px; }
+    
+div.mainContent span.tag.tagNewCamerasAndLenses {
+    background-color: #5481AB; }
+    
+div.mainContent span.tag.tagOtherNews  {
+    background-color: #647D95; }
+    
+div.mainContent span.tag.tagReviewsAndPreviews {
+    background-color: #A01D28; }
+    
+div.mainContent span.tag.tagSampleGalleries  {
+    background-color: #A08F3B; }
+    
+div.mainContent span.tag.tagFeaturesAndArticles {
+    background-color: #852C7F; }
+    
+div.mainContent span.tag.tagFirmwareAndSoftwareUpdates {
+    background-color: #1861A0; }
+    
+div.mainContent span.tag.tagSiteNews {
+    background-color: #08A089; }
+
+div.mainContent div.news div.day div.articles div.article div.bodytext {
+    padding-top: 2px;
+    padding-bottom: 15px;
+    font-size:12px; }
+
+div.mainContent div.news div.day div.articles div.article div.bodytext img {
+    margin-left: 10px;
+    margin-bottom: 15px; }
+
+div.mainContent div.news div.day div.articles div.article div.bodytext span.timeOfPublication {
+    color: #888; }
+    
+div.mainContent div.news div.noNews {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #666;
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom:10px; }
+
+
+/* news detail */
+
+h1.news {
+    margin-bottom: 3px; }
+
+div.mainContent div.newsHeader {
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666; }
+    
+div.mainContent div.newsHeader span.posted {
+    margin-top: 2px;
+    color: #AAA; }
+    
+    
+/* keyword list */
+
+table.keywords {
+    margin-left: auto;
+    margin-right: auto; }
+    
+table.keywords td {
+    text-align: center;
+    width: 140px;
+    padding: 5px 0px;
+    background-color: #555; }

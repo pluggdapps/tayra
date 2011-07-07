@@ -37,6 +37,8 @@ def _option_parse() :
                        help='Generate python executable' )
     parser.add_option( '-x', action='store_true', dest='execute',
                        help='Executable and generate html' )
+    parser.add_option( '-c', dest='context', default='{}',
+                       help='Context for template' )
     parser.add_option( '-g', dest='debug', default='0',
                        help='Debug level for PLY parser' )
     parser.add_option( '--version', action='store_true', dest='version',
@@ -53,10 +55,12 @@ def main() :
         print tayra.__version__
 
     elif args and isfile( args[0] ) :
-        tayra.ttl.render( args[0], inplace=True,
-                          debuglevel=int(options.debug),
-                          show=options.show,
-                          dump=options.dump,
-                        )
+        tayra.ttl.ttl_cmdline(
+            args[0],
+            context=options.context,
+            debuglevel=int(options.debug),
+            show=options.show,
+            dump=options.dump,
+        )
 if __name__ == '__main__' :
     main()

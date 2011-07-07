@@ -1,118 +1,54 @@
-import imp
-from   os.path                  import isfile, abspath, basename
+import imp, os, stat, posixpath, re
+from   os.path                  import isfile, abspath, basename, join
 from   hashlib                  import sha1
 from   StringIO                 import StringIO
 
+from   tayra.ttl                import initplugins
 from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
 
-CODECACHE = {}
-
 class Compiler( object ):
+    _memcache = {}
 
     def __init__( self,
-                  ttlloc,
-                  ttlparser=None,
-                  igen=None,
+                  ttllookup,
+                  # Template options
+                  ttlconfig={},
                   # TTLParser options
+                  ttlparser=None,
                   # InstrGen options
-                  pyfile=None,
-                  htmlfile=None,
-                  ttldir=None,
-                  cachedir=None,
+                  igen=None,
                 ):
-        self.ttlloc, self.ttldir, self.cachedir = ttlloc, ttldir, cachedir
-        self.tmplcache = join( cachedir, 'ttltemplates' ) if cachedir else None
+        self.ttllookup = ttllookup if isinstance(ttllookup, TemplateLookup) \
+                         else TemplateLookup(ttllookup, ttlconfig)
+        self.ttlfile, self.pyfile = self.ttllookup.ttlfile, self.ttllookup.pyfile
+        self.ttltext = None
         # Parser phase
-        self.ttlfile = self._locatettl()
-        self.ttltext = open( self.ttlfile ).read()
-        self.hashttl = sha1( self.ttltext ).hexdigest()
         self.ttlparser = ttlparser or TTLParser()
         # Instruction generation phase
-        self.pyfile, self.pytext = self._locatepy( self.tmplcache, self.ttlloc
-                                   ) if pyfile else (None, None)
         self.pyfd = open( pyfile, 'w' ) if self.pyfile else StringIO()
         self.igen = igen or InstrGen( self.pyfd )
-        self.pytext, self.code = None, None
-        # Execution and translation phase -> to html
-        if htmlfile :
-            self.htmlfile = htmlfile
-        elif isinstance( self.pyfile, basestring ) :
-            self.htmlfile = self.pyfile.rsplit( '.', 2 )[0] + '.html'
-        else :
-            self.htmlfile = None
-        self.htmlfd = open( htmlfile, 'w' ) if self.htmlfile else None
+        # Initialize plugins
+        initplugins( ttlconfig )
 
-
-    def __call__( self, ttlloc ):
-        clone = Template( ttlloc, self.ttlparser, self.ttldir, self.cachedir )
+    def __call__( self, ttllookup ):
+        clone = Compiler(
+                    ttllookup,
+                    ttlparser=self.ttlparser,
+                    igen=self.igen
+                )
         return clone
-        
-
-    def _locatepy( self, tmplcache, ttlloc ):
-        pyfile, uri = None, ttlloc
-        if tmplcache :
-            # Locate the python file from disk cache-directory
-            ttlloc_ = uri[1:] if uri.startswith('/') else uri 
-            pyfile = join( tmplcache, ttlloc_+'.py' )
-            if isfile( pyfile ):
-                # Check whether the python intermediate file is not outdated
-                pytext = open( pyfile ).read()
-                s = re.search( r"__ttlhash = '([0-9a-f])'\n", pytext )
-                try :
-                    hashval = int( s.groups[0], 16 )
-                    if self.hashttl == hashval : return (pyfile, pytext)
-                except : pass
-        return (None, None)
-
-
-    def _locatettl( self ):
-        uri = self.ttlloc
-        if isfile( abspath( uri )) :
-            return uri
-        elif uri.startswith('/') :
-            ttlfile = join(self.ttldir, uri[1:]) if self.ttldir else uri
-            if not isfile(ttlfile) :
-                raise Exception( 'TTL file not found %r' % uri )
-        else :
-            try :
-                mod, loc = uri.split(':', 1)
-                _file, path, _descr = imp.find_module( mod )
-                ttlfile = join( path, parts[1] )
-            except :
-                raise Exception( 'Error locating TTL file %r' % uri )
-        return ttlfile if isfile(ttlfile) else None
-
-
-    def ttl2code( self ):
-        """Code loading involves, picking up the intermediate python file from
-        the cache (if disk persistence is enabled and the file is available)
-        or, generate afresh using `igen` Instruction Generator.
-        """
-        filename = self.pyfile or self.ttlfile+'.py'
-        # Fetch the code from in-memory cache
-        if self.hashttl in CODECACHE :
-            _, self.code = CODECACHE[self.hashttl]
-        # Generate afresh from the ttl-file
-        elif not self.pytext :
-            self.pytext = self.topy()
-            CODECACHE[self.hashttl] = ( self.ttlfile, self.code )
-            self.code = compile(self.pytext, filename, 'exec')
-        self.pyfile and open( self.pyfile, 'w' ).write( self.pytext )
-        return self.code
-
 
     def execttl( self, code=None, context={} ):
         """Execute the template code (python compiled) under module's context
-        `module`. If `code` is None, it will generated from the
-        ttl translated file.
+        `module`.
         """
         # Stack machine
         __m  = StackMachine( self.ttlfile, self )
         # Module instance for the ttl file
-        module = imp.new_module( self.modulename() )            
-        module.__dict__.update({ 
+        module = imp.new_module( self.modulename )
+        module.__dict__.update({
             self.igen.machname : __m,
             'self'   : Namespace( None, module ),
             'local'  : module,
@@ -126,21 +62,105 @@ class Compiler( object ):
         exec code in module.__dict__, module.__dict__
         return module
 
+    def ttl2code( self, pyfile=None, pytext=None ):
+        """Code loading involves, picking up the intermediate python file from
+        the cache (if disk persistence is enabled and the file is available)
+        or, generate afresh using `igen` Instruction Generator.
+        """
+        if pytext :
+            code = compile( pytext, pyfile or self.ttlfile, 'exec' )
+            return code
+
+        code = self._memcache.get( self.ttlfile, None )
+        if code == None and self.pyfile :
+            pytext = open(self.pyfile).read()
+            code = compile( pytext, self.pyfile, 'exec')
+        elif code == None :
+            pytext = self.topy()
+            code = compile( pytext, self.ttlfile, 'exec')
+        return code
 
     def toast( self ):
-        tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
+        tu = None
+        if self.ttlfile and self.ttltext :
+            tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
+        elif self.ttlfile :
+            self.ttltext = open( self.ttlfile ).read()
+            tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
         return tu
-
 
     def topy( self, *args, **kwargs ):
         tu = self.toast()
-        tu.preprocess( self.igen )                # Pre-process with igen
-        tu.generate( self.igen, *args, **kwargs ) # Generate intermediate python
-        return self.igen.codetext()
+        if tu :
+            tu.preprocess( self.igen )
+            tu.generate( self.igen, *args, **kwargs )
+            return self.igen.codetext()
+        else :
+            return None
+
+    modulename = property(lambda s : basename( s.ttlfile ).split('.', 1)[0] )
 
 
-    def modulename( self ):
-        return basename( self.ttlfile ).split('.', 1)[0]
+
+class TemplateLookup( object ) :
+    TTLCONFIG = [
+        ('directories', []),
+        ('module_directory',None),
+        ('devmod',True)
+    ]
+    def __init__( self, ttlloc, ttlconfig ):
+        [ setattr( self, k, ttlconfig.get(k, default) )
+          for k, default in self.TTLCONFIG ]
+        self.ttlloc = os.sep.join(ttlloc) if hasattr(ttlloc, '__iter__') else ttlloc
+        self.directories = [ d.rstrip(' \t/') for d in self.directories ]
+        self.ttlfile = self._locatettl()
+        self.pyfile = self._locatepy()
+
+    def _locatettl( self ):
+        uri = self.ttlloc
+        # If uri is simple absoulte path
+        if isfile( abspath( uri )) :
+            return uri
+        # If uri is provided in asset specification format
+        try :
+            mod, loc = uri.split(':', 1)
+            _file, path, _descr = imp.find_module( mod )
+            ttlfile = join( path.rstrip(os.sep), loc )
+            return ttlfile
+        except :
+            pass
+        # If uri is relative to one of the template directories
+        if uri.startswith('/') :
+            files = filter( 
+                lambda f : isfile(f),
+                [ join(d, uri) for d in self.directories ]
+            )
+            return files[0]
+        raise Exception( 'Error locating TTL file %r' % uri )
+
+    def _locatepy( self ):
+        ttlloc = self.ttlloc[1:] if self.ttlloc.startswith('/') else self.ttlloc
+        pyfile = join( self.module_directory, ttlloc+'.py' 
+                 ) if self.module_directory else None
+        # Check whether the python intermediate file is not outdated, in devmod
+        if pyfile and self.devmod and isfile( pyfile ) :
+            ttltext, pytext = open(self.ttlfile).read(), open(pyfile).read()
+            hashref = sha1( ttltext ).hexdigest()
+            s = re.search( r"__ttlhash = '([0-9a-f])'\n", pytext )
+            try :
+                hashval = int( s.groups[0], 16 )
+                if hashref == hashval : return pyfile
+            except : pass
+        elif pyfile and isfile(pyfile) :
+            return pyfile
+        else :
+            return None
+
+    def modcachepy( self, pytext ):
+        if self.pyfile :
+            open( pyfile, 'w' ).write( pytext )
+            return len(pytext)
+        return None
 
 
 def supermost( module ):

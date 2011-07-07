@@ -117,9 +117,11 @@ class Namespace( object ):
 
     def __getattr__( self, name ):
         if self._parentnm :
-            return self._localmod.get( name, self._parentnm.get( name, None ))
+            return getattr(
+                self._localmod, name, getattr( self._parentnm, name, None )
+           )
         else :
-            return self._localmod.get( name, None )
+            return getattr( self._localmod, name, None )
         
     def __setattr__( self, name, value ):
         if name in [ '_parentnm', '_localmod' ] :

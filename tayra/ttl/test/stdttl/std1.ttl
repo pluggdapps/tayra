@@ -14,5 +14,5 @@
 <html#std1.testcase.sample { color: red; font-size : ${z*2}px } title="hello world">
   <head/>
   <body>
-    <abbr "World Health Organisation"> WHO
+    <abbr "World Health Organization"> WHO
     <button#id_ reset disabled makefriend "button value"/>

@@ -1,7 +1,7 @@
 import time, imp
 from   StringIO                 import StringIO
 
-from   zope.component           import getGlobalSiteManager
+from   zope.component           import getGlobalSiteManager, queryUtility
 import pkg_resources            as pkg
 
 import tayra.ttl.tags.html
@@ -28,70 +28,69 @@ def findttls():
     return [ ( pkgname, ep.load().implementers() )
              for pkgname, ep in entrypoints.items() ]
 
-def loadttls( ttllocs ):
+def loadttls( ttllocs, ttlconfig, context={} ):
     """Only when the plugins are compile and loaded, it is available for rest
     of the system.
     """
-    [ Compiler( ttlloc ).execttl() for ttllocs in ttllocs ]
+    from   tayra.ttl.compiler       import Compiler, TemplateLookup
+    [ Compiler( TemplateLookup( ttlloc, ttlconfig )).execttl( context=context )
+      for ttllocs in ttllocs ]
 
-def runplugins():
+plugins = {}
+tagplugins = {}
+def initplugins( ttlconfig ):
     """Collect and organize Tayra template plugins"""
-    loadttls( findttls() )
+    global plugins, tagplugins
+
+    loadttls( findttls(), ttlconfig )
     gsm = getGlobalSiteManager()
-    plugins = {}
     for x in gsm.registeredUtilities() :
         z = plugins.setdefault( x.provided, {} )
         if x.name :
             z.setdefault( x.name, x.component )
         else :
             z.setdefault( x.name, [] ).append( x.component )
+    # Gather plugins for template tag handlers
+    [ tagplugins.setdefault( name, (obj, obj.handlers()) )
+      for name, obj in plugins.get( ITayraTags, {} ).items()
+      if not isinstance( obj, list )
+    ]
+    # Gather plugins for filters
+    # Gather plugins for filter-blocks
     return plugins
 
 def query_ttlplugin( interface, name='' ) :
     return plugins[interface][name]
 
-# Dictionary of all globally registered plugins
-plugins = runplugins()
-
-# Dictionary of tag plugins
-tagplugins = dict([
-    ( name, (obj, obj.handlers()) )
-    for name, obj in plugins.get( ITayraTags, {} ).items()
-    if not isinstance( obj, list )
-])
 
 #---- APIs for executing Tayra Template Language
 
-def render( ttlloc,
-            ttldir=None,
-            cachedir=None, 
-            # Command line
-            inplace=False,
-            debuglevel=0,
-            show=True,
-            dump=True,
-          ):
-    from   tayra.ttl.compiler       import Compiler, supermost
-    if inplace :    # For command line execution
-        ttl_cmdline( ttlloc, debuglevel, show, dump )
-        return None
-    else :
-        ttlparser = TTLParser( debug=debuglevel )
+class Renderer( object ):
+    def __init__( self, ttlloc, ttlconfig ):
+        self.ttlloc, self.ttlconfig = ttlloc, ttlconfig
+
+    def __call__( self, entry=None, context={} ):
+        from   tayra.ttl.compiler       import Compiler, TemplateLookup
+        ttlparser = TTLParser()
         compiler = Compiler(
-            ttlloc, ttlparser=ttlparser, ttldir=ttldir, cachedir=cachedir
+            self.ttlloc, ttlconfig=self.ttlconfig, ttlparser=ttlparser
         )
-        module = compiler.execttl()
+        module = compiler.execttl( context=context )
         # Fetch parent-most module
-        supermod = supermost( module )
-        body = supermod.__dict__.pop( 'body' )
-        html = body()
+        entry = getattr( module.self, entry or 'body' )
+        html = entry()
         return html
 
-def ttl_cmdline( ttlloc, debuglevel, show, dump ):
-    from   tayra.ttl.compiler       import Compiler, supermost
+def ttl_cmdline( ttlloc, **kwargs ):
+    from   tayra.ttl.compiler       import Compiler, TemplateLookup
+    context = eval( kwargs.pop( 'context', '{}' ))
+    debuglevel = kwargs.pop( 'debuglevel', True )
+    show = kwargs.pop( 'show', True )
+    dump = kwargs.pop( 'dump', True )
+    ttlconfig = kwargs  # directories, module_directory, devmod
     ttlparser = TTLParser( debug=debuglevel )
-    compiler = Compiler( ttlloc, ttlparser=ttlparser )
-    pyfile, ttltext = (compiler.ttlfile+'.py'), open(compiler.ttlfile).read()
+    compiler = Compiler( ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
+    pyfile = compiler.ttlfile+'.py'
     htmlfile = compiler.ttlfile.rsplit('.', 1)[0] + '.html'
     if debuglevel :
         print "AST tree ..."
@@ -103,14 +102,14 @@ def ttl_cmdline( ttlloc, debuglevel, show, dump ):
     elif dump :
         tu = compiler.toast()
         rctext =  tu.dump()
-        if rctext != compiler.ttltext : print "Mismatch ..."
+        if rctext != open( compiler.ttlfile ).read() : print "Mismatch ..."
         else : print "Success ..."
     else :
         print "Generating py / html file ... "
-        module = compiler.execttl()
-        open(pyfile, 'w').write(compiler.pytext)
+        pytext = compiler.topy()
+        code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
+        module = compiler.execttl( code )
+        open(pyfile, 'w').write(pytext)
         # Fetch parent-most module
-        supermod = supermost( module )
-        body = supermod.__dict__.pop( 'body' )
-        html = body()
+        html = module.self.body()
         open(htmlfile, 'w').write(html)

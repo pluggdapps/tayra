@@ -15,6 +15,10 @@ sdist :
 upload : 
 	python ./setup.py bdist_egg register upload --show-response 
 	
+vimplugin :
+	rm -rf ./vim-plugin/vim-tayra.tar.gz
+	cd ./vim-plugin; tar cvfz ./vim-tayra.tar.gz *
+
 cleanall : clean
 	rm -rf tayra-env
 
@@ -26,5 +30,3 @@ clean :
 	rm -rf `find ./ -name "*.pyc"`;
 	rm -rf `find ./ -name "yacctab.py"`;
 	rm -rf `find ./ -name "lextab.py"`;
-
-

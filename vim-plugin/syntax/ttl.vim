@@ -44,7 +44,7 @@ syn region  prolog          start="^@[!ibu]" end=";[ \t]*$" contains=prologKeywo
 
 " Textline
 syn match   textLine        "^[^<:@#!].*$" contains=pythonExprs
-syn match   textSuffix      contained ">.\+$" contains=pythonExprs
+syn region  textSuffix      contained start=+>+ms=s+1 end="$" contains=pythonExprs
 
 " Tagblock
 syn region  ttlString       contained start=+"+ end=+"+ contains=ttlSpecialChar,javaScriptExpression,
@@ -73,17 +73,17 @@ syn region  pythonStatement start="^[ \t]*\$[^{]" end="$" contains=@Python
 syn region  pythonExprs     contained start="\${" end="}" contains=@Python
 
 " Embedded CSS
-syn include @htmlCss            syntax/css.vim
-unlet b:current_syntax
-syn match htmlCssStyleComment   contained "\(<!--\|-->\)"
-syn region cssStyle             start=+[ \t]*<style+ keepend end=+[ \t]*[<@$:]+me=e-1 contains=ttlTag,@htmlCss
+"syn include @htmlCss            syntax/css.vim
+"unlet b:current_syntax
+"syn match htmlCssStyleComment   contained "\(<!--\|-->\)"
+"syn region cssStyle             start=+[ \t]*<style+ keepend end=+[ \t]*[<@$:]+me=e-1 contains=ttlTag,@htmlCss
 "syn region htmlCssDefinition matchgroup=htmlArg start='style="' keepend matchgroup=htmlString end='"' contains=css.*Attr,css.*Prop,cssComment,cssLength,cssColor,cssURL,cssImportant,cssError,cssString,@htmlPreproc
-TTLHiLink htmlStyleArg htmlString
-
+"TTLHiLink htmlStyleArg htmlString
+"
 " Embedded Javascript
-syn include @htmlJavaScript     syntax/javascript.vim
-unlet b:current_syntax
-syn region  javaScript          start=+[ \t]*<script+ keepend end=+[ \t]*[<@$:]+me=s-1 contains=ttlTag,@htmlJavaScript,
+"syn include @htmlJavaScript     syntax/javascript.vim
+"unlet b:current_syntax
+"syn region  javaScript          start=+[ \t]*<script+ keepend end=+[ \t]*[<@$:]+me=s-1 contains=ttlTag,@htmlJavaScript,
                                 \ htmlCssStyleComment
 
 TTLHiLink ttlSpecialChar    Special

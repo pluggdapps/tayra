@@ -83,7 +83,7 @@ class Renderer( object ):
 
 def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.ttl.compiler       import Compiler, TemplateLookup
-    context = eval( kwargs.pop( 'context', '{}' ))
+    args = eval( kwargs.pop( 'args', '[]' ))
     debuglevel = kwargs.pop( 'debuglevel', True )
     show = kwargs.pop( 'show', True )
     dump = kwargs.pop( 'dump', True )
@@ -111,5 +111,5 @@ def ttl_cmdline( ttlloc, **kwargs ):
         module = compiler.execttl( code )
         open(pyfile, 'w').write(pytext)
         # Fetch parent-most module
-        html = module.self.body()
+        html = module.self.body(*args)
         open(htmlfile, 'w').write(html)

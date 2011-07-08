@@ -44,7 +44,7 @@ syn region  prolog          start="^@[!ibu]" end=";[ \t]*$" contains=prologKeywo
 
 " Textline
 syn match   textLine        "^[^<:@#!].*$" contains=pythonExprs
-syn match   textSuffix      contained ">.+$" contains=pythonExprs
+syn match   textSuffix      contained ">.\+$" contains=pythonExprs
 
 " Tagblock
 syn region  ttlString       contained start=+"+ end=+"+ contains=ttlSpecialChar,javaScriptExpression,
@@ -55,7 +55,7 @@ syn match   ttlValue        contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1 contains=
                             \ pythonExprs,@ttlPreproc
 syn match   ttlTagN         contained "<\s*[-a-zA-Z0-9_#.]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
 syn region  ttlTag          start=+^[ \t]*<[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlValue,ttlTagError,
-                            \ ttlEvent,ttlCssDefinition,pythonExprs,@ttlPreproc
+                            \ textSuffix,ttlEvent,ttlCssDefinition,pythonExprs,@ttlPreproc
 
 " Function block
 syn region  funcLine        start=+^[ \t]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
@@ -69,8 +69,22 @@ syn region  forLine         start=+^[ \t]*@for+   end=+:[ \t]*$+ contains=contro
 syn region  whileLine       start=+^[ \t]*@while+ end=+:[ \t]*$+ contains=controlKeywords,@Python
 
 " Statement, Expression
-syn region  pythonStatement start="^[ \t]*\$[^{]"hs=s+1 end="$" contains=@Python
+syn region  pythonStatement start="^[ \t]*\$[^{]" end="$" contains=@Python
 syn region  pythonExprs     contained start="\${" end="}" contains=@Python
+
+" Embedded CSS
+syn include @htmlCss            syntax/css.vim
+unlet b:current_syntax
+syn match htmlCssStyleComment   contained "\(<!--\|-->\)"
+syn region cssStyle             start=+[ \t]*<style+ keepend end=+[ \t]*[<@$:]+me=e-1 contains=ttlTag,@htmlCss
+"syn region htmlCssDefinition matchgroup=htmlArg start='style="' keepend matchgroup=htmlString end='"' contains=css.*Attr,css.*Prop,cssComment,cssLength,cssColor,cssURL,cssImportant,cssError,cssString,@htmlPreproc
+TTLHiLink htmlStyleArg htmlString
+
+" Embedded Javascript
+syn include @htmlJavaScript     syntax/javascript.vim
+unlet b:current_syntax
+syn region  javaScript          start=+[ \t]*<script+ keepend end=+[ \t]*[<@$:]+me=s-1 contains=ttlTag,@htmlJavaScript,
+                                \ htmlCssStyleComment
 
 TTLHiLink ttlSpecialChar    Special
 TTLHiLink comment           Comment

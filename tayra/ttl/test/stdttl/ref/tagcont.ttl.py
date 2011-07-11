@@ -1,0 +1,166 @@
+# -*- encoding:utf-8 -*-
+
+from   StringIO             import StringIO
+from   zope.interface       import implements
+from   zope.component       import getGlobalSiteManager
+import tayra
+from   tayra.ttl.runtime    import StackMachine
+
+
+
+__m.extend( ['<!--', "\nThis file is subject to the terms and conditions defined in\nfile 'LICENSE', which is part of this source code package.\nCopyright (c) 2009 SKR Farms (P) LTD.\n"] )
+__m.extend( ['-->\n\n', '<!--', ' body definition ', '-->\n', '    \n', '<!--', ' Doctype prolog ', '-->\n', '   \n', "<?xml version='' encoding='' ?>\n"] )
+__m.extend( ['<!DOCTYPE html>\n'] )
+__m.extend( ['\n'] )
+def body( x=10, y=10, a="cls2 ", b="cls3" ) :  
+  __m.extend( ['<!--', ' Statemtn ', '-->\n'] )
+  m = 10
+  __m.extend( ['   \n', '<!--', ' Html file starts here ', '-->\n'] )
+  # <html>
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<html', '', '', '', '>'] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['\n'] )
+  __m.upindent( up='  ' )
+  b = 'hello'   
+  # ${x+y}
+  __m.indent()
+  __m.append( str(x+y) )
+  __m.extend( ['\n'] )
+  # <head#headid.cls1.${a.strip(   )} "title" {color:red} lang="en"    data="hello">
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<head'] )
+  __m.pushbuf()
+  __m.extend( ['#headid.cls1.'] )
+  __m.append( str(a.strip(  )) )
+  __m.extend( [' '] )
+  __m.pushbuf()
+  __m.extend( ['"', 'title', '"'] )
+  __m.append( __m.popbuftext() )
+  __m.append( __m.popbuftext() )
+  __m.pushbuf()
+  __m.extend( ['color:red'] )
+  __m.append( __m.popbuftext() )
+  __m.pushbuf()
+  __m.pushbuf()
+  __m.extend( ['lang', '='] )
+  __m.pushbuf()
+  __m.extend( ['"', 'en', '"'] )
+  __m.append( __m.popbuftext() )
+  __m.append( __m.popbuftext() )
+  __m.pushbuf()
+  __m.extend( ['data', '='] )
+  __m.pushbuf()
+  __m.extend( ['"', 'hello', '"'] )
+  __m.append( __m.popbuftext() )
+  __m.append( __m.popbuftext() )
+  __m.append( __m.popbuf() )
+  __m.extend( ['>'] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['\n'] )
+  __m.upindent( up='  ' )
+  # <title#titleid .cls1 "title        string"> hello ${a} @ ! # "helo" 'world "ok
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<title'] )
+  __m.pushbuf()
+  __m.extend( ['#titleid', ' ', '.cls1', ' '] )
+  __m.pushbuf()
+  __m.extend( ['"', 'title', ' ', '\n', '      ', 'string', '"'] )
+  __m.append( __m.popbuftext() )
+  __m.append( __m.popbuftext() )
+  __m.extend( ['', '', '> '] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['hello ${a} @ ! # "helo" \'world "ok', '\n'] )
+  __m.indent()
+  __m.extend( ['</title>\n'] )
+  __m.downindent( down='  ' )
+  __m.indent()
+  __m.extend( ['</head>\n'] )
+  # <body>
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<body', '', '', '', '>'] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['\n'] )
+  __m.upindent( up='  ' )
+  # <h1 { color : red; border : 1px solid gray;     }/> I am the space station ${ "These "} seven cameras     <!-- comment1    comment -->
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<h1 ', ''] )
+  __m.pushbuf()
+  __m.extend( [' color : red;\nborder : 1px solid gray;\n    '] )
+  __m.append( __m.popbuftext() )
+  __m.extend( ['', '/> '] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['I am the space station ${ "These "} seven cameras', '\n', '    <!--', ' comment1\n   comment ', '-->\n'] )
+  # have a zoom range 
+  __m.indent()
+  __m.extend( ['have a zoom range ', '\n'] )
+  # <p first     second> of any 12x or more,     <!-- comment1        comment -->
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<p '] )
+  __m.pushbuf()
+  __m.extend( ['first', '\n', '    ', 'second'] )
+  __m.append( __m.popbuftext() )
+  __m.extend( ['', '', '> '] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['of any 12x or more,', '\n', '    <!--', ' comment1\n       comment ', '-->\n'] )
+  __m.indent()
+  __m.extend( ['</p>\n'] )
+  # and some of the wide-angle view 
+  __m.indent()
+  __m.extend( ['and some of the wide-angle view ', '\n'] )
+  # <div> of good. They also have a
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<div', '', '', '', '> '] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['of good. They also have a', '\n'] )
+  __m.upindent( up='  ' )
+  # lot of image stabilization (either optical or mechanical), which is 
+  __m.indent()
+  __m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n'] )
+  # important for people who are with a powerful zoom lens. Some other
+  __m.indent()
+  __m.extend( ['important for people who are with a powerful zoom lens. Some other', '\n'] )
+  __m.downindent( down='  ' )
+  __m.indent()
+  __m.extend( ['</div>\n'] )
+  # important features thatThese cameras contain electronic viewfinder,       <!-- comment1 comment -->
+  __m.indent()
+  __m.extend( ['important features thatThese cameras contain electronic viewfinder,', '\n', '      <!--', ' comment1 comment ', '-->\n\n'] )
+  __m.downindent( down='  ' )
+  __m.indent()
+  __m.extend( ['</body>\n'] )
+  # full control while shooting. In general, these cameras are all seem 
+  __m.indent()
+  __m.extend( ['full control while shooting. In general, these cameras are all seem ', '\n'] )
+  __m.upindent( up='  ' )
+  # very similar.   
+  __m.indent()
+  __m.extend( ['very similar.', '\n', '  \n'] )
+  # <p#${b}> Sign my guestbook
+  __m.indent()
+  __m.pushbuf()
+  __m.extend( ['<p'] )
+  __m.pushbuf()
+  __m.extend( ['#'] )
+  __m.append( str(b) )
+  __m.append( __m.popbuftext() )
+  __m.extend( ['', '', '> '] )
+  __m.handletag( *__m.popbuf() )
+  __m.extend( ['Sign my guestbook', '\n'] )
+  __m.indent()
+  __m.extend( ['</p>\n'] )
+  __m.downindent( down='  ' )
+  __m.downindent( down='  ' )
+  __m.indent()
+  __m.extend( ['</html>\n'] )
+  return __m.popbuftext()
+
+__ttlhash = '510d0c5b8e5a7c6ce642741000eaecfadd3e71be'
+__ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/ttl/test/stdttl/tagcont.ttl'

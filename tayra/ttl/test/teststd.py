@@ -2,58 +2,32 @@
 
 import os, sys
 from   optparse         import OptionParser
-from   os.path          import abspath, join
-from   tayra.ttl.parser import TTLParser
+from   os.path          import abspath, join, isfile
+from   tayra.ttl        import ttl_cmdline
 
 THISDIR = abspath( '.' )
+STDTTLDIR = join( THISDIR, 'stdttl' )
+STDTTLREFDIR = join( THISDIR, 'stdttl', 'ref' )
+STDTTLFILES = [ join(STDTTLDIR, f) for f in os.listdir(STDTTLDIR) ]
 
-def test_execute( f, options ) :
-    print "Testing %r ..." % f,
-    csstext = open(f).read()
-    ttlparser = TTLParser( debug=int(options.debug) )
-    tu = ttlparser.parse( csstext, debuglevel=int(options.debug) )
-    rc = None
-    if options.show :
-        print ''
-        tu.show()
-    else :
-        dumptext = tu.dump()
-        if csstext != dumptext :
-            open('a', 'w').write(csstext)
-            open('b', 'w').write(dumptext)
-            print "(failure)"
-            rc = 'failure'
-        else :
-            print "(success)"
-            rc = 'success'
-            if options.rmonsuccess : os.remove(f)
-    return rc
-
-def test_samplecss( cssdir, options ) :
-    failures = success = total = knownerrors = 0
-    for f in os.listdir( cssdir ) :
-        f = join( cssdir, f )
-        rc = test_execute(f, options)
-        if rc == 'success' : success += 1
-        elif rc == 'failure' : failures += 1
-        elif rc == 'knownerror' : knownerrors += 1
-        total += 1
-    print "Success      : %r" % success
-    print "Failures     : %r" % failures
-    print "KnownErrors  : %r" % knownerrors
-    print "Total        : %r" % total
+def test_stdttl() :
+    for f in STDTTLFILES :
+        if f.endswith('.ttl') :
+            print '%r ...' % f
+            ttl_cmdline(f)
+    for f in os.listdir( STDTTLDIR ) :
+        if f.endswith( '.py' ) and isfile( join( STDTTLREFDIR, f )) :
+            refpytext = open( join( STDTTLDIR, f )).read()
+            pytext = open( f ).read()
+            print "%20r : %s" % (f, refpytext==pytext)
+        elif f.endswith( '.html' ) and isfile( join( STDTTLREFDIR, f)) :
+            refhtmltext = open( join( STDTTLDIR, f )).read()
+            htmltext = open( f ).read()
+            print "%20r : %s" % (f, refhtmltext==htmltext)
 
 def _option_parse() :
     '''Parse the options and check whether the semantics are correct.'''
     parser = OptionParser(usage="usage: %prog [options] filename")
-    parser.add_option( '-d', dest='directory',
-                       help='run test on directory' )
-    parser.add_option( '-r', action='store_true', dest='rmonsuccess',
-                       help='remove on success' )
-    parser.add_option( '-g', dest='debug', default='0',
-                       help='Debug' )
-    parser.add_option( '-s', action='store_true', dest='show',
-                       help='Show AST parse tree' )
 
     options, args   = parser.parse_args()
 
@@ -61,8 +35,4 @@ def _option_parse() :
 
 if __name__ == '__main__' :
     options, args = _option_parse()
-    if args :
-        test_execute( abspath(args[0]), options )
-    elif options.directory :
-        test_samplecss( abspath(options.directory), options )
-
+    test_stdttl()

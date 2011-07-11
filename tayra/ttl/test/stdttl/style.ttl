@@ -1,0 +1,5 @@
+<div {} >
+  <a#${'idname'}.${'cls'}
+    "http://pluggdapps.com"
+    { ${'color : ' } ${ "red;"  } ' style with line
+      break' } /> hello {world} /> 

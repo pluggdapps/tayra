@@ -1,0 +1,8 @@
+<div> ${ "hello {}" + str([
+  str(10) ]) + \
+  ' world' }
+  <a#${'idname'}.${'cls'
+    'name'} "${"http://"
+            'google.com'}" { ${'color : ' }
+                             ${ "red;" } } ${"title"}="${"sun is "
+                                                    " shining"} brightly"/>

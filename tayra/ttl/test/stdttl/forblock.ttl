@@ -1,0 +1,87 @@
+@@ a = x = y = z = 10;  s='hello '
+
+@for i in range(1) :
+  @@pass
+    
+@for i in range(1):
+
+  @@pass
+      
+
+@for i in range(1):
+    
+  @@pass
+
+@for i in range(2):
+  Google will join its biggest mobile rival, Apple, on the space trip as well.
+  Apple's iPhone 4 will join a crew running an app, called "SpaceLab for iOS."
+
+@for i in range(1):
+  <html#std1.testcase.sample { color: red; font-size : ${z*2}px } title="hello world">
+    <head/>
+    <body>
+      <abbr "World Health Organization"> WHO
+  
+      <button#id_ reset disabled makefriend "button value"/>
+
+@for i in range(1):
+   
+  <div> ${ "hello {}" + str([
+    str(10) ]) + \
+    ' world' }
+    <a#${'idname \
+      '}.${'cls'
+      'name'} "${"http://"
+              'google.com'}" { ${'color : ' }
+                               ${ "red;" } } ${"title"}="${"sun is "
+                                                    " shining"} brightly">
+@for i in range(1) :
+
+  <div {} >
+
+    <a#${'idname'}.${'cls'}
+   
+      "http://pluggdapps.com"
+      { ${'color : ' } ${ "red;"  } ' style with line
+        break' } /> hello {world} /> 
+
+@for i in range(1) :
+  <html>
+    @@b = 'hello'   
+    ${x+y}
+    <head#headid.cls1.${s.strip(
+    )} "title" {color:red} lang="en"
+     data="hello">
+      <title#titleid .cls1 "title 
+        string"> hello ${s} @ ! # "helo" 'world "ok
+    <body>
+      <h1 { color : red;
+  border : 1px solid gray;
+      }/> I am the space station ${ "These "} seven cameras
+      <!-- comment1
+     comment -->
+      have a zoom range 
+      <p first
+      second> of any 12x or more,
+      <!-- comment1
+         comment -->
+      and some of the wide-angle view 
+      <div> of good. They also have a
+        lot of image stabilization (either optical or mechanical), which is 
+        important for people who are with a powerful zoom lens. Some other
+      important features thatThese cameras contain electronic viewfinder,
+        <!-- comment1 comment -->
+  
+    full control while shooting. In general, these cameras are all seem 
+      very similar.
+    
+      <p#${b}> Sign my guestbook
+
+@for i in range(1) :
+  @@world = 10
+  
+  <form#idname
+  formname "${}http://
+  google.com" > ${ "hello " + str(10) + \
+    ' world' }
+      <input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>

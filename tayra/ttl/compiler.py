@@ -1,5 +1,6 @@
 import imp, os, stat, posixpath, re
-from   os.path                  import isfile, abspath, basename, join
+from   os.path                  import isfile, isdir, abspath, basename, \
+                                       join, dirname
 from   hashlib                  import sha1
 from   StringIO                 import StringIO
 
@@ -20,15 +21,16 @@ class Compiler( object ):
                   # InstrGen options
                   igen=None,
                 ):
+        self.ttlconfig = ttlconfig
         self.ttllookup = ttllookup if isinstance(ttllookup, TemplateLookup) \
                          else TemplateLookup(ttllookup, ttlconfig)
-        self.ttlfile, self.pyfile = self.ttllookup.ttlfile, self.ttllookup.pyfile
+        self.ttlfile = self.ttllookup.ttlfile
+        self.pyfile, self.pytext = self.ttllookup.pyfile, self.ttllookup.pytext
         self.ttltext = None
         # Parser phase
         self.ttlparser = ttlparser or TTLParser()
         # Instruction generation phase
-        self.pyfd = open( pyfile, 'w' ) if self.pyfile else StringIO()
-        self.igen = igen or InstrGen( self.pyfd )
+        self.igen = igen or InstrGen()
         # Initialize plugins
         initplugins( ttlconfig )
 
@@ -67,21 +69,26 @@ class Compiler( object ):
         the cache (if disk persistence is enabled and the file is available)
         or, generate afresh using `igen` Instruction Generator.
         """
+        pyfile = pyfile or self.pyfile
+        pytext = pytext or self.pytext
         if pytext :
             code = compile( pytext, pyfile or self.ttlfile, 'exec' )
             return code
-
         code = self._memcache.get( self.ttlfile, None )
-        if code == None and self.pyfile :
-            pytext = open(self.pyfile).read()
-            code = compile( pytext, self.pyfile, 'exec')
+        if code == None and pyfile and pytext :
+            code = compile( pytext, pyfile, 'exec')
         elif code == None :
             pytext = self.topy()
             code = compile( pytext, self.ttlfile, 'exec')
+        # Cache output to file
+        self.ttllookup.modcachepy( pyfile, pytext )
+        if self.ttlconfig.get( 'memcache', '' ).lower() == 'true' :
+            self._memcache[self.ttlfile] = code
         return code
 
     def toast( self ):
         tu = None
+        print '..........'
         if self.ttlfile and self.ttltext :
             tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
         elif self.ttlfile :
@@ -91,6 +98,7 @@ class Compiler( object ):
 
     def topy( self, *args, **kwargs ):
         tu = self.toast()
+        kwargs['ttlhash'] = sha1( self.ttltext ).hexdigest()
         if tu :
             tu.preprocess( self.igen )
             tu.generate( self.igen, *args, **kwargs )
@@ -106,7 +114,7 @@ class TemplateLookup( object ) :
     TTLCONFIG = [
         ('directories', []),
         ('module_directory',None),
-        ('devmod',True)
+        ('devmod','True')
     ]
     def __init__( self, ttlloc, ttlconfig ):
         [ setattr( self, k, ttlconfig.get(k, default) )
@@ -114,7 +122,9 @@ class TemplateLookup( object ) :
         self.ttlloc = os.sep.join(ttlloc) if hasattr(ttlloc, '__iter__') else ttlloc
         self.directories = [ d.rstrip(' \t/') for d in self.directories ]
         self.ttlfile = self._locatettl()
-        self.pyfile = self._locatepy()
+        self.pyfile, self.pytext = self._locatepy()
+        self.pytext = self.pytext or (self.pyfile and open(self.pyfile).read())
+        self.devmod = self.devmod.lower() == 'true'
 
     def _locatettl( self ):
         uri = self.ttlloc
@@ -128,36 +138,47 @@ class TemplateLookup( object ) :
             ttlfile = join( path.rstrip(os.sep), loc )
             return ttlfile
         except :
-            pass
+            return None
         # If uri is relative to one of the template directories
-        if uri.startswith('/') :
-            files = filter( 
-                lambda f : isfile(f),
-                [ join(d, uri) for d in self.directories ]
-            )
-            return files[0]
-        raise Exception( 'Error locating TTL file %r' % uri )
+        files = filter(
+            lambda f : isfile(f), [ join(d, uri) for d in self.directories ]
+        )
+        if files :
+            files[0]
+        else :
+            raise Exception( 'Error locating TTL file %r' % uri )
 
     def _locatepy( self ):
-        ttlloc = self.ttlloc[1:] if self.ttlloc.startswith('/') else self.ttlloc
-        pyfile = join( self.module_directory, ttlloc+'.py' 
-                 ) if self.module_directory else None
+        pyfile = self.computepyfile()
         # Check whether the python intermediate file is not outdated, in devmod
         if pyfile and self.devmod and isfile( pyfile ) :
             ttltext, pytext = open(self.ttlfile).read(), open(pyfile).read()
             hashref = sha1( ttltext ).hexdigest()
-            s = re.search( r"__ttlhash = '([0-9a-f])'\n", pytext )
+            s = re.search( r"__ttlhash = '([0-9a-f]+)'\n", pytext )
             try :
-                hashval = int( s.groups[0], 16 )
-                if hashref == hashval : return pyfile
-            except : pass
+                hashval = s.groups()[0]
+                if hashref == hashval : return pyfile, pytext
+            except :
+                return None, None
         elif pyfile and isfile(pyfile) :
-            return pyfile
+            return pyfile, open(pyfile).read()
         else :
-            return None
+            return None, None
 
-    def modcachepy( self, pytext ):
-        if self.pyfile :
+    def computepyfile( self ) :
+        if self.module_directory :
+            ttlloc = self.ttlloc[1:] if self.ttlloc.startswith('/') else self.ttlloc
+            pyfile = join( self.module_directory, ttlloc+'.py' )
+        else :
+            pyfile = None
+        return pyfile
+
+    def modcachepy( self, pyfile, pytext ):
+        pyfile = pyfile or self.computepyfile()
+        if pyfile :
+            d = dirname(pyfile)
+            if not isdir(d) :
+                os.makedirs(d)
             open( pyfile, 'w' ).write( pytext )
             return len(pytext)
         return None
@@ -170,4 +191,3 @@ def supermost( module ):
     parmod = module.parent
     while parmod : module, parmod = parmod, parmod.parent
     return module
-

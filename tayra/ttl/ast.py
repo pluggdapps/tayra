@@ -264,6 +264,7 @@ class Template( NonTerminal ):
         return self._nonterms
 
     def generate( self, igen, *args, **kwargs ):
+        ttlhash = kwargs.pop( 'ttlhash', '' )
         if self.dirtyblocks :
             self.dirtyblocks.generate( igen, *args, **kwargs )
         # prologs
@@ -282,8 +283,8 @@ class Template( NonTerminal ):
             igen.implement_interface( self.implements, self.interfaces )
         # Footer
         ttlfile = self.parser.ttlparser.ttlfile
-        ttlhash = sha1( self.dump( Context() )).hexdigest()
         igen.footer( ttlhash, ttlfile )
+        igen.finish()
 
     def dump( self, context=None ):
         c = context or Context()

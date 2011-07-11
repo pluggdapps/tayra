@@ -182,6 +182,7 @@ class TTLLexer( object ) :
     commentopen = r'[ \t]*<!--'
     commentclose= r'-->[ \t]*(\n|\r\n)*'
     commenttext = r'(.|[\r\n])+?(?=-->)'        # Non greedy
+    commentline = r'[ \t]*\#\#[^\r\n]*(\n|\r\n)*'
     statement   = r'@@[^\r\n]*(\n|\r\n)+'
     pass_       = r'@@pass(\n|\r\n)+'
     emptyspace  = r'^[ \t]+(\n|\r\n)+'
@@ -237,6 +238,10 @@ class TTLLexer( object ) :
     tagclose    = whitespac+gt+spac
 
     # TTL Tokens
+
+    @TOKEN( commentline )
+    def t_COMMENTLINE( self, t ) :
+        return None
 
     @TOKEN( commentopen )
     def t_COMMENTOPEN( self, t ) :

@@ -33,17 +33,16 @@ class %s( object ):
 class InstrGen( object ) :
     machname = '__m'
 
-    def __init__( self, outfd ):
-        self.outfd = outfd
+    def __init__( self ):
+        self.outfd = StringIO()
         self.pyindent = ''
         self.optimaltext = []
         self.pytext = None
         # prolog for python translated template
         self.initialize( prolog )
 
-    def __call__( self, outfd=None ):
-        outfd = outfd or self.outfd
-        clone = InstrGen( outfd )
+    def __call__( self ):
+        clone = InstrGen()
         return clone
 
     def initialize( self, prolog ):
@@ -182,8 +181,6 @@ class InstrGen( object ) :
     def footer( self, ttlhash, ttlfile ):
         self.cr()
         self.outfd.write( footer % (ttlhash, ttlfile) )
-        if isinstance(self.outfd, StringIO):
-            self.pytext = self.outfd.getvalue()
-        else :
-            self.outfd.close()
-            self.pytext = open( abspath( self.outfd.name )).read()
+
+    def finish( self ):
+        self.pytext = self.outfd.getvalue()

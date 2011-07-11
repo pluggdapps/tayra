@@ -22,6 +22,16 @@ endif
 syntax spell toplevel
 syn case ignore
 
+" Comments (the real ones or the old netscape ones)
+if exists("html_wrong_comments")
+  syn region htmlComment                start=+<!--+    end=+--\s*>+
+else
+  syn region htmlComment                start=+<!+      end=+>+   contains=htmlCommentPart,htmlCommentError
+  syn match  htmlCommentError contained "[^><!]"
+  syn region htmlCommentPart  contained start=+--+      end=+--\s*+  contains=@htmlPreProc
+endif
+syn region htmlComment                  start=+<!DOCTYPE+ keepend end=+>+
+
 " Literals
 syn match   ttlSpecialChar  contained "&#\=[0-9A-Za-z]\{1,8};"
 syn match   ttlTagError     contained "[^>]<"ms=s+1
@@ -35,7 +45,6 @@ syn include @Python         syntax/python.vim
 "syn region  blockTTL        start="^\z([ \t]*\)" end="^\z1" contains=prolog
 
 " Prolog
-syn match   comment         "^[ \t]*\#.*$"
 syn match   prologKeywords  contained "!!!\|@import\| as \|@body\|@inherit\|@implement\|@use"
 syn match   funcKeywords    contained "@function\|@interface"
 syn match   controlKeywords contained "@if\|@elif\|@else\|@for\|@while"
@@ -43,8 +52,9 @@ syn match   prologDoctype   "^!!!.*;[ \t]*" contains=prologKeywords
 syn region  prolog          start="^@[!ibu]" end=";[ \t]*$" contains=prologKeywords
 
 " Textline
-syn match   textLine        "^[^<:@#!].*$" contains=pythonExprs
-syn region  textSuffix      start=+>+ms=s+1 end=+$+ contains=pythonExprs
+syn match   textLine        "^[^<:@!].*$" contains=pythonExprs
+syn match   textSuffix      ">.*$"ms=s+1 contains=pythonExprs
+syn match   commentLine     "[ \t]*##.*$"
 
 " Tagblock
 syn region  ttlString       contained start=+"+ end=+"+ contains=ttlSpecialChar,javaScriptExpression,
@@ -53,9 +63,9 @@ syn region  ttlString       contained start=+'+ end=+'+ contains=ttlSpecialChar,
                             \ pythonExprs,@ttlPreproc
 syn match   ttlValue        contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1 contains=javaScriptExpression,
                             \ pythonExprs,@ttlPreproc
-syn match   ttlTagN         contained "<\s*[-a-zA-Z0-9_#.]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
-syn region  ttlTag          start=+^[ \t]*<[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlValue,ttlTagError,
-                            \ ttlEvent,ttlCssDefinition,pythonExprs,@ttlPreproc
+syn match   ttlTagN         contained "<\s*[-a-zA-Z0-9_#]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
+syn region  ttlTag          start=+^[ \t]*<[^/]+   end=+>.*$+ contains=ttlTagN,ttlString,ttlValue,ttlTagError,
+                            \ ttlEvent,ttlCssDefinition,pythonExprs,textSuffix,@ttlPreproc
 
 " Function block
 syn region  funcLine        start=+^[ \t]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
@@ -69,7 +79,7 @@ syn region  forLine         start=+^[ \t]*@for+   end=+:[ \t]*$+ contains=contro
 syn region  whileLine       start=+^[ \t]*@while+ end=+:[ \t]*$+ contains=controlKeywords,@Python
 
 " Statement, Expression
-syn region  pythonStatement start="^[ \t]*\$[^{]" end="$" contains=@Python
+syn region  pythonStatement start="^[ \t]*@@[^{]" end="$" contains=@Python
 syn region  pythonExprs     contained start="\${" end="}" contains=@Python
 
 " Embedded CSS
@@ -84,7 +94,7 @@ syn region  pythonExprs     contained start="\${" end="}" contains=@Python
 "syn include @htmlJavaScript     syntax/javascript.vim
 "unlet b:current_syntax
 "syn region  javaScript          start=+[ \t]*<script+ keepend end=+[ \t]*[<@$:]+me=s-1 contains=ttlTag,@htmlJavaScript,
-                                \ htmlCssStyleComment
+"                               \ htmlCssStyleComment
 
 TTLHiLink ttlSpecialChar    Special
 TTLHiLink comment           Comment
@@ -98,6 +108,8 @@ TTLHiLink ttlValue          String
 TTLHiLink ttlTagName        ModeMsg
 TTLHiLink ttlTag            Function
 TTLHiLink pythonExprs       Special
+TTLHiLink htmlComment       Comment
+TTLHiLink commentLine       Comment
 
 delcommand TTLHiLink
 

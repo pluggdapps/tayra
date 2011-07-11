@@ -44,7 +44,7 @@ syn region  prolog          start="^@[!ibu]" end=";[ \t]*$" contains=prologKeywo
 
 " Textline
 syn match   textLine        "^[^<:@#!].*$" contains=pythonExprs
-syn region  textSuffix      contained start=+>+ms=s+1 end="$" contains=pythonExprs
+syn region  textSuffix      start=+>+ms=s+1 end=+$+ contains=pythonExprs
 
 " Tagblock
 syn region  ttlString       contained start=+"+ end=+"+ contains=ttlSpecialChar,javaScriptExpression,
@@ -55,7 +55,7 @@ syn match   ttlValue        contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1 contains=
                             \ pythonExprs,@ttlPreproc
 syn match   ttlTagN         contained "<\s*[-a-zA-Z0-9_#.]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
 syn region  ttlTag          start=+^[ \t]*<[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlValue,ttlTagError,
-                            \ textSuffix,ttlEvent,ttlCssDefinition,pythonExprs,@ttlPreproc
+                            \ ttlEvent,ttlCssDefinition,pythonExprs,@ttlPreproc
 
 " Function block
 syn region  funcLine        start=+^[ \t]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
@@ -98,7 +98,6 @@ TTLHiLink ttlValue          String
 TTLHiLink ttlTagName        ModeMsg
 TTLHiLink ttlTag            Function
 TTLHiLink pythonExprs       Special
-
 
 delcommand TTLHiLink
 

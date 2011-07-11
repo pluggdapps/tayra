@@ -16,10 +16,11 @@ def parsespecifiers( specifiers ) :
     elif first.startswith('.') :
         id_, classes = '', first.replace('.', ' ').strip(' ')
     else :
-        rest = ' '.join([first, rest ])
+        rest = ' '.join([ first, rest ])
         id_ = classes = ''
-    id_ = 'id="%s"' % id_ if id_ else id_
-    classes = 'class="%s"' % classes if classes else classes
+
+    id_ = 'id="%s"' % id_.strip() if id_ else id_
+    classes = 'class="%s"' % classes.strip() if classes else classes
     
     # Parse tag-specifiers
     rest, tokens = rest.strip(' '), [ '' ]
@@ -66,19 +67,19 @@ def stdspecifiers( spectokens ):
         if tok in _enctype :
             specattrs.append( 'enctype="%s"' % tok )
             continue
-        if tok is 'disabled' :
+        if tok == 'disabled' :
             specattrs.append( 'disabled="disabled"' )
             continue
-        if tok is 'checked' :
+        if tok == 'checked' :
             specattrs.append( 'checked="checked"' )
             continue
-        if tok is 'readonly' :
+        if tok == 'readonly' :
             specattrs.append( 'readonly="readonly"' )
             continue
-        if tok is 'selected' :
+        if tok == 'selected' :
             specattrs.append( 'selected="selected"' )
             continue
-        if tok is 'multiple' :
+        if tok == 'multiple' :
             specattrs.append( 'multiple="multiple"' )
             continue
         leftover.append( tok )

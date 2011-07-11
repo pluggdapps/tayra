@@ -102,7 +102,7 @@ def handle_colgroup( tagopen, specifiers, style, attrs, tagfinish ):
 def handle_del( tagopen, specifiers, style, attrs, tagfinish ):
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
-    cite, datetime = ''
+    cite = datetime = ''
     for tok in tokens :
         if tok.startswith('on:') :
             datetime = 'datetime="%s"' % tok.split(':', 1)[-1]
@@ -114,7 +114,7 @@ def handle_del( tagopen, specifiers, style, attrs, tagfinish ):
 def handle_form( tagopen, specifiers, style, attrs, tagfinish ):
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
-    action, name = ''
+    action = name = ''
     for tok in tokens :
         if (tok[0] + tok[-1]) in [ '""', "''" ] :
             action = 'action=%s' % tok
@@ -162,14 +162,14 @@ _input_type = [
 def handle_input( tagopen, specifiers, style, attrs, tagfinish ):
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
-    type_ = 'type=%s' % tokens.pop(0) if tokens else ''
+    type_ = 'type="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, type_] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_ins( tagopen, specifiers, style, attrs, tagfinish ):
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
-    cite, datetime = ''
+    cite = datetime = ''
     for tok in tokens :
         if tok.startswith('on:') :
             datetime = 'datetime="%s"' % tok.split(':', 1)[-1]

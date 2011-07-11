@@ -84,9 +84,9 @@ class Renderer( object ):
 def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.ttl.compiler       import Compiler, TemplateLookup
     args = eval( kwargs.pop( 'args', '[]' ))
-    debuglevel = kwargs.pop( 'debuglevel', True )
-    show = kwargs.pop( 'show', True )
-    dump = kwargs.pop( 'dump', True )
+    debuglevel = kwargs.pop( 'debuglevel', 0 )
+    show = kwargs.pop( 'show', False )
+    dump = kwargs.pop( 'dump', False )
     ttlconfig = kwargs  # directories, module_directory, devmod
     ttlparser = TTLParser( debug=debuglevel )
     compiler = Compiler( ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
@@ -107,9 +107,9 @@ def ttl_cmdline( ttlloc, **kwargs ):
     else :
         print "Generating py / html file ... "
         pytext = compiler.topy()
+        open(pyfile, 'w').write(pytext)
         code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
         module = compiler.execttl( code )
-        open(pyfile, 'w').write(pytext)
         # Fetch parent-most module
         html = module.self.body(*args)
         open(htmlfile, 'w').write(html)

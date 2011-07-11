@@ -146,7 +146,7 @@ class TTLLexer( object ) :
 
     ## Tokens recognized by the TTLLexer
     tokens = (
-        'STATEMENT', 'EMPTYSPACE', 'INDENT', 'DEDENT',
+        'STATEMENT', 'PASS', 'EMPTYSPACE', 'INDENT', 'DEDENT',
 
         # `exprs` state
         'OPENEXPRS', 'STRING',
@@ -170,7 +170,7 @@ class TTLLexer( object ) :
         'CLOSEBRACE', 'SPECIALCHARS',
     )
     
-    # special lines, pattern [ \t]*[$!@:]....
+    # special lines, pattern [ \t]*[!@:]....
 
     # Special chars
     tags_spchars = r'[/$]'
@@ -179,11 +179,12 @@ class TTLLexer( object ) :
     # Suffix definition for lookahead match for text
     style_text_s= r'(?!\}|\$\{)'                # till style_close, exprs_open
 
-    commentopen = r'<!--'
-    commentclose= r'-->(\n|\r\n)*'
+    commentopen = r'[ \t]*<!--'
+    commentclose= r'-->[ \t]*(\n|\r\n)*'
     commenttext = r'(.|[\r\n])+?(?=-->)'        # Non greedy
-    statement   = r'\$[^{][^\r\n]*(\n|\r\n)+'
-    emptyspace  = r'^[ ]+$(\n|\r\n)+'
+    statement   = r'@@[^\r\n]*(\n|\r\n)+'
+    pass_       = r'@@pass(\n|\r\n)+'
+    emptyspace  = r'^[ \t]+(\n|\r\n)+'
     indent      = r'^[ ]+'
     nl          = r'[\r\n]+'
     spac        = r'[ \t]*'
@@ -192,31 +193,31 @@ class TTLLexer( object ) :
     whitespace  = r'[\r\n\t ]+'
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9]+'
-    text        = r'[^ \t\n]+'
-    exprs_text  = r'[^ \t\n}"\']+'
-    tag_text    = r'[^ \t\n/>${"\'=]+'
-    style_text  = r'[^ \t\n${}]+'
-    string      = r"""".*?"|'.*?'"""
+    text        = r'[^\r\n<]+(?!\${)'
+    tag_text    = r'[^ \t\r\n/>${"\'=]+'
+    style_text  = r'[^\r\n${}]+'
+    exprs_text  = r'[^\r\n}"\']+'
+    string      = r'"(.|[\r\n])*?"|\'(.|[\r\n])*?\''    # Non greedy
 
     # Suffix definition for lookahead match for prolog / statement tails.
-    suffix1     = r'(?=;$(\n|\r\n)+);$(\n|\r\n)+'
-    suffix2     = r'(?=:$(\n|\r\n)+):$(\n|\r\n)+'
+    suffix1     = r'(?=;[ \t]*(\n|\r\n)+);[ \t]*(\n|\r\n)+'
+    suffix2     = r'(?=:[ \t]*(\n|\r\n)+):[ \t]*(\n|\r\n)+'
 
-    doctype     = r'^!!!(.|[\r\n])*?' + suffix1
-    body        = r'^@body(.|[\r\n])*?' + suffix1
-    importas    = r'^@import(.|[\r\n])*?' + suffix1
-    implement   = r'^@implement(.|[\r\n])*?' + suffix1
-    inherit     = r'^@inherit(.|[\r\n])*?' + suffix1
-    use         = r'^@use(.|[\r\n])*?' + suffix1
+    doctype     = r'^!!!.*?' + suffix1
+    body        = r'^@body.*?' + suffix1
+    importas    = r'^@import.*?' + suffix1
+    implement   = r'^@implement.*?' + suffix1
+    inherit     = r'^@inherit.*?' + suffix1
+    use         = r'^@use.*?' + suffix1
 
-    interface   = r'^@interface(.|[\r\n])*?' + suffix2
+    interface   = r'^@interface.*?' + suffix2
 
-    function    = r'@function(.|[\r\n])*?' + suffix2
-    if_         = r'@if([^:]|[\r\n])*?' + suffix2
-    elif_       = r'@elif([^:]|[\r\n])*?' + suffix2
-    else_       = r'@else([^:]|[\r\n])*?' + suffix2
-    for_        = r'@for([^:]|[\r\n])*?' + suffix2
-    while_      = r'@while([^:]|[\r\n])*?' + suffix2
+    function    = r'@function.*?' + suffix2
+    if_         = r'@if.*?' + suffix2
+    elif_       = r'@elif.*?' + suffix2
+    else_       = r'@else.*?' + suffix2
+    for_        = r'@for.*?' + suffix2
+    while_      = r'@while.*?' + suffix2
     filter_     = r':fb-'+atom
 
     openexprs   = r'\$\{'
@@ -244,6 +245,12 @@ class TTLLexer( object ) :
 
     @TOKEN( statement )
     def t_STATEMENT( self, t ) :
+        self._incrlineno(t)
+        self._onemptyindent(t)
+        return t
+
+    @TOKEN( pass_ )
+    def t_PASS( self, t ) :
         self._incrlineno(t)
         self._onemptyindent(t)
         return t
@@ -382,13 +389,13 @@ class TTLLexer( object ) :
         self._onemptyindent(t)
         return t
 
-    @TOKEN( space )
-    def t_S( self, t ) :
-        return t
+    #@TOKEN( space )
+    #def t_S( self, t ) :
+    #    return t
 
-    @TOKEN( atom )
-    def t_ATOM( self, t ) :
-        return t
+    #@TOKEN( atom )
+    #def t_ATOM( self, t ) :
+    #    return t
 
     @TOKEN( text )
     def t_TEXT( self, t ) :
@@ -408,12 +415,13 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         return t
 
-    @TOKEN( space )
-    def t_exprs_S( self, t ) :
-        return t
+    #@TOKEN( space )
+    #def t_exprs_S( self, t ) :
+    #    return t
 
     @TOKEN( string )
     def t_exprs_STRING( self, t ) :
+        self._incrlineno(t)
         return t
 
     @TOKEN( exprs_text )
@@ -422,6 +430,7 @@ class TTLLexer( object ) :
 
     @TOKEN( tagopen )
     def t_tag_TAGOPEN( self, t ) :                   # <---- `tag` state
+        self._incrlineno(t)
         return t
 
     @TOKEN( tagend )
@@ -455,6 +464,7 @@ class TTLLexer( object ) :
 
     @TOKEN( whitespac+openbrace )
     def t_tag_OPENBRACE( self, t ) :
+        self._incrlineno(t)
         t.lexer.push_state( 'style' )
         return t
 
@@ -498,9 +508,9 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         return t
 
-    @TOKEN( space )
-    def t_style_S( self, t ) :
-        return t
+    #@TOKEN( space )
+    #def t_style_S( self, t ) :
+    #    return t
 
     @TOKEN( style_text )
     def t_style_TEXT( self, t ) :

@@ -164,36 +164,36 @@ class TTLParser( object ):
         return rc
 
     def p_template_1( self, p ) :
-        """template : siblings"""
-        p[0] = Template( p.parser, None, None, p[1] )
-
-    def p_template_2( self, p ) :
         """template : prologs"""
         p[0] = Template( p.parser, None, p[1], None )
 
+    def p_template_2( self, p ) :
+        """template : siblings"""
+        p[0] = Template( p.parser, None, None, p[1] )
+
     def p_template_3( self, p ) :
+        """template : dirtyblocks prologs siblings"""
+        p[0] = Template( p.parser, p[1], p[2], p[3] )
+
+    def p_template_4( self, p ) :
         """template : prologs siblings"""
         p[0] = Template( p.parser, None, p[1], p[2] )
 
-    def p_template_4( self, p ) :
-        """template : commentlines prologs siblings"""
-        p[0] = Template( p.parser, p[1], p[2], p[3] )
+    def p_template_5( self, p ) :
+        """template : """
+        p[0] = Template( p.parser, None, None, None )
 
     def p_prologs_1( self, p ) :
-        """prologs  : prolog"""
-        p[0] = Prologs( p.parser, None, p[1] )
+        """prologs  : prologs dirtyblocks prolog"""
+        p[0] = Prologs( p.parser, p[1], p[2], p[3] )
 
     def p_prologs_2( self, p ) :
-        """prologs  : prologs commentlines"""
-        p[0] = Prologs( p.parser, p[1], p[2] )
+        """prologs  : prologs prolog"""
+        p[0] = Prologs( p.parser, p[1], None, p[2] )
 
     def p_prologs_3( self, p ) :
-        """prologs  : prologs emptylines"""
-        p[0] = Prologs( p.parser, p[1], p[2] )
-
-    def p_prologs_4( self, p ) :
-        """prologs  : prologs prolog"""
-        p[0] = Prologs( p.parser, p[1], p[2] )
+        """prologs  : prolog"""
+        p[0] = Prologs( p.parser, None, None, p[1] )
 
     def p_prolog( self, p ) :
         """prolog   : doctype
@@ -206,15 +206,16 @@ class TTLParser( object ):
 
     def p_siblings( self, p ) :
         """siblings : sibling
-                    | siblings commentlines
-                    | siblings emptylines
                     | siblings sibling"""
         args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
         p[0] = Siblings( p.parser, *args )
 
     def p_sibling( self, p ) :
         """sibling  : statement
+                    | pass
                     | tagline
+                    | dirtyblocks
+                    | textline
                     | interfaceblock
                     | textblock
                     | tagblock
@@ -254,26 +255,29 @@ class TTLParser( object ):
     #---- Filter block
 
     def p_filterblock( self, p ) :
-        """filterblock      : FILTER INDENT siblings DEDENT
-                            | FILTER"""
-        terms = [ (FILTER,1), (INDENT,2), p[3], (DEDENT,4) 
-                ] if len(p) == 5 else [ (FUNCTION,1), None, None, None ]
+        """filterblock      : FILTER dirtyblocks INDENT siblings DEDENT
+                            | FILTER INDENT siblings DEDENT"""
+        terms = [ (FILTER,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
+                ]  if len(p) == 6 else [ 
+                  (FILTER,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = FilterBlock( p.parser, *self._buildterms( p, terms ) )
 
     #---- Function block / Interface block
 
     def p_functionblock( self, p ) :
-        """functionblock    : FUNCTION INDENT siblings DEDENT
-                            | FUNCTION"""
-        terms = [ (FUNCTION,1), (INDENT,2), p[3], (DEDENT,4) 
-                ] if len(p) == 5 else [ (FUNCTION,1), None, None, None ]
+        """functionblock    : FUNCTION dirtyblocks INDENT siblings DEDENT
+                            | FUNCTION INDENT siblings DEDENT"""
+        terms = [ (FUNCTION,1), p[2], (INDENT,3), p[4], (DEDENT,5)
+                ] if len(p) == 6 else [ 
+                  (FUNCTION,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_interfaceblock( self, p ) :
-        """interfaceblock   : INTERFACE INDENT siblings DEDENT
-                            | INTERFACE"""
-        terms = [ (INTERFACE,1), (INDENT,2), p[3], (DEDENT,4) 
-                ] if len(p) == 5 else [ (INTERFACE,1), None, None, None ]
+        """interfaceblock   : INTERFACE dirtyblocks INDENT siblings DEDENT
+                            | INTERFACE INDENT siblings DEDENT"""
+        terms = [ (INTERFACE,1), p[2], (INDENT,3), p[4], (DEDENT,5)
+                ] if len(p) == 6 else [ 
+                  (INTERFACE,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = InterfaceBlock( p.parser, *self._buildterms(p, terms) )
 
     #---- Control blocks  ( if-elif-else / for / while )
@@ -291,28 +295,43 @@ class TTLParser( object ):
         p[0] = IfelfiBlock( p.parser, p[1], None, None, p[2] )
 
     def p_ifblock( self, p ) :
-        """ifblock      : IF INDENT siblings DEDENT"""
-        terms = [ (IF,1), (INDENT,2), p[3], (DEDENT,4) ]
+        """ifblock      : IF dirtyblocks INDENT siblings DEDENT
+                        | IF INDENT siblings DEDENT"""
+        terms = [ (IF,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
+                ] if len(p) == 6 else [
+                  (IF,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = IfBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_elifblock( self, p ) :
-        """elifblock    : ELIF INDENT siblings DEDENT"""
-        terms = [ (ELIF,1), (INDENT,2), p[3], (DEDENT,4) ]
+        """elifblock    : ELIF dirtyblocks INDENT siblings DEDENT
+                        | ELIF INDENT siblings DEDENT"""
+        terms = [ (ELIF,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
+                ] if len(p) == 6 else [
+                  (ELIF,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = ElifBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_elseblock( self, p ) :
-        """elseblock    : ELSE INDENT siblings DEDENT"""
-        terms = [ (ELSE,1), (INDENT,2), p[3], (DEDENT,4) ]
+        """elseblock    : ELSE dirtyblocks INDENT siblings DEDENT
+                        | ELSE INDENT siblings DEDENT"""
+        terms = [ (ELSE,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
+                ] if len(p) == 6 else [
+                  (ELSE,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = ElseBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_forblock( self, p ) :
-        """forblock     : FOR INDENT siblings DEDENT"""
-        terms = [ (FOR,1), (INDENT,2), p[3], (DEDENT,4) ]
+        """forblock     : FOR dirtyblocks INDENT siblings DEDENT
+                        | FOR INDENT siblings DEDENT"""
+        terms = [ (FOR,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
+                ] if len(p) == 6 else [
+                  (FOR,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = ForBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_whileblock( self, p ) :
-        """whileblock   : WHILE INDENT siblings DEDENT"""
-        terms = [ (WHILE,1), (INDENT,2), p[3], (DEDENT,4) ]
+        """whileblock   : WHILE dirtyblocks INDENT siblings DEDENT
+                        | WHILE INDENT siblings DEDENT"""
+        terms = [ (WHILE,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
+                ] if len(p) == 6 else [
+                  (WHILE,1), None, (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = WhileBlock( p.parser, *self._buildterms(p, terms) )
 
     #---- Template language
@@ -326,30 +345,35 @@ class TTLParser( object ):
         """statement    : STATEMENT"""
         p[0] = Statement( p.parser, STATEMENT(p.parser, p[1]) )
 
+    def p_pass( self, p ) :
+        """pass         : PASS"""
+        p[0] = Pass( p.parser, PASS(p.parser, p[1]) )
+
     def p_tagline_1( self, p ) :
-        """tagline      : tag NEWLINES"""
-        p[0] = TagLine( p.parser, p[1], None, NEWLINES(p.parser, p[2]) )
+        """tagline      : tag NEWLINES
+                        | tag NEWLINES dirtyblocks"""
+        terms = [ p[1], None, (NEWLINES,2), p[3] 
+                ] if len(p) == 4 else [ p[1], None, (NEWLINES,2), None ]
+        p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
 
     def p_tagline_2( self, p ) :
-        """tagline      : tag contents NEWLINES"""
-        p[0] = TagLine( p.parser, p[1], p[2], NEWLINES(p.parser, p[3]) )
+        """tagline      : tag contents NEWLINES
+                        | tag contents NEWLINES dirtyblocks"""
+        terms = [ p[1], p[2], (NEWLINES,3), p[4]
+                ] if len(p) == 5 else [ p[1], p[2], (NEWLINES,3), None ]
+        p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
 
-    def p_textblock_1( self, p ) :
-        """textblock    : textline"""
-        p[0] = TextBlock( p.parser, None, p[1], None, None, None )
-
-    def p_textblock_2( self, p ) :
-        """textblock    : textblock textline"""
-        p[0] = TextBlock( p.parser, p[1], p[2], None, None, None )
-
-    def p_textblock_3( self, p ) :
-        """textblock    : textblock INDENT textblock DEDENT"""
-        terms = [ p[1], None, (INDENT,2), p[3], (DEDENT,4) ]
+    def p_textblock( self, p ) :
+        """textblock    : textline INDENT siblings DEDENT"""
+        terms = [ p[1], (INDENT,2), p[3], (DEDENT,4) ]
         p[0] = TextBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_textline( self, p ) :
-        """textline     : contents NEWLINES"""
-        p[0] = TextLine( p.parser, p[1], NEWLINES(p.parser, p[2]) )
+        """textline     : contents NEWLINES
+                        | contents NEWLINES dirtyblocks"""
+        terms = [ p[1], (NEWLINES,2), p[3] 
+                ] if len(p) == 4 else [ p[1], (NEWLINES,2), None ]
+        p[0] = TextLine( p.parser, *self._buildterms(p, terms) )
 
     #---- Tag
 
@@ -450,9 +474,14 @@ class TTLParser( object ):
         """attr         : attrname smartstring"""
         p[0] = Attr( p.parser, p[1], p[2] )
 
-    def p_attrname( self, p ) :
+    def p_attrname_1( self, p ) :
         """attrname     : ATOM EQUAL"""
-        terms = [ (ATOM,1), (EQUAL,2) ]
+        terms = [ None, (ATOM,1), (EQUAL,2) ]
+        p[0] = AttrName( p.parser, *self._buildterms(p, terms) )
+
+    def p_attrname_2( self, p ) :
+        """attrname     : exprs EQUAL"""
+        terms = [ p[1], None, (EQUAL,2) ]
         p[0] = AttrName( p.parser, *self._buildterms(p, terms) )
 
     #---- Content
@@ -473,13 +502,13 @@ class TTLParser( object ):
     #    """content      : SPECIALCHARS"""
     #    p[0] = Content( p.parser, SPECIALCHARS(p.parser, p[1]), None )
 
-    def p_content_3( self, p ) :
-        """content      : ATOM"""
-        p[0] = Content( p.parser, ATOM(p.parser, p[1]), None )
+    #def p_content_3( self, p ) :
+    #    """content      : ATOM"""
+    #    p[0] = Content( p.parser, ATOM(p.parser, p[1]), None )
 
-    def p_content_4( self, p ) :
-        """content      : S"""
-        p[0] = Content( p.parser, S(p.parser, p[1]), None )
+    #def p_content_4( self, p ) :
+    #    """content      : S"""
+    #    p[0] = Content( p.parser, S(p.parser, p[1]), None )
 
     def p_content_5( self, p ) :
         """content      : exprs"""
@@ -501,15 +530,27 @@ class TTLParser( object ):
 
     def p_specifier_1( self, p ) :
         """specifier    : ATOM"""
-        p[0] = Specifier( p.parser, ATOM(p.parser, p[1]), None, None )
+        p[0] = Specifier( p.parser, ATOM(p.parser, p[1]), None )
 
     def p_specifier_2( self, p ) :
-        """specifier    : smartstring"""
-        p[0] = Specifier( p.parser, None, p[1], None )
+        """specifier    : TEXT"""
+        p[0] = Specifier( p.parser, TEXT(p.parser, p[1]), None )
 
     def p_specifier_3( self, p ) :
+        """specifier    : EQUAL"""
+        p[0] = Specifier( p.parser, EQUAL(p.parser, p[1]), None )
+
+    def p_specifier_4( self, p ) :
+        """specifier    : SPECIALCHARS"""
+        p[0] = Specifier( p.parser, SPECIALCHARS(p.parser, p[1]), None )
+
+    def p_specifier_5( self, p ) :
+        """specifier    : smartstring"""
+        p[0] = Specifier( p.parser, None, p[1] )
+
+    def p_specifier_6( self, p ) :
         """specifier    : exprs"""
-        p[0] = Specifier( p.parser, None, None, p[1] )
+        p[0] = Specifier( p.parser, None, p[1] )
 
     #---- SmartString
 
@@ -552,20 +593,29 @@ class TTLParser( object ):
         p[0] = StrContent( p.parser, ATOM(p.parser, p[1]), None )
 
     def p_strcontent_4( self, p ) :
+        """strcontent   : EQUAL"""
+        p[0] = StrContent( p.parser, EQUAL(p.parser, p[1]), None )
+
+    def p_strcontent_5( self, p ) :
+        """strcontent   : OPENBRACE"""
+        p[0] = StrContent( p.parser, OPENBRACE(p.parser, p[1]), None )
+
+    def p_strcontent_6( self, p ) :
         """strcontent   : whitespace"""
         p[0] = StrContent( p.parser, None, p[1] )
 
-    def p_strcontent_5( self, p ) :
+    def p_strcontent_7( self, p ) :
         """strcontent   : exprs"""
         p[0] = StrContent( p.parser, None, p[1] )
 
     #---- style
 
     def p_style( self, p ) :
-        """style            : OPENBRACE stylecontents CLOSEBRACE"""
-        p[0] = Style(
-          p.parser, OPENBRACE(p.parser, p[1]), p[2], CLOSEBRACE(p.parser, p[3])
-        )
+        """style            : OPENBRACE stylecontents CLOSEBRACE
+                            | OPENBRACE CLOSEBRACE"""
+        terms = [ (OPENBRACE,1), p[2], (CLOSEBRACE,3)
+               ] if len(p) == 4 else [ (OPENBRACE,1), None, (CLOSEBRACE,2) ]
+        p[0] = Style( p.parser, *self._buildterms(p, terms) )
 
     def p_stylecontents( self, p ) :
         """stylecontents    : style_content
@@ -578,10 +628,10 @@ class TTLParser( object ):
         terms = [ (NEWLINES,1), None, None, None ]
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
 
-    def p_style_content_2( self, p ) :
-        """style_content    : S"""
-        terms = [ None, (S,1), None, None ]
-        p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
+    #def p_style_content_2( self, p ) :
+    #    """style_content    : S"""
+    #    terms = [ None, (S,1), None, None ]
+    #    p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
 
     def p_style_content_3( self, p ) :
         """style_content    : TEXT"""
@@ -601,8 +651,10 @@ class TTLParser( object ):
     #---- Exprs
 
     def p_exprs( self, p ) :
-        """exprs            : OPENEXPRS exprs_contents CLOSEBRACE"""
-        terms = [ (OPENEXPRS,1), p[2], (CLOSEBRACE, 3) ]
+        """exprs            : OPENEXPRS exprs_contents CLOSEBRACE
+                            | OPENEXPRS CLOSEBRACE"""
+        terms = [ (OPENEXPRS,1), p[2], (CLOSEBRACE, 3) 
+                ] if len(p) == 4 else [ (OPENEXPRS,1), None, (CLOSEBRACE,2) ]
         p[0] = Exprs( p.parser, *self._buildterms(p, terms) )
 
     def p_exprs_contents( self, p ) :
@@ -616,10 +668,10 @@ class TTLParser( object ):
         terms = [ (NEWLINES,1), None, None, None ]
         p[0] = ExprsContent( p.parser, *self._buildterms(p, terms) )
 
-    def p_exprs_content_2( self, p ) :
-        """exprs_content    : S"""
-        terms = [ None, (S,1), None, None ]
-        p[0] = ExprsContent( p.parser, *self._buildterms(p, terms) )
+    #def p_exprs_content_2( self, p ) :
+    #    """exprs_content    : S"""
+    #    terms = [ None, (S,1), None, None ]
+    #    p[0] = ExprsContent( p.parser, *self._buildterms(p, terms) )
 
     def p_exprs_content_3( self, p ) :
         """exprs_content    : STRING"""
@@ -638,12 +690,26 @@ class TTLParser( object ):
 
     #----
 
-    def p_commentlines( self, p ) :
-        """commentlines : COMMENTOPEN COMMENTTEXT COMMENTCLOSE
-                        | COMMENTOPEN COMMENTCLOSE"""
+    def p_dirtyblock( self, p ):
+        """dirtyblocks  : commentblocks
+                        | emptylines
+                        | dirtyblocks commentblocks
+                        | dirtyblocks emptylines"""
+        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
+        p[0] = DirtyBlocks( p.parser, *args )
+
+    def p_commentblocks( self, p ) :
+        """commentblocks    : commentblock
+                            | commentblocks commentblock"""
+        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
+        p[0] = CommentBlocks( p.parser, *args )
+
+    def p_commentblock( self, p ) :
+        """commentblock     : COMMENTOPEN COMMENTTEXT COMMENTCLOSE
+                            | COMMENTOPEN COMMENTCLOSE"""
         terms = [ (COMMENTOPEN,1), (COMMENTTEXT,2), (COMMENTCLOSE,3) 
                 ] if len(p) == 4 else [(COMMENTOPEN,1), None, (COMMENTCLOSE,2)]
-        p[0] = CommentLines( p.parser, *self._buildterms( p, terms ))
+        p[0] = CommentBlock( p.parser, *self._buildterms( p, terms ))
 
     def p_emptylines( self, p ) :
         """emptylines   : EMPTYSPACE

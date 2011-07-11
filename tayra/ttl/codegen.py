@@ -54,6 +54,15 @@ class InstrGen( object ) :
         self.outfd.write( '\n'*count )
         self.outfd.write( self.pyindent )
 
+    def codeindent( self, up=None, down=None, indent=True ):
+        self.flushtext()
+        if up != None :
+            self.pyindent += up
+        if down != None :
+            self.pyindent = self.pyindent[:-len(down)]
+        if indent : 
+            self.outfd.write( self.pyindent )
+
     def codetext( self ) :
         return self.pytext
 
@@ -77,7 +86,7 @@ class InstrGen( object ) :
     def comment( self, comment ) :
         self.flushtext()
         self.cr()
-        self.outfd.write( '#' + comment.rstrip('\r\n') )
+        self.outfd.write( '# ' + ' '.join(comment.rstrip('\r\n').splitlines()) )
 
     def flushtext( self ) :
         if self.optimaltext :
@@ -133,11 +142,6 @@ class InstrGen( object ) :
         self.flushtext()
         self.cr()
         self.outfd.write( '__m.handletag( *__m.popbuf() )' )
-
-    def blockbegin( self, line, pyindent=True ) :
-        self.putstatement( line )
-        if pyindent == True :
-            self.pyindent += '  '
 
     def putimport( self, ttlloc, modname ):
         self.cr()

@@ -1,7 +1,6 @@
 import re
 from   copy         import deepcopy
 
-regexstring = re.compile( r"""("[^"]*")|('[^']*')""" )
 def parsespecifiers( specifiers ) :
     try :
         first, rest = ' '.join( specifiers.splitlines() ).split(' ', 1)
@@ -29,15 +28,15 @@ def parsespecifiers( specifiers ) :
         if stringify :
             tokens[-1] += c
             if c == stringify :
-                stringify = False
+                stringify = None
                 tokens.append( '' )
             continue
         elif c == ' ' : 
             tokens.append( '' )
             continue
         tokens[-1] += c
-        if tokens[-1] in '\'"' : stringify = True
-    return id_, classes, tokens
+        if tokens[-1] in '\'"' : stringify = tokens[-1]
+    return id_, classes, filter( None, tokens )
 
 
 _enctype = [
@@ -81,6 +80,9 @@ def stdspecifiers( spectokens ):
             continue
         if tok == 'multiple' :
             specattrs.append( 'multiple="multiple"' )
+            continue
+        if tok == 'defer' :
+            specattrs.append( 'defer="defer"' )
             continue
         leftover.append( tok )
     return filter(None, leftover), specattrs

@@ -161,7 +161,8 @@ class TTLLexer( object ) :
         'COMMENTOPEN', 'COMMENTTEXT', 'COMMENTCLOSE',
 
         # directives
-        'DOCTYPE', 'BODY', 'IMPORTAS', 'IMPLEMENT', 'INHERIT', 'USE',
+        'DOCTYPE', 'CHARSET', 'BODY', 'IMPORTAS', 'IMPLEMENT', 'INHERIT',
+        'USE',
         'FUNCTION', 'INTERFACE', 'FILTER', 
         'IF', 'ELIF', 'ELSE', 'FOR', 'WHILE',
 
@@ -170,41 +171,44 @@ class TTLLexer( object ) :
         'CLOSEBRACE', 'SPECIALCHARS',
     )
     
-    # special lines, pattern [ \t]*[!@:]....
+    # special lines, pattern [ \t]*[!<@:]....
 
     # Special chars
+    spchars      = r'[${]'
     tags_spchars = r'[/$]'
     styl_spchars = r'[${]'
 
     # Suffix definition for lookahead match for text
     style_text_s= r'(?!\}|\$\{)'                # till style_close, exprs_open
+    tabspace    = r' \t'
 
-    commentopen = r'[ \t]*<!--'
-    commentclose= r'-->[ \t]*(\n|\r\n)*'
+    commentopen = r'[%s]*<!--' % tabspace
+    commentclose= r'-->[%s]*(\n|\r\n)*' % tabspace
     commenttext = r'(.|[\r\n])+?(?=-->)'        # Non greedy
-    commentline = r'[ \t]*\#\#[^\r\n]*(\n|\r\n)*'
+    commentline = r'[%s]*\#\#[^\r\n]*(\n|\r\n)*' % tabspace
     statement   = r'@@[^\r\n]*(\n|\r\n)+'
     pass_       = r'@@pass(\n|\r\n)+'
-    emptyspace  = r'^[ \t]+(\n|\r\n)+'
+    emptyspace  = r'^[%s]+(\n|\r\n)+' % tabspace
     indent      = r'^[ ]+'
     nl          = r'[\r\n]+'
-    spac        = r'[ \t]*'
-    space       = r'[ \t]+'
-    whitespac   = r'[\r\n\t ]*'
-    whitespace  = r'[\r\n\t ]+'
+    spac        = r'[%s]*' % tabspace
+    space       = r'[%s]+' % tabspace
+    whitespac   = r'[\r\n%s]*' % tabspace
+    whitespace  = r'[\r\n%s]+' % tabspace
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9]+'
-    text        = r'[^\r\n<]+(?!\${)'
-    tag_text    = r'[^ \t\r\n/>${"\'=]+'
+    text        = r'[^\r\n<${]+'
+    tag_text    = r'[^%s\r\n/>${"\'=]+' % tabspace
     style_text  = r'[^\r\n${}]+'
     exprs_text  = r'[^\r\n}"\']+'
     string      = r'"(.|[\r\n])*?"|\'(.|[\r\n])*?\''    # Non greedy
 
     # Suffix definition for lookahead match for prolog / statement tails.
-    suffix1     = r'(?=;[ \t]*(\n|\r\n)+);[ \t]*(\n|\r\n)+'
-    suffix2     = r'(?=:[ \t]*(\n|\r\n)+):[ \t]*(\n|\r\n)+'
+    suffix1     = r'(?=;[%s]*(\n|\r\n)+);[%s]*(\n|\r\n)+' % (tabspace, tabspace)
+    suffix2     = r'(?=:[%s]*(\n|\r\n)+):[%s]*(\n|\r\n)+' % (tabspace, tabspace)
 
     doctype     = r'^!!!.*?' + suffix1
+    charset     = r'^@charset.*?' + suffix1
     body        = r'^@body.*?' + suffix1
     importas    = r'^@import.*?' + suffix1
     implement   = r'^@implement.*?' + suffix1
@@ -221,10 +225,11 @@ class TTLLexer( object ) :
     while_      = r'@while.*?' + suffix2
     filter_     = r':fb-'+atom
 
+    prunesyntax = '!'
     openexprs   = r'\$\{'
     gtend       = r'/>'
-    lt          = r'<'
-    gt          = r'>'
+    lt          = r'<[%s]?' % prunesyntax
+    gt          = r'[%s]?>' % prunesyntax
     equal       = r'='
     squote      = r"'"
     dquote      = r'"'
@@ -241,6 +246,7 @@ class TTLLexer( object ) :
 
     @TOKEN( commentline )
     def t_COMMENTLINE( self, t ) :
+        self._onemptyindent(t)
         return None
 
     @TOKEN( commentopen )
@@ -262,6 +268,12 @@ class TTLLexer( object ) :
 
     @TOKEN( doctype )
     def t_DOCTYPE( self, t ) :
+        self._incrlineno(t)
+        self._onemptyindent(t)
+        return t
+
+    @TOKEN( charset )
+    def t_CHARSET( self, t ) :
         self._incrlineno(t)
         self._onemptyindent(t)
         return t
@@ -398,9 +410,9 @@ class TTLLexer( object ) :
     #def t_S( self, t ) :
     #    return t
 
-    #@TOKEN( atom )
-    #def t_ATOM( self, t ) :
-    #    return t
+    @TOKEN( spchars )
+    def t_SPECIALCHARS( self, t ) :
+        return t
 
     @TOKEN( text )
     def t_TEXT( self, t ) :
@@ -533,6 +545,7 @@ class TTLLexer( object ) :
     def t_comment_COMMENTCLOSE( self, t ):
         self._incrlineno(t)
         t.lexer.pop_state()
+        self._onemptyindent(t)
         return t
 
     @TOKEN( commenttext )

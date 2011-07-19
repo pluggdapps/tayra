@@ -131,7 +131,7 @@ class TTLParser( object ):
         self._parse_error( msg, self._coord( line, column ))
     
     def _coord( self, lineno, column=None ):
-        return Coord( file=self.ttllex.filename, 
+        return Coord( file=self.ttllex.ttlfile, 
                       line=lineno,
                       column=column
                )
@@ -197,6 +197,7 @@ class TTLParser( object ):
 
     def p_prolog( self, p ) :
         """prolog   : doctype
+                    | charset
                     | body
                     | importas
                     | inherit
@@ -231,6 +232,10 @@ class TTLParser( object ):
     def p_doctype( self, p ) :
         """doctype      : DOCTYPE"""
         p[0] = DocType( p.parser, DOCTYPE(p.parser, p[1]) )
+
+    def p_charset( self, p ) :
+        """charset      : CHARSET"""
+        p[0] = Charset( p.parser, CHARSET(p.parser, p[1]) )
 
     def p_body( self, p ) :
         """body         : BODY"""
@@ -498,6 +503,10 @@ class TTLParser( object ):
         """content      : TEXT"""
         p[0] = Content( p.parser, TEXT(p.parser, p[1]), None )
 
+    def p_content_2( self, p ) :
+        """content      : SPECIALCHARS"""
+        p[0] = Content( p.parser, SPECIALCHARS(p.parser, p[1]), None )
+
     #def p_content_2( self, p ) :
     #    """content      : SPECIALCHARS"""
     #    p[0] = Content( p.parser, SPECIALCHARS(p.parser, p[1]), None )
@@ -510,7 +519,7 @@ class TTLParser( object ):
     #    """content      : S"""
     #    p[0] = Content( p.parser, S(p.parser, p[1]), None )
 
-    def p_content_5( self, p ) :
+    def p_content_3( self, p ) :
         """content      : exprs"""
         p[0] = Content( p.parser, None, p[1] )
 

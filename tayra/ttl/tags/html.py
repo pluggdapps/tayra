@@ -124,6 +124,7 @@ def handle_form( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_head( tagopen, specifiers, style, attrs, tagfinish ):
+    """<head[#id.class] [profile]>"""
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
     profile = 'profile=%s' % tokens.pop(0) if tokens else ''
@@ -185,11 +186,23 @@ def handle_label( tagopen, specifiers, style, attrs, tagfinish ):
     specattrs = filter( None, [id_, classes, for_] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
+_link_media = [
+    'all', 'aural', 'braille', 'handheld', 'print', 'projection', 'screen',
+    'tty', 'tv',
+]
 def handle_link( tagopen, specifiers, style, attrs, tagfinish ):
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
-    link = 'link=%s' % tokens.pop(0) if tokens else ''
-    specattrs = filter( None, [id_, classes, link] ) + specattrs
+    href = type_ = media = ''
+    for tok in tokens :
+        if tok in _link_media :
+            media = 'media="%s"' % tok
+            continue
+        if (tok[0] + tok[-1]) in [ '""', "''" ] :
+            href = 'href=%s' % tok
+            continue
+        type_ = 'type="%s"' % tok
+    specattrs = filter( None, [id_, classes, href, type_, media]) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_map( tagopen, specifiers, style, attrs, tagfinish ):
@@ -254,9 +267,38 @@ def handle_select( tagopen, specifiers, style, attrs, tagfinish ):
     specattrs = filter( None, [id_, classes, size, name] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
+def handle_script( tagopen, specifiers, style, attrs, tagfinish ):
+    id_, classes, tokens = parsespecifiers( specifiers )
+    tokens, specattrs = stdspecifiers( tokens )
+    src = type_ = ''
+    for tok in tokens :
+        if (tok[0] + tok[-1]) in [ '""', "''" ] :
+            src = 'src=%s' % tokens.pop(0) if tokens else ''
+            continue
+        type_ = 'type="%s"' % tok
+    specattrs = filter( None, [id_, classes, type_, src] ) + specattrs
+    return composetag( tagopen, specattrs, style, attrs, tagfinish )
+
+style_media = [
+    'screen', 'tty', 'tv', 'projection', 'handheld', 'print', 'braille',
+    'aural', 'all',
+]
+def handle_style( tagopen, specifiers, style, attrs, tagfinish ):
+    id_, classes, tokens = parsespecifiers( specifiers )
+    tokens, specattrs = stdspecifiers( tokens )
+    media = type_ = ''
+    for tok in tokens :
+        if tok in style_media :
+            media = 'media="%s"' % tok
+            continue
+        type_ = 'type="%s"' % tok
+    specattrs = filter( None, [id_, classes, media, type_] ) + specattrs
+    return composetag( tagopen, specattrs, style, attrs, tagfinish )
+
 def handle_textarea( tagopen, specifiers, style, attrs, tagfinish ):
     id_, classes, tokens = parsespecifiers( specifiers )
     tokens, specattrs = stdspecifiers( tokens )
+    cols = rows = name = ''
     for tok in tokens :
         try :
             cols, rows = [ int(t) for t in tok.split(',') ]

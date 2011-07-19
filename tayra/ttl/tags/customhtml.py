@@ -12,6 +12,16 @@ def handle_aname( tagopen, specifiers, style, attrs, tagfinish ):
     specattrs = filter( None, [id_, classes, href] )
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
+def handle_aimg( tagopen, specifiers, style, attrs, tagfinish ):
+    _id, classes, tokens = parsespecifiers( specifiers )
+    href = tokens.pop(0) if tokens else ''
+    src  = tokens.pop(0) if tokens else ''
+    id_ = 'id="%s"' % _id if _id else ''
+    cls = 'class="%s"' % classes if classes else ''
+    html = '<a href=%s><img %s %s style="%s" src=%s %s/></a>' % (
+            href, id_, cls, style, src, ' '.join(attrs) )
+    return html
+
 
 class CustomHtml( object ):
     implements( ITayraTags )

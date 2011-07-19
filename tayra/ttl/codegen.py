@@ -9,45 +9,40 @@ from   StringIO     import StringIO
 from   copy         import deepcopy
 from   hashlib      import sha1
 
-prolog = """# -*- encoding:utf-8 -*-
+prolog = """# -*- coding: %s -*-
 
 from   StringIO             import StringIO
 from   zope.interface       import implements
-from   zope.component       import getGlobalSiteManager
 import tayra
-from   tayra.ttl.runtime    import StackMachine
 
-"""
+_m.setencoding( %r )"""
 
 footer = """
-__ttlhash = %r
-__ttlfile = %r
+_ttlhash = %r
+_ttlfile = %r
 """
 
 interfaceClass = """
 class %s( object ):
-    implements(%s)
-%s_obj = %s()
+  implements(%s)
+%s = %s()
 """
 
 class InstrGen( object ) :
-    machname = '__m'
+    machname = '_m'
 
     def __init__( self ):
+        from   tayra.ttl        import DEFAULT_ENCODING
         self.outfd = StringIO()
         self.pyindent = ''
         self.optimaltext = []
         self.pytext = None
         # prolog for python translated template
-        self.initialize( prolog )
+        self.encoding = DEFAULT_ENCODING
 
     def __call__( self ):
         clone = InstrGen()
         return clone
-
-    def initialize( self, prolog ):
-        self.outfd.write( prolog )
-        self.cr()
 
     def cr( self, count=1 ) :
         self.outfd.write( '\n'*count )
@@ -67,20 +62,25 @@ class InstrGen( object ) :
 
     #---- Generate Instructions
 
+    def initialize( self, encoding ):
+        encoding = encoding or self.encoding
+        self.outfd.write( prolog % (encoding, encoding) )
+        self.cr()
+
     def indent( self ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.indent()' )
+        self.outfd.write( '_m.indent()' )
 
     def upindent( self, up='' ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.upindent( up=%r )' % up )
+        self.outfd.write( '_m.upindent( up=%r )' % up )
 
     def downindent( self, down='' ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.downindent( down=%r )' % down )
+        self.outfd.write( '_m.downindent( down=%r )' % down )
 
     def comment( self, comment ) :
         self.flushtext()
@@ -90,7 +90,7 @@ class InstrGen( object ) :
     def flushtext( self ) :
         if self.optimaltext :
             self.cr()
-            self.outfd.write( '__m.extend( %s )' % self.optimaltext )
+            self.outfd.write( '_m.extend( %s )' % self.optimaltext )
             self.optimaltext = []
 
     def puttext( self, text, force=False ) :
@@ -101,7 +101,7 @@ class InstrGen( object ) :
     def putvar( self, var ) :
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.append( %s )' % var )
+        self.outfd.write( '_m.append( %s )' % var )
 
     def putstatement( self, stmt ):
         self.flushtext()
@@ -114,68 +114,79 @@ class InstrGen( object ) :
     def evalexprs( self, code ) :
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.append( str(%s) )' % code )
+        self.outfd.write( '_m.append( _m.encodetext(%s) )' % code )
 
     def pushbuf( self ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.pushbuf()' )
+        self.outfd.write( '_m.pushbuf()' )
 
     def popcompute( self, astext=True ):
         self.flushtext()
         self.cr()
         if astext == True :
-            self.outfd.write( '__m.append( __m.popbuftext() )' )
+            self.outfd.write( '_m.append( _m.popbuftext() )' )
         else :
-            self.outfd.write( '__m.append( __m.popbuf() )' )
+            self.outfd.write( '_m.append( _m.popbuf() )' )
 
     def popreturn( self, astext=True ):
         self.flushtext()
         self.cr()
         if astext == True :
-            self.outfd.write( 'return __m.popbuftext()' )
+            self.outfd.write( 'return _m.popbuftext()' )
         else :
-            self.outfd.write( 'return __m.popbuf()' )
+            self.outfd.write( 'return _m.popbuf()' )
 
     def computetag( self ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '__m.handletag( *__m.popbuf() )' )
+        self.outfd.write( '_m.handletag( *_m.popbuf() )' )
 
-    def putimport( self, ttlloc, modname ):
+    def prunews( self ) :
+        self.flushtext()
         self.cr()
-        line = '%s = __m.importas( %r, %r )' % (modname, ttlloc, modname)
+        self.outfd.write( '_m.prunews()' )
+
+    def putimport_ttl( self, ttlloc, modname ):
+        self.cr()
+        line = '%s = _m.importas( %r, %r, globals() )' % (modname, ttlloc, modname)
         self.outfd.write( line )
+
+    def putimport( self, modnames ):
+        self.cr()
+        self.outfd.write( 'import %s' % modnames )
 
     def putinherit( self, ttlloc ):
         self.cr()
-        self.outfd.write( '__m.inherit( %r, globals() )' % ttlloc, )
+        self.outfd.write( '_m.inherit( %r, globals() )' % ttlloc, )
 
     def importinterface( self, interface ):
         self.putstatement( 'import %s' % interface )
 
     def implement_interface( self, implements, interfaces ):
-        interfaces = {}
-        [ interfaces.setdefault( ifname, [] ).append( method ) 
+        interfaces_ = {}
+        [ interfaces_.setdefault( ifname, [] ).append( method ) 
           for ifname, method in interfaces ]
         # Define interface class, hitch the methods and register the plugin
-        for i in range(implements) :
+        for i in range(len(implements)) :
             # Define interface implementer class
             interface, pluginname = implements[i]
-            infcls = '__Interface' + str(i+1)
-            codeblock = interfaceClass % ( infcls, interface, infcls, infcls )
+            infcls = 'Interface_' + str(i+1)
+            infobj = '%s_obj' % infcls
+            codeblock = interfaceClass % ( infcls, interface, infobj, infcls )
             self.putblock( codeblock )
             # hitch methods with interface class
-            for method in interfaces.get( interface, [] ) :
-                line = '__m.hitch( %s_obj, %s, %s )' % (infcls, infcls, method)
+            for method in interfaces_.get( interface, [] ) :
+                line = '%s.%s = _m.hitch( %s, %s, %s )' % (
+                            infobj, method, infobj, infcls, method )
                 self.putstatement( line )
             # register the interface providing object
-            line = '__m.register( %s_obj, %s, %r )' % ( infcls, interface,
+            line = '_m.register( %s_obj, %s, %r )' % ( infcls, interface,
                    pluginname )
             self.putstatement(line)
 
-    def useinterface( self, interface, pluginname, importname ):
-        line = '%s = __m.use( %s, %s )' % ( importname, interface, pluginname )
+    def useinterface( self, interface, pluginname, name ):
+        line = '%s = _m.use( %s, %r )' % ( name, interface, pluginname )
         self.putstatement(line)
 
     def footer( self, ttlhash, ttlfile ):

@@ -89,23 +89,32 @@ class Node( object ):
             Do you want the coordinates of each Node to be displayed.
         """
 
+    #---- Helper methods
+
     def stackcompute( self, igen, compute, astext=True ):
+        """Push a new buf, execute the compute function, pop the buffer and
+        append that to the parent buffer."""
         igen.pushbuf()
         compute()
         igen.popcompute( astext=astext )
         return None
 
     def getroot( self ):
+        """Get root node traversing backwards from this `self` node."""
         node = self
         parent = node.parent
         while parent : node, parent = parent, parent.parent
         return node
 
     def bubbleup( self, attrname, value ):
+        """Bubble up value `value` to the root node and save that as its
+        attribute `attrname`"""
         rootnode = self.getroot()
         setattr( rootnode, attrname, value )
 
     def bubbleupaccum( self, attrname, value, to=None ):
+        """Same as bubbleup(), but instead of assigning the `value` to
+        `attrname`, it is appended to the list."""
         rootnode = self.getroot()
         l = getattr( rootnode, attrname, [] )
         l.append( value )
@@ -131,6 +140,7 @@ class Terminal( Node ) :
         return unicode( self.terminal )
 
     def generate( self, igen, *args, **kwargs ):
+        """Dump the content."""
         igen.puttext( self.dump(None) )
 
     def dump( self, context ):
@@ -179,6 +189,9 @@ class NonTerminal( Node ):      # Non-terminal
         return getattr( self, '_nonterms', [] )
 
     def gencontrolblock( self, igen, line, *args, **kwargs ):
+        """Generate control blocks,
+            if-elif-else, for and while loops.
+        """
         igen.comment( line )
         igen.putstatement( line )
         if self.siblings :
@@ -193,6 +206,9 @@ class NonTerminal( Node ):      # Non-terminal
         return None
 
     def genfunction( self, igen, line, *args, **kwargs ):
+        """Generate function block for 
+            @function and @interface.
+        """
         igen.cr()
         igen.comment( line )
         # function signature
@@ -213,6 +229,8 @@ class NonTerminal( Node ):      # Non-terminal
         return None
 
     def flatten( self, attrnode, attrs ):
+        """Instead of recursing through left-recursive grammar, flatten them
+        into sequential list for looping on them later."""
         node, rclist = self, []
 
         if isinstance(attrs, basestring) :
@@ -241,47 +259,73 @@ class Template( NonTerminal ):
         self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
+
         self.bodysignature = None   # Will be bubbleup during `preprocess`
         self.implements = []        # [ (interface, pluginname), ...]
-        self.interfaces = []        # [ (interface, method), ... ]
+        self.interfaces = []        # [ (interface, methodname), ... ]
+        self.useinterfaces = []     # [ (inteface, plugin-name, name) ]
         self.doctypes = []          # [ html, html, ... ]
         self.globalfuncs = []       # [ ast-node, ... ]
 
-    def _genbody( self, igen, signature='', *args, **kwargs ):
-        # Body function signature
-        signature = signature and signature.strip(', \t') or ''
-        ', '.join([ signature, '*args', '**kwargs' ])
-        line = "def body( %s ) :" % signature
-        igen.putstatement( line )
-        igen.codeindent( up='  ' )
-        self.siblings and self.siblings.generate( igen, *args, **kwargs )
-        # finish body function
-        igen.flushtext()
-        igen.popreturn( astext=True )
-        igen.codeindent( down='  ' )
+    def _bodylookahead( self, siblings ) :
+        """Check whether the body of the template page contains valid content,
+        if not then the `body` function should not be generated at all."""
+        bodynodes = (Statement, TagLine, TextLine, TextBlock, TagBlock)
+        # Other siblings are,
+        #   dirtyblocks, interfaceblock, filterblock, functionblock,
+        #   ifelfiblock, forblock, whileblock
+        for sibling in siblings :   # flattened siblings
+            if isinstance(sibling.nonterm, bodynodes) : return True
+        else :
+            return False
+
+    def _generate( self, igen, signature='', *args, **kwargs ):
+        """Generate the body function only when there is valid content in the
+        global scope."""
+        if self._bodylookahead( self.siblings.flatten() ) :
+            igen.cr()
+            # Body function signature
+            signature = signature and signature.strip(', \t') or ''
+            ', '.join([ signature, '*args', '**kwargs' ])
+            line = "def body( %s ) :" % signature
+            igen.putstatement( line )
+            igen.codeindent( up='  ' )
+            # Doctype prolog
+            [ igen.puttext( html+'\n', force=True ) for html in self.doctypes ]
+            # Comments and emptyspaces
+            if self.dirtyblocks :
+                self.dirtyblocks.generate( igen, *args, **kwargs )
+            # Body function's body
+            self.siblings and self.siblings.generate( igen, *args, **kwargs )
+            # finish body function
+            igen.flushtext()
+            igen.popreturn( astext=True )
+            igen.codeindent( down='  ' )
+        else :
+            self.siblings and self.siblings.generate( igen, *args, **kwargs )
 
     def children( self ):
         return self._nonterms
 
     def generate( self, igen, *args, **kwargs ):
+        from   tayra.ttl        import DEFAULT_ENCODING
         ttlhash = kwargs.pop( 'ttlhash', '' )
-        if self.dirtyblocks :
-            self.dirtyblocks.generate( igen, *args, **kwargs )
+        igen.initialize( kwargs.get( 'encoding', igen.encoding ))
         # prologs
         if self.prologs :
             self.prologs.generate( igen, *args, **kwargs )
-            [ igen.puttext( html+'\n', force=True ) for html in self.doctypes ]
             igen.puttext('\n')
-        # Body start
-        self._genbody( igen, self.bodysignature, *args, **kwargs )
-        # Global functions
-        for funcnode in self.globalfuncs :
-            kwargs['pass2'] = True
-            funcnode.generate( igen, *args, **kwargs )
+        # Body
+        self._generate( igen, self.bodysignature, *args, **kwargs )
+        # Global functions, that got accumulated while running `generate()`
+        # recursively on `siblings`. The actual functions are generated on
+        # 'pass2' in calling `generate()`
+        kwargs['pass2'] = True
+        [ fnode.generate(igen, *args, **kwargs) for fnode in self.globalfuncs ]
         # Handle interface implementations
         if self.implements and self.interfaces :
             igen.implement_interface( self.implements, self.interfaces )
-        # Footer
+        # Footer code
         ttlfile = self.parser.ttlparser.ttlfile
         igen.footer( ttlhash, ttlfile )
         igen.finish()
@@ -357,6 +401,7 @@ class Siblings( NonTerminal ):
         return self._nonterms
 
     def preprocess( self, igen ) :
+        # Flatten the nodes, to avoid deep recursion.
         [ x.preprocess( igen ) for x in self.flatten() ]
 
     def generate( self, igen, *args, **kwargs ) :
@@ -387,9 +432,6 @@ class Sibling( NonTerminal ):
     def children( self ):
         return self._nonterms
 
-    def generate( self, igen, *args, **kwargs ):
-        NonTerminal.generate( self, igen, *args, **kwargs )
-
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         lead = ' ' * offset
@@ -416,9 +458,11 @@ class DocType( NonTerminal ):
     def preprocess( self, igen ):
         from   tayra.ttl.doctype    import ttl2doctype
         self.html = ttl2doctype( self.DOCTYPE.dump(None) )
+        self.bubbleupaccum( 'doctypes', self.html )
+        NonTerminal.preprocess( self, igen )
 
     def generate( self, igen, *args, **kwargs ) :
-        self.bubbleupaccum( 'doctypes', self.html )
+        pass
 
     def children( self ):
         return self._terms
@@ -448,6 +492,7 @@ class Body( NonTerminal ):
     def preprocess( self, igen ):
         self.signature = self.BODY.dump(None)[5:].strip(' \t\r\n').rstrip(';')
         self.bubbleup( 'bodysignature', self.signature )
+        NonTerminal.preprocess( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
         pass
@@ -456,6 +501,35 @@ class Body( NonTerminal ):
               showcoord=False ):
         lead = ' ' * offset
         buf.write( lead + 'body: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+
+class Charset( NonTerminal ):
+    """class to handle `charset` grammar."""
+
+    def __init__( self, parser, charset ) :
+        NonTerminal.__init__( self, parser, charset )
+        self._terms = (self.CHARSET,) = (charset,)
+        # Set parent attribute for children, should be last statement !!
+        self.setparent( self, self.children() )
+
+    def children( self ):
+        return self._terms
+
+    def preprocess( self, igen ):
+        igen.encoding = self.CHARSET.dump(None)[8:].strip(' \t\r\n').rstrip(';')
+        NonTerminal.preprocess( self, igen )
+
+    def generate( self, igen, *args, **kwargs ):
+        pass
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'charset: ' )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
@@ -471,18 +545,17 @@ class ImportAs( NonTerminal ):
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
-    def _parseline( self, line ):
-        parts = ' '.join( line.splitlines() ).split(' ')
-        ttlloc, modname = parts[1], parts[3]
-        return ttlloc, modname
-
     def children( self ):
         return self._terms
 
     def generate( self, igen, *args, **kwargs ):
         line = self.IMPORTAS.dump(None).rstrip(';\r\n')
-        ttlloc, modname = self._parseline( line )
-        igen.putimport( ttlloc, modname )
+        parts = ' '.join( line.splitlines() ).split(' ')
+        if parts[1].endswith('.ttl') and parts[2] == 'as' :
+            ttlloc, modname = parts[1], parts[3]
+            igen.putimport_ttl( ttlloc, modname )
+        else :
+            igen.putimport( ' '.join(parts[1:]) )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -503,17 +576,13 @@ class Inherit( NonTerminal ):
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
-    def _parseline( self, line ):
-        parts = ' '.join( line.splitlines() ).split(' ')
-        ttlloc = parts[1]
-        return ttlloc
-
     def children( self ):
         return self._terms
 
     def generate( self, igen, *args, **kwargs ):
-        line = self.INHERIT.dump(None).rstrip(';\r\b')
-        ttlloc = self._parseline( line )
+        line = self.INHERIT.dump(None).rstrip(';\r\n')
+        parts = ' '.join( line.splitlines() ).split(' ')
+        ttlloc = parts[1]
         igen.putinherit( ttlloc )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
@@ -535,19 +604,23 @@ class Implement( NonTerminal ):
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
-    def _parseline( self, line ):
-        parts = ' '.join( line.splitlines() ).split(' ')
-        interface, pluginname = parts[1], parts[3]
-        return interface, name
-
     def children( self ):
         return self._terms
 
     def preprocess( self, igen ):
         line = self.IMPLEMENT.dump(None).rstrip(';\r\n')
-        interface, pluginname = self._parseline( line )
-        self.importinterface( interface )
-        self.bubbleupaccum( 'implements', (interface, pluginname) )
+        parts = ' '.join( line.splitlines() ).split(' ')
+        if parts[2] == 'as' :
+            interface, pluginname = parts[1], parts[3]
+            self.bubbleupaccum( 'implements', (interface, pluginname) )
+        else :
+            raise Exception(
+                '@implement directive does not have proper syntax'
+            )
+        NonTerminal.preprocess( self, igen )
+
+    def generate( self, igen, *args, **kwargs ):
+        pass
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -569,11 +642,13 @@ class Use( NonTerminal ):
         self.setparent( self, self.children() )
 
     def _parseline( self, line ):
-        parts = ' '.join( line.splitlines() ).split(' ')
+        parts = filter( None, ' '.join( line.splitlines() ).split(' ') )
         if len(parts) == 5 and (parts[0], parts[3]) == ('@use', 'as') :
             interface, pluginname, importname = parts[1], parts[2], parts[4]
         elif len(parts) == 4 and (parts[0], parts[2]) == ('@use', 'as') :
             interface, pluginname, importname = parts[1], '', parts[3]
+        else :
+            raise Exception( 'use directive syntax error' )
         return interface, pluginname, importname
 
     def children( self ):
@@ -581,7 +656,13 @@ class Use( NonTerminal ):
 
     def preprocess( self, igen ):
         line = self.USE.dump(None).rstrip(';\r\n')
-        interface, pluginname, importname = self._parseline( line )
+        interface, pluginname, name = self._parseline( line )
+        self.bubbleupaccum( 'useinterfaces', (interface, pluginname, name) )
+        self.interface, self.pluginname, self.name = interface, pluginname, name
+        NonTerminal.preprocess( self, igen )
+
+    def generate( self, igen, *args, **kwargs ):
+        igen.useinterface( self.interface, self.pluginname, self.name )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -598,30 +679,42 @@ class Use( NonTerminal ):
 class InterfaceBlock( NonTerminal ):
     """class to handle `interfaceblock` grammar."""
 
-    def __init__( self, parser, interface, indent, siblings, dedent ) :
-        NonTerminal.__init__( self, parser, interface, indent, siblings, dedent )
+    def __init__( self, parser, interface, dirtyblocks, indent, siblings,
+                  dedent ) :
+        NonTerminal.__init__(
+            self, parser, interface, dirtyblocks, indent, siblings, dedent )
         self._terms = self.INTERFACE, self.INDENT, self.DEDENT = \
                 interface, indent, dedent
-        self._nonterms = (self.siblings,) = (siblings,)
+        self._nonterms = self.dirtyblocks,self.siblings = dirtyblocks,siblings
         self._terms = filter( None, self._terms )
         self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        return (self.INTERFACE, self.INDENT, self.siblings, self.DEDENT)
+        x = ( self.INTERFACE, self.dirtyblocks, self.INDENT, self.siblings,
+              self.DEDENT )
+        return filter(None, x)
+
+    def _parseline( self, line ):
+        interfacename, signature = line.strip().split(' ', 1)
+        interface, method = interfacename.rsplit('.', 1)
+        funcline = 'def ' + method + signature
+        return interface, method, signature
+
+    def preprocess( self, igen ):
+        line = ' '.join( self.INTERFACE.dump(None)[10:].splitlines() )
+        self.interface, method, signature = self._parseline( line )
+        self.methodname = method.strip('( ')
+        self.signature = '(' + signature
+        self.bubbleupaccum( 'interfaces', (self.interface, self.methodname) )
+        NonTerminal.preprocess( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
         pass2 = kwargs.get( 'pass2', None )
         if pass2 == True :
-            # Interface function signature
-            line = ' '.join( self.INTERFACE.dump(None)[10:].splitlines() )
-            interfacename, signature = line.split(' ', 1)[0]
-            interface, method = interfacename.rsplit('.', 1)
-            funcline = 'def ' + method + signature
-            # Interface function block
+            funcline = 'def ' + self.methodname + self.signature
             self.genfunction( igen, funcline, *args, **kwargs )
-            self.bubbleupaccum( 'interfaces', (interface, method) )
         else :
             self.bubbleupaccum( 'globalfuncs', self )
         return None
@@ -1104,7 +1197,10 @@ class TagLine( NonTerminal ):
         # Generate closing tag
         if isinstance( self.parent, Sibling ) and self.tag.TAGCLOSE :
             igen.indent()
-            igen.puttext( self.tag.closetag(igen) + '\n' )
+            self.tag.pruneinner and igen.prunews()
+            closehtml = self.tag.closetag(igen)
+            closehtml += '\n' if not self.tag.pruneouter else ''
+            igen.puttext( closehtml )
 
     def dump( self, context ) :
         return context.htmlindent + NonTerminal.dump( self, context )
@@ -1208,6 +1304,24 @@ class Tag( NonTerminal ):
         self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
+        self.pruneouter = self.pruneinner = False
+
+    def _prunews( self, TAGOPEN, TAGCLOSE ):
+        from  tayra.ttl.lexer import TTLLexer
+
+        if TAGOPEN :
+            tagopen = TAGOPEN.terminal
+            if tagopen[1] == TTLLexer.prunesyntax :
+                self.pruneouter = True
+                tagopen = tagopen[0] + tagopen[2:]
+            TAGOPEN.terminal = tagopen
+        if TAGCLOSE :
+            tagclose = TAGCLOSE.terminal
+            parts = tagclose.split( TTLLexer.prunesyntax )
+            if len(parts) == 2 :
+                self.pruneinner = True
+                tagclose = ''.join( parts ).strip( TTLLexer.tabspace )
+            TAGCLOSE.terminal = tagclose
 
     def children( self ):
         x = ( self.TAGOPEN, self.specifiers, self.style, self.attributes,
@@ -1215,6 +1329,7 @@ class Tag( NonTerminal ):
         return filter( None, x )
 
     def generate( self, igen, *args, **kwargs ):
+        self._prunews( self.TAGOPEN, self.TAGCLOSE )
         igen.pushbuf()
 
         self.TAGOPEN.generate(igen, *args, **kwargs)
@@ -1222,13 +1337,14 @@ class Tag( NonTerminal ):
                   (self.attributes,False) ]
         for item, astext in items :
             if item :
-                compute = lambda : item.generate(igen, *args, **kwargs);
+                compute = lambda : item.generate(igen, *args, **kwargs)
                 self.stackcompute( igen, compute, astext=astext )
             else :
                 igen.puttext( '' )
+
         self.TAGEND and self.TAGEND.generate(igen, *args, **kwargs)
         self.TAGCLOSE and self.TAGCLOSE.generate(igen, *args, **kwargs)
-
+        
         igen.computetag()
 
     def closetag( self, igen ):
@@ -1803,6 +1919,9 @@ class EmptyLines( NonTerminal ):
     def children( self ):
         return self._nonterms + self._terms
 
+    def generate( self, igen, *args, **kwargs ):
+        pass
+
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         lead = ' ' * offset
@@ -1863,6 +1982,7 @@ class S( Terminal ) : pass
 
 class DOCTYPE( Terminal ) : pass
 class BODY( Terminal ) : pass
+class CHARSET( Terminal ) : pass
 class IMPORTAS( Terminal ) : pass
 class IMPLEMENT( Terminal ) : pass
 class INHERIT( Terminal ) : pass

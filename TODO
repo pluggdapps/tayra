@@ -1,2 +1,13 @@
 1. Check paper.js (Javascript+canvas) and see how one can write plugins in
    tayra using that.
+
+Feature requests :
+* Enable file check, using `reload_templates` ttlconfig, so that the
+  intermediate template files and in memory code cache will be regenerated
+  when ever the file is updated.
+* Whitespace pruning,
+  Currently whitespace (' \t\r\n') is pruned only before the closing tag. This
+  needs to be implemented for all combinations.
+    after and before opening tag and closing tag (for innerprune)
+    before and after opening tag and closing tag (for outerprune)
+* @use directive should include ${...} expression evaluation syntax.

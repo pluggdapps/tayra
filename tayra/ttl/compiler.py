@@ -9,6 +9,20 @@ from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
 
+"""
+ttlconfig:
+memcache
+    boolean, to cache ttl code objects in memory
+directories 
+    a list of directories to look for .ttl files
+module_directory 
+    cache directory to store the .py intermediate files
+devmod 
+    boolean, to enable development mode.
+plugin_packages 
+    a comma seperated list of packages to import for loading plugins.
+"""
+
 class Compiler( object ):
     _memcache = {}
 
@@ -22,6 +36,9 @@ class Compiler( object ):
                   igen=None,
                 ):
         self.ttlconfig = ttlconfig
+        # Initialize plugins
+        initplugins( ttlconfig, force=ttlconfig.get('devmod', True) )
+        # Lookup files
         self.ttllookup = ttllookup if isinstance(ttllookup, TemplateLookup) \
                          else TemplateLookup(ttllookup, ttlconfig)
         self.ttlfile = self.ttllookup.ttlfile
@@ -31,15 +48,9 @@ class Compiler( object ):
         self.ttlparser = ttlparser or TTLParser()
         # Instruction generation phase
         self.igen = igen or InstrGen()
-        # Initialize plugins
-        initplugins( ttlconfig )
 
     def __call__( self, ttllookup ):
-        clone = Compiler(
-                    ttllookup,
-                    ttlparser=self.ttlparser,
-                    igen=self.igen
-                )
+        clone = Compiler( ttllookup, ttlconfig=self.ttlconfig )
         return clone
 
     def execttl( self, code=None, context={} ):
@@ -47,11 +58,11 @@ class Compiler( object ):
         `module`.
         """
         # Stack machine
-        __m  = StackMachine( self.ttlfile, self )
+        _m  = StackMachine( self.ttlfile, self )
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
         module.__dict__.update({
-            self.igen.machname : __m,
+            self.igen.machname : _m,
             'self'   : Namespace( None, module ),
             'local'  : module,
             'parent' : None,
@@ -79,6 +90,7 @@ class Compiler( object ):
             code = compile( pytext, pyfile, 'exec')
         elif code == None :
             pytext = self.topy()
+            self.ttllookup.modcachepy( pyfile, pytext )
             code = compile( pytext, self.ttlfile, 'exec')
         # Cache output to file
         self.ttllookup.modcachepy( pyfile, pytext )
@@ -88,7 +100,6 @@ class Compiler( object ):
 
     def toast( self ):
         tu = None
-        print '..........'
         if self.ttlfile and self.ttltext :
             tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
         elif self.ttlfile :
@@ -114,7 +125,7 @@ class TemplateLookup( object ) :
     TTLCONFIG = [
         ('directories', []),
         ('module_directory',None),
-        ('devmod','True')
+        ('devmod', True)
     ]
     def __init__( self, ttlloc, ttlconfig ):
         [ setattr( self, k, ttlconfig.get(k, default) )
@@ -124,7 +135,6 @@ class TemplateLookup( object ) :
         self.ttlfile = self._locatettl()
         self.pyfile, self.pytext = self._locatepy()
         self.pytext = self.pytext or (self.pyfile and open(self.pyfile).read())
-        self.devmod = self.devmod.lower() == 'true'
 
     def _locatettl( self ):
         uri = self.ttlloc
@@ -151,15 +161,8 @@ class TemplateLookup( object ) :
     def _locatepy( self ):
         pyfile = self.computepyfile()
         # Check whether the python intermediate file is not outdated, in devmod
-        if pyfile and self.devmod and isfile( pyfile ) :
-            ttltext, pytext = open(self.ttlfile).read(), open(pyfile).read()
-            hashref = sha1( ttltext ).hexdigest()
-            s = re.search( r"__ttlhash = '([0-9a-f]+)'\n", pytext )
-            try :
-                hashval = s.groups()[0]
-                if hashref == hashval : return pyfile, pytext
-            except :
-                return None, None
+        if self.devmod :
+            return None, None
         elif pyfile and isfile(pyfile) :
             return pyfile, open(pyfile).read()
         else :

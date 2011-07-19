@@ -1,7 +1,7 @@
 import time, imp
 from   StringIO                 import StringIO
 
-from   zope.component           import getGlobalSiteManager, queryUtility
+from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
 
 import tayra.ttl.tags.html
@@ -12,6 +12,7 @@ from   tayra.ttl.parser         import TTLParser
 
 EP_TTLGROUP = 'tayra.ttlplugins'
 EP_TTLNAME  = 'ITTLPlugin'
+DEFAULT_ENCODING = 'utf-8'
 
 def findttls():
     """Search for tayra template plugins."""
@@ -25,7 +26,7 @@ def findttls():
             except : continue
             entrypoints.setdefault( pkgname, ep )
 
-    return [ ( pkgname, ep.load().implementers() )
+    return [ ( pkgname, ep.load()().implementers() )
              for pkgname, ep in entrypoints.items() ]
 
 def loadttls( ttllocs, ttlconfig, context={} ):
@@ -33,34 +34,54 @@ def loadttls( ttllocs, ttlconfig, context={} ):
     of the system.
     """
     from   tayra.ttl.compiler       import Compiler, TemplateLookup
-    [ Compiler( TemplateLookup( ttlloc, ttlconfig )).execttl( context=context )
-      for ttllocs in ttllocs ]
+    [ Compiler( TemplateLookup( ttlloc, ttlconfig ), ttlconfig=ttlconfig 
+              ).execttl( context=context )
+      for ttlloc in ttllocs ]
 
-plugins = {}
-tagplugins = {}
-def initplugins( ttlconfig ):
+ttlplugins = {}         # { interfaceName : {plugin-name: instance, ... }, ... }
+tagplugins = {}         # { plugin-name   : (instance, hander-dict), ... }
+init_status = 'pending'
+def initplugins( ttlconfig, force=False ):
     """Collect and organize Tayra template plugins"""
-    global plugins, tagplugins
+    global ttlplugins, tagplugins, init_status
+    if init_status == 'progress' :
+        return None
+    if (force == False) and tagplugins:
+        return None
 
-    loadttls( findttls(), ttlconfig )
+    init_status = 'progress'
     gsm = getGlobalSiteManager()
-    for x in gsm.registeredUtilities() :
-        z = plugins.setdefault( x.provided, {} )
-        if x.name :
-            z.setdefault( x.name, x.component )
-        else :
-            z.setdefault( x.name, [] ).append( x.component )
-    # Gather plugins for template tag handlers
-    [ tagplugins.setdefault( name, (obj, obj.handlers()) )
-      for name, obj in plugins.get( ITayraTags, {} ).items()
-      if not isinstance( obj, list )
-    ]
-    # Gather plugins for filters
-    # Gather plugins for filter-blocks
-    return plugins
 
-def query_ttlplugin( interface, name='' ) :
-    return plugins[interface][name]
+    # Load plugin packages
+    packages = ttlconfig.get( 'plugin_packages', '' )
+    packages = [ x.strip(' \t') for x in packages.split(',') ]
+    [ __import__(pkg) for pkg in filter(None, packages) ]
+
+    # Gather plugins for template tag handlers, before ttl plugins
+    for x in gsm.registeredUtilities() :
+        if x.provided == ITayraTags :
+            tagplugins[x.name] = ( x.component, x.component.handlers() )
+
+    # Gather plugins for filters, before ttl plugins
+    # Gather plugins for filter-blocks, before ttl plugins
+
+    # Load ttl files implementing template plugins
+    [ loadttls( ttllocs, ttlconfig ) for pkg, ttllocs in findttls() ]
+
+    # Setup plugin lookup table
+    for x in gsm.registeredUtilities() :
+        # Skip plugins for tags, filters and filter-blocks
+        if x.provided in [ ITayraTags ] : continue
+        z = ttlplugins.setdefault( x.provided, {} )
+        z.setdefault( x.name, x.component )
+    init_status = 'done'
+    return None
+
+def queryTTLPlugin( interface, name='' ) :
+    if name :
+        return ttlplugins[interface][name]
+    else :
+        return ttlplugins[interface].values()
 
 
 #---- APIs for executing Tayra Template Language
@@ -75,6 +96,7 @@ class Renderer( object ):
         compiler = Compiler(
             self.ttlloc, ttlconfig=self.ttlconfig, ttlparser=ttlparser
         )
+        context['_ttlcontext'] = context
         module = compiler.execttl( context=context )
         # Fetch parent-most module
         entry = getattr( module.self, entry or 'body' )

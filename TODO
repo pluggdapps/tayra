@@ -8,20 +8,11 @@ Feature requests :
   when ever the file is updated.
 
 * Whitespace pruning,
-  Currently whitespace (' \t\r\n') is pruned only before the closing tag. This
-  needs to be implemented for all combinations.
-    after and before opening tag and closing tag (for innerprune)
     before and after opening tag and closing tag (for outerprune)
 
 * @use directive should include ${...} expression evaluation syntax.
 
-* Custom tag implementers have access only to the `tag` Syntax.
-  The childnodes to the tag are not available to the handlers.
-
 * Filter blocks, to have its own lexer rules ... and designed pluggable.
-
-* Syntax to avoid outputing indendations for child element(s) in a tag. This is
-  useful for preformating styling the child element(s).
 
 * Custom tag plugin for form generation.
 

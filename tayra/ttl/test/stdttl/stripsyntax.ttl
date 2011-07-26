@@ -1,0 +1,31 @@
+<!--
+This file is subject to the terms and conditions defined in
+file 'LICENSE', which is part of this source code package.
+Copyright (c) 2009 SKR Farms (P) LTD.
+-->
+
+@function helloword( x=10, y=20, a='wer', b='ehl' ) :
+  <html>
+    @@b = 'hello'   
+    ${x+y}
+    <head#headid.cls1.${a.strip()} "title" {color:red} lang="en" data="hello">
+      <title#titleid .cls1 "title string"> hello ${a} @ ! # "helo" 'world "ok
+    <body>
+      <h1 { color : red; border : 1px solid gray; }/> I am the space station ${ "These "} seven cameras
+      have a zoom range 
+      <p first second!> of any 12x or more,  ${20}  
+      and some of the wide-angle view 
+      <div%> of good. They also have a
+        lot of image stabilization (either optical or mechanical), which is 
+        important for people who are with a powerful zoom lens. Some other        
+      important features thatThese cameras contain electronic viewfinder,
+    full control while shooting. In general, these cameras are all seem 
+      very similar.
+    
+      <p#${b}> Sign my guestbook
+
+<pre%>
+  int foo( int a, int b  ){
+    printf( 'helloworld' )
+  }
+${helloword()}

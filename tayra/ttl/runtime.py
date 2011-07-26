@@ -109,12 +109,24 @@ class StackMachine( object ) :
         buf = self.popbuf()
         return self.emptystring.join( buf )
 
-    def handletag( self, tagname, specifiers, style, attrs, tagfinish ) :
+    def handletag( self, contents, tag, indent=False, newline='' ):
         """Entry point to handle tags"""
         from   tayra.ttl.tags       import handle_default
+        tagname, specifiers, style, attrs, tagfinish = tag
+        # Compute and push tag element
         tagnm = tagname.strip(' \t\r\n')[1:]
         handler = self.taghandlers.get( tagnm, None ) or handle_default
         self.append( handler( tagname, specifiers, style, attrs, tagfinish ))
+        # Just push tag content
+        self.append( ''.join(contents) )
+        # Close tag
+        tail = self.htmlindent if indent else ''
+        tail += self.encodetext( '</%s>'%tagnm ) 
+        tail += newline
+        self.append( tail )
+
+    def evalexprs( self, val ) :
+        return self.encodetext( str(val) )
 
     def importas( self, ttlloc, modname, childglobals ):
         compiler = self.compiler( ttlloc )

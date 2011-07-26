@@ -225,11 +225,12 @@ class TTLLexer( object ) :
     while_      = r'@while.*?' + suffix2
     filter_     = r':fb-'+atom
 
-    prunesyntax = '!'
+    prunews     = '!'
+    pruneindent = '%'
     openexprs   = r'\$\{'
     gtend       = r'/>'
-    lt          = r'<[%s]?' % prunesyntax
-    gt          = r'[%s]?>' % prunesyntax
+    lt          = r'<[%s]?' % prunews
+    gt          = r'[%s%s]?>' % (prunews, pruneindent)
     equal       = r'='
     squote      = r"'"
     dquote      = r'"'

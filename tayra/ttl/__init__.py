@@ -133,5 +133,6 @@ def ttl_cmdline( ttlloc, **kwargs ):
         code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
         module = compiler.execttl( code )
         # Fetch parent-most module
-        html = module.self.body(*args)
-        open(htmlfile, 'w').write(html)
+        body = getattr( module.self, 'body' )
+        html = body( *args ) if callable( body ) else ''
+        open( htmlfile, 'w' ).write( html )

@@ -62,11 +62,11 @@ syn region  ttlString       contained start=+'+ end=+'+ contains=ttlSpecialChar,
                             \ pythonExprs
 syn match   ttlValue        contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1 contains=javaScriptExpression,
                             \ pythonExprs
-syn match   ttlTagN         contained "<\s*[-a-zA-Z0-9_#]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
+syn match   ttlTagN         contained "<[!%]\?\s*[-a-zA-Z0-9_#]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
 syn region  ttlStyle        contained start=+{+ keepend end=+}+ contains=pythonExprs,@htmlCss
-syn region  ttlTag          contained start=+^[ ]*<[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlStyle,
+syn region  ttlTag          contained start=+^[ ]*<[!%]\?[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlStyle,
                             \ ttlValue,ttlTagError,ttlEvent,ttlCssDefinition,pythonExprs
-syn region  ttlTagline      start=+^[ ]*<[^/]+  end=+[^\r\n]\{-}$+ contains=ttlTag,pythonExprs
+syn region  ttlTagline      start=+^[ ]*<[!%]\?[^/]+  end=+[^\r\n]\{-}$+ contains=ttlTag,pythonExprs
 
 " Function block
 syn region  funcLine        start=+^[ ]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
@@ -87,7 +87,7 @@ syn region  pythonExprs     contained start="\${" end="}" contains=@Python
 syn include @htmlCss            syntax/css.vim
 unlet b:current_syntax
 syn match htmlCssStyleComment   contained "\(<!--\|-->\)"
-syn region cssStyle             start=+[ ]*<style+ keepend end=+^$+ contains=ttlTag,@htmlCss
+syn region cssStyle             start=+[ ]*<[!%]\?style+ keepend end=+^$+ contains=ttlTag,@htmlCss
 syn region htmlCssDefinition    start='style="' keepend matchgroup=ttlString end='"' contains=css.*Attr,css.*Prop,
                                 \ cssComment,cssLength,cssColor,cssURL,cssImportant,cssError,cssString,@htmlPreproc
 TTLHiLink htmlStyleArg ttlString
@@ -95,7 +95,7 @@ TTLHiLink htmlStyleArg ttlString
 "Embedded Javascript
 syn include @htmlJavaScript     syntax/javascript.vim
 unlet b:current_syntax
-syn region  jsstyle             start=+[ ]*<script+ keepend end=+^$+ contains=ttlTag,@htmlJavaScript,pythonExprs
+syn region  jsstyle             start=+[ ]*<[!%]\?script+ keepend end=+^$+ contains=ttlTag,@htmlJavaScript,pythonExprs
 ,
 TTLHiLink ttlSpecialChar    Special
 TTLHiLink comment           Comment

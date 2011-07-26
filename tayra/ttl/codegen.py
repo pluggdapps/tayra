@@ -114,7 +114,7 @@ class InstrGen( object ) :
     def evalexprs( self, code ) :
         self.flushtext()
         self.cr()
-        self.outfd.write( '_m.append( _m.encodetext(%s) )' % code )
+        self.outfd.write( '_m.append( _m.evalexprs(%s) )' % code )
 
     def pushbuf( self ):
         self.flushtext()
@@ -137,10 +137,15 @@ class InstrGen( object ) :
         else :
             self.outfd.write( 'return _m.popbuf()' )
 
-    def computetag( self ):
+    def handletag( self, indent=False, newline='' ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '_m.handletag( *_m.popbuf() )' )
+        # first arg is `content` and second arg is `tag`
+        self.outfd.write(
+            '_m.handletag( _m.popbuf(), _m.popbuf(), indent=%s, newline=%r )'%(
+                indent, newline
+            )
+        )
 
     def prunews( self ) :
         self.flushtext()

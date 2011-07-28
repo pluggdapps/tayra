@@ -1,6 +1,8 @@
 Rlease check-list 
 -----------------
 
+* Fix copyright header in all the files.
+
 * Change the release version in 
     ./CHANGELOG,
     ./tayra/__init__.py

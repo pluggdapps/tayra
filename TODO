@@ -12,7 +12,10 @@ Feature requests :
 
 * @use directive should include ${...} expression evaluation syntax.
 
-* Filter blocks, to have its own lexer rules ... and designed pluggable.
+* Micro-templating similar to mako. This will demonstrate the true power of
+  StackMachine based design.
+
+* Escape filtering for exression evaluation.
 
 * Custom tag plugin for form generation.
 

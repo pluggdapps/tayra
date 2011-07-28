@@ -2,7 +2,7 @@
 
 import os, sys
 from   optparse         import OptionParser
-from   os.path          import abspath, join, isfile, basename
+from   os.path          import abspath, join, isfile, isdir, basename
 from   tayra.ttl        import ttl_cmdline
 
 THISDIR = abspath( '.' )
@@ -19,11 +19,11 @@ def test_stdttl() :
     print "Reference checking ... "
     for f in os.listdir( STDTTLDIR ) :
         outfile = join( STDTTLDIR, f )
+        if f.startswith('.') or f.endswith( '.ttl' ) or isdir(outfile): continue
         reffile = join( STDTTLREFDIR, f )
-        if isfile(reffile) :
-            refpytext = open(reffile).read()
-            pytext = open(outfile).read()
-            print "%25r : %s" % ( basename(f), refpytext==pytext)
+        refpytext = open(reffile).read()
+        pytext = open(outfile).read()
+        print "%25r : %s" % ( basename(f), refpytext==pytext)
 
 def _option_parse() :
     '''Parse the options and check whether the semantics are correct.'''

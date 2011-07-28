@@ -13,7 +13,7 @@ from   zope.component           import getGlobalSiteManager
 from   paste.util.import_string import eval_import
 from   tayra.ttl.interfaces     import ITayraTags
 from   tayra.ttl.codegen        import InstrGen
-from   tayra.ttl                import tagplugins, DEFAULT_ENCODING, \
+from   tayra.ttl                import tagplugins, DEFAULT_ENCODING,\
                                        queryTTLPlugin
 
 # Note :

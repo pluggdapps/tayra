@@ -4,10 +4,15 @@ from   StringIO                 import StringIO
 from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
 
+# Import tag-plugins so that they can register themselves.
 import tayra.ttl.tags.html
 import tayra.ttl.tags.customhtml
 import tayra.ttl.tags.forms
-from   tayra.ttl.interfaces     import ITayraTags
+# Import filterblock-plugins so that they can register themselves.
+import tayra.ttl.filterblocks.pycode
+# Import escapefilter-plugins so that they can register themselves.
+
+from   tayra.ttl.interfaces     import ITayraTags, ITayraFilterBlock
 from   tayra.ttl.parser         import TTLParser
 
 EP_TTLGROUP = 'tayra.ttlplugins'
@@ -40,6 +45,7 @@ def loadttls( ttllocs, ttlconfig, context={} ):
 
 ttlplugins = {}         # { interfaceName : {plugin-name: instance, ... }, ... }
 tagplugins = {}         # { plugin-name   : (instance, hander-dict), ... }
+fbplugins  = {}         # { plugin-name   : instance }
 init_status = 'pending'
 def initplugins( ttlconfig, force=False ):
     """Collect and organize Tayra template plugins"""
@@ -57,13 +63,14 @@ def initplugins( ttlconfig, force=False ):
     packages = [ x.strip(' \t') for x in packages.split(',') ]
     [ __import__(pkg) for pkg in filter(None, packages) ]
 
-    # Gather plugins for template tag handlers, before ttl plugins
+    # Gather plugins template tag handlers, filter-blocks
     for x in gsm.registeredUtilities() :
-        if x.provided == ITayraTags :
+        if x.provided == ITayraTags :           # Tag handlers
             tagplugins[x.name] = ( x.component, x.component.handlers() )
+        if x.provided == ITayraFilterBlock :    # Filter blocks
+            fbplugins[x.name] = x.component
 
-    # Gather plugins for filters, before ttl plugins
-    # Gather plugins for filter-blocks, before ttl plugins
+    # Gather plugins for escape-filters before ttl plugins
 
     # Load ttl files implementing template plugins
     [ loadttls( ttllocs, ttlconfig ) for pkg, ttllocs in findttls() ]
@@ -82,7 +89,6 @@ def queryTTLPlugin( interface, name='' ) :
         return ttlplugins[interface][name]
     else :
         return ttlplugins[interface].values()
-
 
 #---- APIs for executing Tayra Template Language
 

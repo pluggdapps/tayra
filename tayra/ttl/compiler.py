@@ -112,7 +112,8 @@ class Compiler( object ):
         kwargs['ttlhash'] = sha1( self.ttltext ).hexdigest()
         if tu :
             tu.validate()
-            tu.headpass( self.igen )                    # Head pass
+            tu.headpass1( self.igen )                   # Head pass, phase 1
+            tu.headpass2( self.igen )                   # Head pass, phase 2
             tu.generate( self.igen, *args, **kwargs )   # Generation
             tu.tailpass( self.igen )                    # Tail pass
             return self.igen.codetext()

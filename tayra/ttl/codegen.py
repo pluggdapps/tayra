@@ -9,13 +9,11 @@ from   StringIO     import StringIO
 from   copy         import deepcopy
 from   hashlib      import sha1
 
-prolog = """# -*- coding: %s -*-
-
+prolog = """
 from   StringIO             import StringIO
 from   zope.interface       import implements
 import tayra
-
-_m.setencoding( %r )"""
+"""
 
 footer = """
 _ttlhash = %r
@@ -62,9 +60,8 @@ class InstrGen( object ) :
 
     #---- Generate Instructions
 
-    def initialize( self, encoding ):
-        encoding = encoding or self.encoding
-        self.outfd.write( prolog % (encoding, encoding) )
+    def initialize( self ):
+        self.outfd.write( prolog )
         self.cr()
 
     def indent( self ):

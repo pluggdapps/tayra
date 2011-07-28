@@ -29,12 +29,12 @@ class ParseError( Exception ):
 class TTLParser( object ):
 
     def __init__( self,
-                  outputdir='',
+                  outputdir=None,
                   lex_optimize=None,
-                  lextab='tayra.lextab',
+                  lextab=None,
                   lex_debug=None,
                   yacc_optimize=None,
-                  yacctab='tayra.yacctab',
+                  yacctab=None,
                   yacc_debug=None,
                   debug=None
                 ) :
@@ -84,16 +84,17 @@ class TTLParser( object ):
         # Build Lexer
         self.ttllex = TTLLexer( error_func=self._lex_error_func )
         kwargs = {'optimize' : lex_optimize} if lex_optimize != None else {}
-        kwargs.update({ 'debug' : lex_debug }) if lex_debug else None
-        self.ttllex.build( lextab=lextab, **kwargs )
+        kwargs.update(debug=lex_debug) if lex_debug else None
+        kwargs.update(lextab=lextab) if lextab else None
+        self.ttllex.build( **kwargs )
         self.tokens = self.ttllex.tokens
 
         # Build Yaccer
         kwargs = {'optimize' : yacc_optimize} if yacc_optimize != None else {}
-        kwargs.update({ 'debug' : yacc_debug }) if yacc_debug else None
-        self.parser = ply.yacc.yacc(
-            module=self, tabmodule=yacctab, outputdir=outputdir, **kwargs
-        )
+        kwargs.update(debug=yacc_debug) if yacc_debug else None
+        kwargs.update(outputdir=outputdir) if outputdir else None
+        kwargs.update(yacctab=yacctab) if yacctab else None
+        self.parser = ply.yacc.yacc( module=self, **kwargs )
         self.parser.ttlparser = self     # For AST nodes to access `this`
 
         # Parser initialization
@@ -260,11 +261,8 @@ class TTLParser( object ):
     #---- Filter block
 
     def p_filterblock( self, p ) :
-        """filterblock      : FILTER dirtyblocks INDENT siblings DEDENT
-                            | FILTER INDENT siblings DEDENT"""
-        terms = [ (FILTER,1), p[2], (INDENT,3), p[4], (DEDENT,5) 
-                ]  if len(p) == 6 else [ 
-                  (FILTER,1), None, (INDENT,2), p[3], (DEDENT,4) ]
+        """filterblock      : FILTEROPEN FILTERTEXT FILTERCLOSE"""
+        terms = [ (FILTEROPEN,1), (FILTERTEXT,2), (FILTERCLOSE,3) ]
         p[0] = FilterBlock( p.parser, *self._buildterms( p, terms ) )
 
     #---- Function block / Interface block

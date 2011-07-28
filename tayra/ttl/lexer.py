@@ -142,6 +142,7 @@ class TTLLexer( object ) :
         ( 'style', 'exclusive' ),
         ( 'exprs', 'exclusive' ),
         ( 'comment', 'exclusive' ),
+        ( 'filter', 'exclusive' ),
     )
 
     ## Tokens recognized by the TTLLexer
@@ -160,10 +161,13 @@ class TTLLexer( object ) :
         # `comment` state
         'COMMENTOPEN', 'COMMENTTEXT', 'COMMENTCLOSE',
 
+        # `filter` state
+        'FILTEROPEN', 'FILTERTEXT', 'FILTERCLOSE',
+
         # directives
         'DOCTYPE', 'CHARSET', 'BODY', 'IMPORTAS', 'IMPLEMENT', 'INHERIT',
         'USE',
-        'FUNCTION', 'INTERFACE', 'FILTER', 
+        'FUNCTION', 'INTERFACE',
         'IF', 'ELIF', 'ELSE', 'FOR', 'WHILE',
 
         #
@@ -184,7 +188,7 @@ class TTLLexer( object ) :
 
     commentopen = r'[%s]*<!--' % tabspace
     commentclose= r'-->[%s]*(\n|\r\n)*' % tabspace
-    commenttext = r'(.|[\r\n])+?(?=-->)'        # Non greedy
+    commenttext = r'(.|[\r\n])+?(?=-->)'                # Non greedy
     commentline = r'[%s]*\#\#[^\r\n]*(\n|\r\n)*' % tabspace
     statement   = r'@@[^\r\n]*(\n|\r\n)+'
     pass_       = r'@@pass(\n|\r\n)+'
@@ -223,7 +227,9 @@ class TTLLexer( object ) :
     else_       = r'@else.*?' + suffix2
     for_        = r'@for.*?' + suffix2
     while_      = r'@while.*?' + suffix2
-    filter_     = r':fb-'+atom
+    filteropen  = r':fb-%s' % atom
+    filtertext  = r'(.|[\r\n])+?(?=:fbend)'             # Non greedy
+    filterclose = r':fbend[%s]*(\n|\r\n)*' % tabspace
 
     prunews     = '!'
     pruneindent = '%'
@@ -253,6 +259,11 @@ class TTLLexer( object ) :
     @TOKEN( commentopen )
     def t_COMMENTOPEN( self, t ) :
         t.lexer.push_state( 'comment' )
+        return t
+
+    @TOKEN( filteropen )
+    def t_FILTEROPEN( self, t ) :
+        t.lexer.push_state( 'filter' )
         return t
 
     @TOKEN( statement )
@@ -350,12 +361,6 @@ class TTLLexer( object ) :
 
     @TOKEN( function )
     def t_FUNCTION( self, t ) :
-        self._incrlineno(t)
-        self._onemptyindent(t)
-        return t
-
-    @TOKEN( filter_ )
-    def t_FILTER( self, t ) :
         self._incrlineno(t)
         self._onemptyindent(t)
         return t
@@ -554,6 +559,22 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         return t
 
+    @TOKEN( filteropen )
+    def t_filter_FILTEROPEN( self, t ):             #<---- `filter` state
+        return t 
+
+    @TOKEN( filterclose )
+    def t_filter_FILTERCLOSE( self, t ):
+        self._incrlineno(t)
+        t.lexer.pop_state()
+        self._onemptyindent(t)
+        return t
+
+    @TOKEN( filtertext )
+    def t_filter_FILTERTEXT( self, t ):
+        self._incrlineno(t)
+        return t
+
     def t_error( self, t ):
         msg = 'Illegal character %s' % repr(t.value[0])
         self._error(msg, t)
@@ -571,6 +592,10 @@ class TTLLexer( object ) :
         self._error(msg, t)
 
     def t_comment_error( self, t ):
+        msg = 'Illegal character %s' % repr(t.value[0])
+        self._error(msg, t)
+
+    def t_filter_error( self, t ):
         msg = 'Illegal character %s' % repr(t.value[0])
         self._error(msg, t)
 

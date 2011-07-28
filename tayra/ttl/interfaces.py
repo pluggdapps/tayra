@@ -17,3 +17,49 @@ class ITTLPlugins( Interface ):
         register their interfaces with ZCA.
         """
         return []
+
+class ITayraFilterBlock( Interface ):
+
+    def __call__( filteropen, filtertext, filterclose ):
+        """Will be called when a new filter block matches with the interface
+        implementer. More specifically, the plugin will be called when a
+        matching Non-terminal filter-block node is being instantiated.
+
+        ``filteropen``
+            will be the syntax including the preceeding whitespace that starts
+            the filter block, [ \t]*:fb-
+        ``filtertext``
+            filter text including indentations and newlines that happen to
+            come after the `filteropen`
+        ``filterclose``
+            will be the syntax to end a filter block including the trailing
+            newlines
+        """
+
+    def headpass1( igen ):
+        """Will be called during the `headpass` phase 1, traversing AST.
+
+        ``igen``,
+            object to generate instructions.
+        """
+
+    def headpass2( igen ):
+        """Will be called during the `headpass` phase 2, traversing AST.
+
+        ``igen``,
+            object to generate instructions.
+        """
+
+    def generate( igen, *args, **kwargs ):
+        """Will be called during the `generate` phase, traversing AST.
+
+        ``igen``,
+            object to generate instructions.
+        """
+
+    def tailpass( igen ):
+        """Will be called during the `tailpass` phase, traversing AST.
+
+        ``igen``,
+            object to generate instructions.
+        """

@@ -1,0 +1,15 @@
+<!--
+This file is subject to the terms and conditions defined in
+file 'LICENSE', which is part of this source code package.
+          Copyright (c) 2009 SKR Farms (P) LTD.
+-->
+
+@charset utf-8 ;
+@import re ;
+
+@@ html = '<div title="hello"> div block </div>'
+@@ url  = 'http://pluggdapps.com/hello world'
+@@ text = '  hello world \t'
+${ html | h }
+${ url | u }
+${ text | t }

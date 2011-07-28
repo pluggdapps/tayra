@@ -3,6 +3,9 @@
 
 Feature requests :
 
+* filters for expression evaluation,
+    html-entity-escaping
+
 * Enable file check, using `reload_templates` ttlconfig, so that the
   intermediate template files and in memory code cache will be regenerated
   when ever the file is updated.
@@ -14,8 +17,6 @@ Feature requests :
 
 * Micro-templating similar to mako. This will demonstrate the true power of
   StackMachine based design.
-
-* Escape filtering for exression evaluation.
 
 * Custom tag plugin for form generation.
 

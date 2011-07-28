@@ -1875,6 +1875,8 @@ class Exprs( NonTerminal ):
 class ExprsContents( NonTerminal ):
     """class to handle `exprs_contents` grammar."""
 
+    FILTER_DELIMITER = '|'
+
     def __init__( self, parser, exprs_contents, exprs_content ) :
         NonTerminal.__init__( self, parser, exprs_contents, exprs_content )
         self._nonterms = self.exprs_contents, self.exprs_content = \
@@ -1890,7 +1892,9 @@ class ExprsContents( NonTerminal ):
         contents = self.flatten()
         contents = filter( lambda x : not x.NEWLINES, contents )
         text = ''.join([ x.dump( Context() ) for x in contents ])
-        igen.evalexprs( text )
+        try    : text, filters = text.rsplit( self.FILTER_DELIMITER, 1 )
+        except : text, filters = text, ''
+        igen.evalexprs( text, filters=filters )
         return None
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,

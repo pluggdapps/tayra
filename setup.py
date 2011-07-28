@@ -45,10 +45,11 @@ setup(
         ],
     },
     install_requires=[                      # setuptools
-        'ply==3.4',
+        'ply>=3.4',
         'zope.component',
         'zope.interface',
         'paste'
+        'MarkupSafe>=0.9.2',
     ],
     extras_require={},                      # setuptools
     setup_requires={},                      # setuptools

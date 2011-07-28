@@ -13,7 +13,7 @@ from   zope.component           import getGlobalSiteManager
 from   paste.util.import_string import eval_import
 from   tayra.ttl.interfaces     import ITayraTags
 from   tayra.ttl.codegen        import InstrGen
-from   tayra.ttl                import tagplugins, DEFAULT_ENCODING,\
+from   tayra.ttl                import tagplugins, escfilters, DEFAULT_ENCODING,\
                                        queryTTLPlugin
 
 # Note :
@@ -125,8 +125,14 @@ class StackMachine( object ) :
         tail += newline
         self.append( tail )
 
-    def evalexprs( self, val ) :
-        return self.encodetext( str(val) )
+    def evalexprs( self, val, filters ) :
+        filters = [ f.strip() for f in filters.split(',') if f ]
+        text    = str(val)
+        if 'n' not in filters :
+            text = escfilters['un']( self, text )
+            for filt in filters :
+                text = escfilters[filt]( self, text )
+        return self.encodetext( text )
 
     def importas( self, ttlloc, modname, childglobals ):
         compiler = self.compiler( ttlloc )

@@ -108,10 +108,10 @@ class InstrGen( object ) :
     def putblock( self, codeblock, indent=True ):
         [ self.putstatement(line) for line in codeblock.splitlines() ]
 
-    def evalexprs( self, code ) :
+    def evalexprs( self, code, filters ) :
         self.flushtext()
         self.cr()
-        self.outfd.write( '_m.append( _m.evalexprs(%s) )' % code )
+        self.outfd.write('_m.append( _m.evalexprs(%s, %r) )' % (code, filters))
 
     def pushbuf( self ):
         self.flushtext()

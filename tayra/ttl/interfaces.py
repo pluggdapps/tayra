@@ -8,15 +8,17 @@ class ITayraTags( Interface ):
             handler( mach, tagname, specifiers, style, attrs tagfinish )
         """
 
-class ITTLPlugins( Interface ):
+class ITayraEscapeFilter( Interface ):
 
-    def implementers():
-        """Return a list of ttl file urls either as absolute path or as,
-        <packagename:file/path>. These template files are expected to
-        implement interfaces, and hence they will be compile and executed to
-        register their interfaces with ZCA.
+    def __call__( self, mach, text ):
+        """Apply the filter logic to the text string and return processed
+        text.
+
+        ``mach``,
+            is stach-machine instance.
+        ``text``
+            text to be filtered.
         """
-        return []
 
 class ITayraFilterBlock( Interface ):
 
@@ -63,3 +65,14 @@ class ITayraFilterBlock( Interface ):
         ``igen``,
             object to generate instructions.
         """
+
+class ITTLPlugins( Interface ):
+
+    def implementers():
+        """Return a list of ttl file urls either as absolute path or as,
+        <packagename:file/path>. These template files are expected to
+        implement interfaces, and hence they will be compile and executed to
+        register their interfaces with ZCA.
+        """
+        return []
+

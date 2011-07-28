@@ -11,8 +11,10 @@ import tayra.ttl.tags.forms
 # Import filterblock-plugins so that they can register themselves.
 import tayra.ttl.filterblocks.pycode
 # Import escapefilter-plugins so that they can register themselves.
+import tayra.ttl.filters.common
 
-from   tayra.ttl.interfaces     import ITayraTags, ITayraFilterBlock
+from   tayra.ttl.interfaces     import ITayraTags, ITayraFilterBlock, \
+                                       ITayraEscapeFilter
 from   tayra.ttl.parser         import TTLParser
 
 EP_TTLGROUP = 'tayra.ttlplugins'
@@ -46,6 +48,7 @@ def loadttls( ttllocs, ttlconfig, context={} ):
 ttlplugins = {}         # { interfaceName : {plugin-name: instance, ... }, ... }
 tagplugins = {}         # { plugin-name   : (instance, hander-dict), ... }
 fbplugins  = {}         # { plugin-name   : instance }
+escfilters = {}         # { plugin-name   : instance }
 init_status = 'pending'
 def initplugins( ttlconfig, force=False ):
     """Collect and organize Tayra template plugins"""
@@ -69,8 +72,8 @@ def initplugins( ttlconfig, force=False ):
             tagplugins[x.name] = ( x.component, x.component.handlers() )
         if x.provided == ITayraFilterBlock :    # Filter blocks
             fbplugins[x.name] = x.component
-
-    # Gather plugins for escape-filters before ttl plugins
+        if x.provided == ITayraEscapeFilter :   # Escape Filters
+            escfilters[x.name] = x.component
 
     # Load ttl files implementing template plugins
     [ loadttls( ttllocs, ttlconfig ) for pkg, ttllocs in findttls() ]

@@ -317,16 +317,17 @@ class Template( NonTerminal ):
         self.interfaces = []        # [ (interface, methodname), ... ]
         self.doctypes = []          # [ html, html, ... ]
 
-    def _bodylookahead( self, siblings ) :
+    def _is_generate( self ) :
         """Check whether the body of the template page contains valid content,
         if not then the `body` function should not be generated at all."""
-        bodynodes = (
+        _bodynodes = (
             Statement, TagLine, TextLine, TextBlock, TagBlock, IfelfiBlock,
             ForBlock, WhileBlock
+            # Other siblings are,
+            #   dirtyblocks, interfaceblock, filterblock, functionblock,
+            #   ifelfiblock, forblock, whileblock
         )
-        # Other siblings are,
-        #   dirtyblocks, interfaceblock, filterblock, functionblock,
-        #   ifelfiblock, forblock, whileblock
+        siblings = self.siblings and self.siblings.flatten() or []
         for sibling in siblings :   # flattened siblings
             if isinstance(sibling.nonterm, bodynodes) : return True
         else :
@@ -336,7 +337,7 @@ class Template( NonTerminal ):
         """Generate the body function only when there is valid content in the
         global scope.
         """
-        if self.siblings and self._bodylookahead( self.siblings.flatten() ) :
+        if self._is_generate() or self.doctypes :
             igen.cr()
             # Body function signature
             signature = signature and signature.strip(', \t') or ''
@@ -355,8 +356,6 @@ class Template( NonTerminal ):
             igen.flushtext()
             igen.popreturn( astext=True )
             igen.codeindent( down='  ' )
-        else :
-            self.siblings and self.siblings.generate( igen, *args, **kwargs )
 
     def children( self ):
         return self._nonterms
@@ -376,7 +375,6 @@ class Template( NonTerminal ):
         # prologs
         if self.prologs :
             self.prologs.generate( igen, *args, **kwargs )
-            igen.puttext('\n')
 
         # Body
         self._generatebody( igen, self.bodysignature, *args, **kwargs )

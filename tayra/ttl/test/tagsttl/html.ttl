@@ -1,0 +1,41 @@
+!!!  ;
+
+<html>
+  <head>
+  <body>
+    <!-- Global attribute : contenteditable -->
+    <div edit> make this div element editable
+      <div> nested divs are editable as well
+      <div noedit> while this one is not editable
+
+    <!-- Global attribute : draggable and dragzone -->
+    <div dragcopy> drag this element to another area to 
+      <b> copy
+      it there
+    <div dragmove> drag this element to another area to
+      <b> move
+      it there
+    <div draglink> drag this element to another area to
+      <b> link
+      it there
+    <div nodrag> dont drag this element
+
+    <!-- Global attribute : spellcheck -->
+    <div spellcheck> user-agent will do spell check on this text
+    <div nospellcheck> user-agent will not do spell check on this text
+
+    <!-- Global attribute : hidden, accesskey, tabindex -->
+    <div hidden> this element will not be displayed
+    <div key:a> You can access this element using the key
+      <b> a
+      along with the meta key, for instance, Alt+Shift
+    <div tag:2> The tabindex order for this element is
+      <b> 2
+
+    <!-- Anchor element <a> -->
+    <div> href attribute in anchor tag can simply be specified as a string
+      <a "http://pluggdapps.com"> pluggdapps
+      and the target attribute can be specified directly using the atom, like
+      <a _parent "http://pluggdapps.com"> pluggdapps
+
+    <!-- Abbr element <abbr> -->

@@ -30,5 +30,9 @@ clean :
 	rm -rf `find ./ -name "*.pyc"`;
 	rm -rf `find ./ -name "yacctab.py"`;
 	rm -rf `find ./ -name "lextab.py"`;
-	rm tayra/ttl/test/stdttl/*.ttl.py;
-	rm tayra/ttl/test/stdttl/*.html;
+	rm -f tayra/ttl/test/stdttl/*.ttl.py;
+	rm -f tayra/ttl/test/stdttl/*.html;
+	rm -f tayra/ttl/test/bench/tayra/*.html;
+	rm -f tayra/ttl/test/bench/tayra/*.ttl.py;
+	rm -f tayra/ttl/test/tagsttl/*.html;
+	rm -f tayra/ttl/test/tagsttl/*.ttl.py;

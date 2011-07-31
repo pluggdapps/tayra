@@ -6,6 +6,13 @@ Feature requests :
 * filters for expression evaluation,
     html-entity-escaping
 
+* For attributes, the value, along with the "=" character, can be omitted
+  altogether if the value is the empty string, eg,
+    disabled, selected etc ...
+
+* In some cases the attribute values can be specified as an atom, like
+    disabled=disabled.
+
 * Enable file check, using `reload_templates` ttlconfig, so that the
   intermediate template files and in memory code cache will be regenerated
   when ever the file is updated.
@@ -21,3 +28,22 @@ Feature requests :
 * Custom tag plugin for form generation.
 
 * Standard tag for SVG.
+
+* Automatically detect the user-agent compatibility level with html and
+  generate elements in confirmance to it. This must play safe with the
+  following knobs,
+    - doctype specification in ttl file
+    - encoding specification in ttl file
+    - language specification in ttl file
+    - config params passed to compile the ttl file
+    - HTTP headers (or any other real-time info available from user agent)
+      denoting the user agent capabilities.
+
+* Unicode support using the philosopy,
+    decode early, encode late.
+
+* Ruby's code-block style syntax to write event-handlers for tag-elements.
+
+* Sandbox the execution environment for the templates.
+
+* Let tag plugins be bolted at AST level.

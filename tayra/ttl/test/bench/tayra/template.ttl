@@ -1,0 +1,21 @@
+!!! html ;
+@import header.ttl as header;
+@import footer.ttl as footer;
+
+@function greeting( name ) :
+  <p> hello ${name}!
+      
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title> ${title}
+  <body>
+    ${ header.body() }
+    ${ greeting(user) }
+    ${ greeting('me') }
+    ${ greeting('world') }
+    <h2> Loop
+    @if list_items :
+      <ul>
+        @for i, list_item in enumerate(list_items) :
+          <li ${i+1==len(list_items) and "class='last'" or ""}> ${list_item}
+    ${ footer.body() }

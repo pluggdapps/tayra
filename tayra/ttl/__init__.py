@@ -168,6 +168,6 @@ def ttl_cmdline( ttlloc, **kwargs ):
 
         # This is for measuring performance
         st = dt.now()
-        [ r( context=context ) for i in range(20) ]
-        print (dt.now() - st) / 20
+        [ r( context=context ) for i in range(2) ]
+        print (dt.now() - st) / 2
 

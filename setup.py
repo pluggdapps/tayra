@@ -48,7 +48,7 @@ setup(
         'ply>=3.4',
         'zope.component',
         'zope.interface',
-        'paste'
+        'paste',
         'MarkupSafe>=0.9.2',
     ],
     extras_require={},                      # setuptools

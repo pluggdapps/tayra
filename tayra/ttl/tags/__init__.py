@@ -1,35 +1,77 @@
 import re
 from   copy         import deepcopy
 
-ws = r'[ \r\n\t]*'
-parseexp = re.compile(
-    r'(\'[^\']+\'%s)|(\"[^"]+\"%s)|([^" \t\r\n\']+%s)' % (ws,ws,ws)
-)
-def parsespecifiers( specifiers ) :
-    parsed = parseexp.findall( specifiers )
-    idclass = parsed and parsed[0][-1]
-    if idclass and idclass[0] == '#' :
-        parts = idclass.split('.')
-        if len(parts) > 1 :
-            id_, classes = parts[0], ' '.join( parts[1:] )
-        else :
-            id_, classes = parts[0], ''
-        parsed.pop(0)
-    elif idclass and idclass[0] == '.' :
-        id_, classes = '', idclass[1:].replace('.', ' ')
-        parsed.pop(0)
-    else :
-        id_ = classes = None
+class Tag( object ):
+    def __init__( self ):
+        pass
 
-    if parsed :
-        strings = filter( None, reduce( lambda x, t : x + list(t[:2]), parsed, [] ))
-        atoms   = filter( None, map( lambda t : t[2], parsed ))
-    else :
-        strings = []
-        atoms   = []
-    id_ = 'id="%s"' % id_ if id_ else None
-    classes = 'class="%s"' % classes if classes else None
-    return id_, classes, strings, atoms
+    def headpass1( self ):
+        pass
+
+    def headpass2( self ):
+        pass
+
+    def generate( self ):
+        pass
+
+    def tailpass( self ):
+        pass
+    
+    def handle( tagopen, specifiers, style, attrs, tagfinish ):
+        id_, classes, _s, _a = self.parsespecifiers( specifiers )
+        return composetag(
+            tagopen, filter(None, [id_, classes]), style, attrs, tagfinish
+        )
+
+    ws = r'[ \r\n\t]*'
+    parseexp = re.compile(
+        r'(\'[^\']+\'%s)|(\"[^"]+\"%s)|([^" \t\r\n\']+%s)' % (ws,ws,ws)
+    )
+    def parsespecifiers( self, specifiers ):
+        parsed = self.parseexp.findall( specifiers )
+        idclass = parsed and parsed[0][-1]
+        if idclass and idclass[0] == '#' :
+            parts = idclass.split('.')
+            if len(parts) > 1 :
+                id_, classes = parts[0], ' '.join( parts[1:] )
+            else :
+                id_, classes = parts[0], ''
+            parsed.pop(0)
+        elif idclass and idclass[0] == '.' :
+            id_, classes = '', idclass[1:].replace('.', ' ')
+            parsed.pop(0)
+        else :
+            id_ = classes = None
+
+        if parsed :
+            strings = filter( None, reduce( lambda x, t : x + list(t[:2]), parsed, [] ))
+            atoms   = filter( None, map( lambda t : t[2], parsed ))
+        else :
+            strings = []
+            atoms   = []
+        id_ = 'id="%s"' % id_ if id_ else None
+        classes = 'class="%s"' % classes if classes else None
+        return id_, classes, strings, atoms
+
+    def atoms2attrs( self, spectokens ):
+        leftover, attrs = [], []
+        for token in spectokens :
+            if token.startswith( 'key:' ):
+                attr = 'accesskey="%s"' % token.split(':', 1)[1]
+            if token.startswith( 'tab:' ):
+                attr = 'tabindex="%s"' % token.split(':', 1)[1]
+            else :
+                attr = atom2attr.get( token, None )
+            attrs.append( attr ) if attr != None else leftover.append( token )
+        return filter(None, leftover), attrs
+
+    def composetag( tagopen, specattrs, style, attrs, tagfinish ):
+        tagopen = tagopen.rstrip(' ')
+        style = 'style="%s"' % style.strip(' ') if style else style
+        specattrs = ' '.join( specattrs )
+        attrs = ' '.join( attrs )
+        cont = ' '.join( filter( None, [ tagopen, specattrs, style, attrs ]) )
+        return cont + tagfinish
 
 atom2attr = {
   # global attributes
@@ -71,28 +113,3 @@ atom2attr = {
   'defer'   : 'defer="defer"',
 }
 
-def atoms2attrs( spectokens ):
-    leftover, attrs = [], []
-    for token in spectokens :
-        if token.startswith( 'key:' ):
-            attr = 'accesskey="%s"' % token.split(':', 1)[1]
-        if token.startswith( 'tab:' ):
-            attr = 'tabindex="%s"' % token.split(':', 1)[1]
-        else :
-            attr = atom2attr.get( token, None )
-        attrs.append( attr ) if attr != None else leftover.append( token )
-    return filter(None, leftover), attrs
-
-def composetag( tagopen, specattrs, style, attrs, tagfinish ):
-    tagopen = tagopen.rstrip(' ')
-    style = 'style="%s"' % style.strip(' ') if style else style
-    specattrs = ' '.join( specattrs )
-    attrs = ' '.join( attrs )
-    cont = ' '.join( filter( None, [ tagopen, specattrs, style, attrs ]) )
-    return cont + tagfinish
-
-def handle_default( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, _s, _a = parsespecifiers( specifiers )
-    return composetag(
-        tagopen, filter(None, [id_, classes]), style, attrs, tagfinish
-    )

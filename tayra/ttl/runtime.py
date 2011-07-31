@@ -40,12 +40,18 @@ class StackMachine( object ) :
         self.htmlindent = self.encodetext( '' )
         self.emptystring = self.encodetext( '' )
 
+    _cache_taghandlers = {}
     def _buildtaghandlers( self, usetagplugins ):
+        key = ''.join( usetagplugins )
+        if key in self._cache_taghandlers :
+            return self._cache_taghandlers[key]
+
         taghandlers = {}
         for pluginname in usetagplugins :
             handlers = tagplugins.get( pluginname, None )
             if handlers :
                 taghandlers.update( handlers[1] )
+        self._cache_taghandlers.setdefault( key, taghandlers )
         return taghandlers
 
     #---- Stack machine instructions

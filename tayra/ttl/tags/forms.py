@@ -2,7 +2,7 @@ from   zope.component       import getGlobalSiteManager
 from   zope.interface       import implements
 
 from   tayra.ttl.interfaces import ITayraTags
-from   tayra.ttl.tags       import parsespecifiers, composetag, stdspecifiers
+from   tayra.ttl.tags       import parsespecifiers, composetag
 
 gsm = getGlobalSiteManager()
 

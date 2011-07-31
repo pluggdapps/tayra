@@ -7,13 +7,13 @@ from   tayra.ttl.tags       import parsespecifiers, composetag
 gsm = getGlobalSiteManager()
 
 def handle_aname( tagopen, specifiers, style, attrs, tagfinish ):
-    _id, classes, tokens = parsespecifiers( specifiers )
+    _id, classes, strings, atoms = parsespecifiers( specifiers )
     href = 'name=%s' % tokens.pop(0) if tokens else None
     specattrs = filter( None, [id_, classes, href] )
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_aimg( tagopen, specifiers, style, attrs, tagfinish ):
-    _id, classes, tokens = parsespecifiers( specifiers )
+    _id, classes, strings, atoms = parsespecifiers( specifiers )
     href = tokens.pop(0) if tokens else ''
     src  = tokens.pop(0) if tokens else ''
     id_ = 'id="%s"' % _id if _id else ''

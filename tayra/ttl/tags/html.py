@@ -2,25 +2,28 @@ from   zope.component       import getGlobalSiteManager
 from   zope.interface       import implements
 
 from   tayra.ttl.interfaces import ITayraTags
-from   tayra.ttl.tags       import parsespecifiers, composetag, stdspecifiers
+from   tayra.ttl.tags       import parsespecifiers, composetag, atoms2attrs
 
 gsm = getGlobalSiteManager()
 
 def handle_a( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    href = 'href=%s' % tokens.pop(0) if tokens else None
+    """Specify href attribute as,
+        <a "http://pluggdapps.com">
+    """
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    href = 'href=%s' % strings.pop(0) if strings else None
     specattrs = filter( None, [id_, classes, href] )
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_abbr( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    title = 'title=%s' % tokens.pop(0) if tokens else None
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    title = 'title=%s' % strings.pop(0) if strings else None
     specattrs = filter( None, [id_, classes, title] )
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_area( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     href = coords = ''
     for tok in tokens :
         try :
@@ -37,28 +40,28 @@ def handle_base( tagopen, specifiers, style, attrs, tagfinish ):
     """The base tag must be inside head element, and its `href` must be
     absolute uri. It does not support standard attributes
     """
-    id_, classes, tokens = parsespecifiers( specifiers )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
     href = 'href=%s' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, href] )
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_bdo( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     specattrs = filter( None, [id_, classes] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_blockquote( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     cite = 'cite=%s' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, cite] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 _button_type = [ 'button', 'reset', 'submit' ]
 def handle_button( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     type_ = value = name = ''
     for tok in tokens :
         if tok in _button_type :
@@ -74,8 +77,8 @@ def handle_button( tagopen, specifiers, style, attrs, tagfinish ):
 _align_col = [ 'left', 'right', 'center', 'justify', 'char' ]
 _valign    = [ 'top', 'middle', 'bottom', 'baseline' ]
 def _column( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     align = valign = span = width = ''
     for tok in tokens :
         if tok in _align_col :
@@ -100,8 +103,8 @@ def handle_colgroup( tagopen, specifiers, style, attrs, tagfinish ):
     _column( tagopen, specifiers, style, attrs, tagfinish )
 
 def handle_del( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     cite = datetime = ''
     for tok in tokens :
         if tok.startswith('on:') :
@@ -112,8 +115,8 @@ def handle_del( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_form( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     action = name = ''
     for tok in tokens :
         if (tok[0] + tok[-1]) in [ '""', "''" ] :
@@ -125,8 +128,8 @@ def handle_form( tagopen, specifiers, style, attrs, tagfinish ):
 
 def handle_head( tagopen, specifiers, style, attrs, tagfinish ):
     """<head[#id.class] [profile]>"""
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     profile = 'profile=%s' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, profile] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
@@ -134,8 +137,8 @@ def handle_head( tagopen, specifiers, style, attrs, tagfinish ):
 _frameborder = [ '1', '0' ]
 _scrolling   = [ 'yes', 'no', 'auto' ]
 def handle_iframe( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     name = frameborder = scrolling = ''
     for tok in tokens :
         if tok in _frameborder :
@@ -150,8 +153,8 @@ def handle_iframe( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_img( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     src = 'src=%s' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, src] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
@@ -161,15 +164,15 @@ _input_type = [
     'reset', 'submit', 'text'
 ]
 def handle_input( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     type_ = 'type="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, type_] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_ins( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     cite = datetime = ''
     for tok in tokens :
         if tok.startswith('on:') :
@@ -180,8 +183,8 @@ def handle_ins( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_label( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     for_ = 'for="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, for_] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
@@ -191,8 +194,8 @@ _link_media = [
     'tty', 'tv',
 ]
 def handle_link( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     href = type_ = media = ''
     for tok in tokens :
         if tok in _link_media :
@@ -206,15 +209,15 @@ def handle_link( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_map( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     name = 'name="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, name] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_meta( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     name = content = ''
     for tok in tokens :
         if (tok[0] + tok[-1]) in [ '""', "''" ] :
@@ -225,37 +228,37 @@ def handle_meta( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_optgroup( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     label = 'label="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, label] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_option( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     value = 'value="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, value] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_param( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     name = 'name="%s"' % tokens.pop(0) if tokens else ''
     value = 'value="%s"' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, name, value] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_q( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     cite = 'cite=%s' % tokens.pop(0) if tokens else ''
     specattrs = filter( None, [id_, classes, cite] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_select( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     size = name = ''
     for tok in tokens :
         try :
@@ -268,8 +271,8 @@ def handle_select( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_script( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     src = type_ = ''
     for tok in tokens :
         if (tok[0] + tok[-1]) in [ '""', "''" ] :
@@ -284,8 +287,8 @@ style_media = [
     'aural', 'all',
 ]
 def handle_style( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     media = type_ = ''
     for tok in tokens :
         if tok in style_media :
@@ -296,8 +299,8 @@ def handle_style( tagopen, specifiers, style, attrs, tagfinish ):
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
 
 def handle_textarea( tagopen, specifiers, style, attrs, tagfinish ):
-    id_, classes, tokens = parsespecifiers( specifiers )
-    tokens, specattrs = stdspecifiers( tokens )
+    id_, classes, strings, atoms = parsespecifiers( specifiers )
+    tokens, specattrs = atoms2attrs( atoms )
     cols = rows = name = ''
     for tok in tokens :
         try :

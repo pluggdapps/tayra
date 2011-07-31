@@ -1,5 +1,6 @@
 import time, imp
 from   StringIO                 import StringIO
+from   os.path                  import dirname
 
 from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
@@ -98,15 +99,17 @@ def queryTTLPlugin( interface, name='' ) :
 class Renderer( object ):
     def __init__( self, ttlloc, ttlconfig ):
         self.ttlloc, self.ttlconfig = ttlloc, ttlconfig
+        self.ttlparser = TTLParser()
+        # Initialize plugins
+        initplugins( ttlconfig, force=ttlconfig.get('devmod', True) )
 
     def __call__( self, entry=None, context={} ):
         from   tayra.ttl.compiler       import Compiler, TemplateLookup
-        ttlparser = TTLParser()
-        compiler = Compiler(
-            self.ttlloc, ttlconfig=self.ttlconfig, ttlparser=ttlparser
+        self.compiler = Compiler(
+            self.ttlloc, ttlconfig=self.ttlconfig, ttlparser=self.ttlparser
         )
         context['_ttlcontext'] = context
-        module = compiler.execttl( context=context )
+        module = self.compiler.execttl( context=context )
         # Fetch parent-most module
         entry = getattr( module.self, entry or 'body' )
         html = entry()
@@ -114,15 +117,26 @@ class Renderer( object ):
 
 def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.ttl.compiler       import Compiler, TemplateLookup
+    from   datetime                 import datetime as dt
+
+    # Parse command line arguments
     args = eval( kwargs.pop( 'args', '[]' ))
+    context = eval( kwargs.pop( 'context', '{}' ))
     debuglevel = kwargs.pop( 'debuglevel', 0 )
     show = kwargs.pop( 'show', False )
     dump = kwargs.pop( 'dump', False )
     ttlconfig = kwargs  # directories, module_directory, devmod
+    ttlconfig.setdefault( 'module_directory', dirname( ttlloc ))
+
+    # Initialize plugins
+    initplugins( ttlconfig, force=ttlconfig.get('devmod', True) )
+
+    # Setup parser
     ttlparser = TTLParser( debug=debuglevel )
     compiler = Compiler( ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
     pyfile = compiler.ttlfile+'.py'
     htmlfile = compiler.ttlfile.rsplit('.', 1)[0] + '.html'
+
     if debuglevel :
         print "AST tree ..."
         tu = compiler.toast()
@@ -139,9 +153,21 @@ def ttl_cmdline( ttlloc, **kwargs ):
         print "Generating py / html file ... "
         pytext = compiler.topy()
         open(pyfile, 'w').write(pytext)
-        code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
-        module = compiler.execttl( code )
-        # Fetch parent-most module
-        body = getattr( module.self, 'body' )
-        html = body( *args ) if callable( body ) else ''
+
+        #code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
+        #context['_ttlcontext'] = context
+        #module = compiler.execttl( code, context=context )
+        ## Fetch parent-most module
+        #body = getattr( module.self, 'body' )
+        #html = body( *args ) if callable( body ) else ''
+
+        ttlconfig.setdefault( 'memcache', 'true' )
+        r = Renderer( ttlloc, ttlconfig )
+        html = r( context=context )
         open( htmlfile, 'w' ).write( html )
+
+        # This is for measuring performance
+        st = dt.now()
+        [ r( context=context ) for i in range(20) ]
+        print (dt.now() - st) / 20
+

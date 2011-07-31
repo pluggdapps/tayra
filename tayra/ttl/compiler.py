@@ -36,8 +36,6 @@ class Compiler( object ):
                   igen=None,
                 ):
         self.ttlconfig = ttlconfig
-        # Initialize plugins
-        initplugins( ttlconfig, force=ttlconfig.get('devmod', True) )
         # Lookup files
         self.ttllookup = ttllookup if isinstance(ttllookup, TemplateLookup) \
                          else TemplateLookup(ttllookup, ttlconfig)
@@ -49,8 +47,11 @@ class Compiler( object ):
         # Instruction generation phase
         self.igen = igen or InstrGen()
 
-    def __call__( self, ttllookup ):
-        clone = Compiler( ttllookup, ttlconfig=self.ttlconfig )
+    def __call__( self, ttllookup, ttlparser=None ):
+        ttlparser = ttlparser or self.ttlparser
+        clone = Compiler(
+            ttllookup, ttlconfig=self.ttlconfig, ttlparser=ttlparser
+        )
         return clone
 
     def execttl( self, code=None, context={} ):
@@ -88,14 +89,16 @@ class Compiler( object ):
         code = self._memcache.get( self.ttlfile, None )
         if code == None and pyfile and pytext :
             code = compile( pytext, pyfile, 'exec')
+        elif code == None and pyfile :
+            pytext = open( pyfile ).read()
+            code = compile( pytext, pyfile, 'exec')
         elif code == None :
             pytext = self.topy()
-            self.ttllookup.modcachepy( pyfile, pytext )
             code = compile( pytext, self.ttlfile, 'exec')
         # Cache output to file
         self.ttllookup.modcachepy( pyfile, pytext )
         if self.ttlconfig.get( 'memcache', '' ).lower() == 'true' :
-            self._memcache[self.ttlfile] = code
+            self._memcache.setdefault( self.ttlfile, code )
         return code
 
     def toast( self ):

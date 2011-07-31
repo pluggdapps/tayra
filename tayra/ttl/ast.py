@@ -320,7 +320,7 @@ class Template( NonTerminal ):
     def _is_generate( self ) :
         """Check whether the body of the template page contains valid content,
         if not then the `body` function should not be generated at all."""
-        _bodynodes = (
+        bodynodes = (
             Statement, TagLine, TextLine, TextBlock, TagBlock, IfelfiBlock,
             ForBlock, WhileBlock
             # Other siblings are,
@@ -345,6 +345,7 @@ class Template( NonTerminal ):
             line = "def body( %s ) :" % signature
             igen.putstatement( line )
             igen.codeindent( up='  ' )
+            igen.pushbuf()
             # Doctype prolog
             [ igen.puttext( html+'\n', force=True ) for html in self.doctypes ]
             # Comments and emptyspaces

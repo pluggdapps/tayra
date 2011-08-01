@@ -1,0 +1,27 @@
+!!! html;
+\!!! escaping doctypes ;
+\@charset escaping directives;
+\@body any directive;
+
+<html>
+  <head>
+  <body>
+    \ \ Escaping the indent
+    <div>
+      Escaping newlines \
+      across textblocks, all of this belongs to body content.
+      @function willbecomeglobal( *args ):
+        <b> Ghost
+        @function nestedfunc():
+          <em> Rider
+        ${ nestedfunc() }
+      \@function escapedfunction():
+        @\@pass
+      \${ this expresion is also escaped } and displayed as text
+      \@if so is this if block :
+      \@elif block :
+      \@else block :
+      \@for block :
+      \@while block :
+      all of them are interpreted as text.
+    ${ willbecomeglobal() }

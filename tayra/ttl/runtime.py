@@ -10,11 +10,7 @@ from   os.path                  import basename
 
 from   zope.component           import getGlobalSiteManager
 
-from   paste.util.import_string import eval_import
-from   tayra.ttl.interfaces     import ITayraTags
-from   tayra.ttl.codegen        import InstrGen
-from   tayra.ttl                import tagplugins, escfilters, DEFAULT_ENCODING,\
-                                       queryTTLPlugin
+from   tayra.ttl                import DEFAULT_ENCODING, queryTTLPlugin
 
 # Note :
 # Special variables that the context should not mess with,
@@ -26,17 +22,20 @@ from   tayra.ttl                import tagplugins, escfilters, DEFAULT_ENCODING,
 gsm = getGlobalSiteManager()
 
 class StackMachine( object ) :
+    DEFAULT_TAGS = [ 'html', 'customhtml', 'forms' ]
     def __init__( self,
                   ifile,
                   compiler,
-                  usetagplugins=[ 'html', 'customhtml', 'forms' ],
-                  encoding=DEFAULT_ENCODING
+                  ttlconfig={},
                 ):
-        self.taghandlers = self._buildtaghandlers( usetagplugins )
+        self.escfilters = ttlconfig.get( 'escfilters', {} )
+        self.tagplugins = ttlconfig.get( 'tagplugins', {} )
+        self.ttlconfig = ttlconfig
+
         self.bufstack = [ [] ]
-        self.ifile, self.usetagplugins, = ifile, usetagplugins
+        self.ifile = ifile
         self.compiler = compiler
-        self.encoding = DEFAULT_ENCODING
+        self.encoding = self.ttlconfig.get( 'input_encoding', DEFAULT_ENCODING )
         self.htmlindent = self.encodetext( '' )
         self.emptystring = self.encodetext( '' )
 
@@ -48,7 +47,7 @@ class StackMachine( object ) :
 
         taghandlers = {}
         for pluginname in usetagplugins :
-            handlers = tagplugins.get( pluginname, None )
+            handlers = self.tagplugins.get( pluginname, None )
             if handlers :
                 taghandlers.update( handlers[1] )
         self._cache_taghandlers.setdefault( key, taghandlers )
@@ -79,17 +78,6 @@ class StackMachine( object ) :
     def indent( self ) :
         return self.append( self.htmlindent )
 
-    def prunews( self ) :
-        buf = self.bufstack[-1]
-        buf.reverse()
-        while buf :
-            v = buf.pop(0).rstrip(' \t\r\n')
-            if v :
-                buf.insert(0, v)
-                break
-        buf.reverse()
-        self.bufstack[-1] = buf
-
     def append( self, value ) :
         if isinstance(value, basestring) :
             value = self.encodetext( value )
@@ -117,12 +105,13 @@ class StackMachine( object ) :
 
     def handletag( self, contents, tag, indent=False, newline='' ):
         """Entry point to handle tags"""
-        from   tayra.ttl.tags       import handle_default
         tagname, specifiers, style, attrs, tagfinish = tag
         # Compute and push tag element
         tagnm = tagname.strip(' \t\r\n')[1:]
-        handler = self.taghandlers.get( tagnm, None ) or handle_default
-        self.append( handler( tagname, specifiers, style, attrs, tagfinish ))
+        tagplugin = self.tagplugins.get( tagnm, self.tagplugins['_default'] )
+        self.append(
+            tagplugin.handle( tagname, specifiers, style, attrs, tagfinish )
+        )
         # Just push tag content
         self.append( ''.join(contents) )
         # Close tag
@@ -135,9 +124,10 @@ class StackMachine( object ) :
         filters = [ f.strip() for f in filters.split(',') if f ]
         text    = str(val)
         if 'n' not in filters :
-            text = escfilters['un']( self, text )
+            text = self.escfilters['un']( self, text )
             for filt in filters :
-                text = escfilters[filt]( self, text )
+                fn = self.escfilters.get( filt, None )
+                text = fn( self, text ) if fn else text
         return self.encodetext( text )
 
     def importas( self, ttlloc, modname, childglobals ):

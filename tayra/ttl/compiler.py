@@ -4,23 +4,22 @@ from   os.path                  import isfile, isdir, abspath, basename, \
 from   hashlib                  import sha1
 from   StringIO                 import StringIO
 
-from   tayra.ttl                import initplugins
 from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
 
 """
-ttlconfig:
-memcache
-    boolean, to cache ttl code objects in memory
-directories 
-    a list of directories to look for .ttl files
-module_directory 
-    cache directory to store the .py intermediate files
-devmod 
-    boolean, to enable development mode.
-plugin_packages 
-    a comma seperated list of packages to import for loading plugins.
+: ttlconfig ::
+    memcache
+        boolean, to cache ttl code objects in memory
+    directories 
+        a list of directories to look for .ttl files
+    module_directory 
+        cache directory to store the .py intermediate files
+    devmod 
+        boolean, to enable development mode.
+    plugin_packages 
+        a comma seperated list of packages to import for loading plugins.
 """
 
 class Compiler( object ):
@@ -37,15 +36,15 @@ class Compiler( object ):
                 ):
         self.ttlconfig = ttlconfig
         # Lookup files
-        self.ttllookup = ttllookup if isinstance(ttllookup, TemplateLookup) \
-                         else TemplateLookup(ttllookup, ttlconfig)
+        self.ttllookup = ttllookup if isinstance( ttllookup, TemplateLookup ) \
+                         else TemplateLookup( ttllookup, self.ttlconfig )
         self.ttlfile = self.ttllookup.ttlfile
         self.pyfile, self.pytext = self.ttllookup.pyfile, self.ttllookup.pytext
         self.ttltext = None
         # Parser phase
-        self.ttlparser = ttlparser or TTLParser()
+        self.ttlparser = ttlparser or TTLParser( ttlconfig=self.ttlconfig )
         # Instruction generation phase
-        self.igen = igen or InstrGen()
+        self.igen = igen or InstrGen( self, ttlconfig=self.ttlconfig )
 
     def __call__( self, ttllookup, ttlparser=None ):
         ttlparser = ttlparser or self.ttlparser
@@ -59,7 +58,7 @@ class Compiler( object ):
         `module`.
         """
         # Stack machine
-        _m  = StackMachine( self.ttlfile, self )
+        _m  = StackMachine( self.ttlfile, self, ttlconfig=self.ttlconfig )
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
         module.__dict__.update({
@@ -136,6 +135,7 @@ class TemplateLookup( object ) :
     def __init__( self, ttlloc, ttlconfig ):
         [ setattr( self, k, ttlconfig.get(k, default) )
           for k, default in self.TTLCONFIG ]
+        self.ttlconfig = ttlconfig
         self.ttlloc = os.sep.join(ttlloc) if hasattr(ttlloc, '__iter__') else ttlloc
         self.directories = [ d.rstrip(' \t/') for d in self.directories ]
         self.ttlfile = self._locatettl()

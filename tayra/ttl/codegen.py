@@ -29,17 +29,20 @@ class %s( object ):
 class InstrGen( object ) :
     machname = '_m'
 
-    def __init__( self ):
+    def __init__( self, compiler, ttlconfig={} ):
         from   tayra.ttl        import DEFAULT_ENCODING
+        self.compiler = compiler
+        self.ttlconfig = ttlconfig
+        self.devmod = self.ttlconfig.get( 'devmod', True )
         self.outfd = StringIO()
         self.pyindent = ''
         self.optimaltext = []
         self.pytext = None
         # prolog for python translated template
-        self.encoding = DEFAULT_ENCODING
+        self.encoding = ttlconfig.get( 'input_encoding', DEFAULT_ENCODING )
 
     def __call__( self ):
-        clone = InstrGen()
+        clone = InstrGen( self.compiler, ttlconfig=self.ttlconfig )
         return clone
 
     def cr( self, count=1 ) :
@@ -80,9 +83,10 @@ class InstrGen( object ) :
         self.outfd.write( '_m.downindent( down=%r )' % down )
 
     def comment( self, comment ) :
-        self.flushtext()
-        self.cr()
-        self.outfd.write( '# ' + ' '.join(comment.rstrip('\r\n').splitlines()) )
+        if self.devmod :
+            self.flushtext()
+            self.cr()
+            self.outfd.write( '# ' + ' '.join(comment.rstrip('\r\n').splitlines()) )
 
     def flushtext( self ) :
         if self.optimaltext :
@@ -94,11 +98,6 @@ class InstrGen( object ) :
         self.optimaltext.append( text )
         if force or sum(map( lambda x : len(x), self.optimaltext)) > 100 :
             self.flushtext()
-
-    def putvar( self, var ) :
-        self.flushtext()
-        self.cr()
-        self.outfd.write( '_m.append( %s )' % var )
 
     def putstatement( self, stmt ):
         self.flushtext()
@@ -143,11 +142,6 @@ class InstrGen( object ) :
                 indent, newline
             )
         )
-
-    def prunews( self ) :
-        self.flushtext()
-        self.cr()
-        self.outfd.write( '_m.prunews()' )
 
     def putimport_ttl( self, ttlloc, modname ):
         self.cr()

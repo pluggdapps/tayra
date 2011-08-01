@@ -29,6 +29,7 @@ class ParseError( Exception ):
 class TTLParser( object ):
 
     def __init__( self,
+                  ttlconfig={},
                   outputdir=None,
                   lex_optimize=None,
                   lextab=None,
@@ -40,6 +41,10 @@ class TTLParser( object ):
                 ) :
         """
         Create a new TTLParser.
+
+        : ttlconfig ::
+            All configurations related to tayra templates, are represented in
+            this object.
 
         : outputdir ::
             To change the directory in which the parsetab.py file (and other
@@ -98,13 +103,13 @@ class TTLParser( object ):
         self.parser.ttlparser = self     # For AST nodes to access `this`
 
         # Parser initialization
-        self._initialize()
+        self._initialize( ttlconfig=ttlconfig )
 
-    def _initialize( self ) :
-        self.ttlfile = None
-        pass
+    def _initialize( self, ttlfile=None, ttlconfig={} ) :
+        self.ttlfile = ttlfile
+        self.ttlconfig = ttlconfig
 
-    def parse( self, text, ttlfile='', debuglevel=0 ):
+    def parse( self, text, ttlfile=None, ttlconfig=None, debuglevel=0 ):
         """Parse tayra templage language and creates an AST tree. For every
         parsing invocation, the same lex, yacc, app options and objects will
         be used.
@@ -115,7 +120,9 @@ class TTLParser( object ):
             Debug level to yacc
         """
         # Parser Initialize
-        self._initialize()
+        ttlfile = ttlfile if ttlfile != None else self.ttlfile
+        ttlconfig = ttlconfig if ttlconfig != None else self.ttlconfig
+        self._initialize( ttlfile=ttlfile, ttlconfig=ttlconfig )
 
         self.ttllex.ttlfile = self.ttlfile = ttlfile
         self.ttllex.reset_lineno()
@@ -505,20 +512,12 @@ class TTLParser( object ):
         """content      : SPECIALCHARS"""
         p[0] = Content( p.parser, SPECIALCHARS(p.parser, p[1]), None )
 
-    #def p_content_2( self, p ) :
-    #    """content      : SPECIALCHARS"""
-    #    p[0] = Content( p.parser, SPECIALCHARS(p.parser, p[1]), None )
-
-    #def p_content_3( self, p ) :
-    #    """content      : ATOM"""
-    #    p[0] = Content( p.parser, ATOM(p.parser, p[1]), None )
-
-    #def p_content_4( self, p ) :
-    #    """content      : S"""
-    #    p[0] = Content( p.parser, S(p.parser, p[1]), None )
-
     def p_content_3( self, p ) :
         """content      : exprs"""
+        p[0] = Content( p.parser, None, p[1] )
+
+    def p_content_4( self, p ) :
+        """content      : commentblocks"""
         p[0] = Content( p.parser, None, p[1] )
 
     #---- Specifier
@@ -697,12 +696,17 @@ class TTLParser( object ):
 
     #----
 
-    def p_dirtyblock( self, p ):
-        """dirtyblocks  : commentblocks
-                        | emptylines
-                        | dirtyblocks commentblocks
+    def p_dirtyblock_1( self, p ):
+        """dirtyblocks  : commentblocks NEWLINES
+                        | dirtyblocks commentblocks NEWLINES"""
+        args = [ p[1], p[2], NEWLINES(p.parser, p[3])
+               ] if len(p) == 4 else [ None, p[1], NEWLINES(p.parser, p[2]) ]
+        p[0] = DirtyBlocks( p.parser, *args )
+
+    def p_dirtyblock_2( self, p ):
+        """dirtyblocks  : emptylines
                         | dirtyblocks emptylines"""
-        args = [ p[1], p[2] ] if len(p) == 3 else [ None, p[1] ]
+        args = [ p[1], p[2], None ] if len(p) == 3 else [ None, p[1], None ]
         p[0] = DirtyBlocks( p.parser, *args )
 
     def p_commentblocks( self, p ) :

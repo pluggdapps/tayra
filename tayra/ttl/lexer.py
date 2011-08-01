@@ -11,6 +11,9 @@
 # Gotcha :
 # Notes  :
 # Todo   :
+#   1. There is a dirty thing going on in this lexer rules, we find that there
+#   are several tokens with consume a trailing newline sequence. Ideally
+#   newlines should be parsed as a separate token.
 
 
 import re, sys, logging
@@ -82,7 +85,7 @@ class TTLLexer( object ) :
         self.currindent = ''
 
     def _onemptyindent( self, token ) :
-        if len(token.lexer.lexdata) == token.lexer.lexpos :
+        if len(token.lexer.lexdata) == token.lexer.lexpos :     # End of text
             return
         elif token.lexer.lexdata[token.lexer.lexpos] != ' ':
             self._unwind_indentstack()
@@ -187,14 +190,14 @@ class TTLLexer( object ) :
     tabspace    = r' \t'
 
     commentopen = r'[%s]*<!--' % tabspace
-    commentclose= r'-->[%s]*(\n|\r\n)*' % tabspace
     commenttext = r'(.|[\r\n])+?(?=-->)'                # Non greedy
+    commentclose= r'-->[%s]*' % tabspace
     commentline = r'[%s]*\#\#[^\r\n]*(\n|\r\n)*' % tabspace
     statement   = r'@@[^\r\n]*(\n|\r\n)+'
     pass_       = r'@@pass(\n|\r\n)+'
     emptyspace  = r'^[%s]+(\n|\r\n)+' % tabspace
     indent      = r'^[ ]+'
-    nl          = r'[\r\n]+'
+    nl          = r'(\n|\r\n)+'
     spac        = r'[%s]*' % tabspace
     space       = r'[%s]+' % tabspace
     whitespac   = r'[\r\n%s]*' % tabspace
@@ -412,10 +415,6 @@ class TTLLexer( object ) :
         self._onemptyindent(t)
         return t
 
-    #@TOKEN( space )
-    #def t_S( self, t ) :
-    #    return t
-
     @TOKEN( spchars )
     def t_SPECIALCHARS( self, t ) :
         return t
@@ -437,10 +436,6 @@ class TTLLexer( object ) :
     def t_exprs_NEWLINES( self, t ) :
         self._incrlineno(t)
         return t
-
-    #@TOKEN( space )
-    #def t_exprs_S( self, t ) :
-    #    return t
 
     @TOKEN( string )
     def t_exprs_STRING( self, t ) :
@@ -531,10 +526,6 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         return t
 
-    #@TOKEN( space )
-    #def t_style_S( self, t ) :
-    #    return t
-
     @TOKEN( style_text )
     def t_style_TEXT( self, t ) :
         return t
@@ -551,7 +542,6 @@ class TTLLexer( object ) :
     def t_comment_COMMENTCLOSE( self, t ):
         self._incrlineno(t)
         t.lexer.pop_state()
-        self._onemptyindent(t)
         return t
 
     @TOKEN( commenttext )

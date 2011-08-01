@@ -503,8 +503,6 @@ class Sibling( NonTerminal ):
         return self._nonterms
 
     def generate( self, igen, *args, **kwargs ):
-        if isinstance( self._nonterms[0], TagLine ):
-            kwargs['handletag'] = True
         NonTerminal.generate( self, igen, *args, **kwargs )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
@@ -829,6 +827,10 @@ class TagBlock( NonTerminal ):
         NonTerminal.__init__( self, parser, tagline, indent, siblings, dedent )
         self._terms = self.INDENT, self.DEDENT = indent, dedent
         self._nonterms = self.tagline, self.siblings = tagline, siblings
+        # Fetch the tag-plugin
+        tagplugins = parser.ttlparser.ttlconfig.get( 'tagplugins', {} )
+        tagname    = self.tagline.tag.tagname
+        self.tagplugin = tagplugins.get( tagname, tagplugins['_default'] )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
@@ -843,23 +845,22 @@ class TagBlock( NonTerminal ):
             if node.lstrip(' \n\t') : break
         self.siblings.rstrip(' \n\t')
 
-    def generate( self, igen, *args, **kwargs ):
-        kwargs['handletag'] = False
-        pruneindent = self.tagline.tag.pruneindent
-        pruneinner = self.tagline.tag.pruneinner or pruneindent
-        pruneinner and self._pruneinner()
+    def headpass1( self, igen ):
+        through = self.tagplugin.headpass1( self, igen )
+        NonTerminal.headpass1( self, igen ) if through else None
 
-        # Tagline
-        self.tagline.generate(igen, *args, **kwargs)
-        # siblings
-        if pruneindent != True :
-            igen.upindent( up=self.INDENT.dump(None) )
-        self.siblings.generate( igen, *args, **kwargs )
-        if pruneindent != True :
-            igen.downindent( down=self.DEDENT.dump(None) )
-        # handle tag with siblings
-        igen.handletag( indent=(not pruneinner), newline='\n' )
-        return None
+    def headpass2( self, igen ):
+        through = self.tagplugin.headpass2( self, igen )
+        NonTerminal.headpass1( self, igen ) if through else None
+
+    def generate( self, igen, *args, **kwargs ):
+        # Move to tag-plugin, So that there will be an option of handling the
+        # AST statically.
+        self.tagplugin.generate_tagblock( self, igen, *args, **kwargs )
+
+    def tailpass( self, igen ):
+        through = self.tagplugin.tailpass( self, igen )
+        NonTerminal.tailpass( self, igen ) if through else None
 
     def dump( self, context ) :
         text = self.tagline.dump(context)
@@ -882,8 +883,8 @@ class FilterBlock( NonTerminal ):
     """class to handle `filterblock` grammar."""
 
     def __init__( self, parser, filteropen, filtertext, filterclose ):
-        from   tayra.ttl        import fbplugins
         NonTerminal.__init__(self, parser, filteropen, filtertext, filterclose)
+        fbplugins = parser.ttlparser.ttlconfig.get( 'fbplugins', {} )
         self._terms = self.FILTEROPEN, self.FILTERTEXT, self.FILTERCLOSE = \
                 filteropen, filtertext, filterclose
         # Call the filter block to initialize
@@ -891,7 +892,7 @@ class FilterBlock( NonTerminal ):
             filteropen.dump(None), filtertext.dump(None), filterclose.dump(None)
         self.fbname = fbopen.strip()[4:]
         fb = fbplugins.get( self.fbname, None )
-        self.fb = fb( fbopen, fbtext, fbclose ) if fb else None
+        self.fb = fb( parser, fbopen, fbtext, fbclose ) if fb else None
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
@@ -1287,6 +1288,10 @@ class TagLine( NonTerminal ):
                 tag, content, dirtyblocks
         self._nonterms = filter( None, self._nonterms )
         self._terms = (self.NEWLINES,) = (newlines,)
+        # Fetch the tag-plugin
+        tagplugins = parser.ttlparser.ttlconfig.get( 'tagplugins', {} )
+        tagname    = self.tag.tagname
+        self.tagplugin = tagplugins.get( tagname, tagplugins['_default'] )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
@@ -1299,25 +1304,31 @@ class TagLine( NonTerminal ):
         self.content.lstrip(' \n\t')
         self.content.rstrip(' \n\t')
 
+    def headpass1( self, igen ):
+        if isinstance( self.parent, Sibling ):
+            through = self.tagplugin.headpass1( self, igen )
+            NonTerminal.headpass1( self, igen ) if through else None
+        else :
+            NonTerminal.headpass1( self, igen )
+
+    def headpass2( self, igen ):
+        if self.tagplugin :
+            through = self.tagplugin.headpass2( self, igen )
+            NonTerminal.headpass1( self, igen ) if through else None
+        else :
+            NonTerminal.headpass2( self, igen )
+
     def generate( self, igen, *args, **kwargs ):
-        handletag = kwargs.pop( 'handletag' )
-        self.tag.pruneinner and self._pruneinner()
+        # Move to tag-plugin, So that there will be an option of handling the
+        # AST statically.
+        self.tagplugin.generate_tagline( self, igen, *args, **kwargs )
 
-        igen.comment( self.dump( Context() ))
-        igen.indent()
-
-        tag, content = self.tag, self.content
-        # Push tag element
-        igen.pushbuf()
-        tag.generate( igen, *args, **kwargs )
-        # Push tag content
-        igen.pushbuf()
-        content.generate( igen, *args, **kwargs ) if content else None
-        # Just the tag line, so handle the tag with its content.
-        igen.handletag() if handletag else None
-        # Remaining nodes
-        self.NEWLINES and self.NEWLINES.generate( igen, *args, **kwargs )
-        self.dirtyblocks and self.dirtyblocks.generate( igen, *args, **kwargs )
+    def tailpass( self, igen ):
+        if self.tagplugin :
+            through = self.tagplugin.tailpass( self, igen )
+            NonTerminal.tailpass( self, igen ) if through else None
+        else :
+            NonTerminal.tailpass( self, igen )
 
     def dump( self, context ) :
         return context.htmlindent + NonTerminal.dump( self, context )
@@ -1456,6 +1467,8 @@ class Tag( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    tagname = property( lambda self : self.TAGOPEN.tagname )
 
 #---- Attributes
 
@@ -1937,15 +1950,17 @@ class ExprsContent( NonTerminal ):
 class DirtyBlocks( NonTerminal ):
     """class to handle `dirtyblocks` grammar."""
 
-    def __init__( self, parser, dirtyblocks, nonterm ) :
-        NonTerminal.__init__( self, parser, dirtyblocks, nonterm )
+    def __init__( self, parser, dirtyblocks, nonterm, newlines ) :
+        NonTerminal.__init__( self, parser, dirtyblocks, nonterm, newlines )
         self._nonterms = self.dirtyblocks, self.nonterm = dirtyblocks, nonterm
         self._nonterms = filter( None, self._nonterms )
+        self._terms = (self.NEWLINES,) = (newlines,)
+        self._terms = filter( None, self._terms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        return self._nonterms
+        return self._nonterms + self._terms
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -2120,6 +2135,12 @@ class TAGOPEN( Terminal ):
         if self.pruneouter :
             self.terminal = tagopen[0] + tagopen[2:]
         return self.pruneouter
+
+    def _tagname( self ):
+        from  tayra.ttl.lexer import TTLLexer
+        return self.terminal.rstrip( TTLLexer.whitespac ).lstrip( '<!' )
+
+    tagname = property( lambda self : self._tagname() )
 
 class TAGEND( Terminal ) : pass
 

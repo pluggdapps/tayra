@@ -594,7 +594,9 @@ class Charset( NonTerminal ):
 
     def headpass1( self, igen ):
         igen.encoding = self.CHARSET.dump(None)[8:].strip(' \t\r\n').rstrip(';')
-        igen.comment( "-*- coding: %s -*-" % igen.encoding )
+        # As of now, we havn't figured out how to use @charset, directive to
+        # override ttlconfig['input_encoding']
+        #igen.comment( "-*- coding: %s -*-" % igen.encoding )
         igen.putstatement( "_m.setencoding( %r )" % igen.encoding )
         NonTerminal.headpass1( self, igen )
 

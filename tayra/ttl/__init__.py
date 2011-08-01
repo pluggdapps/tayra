@@ -1,4 +1,4 @@
-import time, imp
+import time, imp, codecs
 from   StringIO                 import StringIO
 from   os.path                  import dirname
 from   copy                     import deepcopy
@@ -33,7 +33,7 @@ defaultconfig = {
     'devmod': True,
     'reload_templates': False,
     'debug_templates': False,
-    'input_encoding': 'utf-8',
+    'input_encoding': DEFAULT_ENCODING,
     'usetagplugins' : [ 'html' ],
 }
 
@@ -152,16 +152,18 @@ def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.ttl.compiler       import Compiler, TemplateLookup
     from   datetime                 import datetime as dt
 
-    # Parse command line arguments
-    args = eval( kwargs.pop( 'args', '[]' ))
-    context = eval( kwargs.pop( 'context', '{}' ))
-    debuglevel = kwargs.pop( 'debuglevel', 0 )
-    show = kwargs.pop( 'show', False )
-    dump = kwargs.pop( 'dump', False )
     ttlconfig = deepcopy( defaultconfig )
     # directories, module_directory, devmod
     ttlconfig.update( kwargs )
     ttlconfig.setdefault( 'module_directory', dirname( ttlloc ))
+
+    # Parse command line arguments and configuration
+    args = eval( ttlconfig.pop( 'args', '[]' ))
+    context = eval( ttlconfig.pop( 'context', '{}' ))
+    debuglevel = ttlconfig.pop( 'debuglevel', 0 )
+    show = ttlconfig.pop( 'show', False )
+    dump = ttlconfig.pop( 'dump', False )
+    encoding = ttlconfig['input_encoding']
 
     # Initialize plugins
     ttlconfig = initplugins( ttlconfig, force=ttlconfig.get('devmod', True) )
@@ -182,12 +184,14 @@ def ttl_cmdline( ttlloc, **kwargs ):
     elif dump :
         tu = compiler.toast()
         rctext =  tu.dump()
-        if rctext != open( compiler.ttlfile ).read() : print "Mismatch ..."
+        if rctext != codecs.open( compiler.ttlfile, encoding=encoding ).read() :
+            print "Mismatch ..."
         else : print "Success ..."
     else :
         print "Generating py / html file ... "
         pytext = compiler.topy()
-        open(pyfile, 'w').write(pytext)
+        # Intermediate file should always be encoded in 'utf-8'
+        codecs.open(pyfile, mode='w', encoding=DEFAULT_ENCODING).write(pytext)
 
         #code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
         #context['_ttlcontext'] = context
@@ -199,7 +203,7 @@ def ttl_cmdline( ttlloc, **kwargs ):
         ttlconfig.setdefault( 'memcache', 'true' )
         r = Renderer( ttlloc, ttlconfig )
         html = r( context=context )
-        open( htmlfile, 'w' ).write( html )
+        codecs.open( htmlfile, mode='w', encoding=encoding).write( html )
 
         # This is for measuring performance
         st = dt.now()

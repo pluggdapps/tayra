@@ -1,4 +1,4 @@
-import imp, os, stat, posixpath, re
+import imp, os, stat, posixpath, re, codecs
 from   os.path                  import isfile, isdir, abspath, basename, \
                                        join, dirname
 from   hashlib                  import sha1
@@ -7,6 +7,7 @@ from   StringIO                 import StringIO
 from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
+from   tayra.ttl                import DEFAULT_ENCODING
 
 """
 : ttlconfig ::
@@ -89,7 +90,7 @@ class Compiler( object ):
         if code == None and pyfile and pytext :
             code = compile( pytext, pyfile, 'exec')
         elif code == None and pyfile :
-            pytext = open( pyfile ).read()
+            pytext = codecs.open( pyfile, encoding=DEFAULT_ENCODING ).read()
             code = compile( pytext, pyfile, 'exec')
         elif code == None :
             pytext = self.topy()
@@ -101,17 +102,19 @@ class Compiler( object ):
         return code
 
     def toast( self ):
+        encoding = self.ttlconfig['input_encoding']
         tu = None
         if self.ttlfile and self.ttltext :
             tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
         elif self.ttlfile :
-            self.ttltext = open( self.ttlfile ).read()
+            self.ttltext = codecs.open( self.ttlfile, encoding=encoding ).read()
             tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
         return tu
 
     def topy( self, *args, **kwargs ):
+        encoding = self.ttlconfig['input_encoding']
         tu = self.toast()
-        kwargs['ttlhash'] = sha1( self.ttltext ).hexdigest()
+        kwargs['ttlhash'] = sha1( self.ttltext.encode(encoding) ).hexdigest()
         if tu :
             tu.validate()
             tu.headpass1( self.igen )                   # Head pass, phase 1
@@ -140,7 +143,10 @@ class TemplateLookup( object ) :
         self.directories = [ d.rstrip(' \t/') for d in self.directories ]
         self.ttlfile = self._locatettl()
         self.pyfile, self.pytext = self._locatepy()
-        self.pytext = self.pytext or (self.pyfile and open(self.pyfile).read())
+        self.pytext = self.pytext or (
+                        self.pyfile and \
+                        codecs.open( self.pyfile, encoding=DEFAULT_ENCODING ).read()
+                      )
 
     def _locatettl( self ):
         uri = self.ttlloc
@@ -170,7 +176,7 @@ class TemplateLookup( object ) :
         if self.devmod :
             return None, None
         elif pyfile and isfile(pyfile) :
-            return pyfile, open(pyfile).read()
+            return pyfile, codecs.open(pyfile, encoding=DEFAULT_ENCODING).read()
         else :
             return None, None
 
@@ -188,7 +194,7 @@ class TemplateLookup( object ) :
             d = dirname(pyfile)
             if not isdir(d) :
                 os.makedirs(d)
-            open( pyfile, 'w' ).write( pytext )
+            codecs.open( pyfile, mode='w', encoding=DEFAULT_ENCODING ).write( pytext )
             return len(pytext)
         return None
 

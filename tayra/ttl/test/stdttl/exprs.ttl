@@ -1,5 +1,5 @@
 <div> ${ "hello {}" + str([
-  str(10) ]) + \
+  str(10) ]) + 
   ' world' }
   <a#${'idname'}.${'cls'
     'name'} "${"http://"

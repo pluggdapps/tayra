@@ -28,7 +28,7 @@
   <div> ${ "hello {}" + str([
     str(10) ]) + \
     ' world' }
-    <a#${'idname \
+    <a#${'idname  \
       '}.${'cls'
       'name'} "${"http://"
               'google.com'}" { ${'color : ' }
@@ -79,7 +79,7 @@
   
   <form#idname
   formname "${}http://
-  google.com" > ${ "hello " + str(10) + \
+  google.com" > ${ "hello " + str(10) + 
     ' world' }
       <input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>
 

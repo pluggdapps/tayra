@@ -6,21 +6,31 @@ Feature requests :
 * escape-filters for expression evaluation,
     html-entity-escaping
 
-* Enable file check, using `reload_templates` ttlconfig, so that the
-  intermediate template files and in memory code cache will be regenerated
-  when ever the file is updated.
-
-* Whitespace pruning,
-    before and after opening tag and closing tag (for outerprune)
-
 * @use directive should include ${...} expression evaluation syntax.
+
+* For attributes, the value, along with the "=" character, can be omitted
+  altogether if the value is the empty string, eg,
+    disabled, selected etc ...
+  In some cases the attribute values can be specified as an atom, like
+    disabled=disabled.
+
+* `tagline` grammar can include multiple tag definition contained within the
+  same tagline as a `sibling`.
+
+* Sandbox the execution environment for the templates.
+
+* Optional configuration to ignore indentation output.
+
+* Nested functions should remain nested !
 
 * Micro-templating similar to mako. This will demonstrate the true power of
   StackMachine based design.
 
-* Custom tag plugin for form generation.
+* find out an inheritable way for generic tag handling parts. Especially
+  composing tags during compile time and thus avoiding handletag() during
+  run-time.
 
-* Standard tag for SVG.
+* Figure out a way to cache the plugins catogarised by initplugins() function.
 
 * Automatically detect the user-agent compatibility level with html and
   generate elements in confirmance to it. This must play safe with the
@@ -32,31 +42,22 @@ Feature requests :
     - HTTP headers (or any other real-time info available from user agent)
       denoting the user agent capabilities.
 
-* Unicode support using the philosopy,
-    decode early, encode late.
-
-* Ruby's code-block style syntax to write event-handlers for tag-elements.
-
-* Sandbox the execution environment for the templates.
-
-* Let tag plugins be bolted at AST level.
-
-* Optional configuration to ignore indentation output.
-
-* `tagline` grammar can include multiple tag definition contained within the
-  same tagline as a `sibling`.
-
-* Escape grammar for special tokens.
-
-* For attributes, the value, along with the "=" character, can be omitted
-  altogether if the value is the empty string, eg,
-    disabled, selected etc ...
-  In some cases the attribute values can be specified as an atom, like
-    disabled=disabled.
-
 * Just saw Adobe Egdge ... Can tayra be the keyboard version for addressing
   the same market place as Adobe's ?
 
-* Figure out a way to cache the plugins catogarised by initplugins() function.
+* Whitespace pruning,
+    before and after opening tag and closing tag (for outerprune)
 
-* Nested functions should remain nested !
+* Enable file check, using `reload_templates` ttlconfig, so that the
+  intermediate template files and in memory code cache will be regenerated
+  when ever the file is updated.
+
+* Custom tag plugin for form generation.
+
+* Standard tag for SVG.
+
+* Ruby's code-block style syntax to write event-handlers for tag-elements.
+
+* @charset directive is pretty much a stale feature. Figure out how to use
+  that, without compromising on ttlconfig['input_encoding']
+

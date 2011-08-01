@@ -216,10 +216,11 @@ class TTLLexer( object ) :
     whitespace  = r'[\r\n%s]+' % tabspace
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9-_]+'
+    # Escape newlines available for text, tag_text, style_text, exprs_text
     text        = r'[^\r\n<${\\]+'
     tag_text    = r'[^%s\r\n/>${"\'=\\]+' % tabspace
     style_text  = r'[^\r\n${}\\]+'
-    exprs_text  = r'[^\r\n}"\']+'
+    exprs_text  = r'[^\r\n}"\'\\]+'
     string      = r'"(.|[\r\n])*?"|\'(.|[\r\n])*?\''    # Non greedy
 
     # Suffix definition for lookahead match for prolog / statement tails.
@@ -445,6 +446,10 @@ class TTLLexer( object ) :
     @TOKEN( openexprs )
     def t_exprs_OPENEXPRS( self, t ) :               # <---- `exprs` state
         return t
+
+    @TOKEN( escseq )
+    def t_exprs_ESCAPED( self, t ) :
+        return self._onescaped( t )
 
     @TOKEN( closebrace )
     def t_exprs_CLOSEBRACE( self, t ) :

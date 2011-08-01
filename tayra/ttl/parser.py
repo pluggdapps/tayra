@@ -126,7 +126,6 @@ class TTLParser( object ):
 
         self.ttllex.ttlfile = self.ttlfile = ttlfile
         self.ttllex.reset_lineno()
-        self.hashtext = sha1( text ).hexdigest()
 
         # parse and get the Translation Unit
         debuglevel = self.debug or debuglevel

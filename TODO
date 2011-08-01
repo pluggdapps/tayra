@@ -3,15 +3,8 @@
 
 Feature requests :
 
-* filters for expression evaluation,
+* escape-filters for expression evaluation,
     html-entity-escaping
-
-* For attributes, the value, along with the "=" character, can be omitted
-  altogether if the value is the empty string, eg,
-    disabled, selected etc ...
-
-* In some cases the attribute values can be specified as an atom, like
-    disabled=disabled.
 
 * Enable file check, using `reload_templates` ttlconfig, so that the
   intermediate template files and in memory code cache will be regenerated
@@ -47,3 +40,19 @@ Feature requests :
 * Sandbox the execution environment for the templates.
 
 * Let tag plugins be bolted at AST level.
+
+* Optional configuration to ignore indentation output.
+
+* `tagline` grammar can include multiple tag definition contained within the
+  same tagline as a `sibling`.
+
+* Escape grammar for special tokens.
+
+* For attributes, the value, along with the "=" character, can be omitted
+  altogether if the value is the empty string, eg,
+    disabled, selected etc ...
+  In some cases the attribute values can be specified as an atom, like
+    disabled=disabled.
+
+* Just saw Adobe Egdge ... Can tayra be the keyboard version for addressing
+  the same market place as Adobe's ?

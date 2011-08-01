@@ -1,9 +1,6 @@
 from   zope.component       import getGlobalSiteManager
 from   zope.interface       import implements
 
-from   tayra.ttl.interfaces import ITayraTags
-from   tayra.ttl.tags       import parsespecifiers, composetag
-
 gsm = getGlobalSiteManager()
 
 def handle_aname( tagopen, specifiers, style, attrs, tagfinish ):
@@ -21,16 +18,3 @@ def handle_aimg( tagopen, specifiers, style, attrs, tagfinish ):
     html = '<a href=%s><img %s %s style="%s" src=%s %s/></a>' % (
             href, id_, cls, style, src, ' '.join(attrs) )
     return html
-
-
-class CustomHtml( object ):
-    implements( ITayraTags )
-    def handlers( self ):
-        g = globals()
-        return dict([
-            (fn[7:], val) for fn, val in g.items() if fn.startswith('handle_')
-        ])
-
-
-# Register this plugin
-gsm.registerUtility( CustomHtml(), ITayraTags, 'customhtml' )

@@ -1,9 +1,6 @@
 from   zope.component       import getGlobalSiteManager
 from   zope.interface       import implements
 
-from   tayra.ttl.interfaces import ITayraTags
-from   tayra.ttl.tags       import parsespecifiers, composetag, atoms2attrs
-
 gsm = getGlobalSiteManager()
 
 def handle_a( tagopen, specifiers, style, attrs, tagfinish ):
@@ -312,16 +309,3 @@ def handle_textarea( tagopen, specifiers, style, attrs, tagfinish ):
         name = 'name="%s"' % tok
     specattrs = filter( None, [id_, classes, cols, rows, name] ) + specattrs
     return composetag( tagopen, specattrs, style, attrs, tagfinish )
-
-
-
-class Html( object ):
-    implements( ITayraTags )
-    def handlers( self ):
-        g = globals()
-        return dict([
-            (fn[7:], val) for fn, val in g.items() if fn.startswith('handle_')
-        ])
-
-# Register this plugin
-gsm.registerUtility( Html(), ITayraTags, 'html' )

@@ -10,10 +10,11 @@ class PyCode( object ):
 
     def __init__( self, *args, **kwargs ):
         if args :
-            self.filteropen, self.filtertext, self.filterclose = args
+            self.parser, self.filteropen, self.filtertext, self.filterclose = \
+                    args
 
-    def __call__( self, filteropen, filtertext, filterclose ):
-        return PyCode( filteropen, filtertext, filterclose )
+    def __call__( self, parser, filteropen, filtertext, filterclose ):
+        return PyCode( parser, filteropen, filtertext, filterclose )
 
     def headpass1( self, igen ):                        # Global
         lines = self.filtertext.splitlines()

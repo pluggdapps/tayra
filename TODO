@@ -56,3 +56,5 @@ Feature requests :
 
 * Just saw Adobe Egdge ... Can tayra be the keyboard version for addressing
   the same market place as Adobe's ?
+
+* Figure out a way to cache the plugins catogarised by initplugins() function.

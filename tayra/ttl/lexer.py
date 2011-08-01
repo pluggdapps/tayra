@@ -70,8 +70,8 @@ class TTLLexer( object ) :
 
     def _preprocess( self, text ) :
         # Replace `\ ESCAPEd new lines'.
-        text = text.replace( '\\\n', '' )
-        text = text.replace( '\\\r\n', '' )
+        #text = text.replace( '\\\n', '' )
+        #text = text.replace( '\\\r\n', '' )
         return text
 
     def _addtokens( self, tok ) :
@@ -89,6 +89,17 @@ class TTLLexer( object ) :
             return
         elif token.lexer.lexdata[token.lexer.lexpos] != ' ':
             self._unwind_indentstack()
+
+    def _onescaped( self, token ) :
+        if len(token.value) == 1 :
+            # If escaping the newline then increment the lexposition, but
+            # cound the line-number.
+            self._incrlineno( token )
+            token.lexer.lexpos += 1
+            return None
+        else :
+            token = self._lextoken('TEXT', token.value[1])
+            return token
     
     ## --------------- Interface methods ------------------------------
 
@@ -181,6 +192,7 @@ class TTLLexer( object ) :
     # special lines, pattern [ \t]*[!<@:]....
 
     # Special chars
+    escseq       = r'(\\.?)|(\\$)'
     spchars      = r'[${]'
     tags_spchars = r'[/$]'
     styl_spchars = r'[${]'
@@ -203,10 +215,10 @@ class TTLLexer( object ) :
     whitespac   = r'[\r\n%s]*' % tabspace
     whitespace  = r'[\r\n%s]+' % tabspace
     atom        = r'[a-zA-Z0-9\._\#-]+'
-    tagname     = r'[a-zA-Z0-9]+'
-    text        = r'[^\r\n<${]+'
-    tag_text    = r'[^%s\r\n/>${"\'=]+' % tabspace
-    style_text  = r'[^\r\n${}]+'
+    tagname     = r'[a-zA-Z0-9-_]+'
+    text        = r'[^\r\n<${\\]+'
+    tag_text    = r'[^%s\r\n/>${"\'=\\]+' % tabspace
+    style_text  = r'[^\r\n${}\\]+'
     exprs_text  = r'[^\r\n}"\']+'
     string      = r'"(.|[\r\n])*?"|\'(.|[\r\n])*?\''    # Non greedy
 
@@ -253,6 +265,10 @@ class TTLLexer( object ) :
     tagclose    = whitespac+gt+spac
 
     # TTL Tokens
+
+    @TOKEN( escseq )
+    def t_ESCAPED( self, t ) :
+        return self._onescaped( t )
 
     @TOKEN( commentline )
     def t_COMMENTLINE( self, t ) :
@@ -359,7 +375,10 @@ class TTLLexer( object ) :
                 raise Exception( 'Unexpected indentation' )
             self.currindent = t.value
         elif len(value) != currlevel :
-            raise LexError( 'Indentation should be %s spaces' % INDENTSPACE )
+            raise LexError(
+                'Indentation should be %s spaces : position (%s, %s)' % (
+                 (INDENTSPACE,) + self._make_tok_location( t ) )
+            )
         return self.poptoken()
 
     @TOKEN( function )
@@ -451,6 +470,10 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         return t
 
+    @TOKEN( escseq )
+    def t_tag_ESCAPED( self, t ) :
+        return self._onescaped( t )
+
     @TOKEN( tagend )
     def t_tag_TAGEND( self, t ) :
         t.lexer.pop_state()
@@ -510,6 +533,10 @@ class TTLLexer( object ) :
     @TOKEN( whitespac+openbrace )
     def t_style_OPENBRACE( self, t ) :              # <---- `style` state
         return t
+
+    @TOKEN( escseq )
+    def t_style_ESCAPED( self, t ) :
+        return self._onescaped( t )
 
     @TOKEN( closebrace+whitespac )
     def t_style_CLOSEBRACE( self, t ) :

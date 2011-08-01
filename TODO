@@ -58,3 +58,5 @@ Feature requests :
   the same market place as Adobe's ?
 
 * Figure out a way to cache the plugins catogarised by initplugins() function.
+
+* Nested functions should remain nested !

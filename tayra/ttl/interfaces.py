@@ -73,7 +73,7 @@ class ITayraTag( Interface ):
 
 class ITayraEscapeFilter( Interface ):
 
-    def __call__( self, mach, text ):
+    def __call__( self, mach, text, filterns=None ):
         """Apply the filter logic to the text string and return processed
         text.
 
@@ -81,6 +81,8 @@ class ITayraEscapeFilter( Interface ):
             is stach-machine instance.
         ``text``
             text to be filtered.
+        ``filterns``
+            namespace used to invoke this filter implemetation.
         """
 
 class ITayraFilterBlock( Interface ):

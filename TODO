@@ -3,9 +3,6 @@
 
 Feature requests :
 
-* escape-filters for expression evaluation,
-    html-entity-escaping
-
 * @use directive should include ${...} expression evaluation syntax.
 
 * For attributes, the value, along with the "=" character, can be omitted
@@ -60,4 +57,6 @@ Feature requests :
 
 * @charset directive is pretty much a stale feature. Figure out how to use
   that, without compromising on ttlconfig['input_encoding']
+
+* html-entity-escaping in escape-filters
 

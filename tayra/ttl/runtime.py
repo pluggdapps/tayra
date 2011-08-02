@@ -36,8 +36,8 @@ class StackMachine( object ) :
         self.ifile = ifile
         self.compiler = compiler
         self.encoding = self.ttlconfig.get( 'input_encoding', DEFAULT_ENCODING )
-        self.htmlindent = self.encodetext( '' )
-        self.emptystring = self.encodetext( '' )
+        self.htmlindent = ''
+        self.emptystring = ''
 
     _cache_taghandlers = {}
     def _buildtaghandlers( self, usetagplugins ):
@@ -56,16 +56,15 @@ class StackMachine( object ) :
     #---- Stack machine instructions
 
     def setencoding( self, encoding ):
-        self.encoding = encoding
-        self.htmlindent = self.encodetext( '' )
-        self.emptystring = self.encodetext( '' )
+        #self.encoding = encoding
+        pass
 
-    def encodetext( self, text ) :
-        if isinstance( text, unicode) :
-            return text
-        else :
-            text = str( text )
-            return unicode( text, self.encoding )
+    #def encodetext( self, text ) :
+    #    if isinstance( text, unicode) :
+    #        return text
+    #    else :
+    #        text = repr( text )
+    #        return unicode( text, self.encoding )
 
     def upindent( self, up='' ) :
         self.htmlindent += up
@@ -79,14 +78,11 @@ class StackMachine( object ) :
         return self.append( self.htmlindent )
 
     def append( self, value ) :
-        if isinstance(value, basestring) :
-            value = self.encodetext( value )
         self.bufstack[-1].append( value )
         return value
 
     def extend( self, value ) :
         if isinstance(value, list) :
-            value = [ self.encodetext(v) for v in value ]
             self.bufstack[-1].extend( value )
         else :
             raise Exception( 'Unable to extend context stack' )
@@ -116,19 +112,24 @@ class StackMachine( object ) :
         self.append( ''.join(contents) )
         # Close tag
         tail = self.htmlindent if indent else ''
-        tail += self.encodetext( '</%s>'%tagnm ) 
+        tail += ('</%s>'%tagnm).decode( self.encoding )
         tail += newline
         self.append( tail )
 
     def evalexprs( self, val, filters ) :
-        filters = [ f.strip() for f in filters.split(',') if f ]
-        text    = str(val)
-        if 'n' not in filters :
-            text = self.escfilters['un']( self, text )
+        filters = [ f.strip().split('.',1) for f in filters.split(',') if f ]
+        unins = filters.pop(0) if filters and filters[0][0] == 'uni' else None
+        skip  = filters.pop(0) if filters and filters[0][0] == 'n' else None
+        # Default filters
+        if skip == None :
+            text = self.escfilters['uni']( self, val, unins )
+        else :
+            text = val
+        # Pluggable filters
+        if filters and skip != None :
             for filt in filters :
-                fn = self.escfilters.get( filt, None )
-                text = fn( self, text ) if fn else text
-        return self.encodetext( text )
+                text = self.escfilters.get( filt[0], None )( self, text, filt )
+        return text
 
     def importas( self, ttlloc, modname, childglobals ):
         compiler = self.compiler( ttlloc )

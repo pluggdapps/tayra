@@ -10,6 +10,15 @@ file 'LICENSE', which is part of this source code package.
 @@ html = '<div title="hello"> div block </div>'
 @@ url  = 'http://pluggdapps.com/hello world'
 @@ text = '  hello world \t'
-${ html | h }
-${ url | u }
-${ text | t }
+@@ unitext = 'ما هي الشفرة الموحدة "يونِكود" ؟ in Arabicc'
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <body>
+    ${ html | h }
+    ${ html }
+    ${ url | u }
+    ${ text | t }
+    ${ unitext }
+    ${ unitext | uni.latin_1 }

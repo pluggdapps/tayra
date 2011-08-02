@@ -11,8 +11,7 @@ Feature requests :
   In some cases the attribute values can be specified as an atom, like
     disabled=disabled.
 
-* `tagline` grammar can include multiple tag definition contained within the
-  same tagline as a `sibling`.
+* inlinetag, `contents` must include inline-tag elements.
 
 * Sandbox the execution environment for the templates.
 

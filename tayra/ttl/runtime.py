@@ -126,7 +126,7 @@ class StackMachine( object ) :
         else :
             text = val
         # Pluggable filters
-        if filters and skip != None :
+        if filters and skip == None :
             for filt in filters :
                 text = self.escfilters.get( filt[0], None )( self, text, filt )
         return text

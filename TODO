@@ -3,13 +3,6 @@
 
 Feature requests :
 
-* Sandbox the execution environment for the templates.
-    implement interface. do isintance( <interface>, Interface ) to make sure it
-    is alright.
-    try __builtins__ = {}
-
-* Optional configuration to ignore indentation output.
-
 * Nested functions should remain nested !
 
 * Micro-templating similar to mako. This will demonstrate the true power of
@@ -18,8 +11,6 @@ Feature requests :
 * find out an inheritable way for generic tag handling parts. Especially
   composing tags during compile time and thus avoiding handletag() during
   run-time.
-
-* Figure out a way to cache the plugins catogarised by initplugins() function.
 
 * Automatically detect the user-agent compatibility level with html and
   generate elements in confirmance to it. This must play safe with the
@@ -41,6 +32,8 @@ Feature requests :
   intermediate template files and in memory code cache will be regenerated
   when ever the file is updated.
 
+* Figure out a way to cache the plugins catogarised by initplugins() function.
+
 * Custom tag plugin for form generation.
 
 * Standard tag for SVG.
@@ -58,4 +51,7 @@ Feature requests :
     disabled, selected etc ...
   To be handled as specifier option.
 
-* Enable wiki text as `content` selectable as a tag's specifier.
+* Enable wiki text as content selectable using the tag's specifier. like,
+    <div etx> **hello** world
+
+* making `devmod` as False seems to have degrading effect on performance.

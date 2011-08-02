@@ -94,7 +94,7 @@ class TagPlugin( object ):
         else :
             id_ = classes = None
 
-        id_ = 'id="%s"' % id_ if id_ else None
+        id_ = 'id="%s"' % id_[1:] if id_ else None
         classes = 'class="%s"' % classes if classes else None
 
         strings = filter( None, reduce( lambda x, t : x + list(t[:2]), parsed, [] ))

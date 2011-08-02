@@ -35,6 +35,7 @@ defaultconfig = {
     'debug_templates': False,
     'input_encoding': DEFAULT_ENCODING,
     'usetagplugins' : [ 'html' ],
+    'uglyhtml': False,
 }
 
 def _findttls():

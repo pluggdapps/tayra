@@ -34,7 +34,8 @@ class InstrGen( object ) :
         from   tayra.ttl        import DEFAULT_ENCODING
         self.compiler = compiler
         self.ttlconfig = ttlconfig
-        self.devmod = self.ttlconfig.get( 'devmod', True )
+        self.devmod = self.ttlconfig['devmod']
+        self.uglyhtml = self.ttlconfig['uglyhtml']
         self.outfd = StringIO()
         self.pyindent = ''
         self.optimaltext = []
@@ -69,19 +70,22 @@ class InstrGen( object ) :
         self.cr()
 
     def indent( self ):
-        self.flushtext()
-        self.cr()
-        self.outfd.write( '_m.indent()' )
+        if self.uglyhtml == False :
+            self.flushtext()
+            self.cr()
+            self.outfd.write( '_m.indent()' )
 
     def upindent( self, up='' ):
-        self.flushtext()
-        self.cr()
-        self.outfd.write( '_m.upindent( up=%r )' % up )
+        if self.uglyhtml == False :
+            self.flushtext()
+            self.cr()
+            self.outfd.write( '_m.upindent( up=%r )' % up )
 
     def downindent( self, down='' ):
-        self.flushtext()
-        self.cr()
-        self.outfd.write( '_m.downindent( down=%r )' % down )
+        if self.uglyhtml == False :
+            self.flushtext()
+            self.cr()
+            self.outfd.write( '_m.downindent( down=%r )' % down )
 
     def comment( self, comment ) :
         if self.devmod :

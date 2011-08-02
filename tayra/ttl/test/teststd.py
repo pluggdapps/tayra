@@ -18,6 +18,7 @@ def test_stdttl() :
         if f.endswith('.ttl') :
             print '%r ...' % f
             ttl_cmdline( filepath, context=contexts.get(f, '{}') )
+            print
     print  
     print "Reference checking ... "
     for f in os.listdir( STDTTLDIR ) :

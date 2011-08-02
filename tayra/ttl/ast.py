@@ -269,9 +269,11 @@ class NonTerminal( Node ):      # Non-terminal
         # function body
         if self.siblings :
             igen.pushbuf()
+            kwargs['localfunc'] = True
             if self.dirtyblocks :
                 self.dirtyblocks.generate( igen, *args, **kwargs )
             self.siblings.generate( igen, *args, **kwargs )
+            kwargs.pop( 'localfunc' )
         else :
             igen.putstatement('pass')
         # return from function
@@ -963,11 +965,16 @@ class FunctionBlock( NonTerminal ):
         NonTerminal.headpass1( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
+        self.localfunc = kwargs.get( 'localfunc', False )
         self.args, self.kwargs = args, kwargs
+        if self.localfunc :
+            # Function block, siblings will be generated via genfunction.
+            self.genfunction( igen, self.line, *self.args, **self.kwargs )
 
     def tailpass( self, igen ):
-        # Function block
-        self.genfunction( igen, self.line, *self.args, **self.kwargs )
+        if self.localfunc == False :
+            # Function block, siblings will be generated via genfunction
+            self.genfunction( igen, self.line, *self.args, **self.kwargs )
         # Do tail pass after the deferred generation.
         NonTerminal.tailpass( self, igen )
 

@@ -18,7 +18,10 @@
     <body>
       <abbr "World Health Organization"> WHO
       @function nestedfunc() :
-        <b> bold text
+        <b!> this is nested function
+        @function nestednestedfunc() :
+          <em!> this is nested nested function
+        ${ nestednestedfunc() }
       <button#id_ reset disabled makefriend "button value"/>
       ${ nestedfunc() }
       ${ func3() }

@@ -8,18 +8,21 @@ from   tayra.ttl        import ttl_cmdline
 THISDIR = abspath( '.' )
 STDTTLDIR = join( THISDIR, 'stdttl' )
 STDTTLREFDIR = join( THISDIR, 'stdttl', 'ref' )
-STDTTLFILES = [ join(STDTTLDIR, f) for f in os.listdir(STDTTLDIR) ]
 
+contexts = {
+    'useinterface.ttl' : '{ "plugin" : "testinterface" }',
+}
 def test_stdttl() :
-    for f in STDTTLFILES :
+    for f in os.listdir(STDTTLDIR) :
+        filepath = join(STDTTLDIR, f)
         if f.endswith('.ttl') :
             print '%r ...' % f
-            ttl_cmdline(f)
+            ttl_cmdline( filepath, context=contexts.get(f, '{}') )
     print  
     print "Reference checking ... "
     for f in os.listdir( STDTTLDIR ) :
         outfile = join( STDTTLDIR, f )
-        if f.startswith('.') or f.endswith( '.ttl' ) or isdir(outfile): continue
+        if f.startswith('.') or f.endswith( '.ttl' ) or isdir(outfile) : continue
         reffile = join( STDTTLREFDIR, f )
         refpytext = open(reffile).read()
         pytext = open(outfile).read()

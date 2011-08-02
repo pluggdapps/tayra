@@ -313,7 +313,7 @@ class Template( NonTerminal ):
         self.setparent( self, self.children() )
 
         self.bodysignature = None   # Will be bubbleup during `headpass`
-        self.implements = []        # [ (interface, pluginname), ...]
+        self.implements = []        # [ (module, interface, pluginname), ...]
         self.interfaces = []        # [ (interface, methodname), ... ]
         self.doctypes = []          # [ html, html, ... ]
 
@@ -382,12 +382,12 @@ class Template( NonTerminal ):
 
     def tailpass( self, igen ):
         igen.cr()
-        igen.comment( "#---- Global Functions" )
+        igen.comment( "---- Global Functions" )
         NonTerminal.tailpass( self, igen )
-        igen.comment( "#---- Interface functions" )
+        igen.comment( "---- Interface functions" )
         if self.implements and self.interfaces :
             igen.implement_interface( self.implements, self.interfaces )
-        igen.comment( "#---- Footer" )
+        igen.comment( "---- Footer" )
         igen.footer( self.ttlhash, self.ttlfile )
         igen.finish()
 
@@ -694,10 +694,11 @@ class Implement( NonTerminal ):
 
     def headpass1( self, igen ):
         line = self.IMPLEMENT.dump(None).rstrip(';\r\n')
-        parts = ' '.join( line.splitlines() ).split(' ')
+        parts = [ x.strip() for x in ' '.join( line.splitlines() ).split(' ') ]
         if parts[2] == 'as' :
             interface, pluginname = parts[1], parts[3]
-            self.bubbleupaccum( 'implements', (interface, pluginname) )
+            module, interfacename = interface.split(':')
+            self.bubbleupaccum( 'implements', (module, interfacename, pluginname) )
         else :
             raise Exception(
                 '@implement directive does not have proper syntax'
@@ -727,22 +728,32 @@ class Use( NonTerminal ):
         self.setparent( self, self.children() )
 
     def _parseline( self, line ):
-        parts = filter( None, ' '.join( line.splitlines() ).split(' ') )
+        parts = filter( None, map(
+            lambda x : x [0],
+            re.findall( r'((\$\{.+\})|([^ \r\n\f\t]+))(?=[ \t]|$)', line )
+        ))
         if len(parts) == 5 and (parts[0], parts[3]) == ('@use', 'as') :
             interface, pluginname, importname = parts[1], parts[2], parts[4]
         elif len(parts) == 4 and (parts[0], parts[2]) == ('@use', 'as') :
             interface, pluginname, importname = parts[1], '', parts[3]
         else :
             raise Exception( 'use directive syntax error' )
-        return interface, pluginname, importname
+        module, interfacename = interface.split(':')
+        match = re.match( r'\$\{(.+)\}', pluginname )
+        if match :
+            text, filters = ExprsContents.parseexprs( match.groups()[0] )
+            pluginname = text, filters
+        return module, interfacename, pluginname, importname
 
     def children( self ):
         return self._terms
 
     def headpass2( self, igen ):
-        line = self.USE.dump(None).rstrip(';\r\n')
-        self.interface, self.pluginname, self.name = self._parseline( line )
-        igen.useinterface( self.interface, self.pluginname, self.name )
+        line = ' '.join( self.USE.dump(None).rstrip(';\r\n').splitlines() )
+        self.module, self.interfacename, self.pluginname, self.name = \
+                self._parseline( line )
+        igen.useinterface(
+                self.module, self.interfacename, self.pluginname, self.name )
         NonTerminal.headpass2( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
@@ -781,17 +792,17 @@ class InterfaceBlock( NonTerminal ):
         return filter(None, x)
 
     def _parseline( self, line ):
-        interfacename, signature = line.strip().split(' ', 1)
-        interface, method = interfacename.rsplit('.', 1)
-        methodname = method.strip('( ')
+        interface, signature = line.strip().split(' ', 1)
         signature = '(' + signature
+        interfacename, method = interface.rsplit('.', 1)
+        methodname = method.strip('( ')
         funcline = 'def ' + methodname + signature
-        return interface, methodname, funcline
+        return interfacename, methodname, funcline
 
     def headpass1( self, igen ):
         line = ' '.join( self.INTERFACE.dump(None)[10:].splitlines() )
-        self.interface, self.methodname, self.funcline = self._parseline( line )
-        self.bubbleupaccum( 'interfaces', (self.interface, self.methodname) )
+        self.interfacename, self.methodname, self.funcline = self._parseline( line )
+        self.bubbleupaccum( 'interfaces', (self.interfacename, self.methodname) )
         NonTerminal.headpass1( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
@@ -1906,8 +1917,7 @@ class ExprsContents( NonTerminal ):
         contents = self.flatten()
         contents = filter( lambda x : not x.NEWLINES, contents )
         text = ''.join([ x.dump( Context() ) for x in contents ])
-        try    : text, filters = text.rsplit( self.FILTER_DELIMITER, 1 )
-        except : text, filters = text, ''
+        text, filters = ExprsContents.parseexprs( text )
         igen.evalexprs( text, filters=filters )
         return None
 
@@ -1922,6 +1932,12 @@ class ExprsContents( NonTerminal ):
 
     def flatten( self ) :
         return NonTerminal.flatten( self, 'exprs_contents', 'exprs_content' )
+
+    @classmethod
+    def parseexprs( cls, text ):
+        try    : text, filters = text.rsplit( cls.FILTER_DELIMITER, 1 )
+        except : text, filters = text, ''
+        return text, filters
 
 
 class ExprsContent( NonTerminal ):

@@ -41,7 +41,10 @@ setup(
     zip_safe=False,                         # setuptools
     entry_points={                          # setuptools
         'console_scripts' : [
-           'tayra = tayra.tyr:main'
+           'tayra = tayra.tyr:main',
+        ],
+        'tayra.ttlplugins' : [
+            'ITTLPlugin = tayra.ttl.plugins:TestPlugins',
         ],
     },
     install_requires=[                      # setuptools

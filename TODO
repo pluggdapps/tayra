@@ -14,6 +14,8 @@ Feature requests :
 * inlinetag, `contents` must include inline-tag elements.
 
 * Sandbox the execution environment for the templates.
+    implement interface. do isintance( <interface>, Interface ) to make sure it
+    is alright.
 
 * Optional configuration to ignore indentation output.
 
@@ -57,5 +59,5 @@ Feature requests :
 * @charset directive is pretty much a stale feature. Figure out how to use
   that, without compromising on ttlconfig['input_encoding']
 
-* html-entity-escaping in escape-filters
-
+* html-entity-escaping in escape-filters, should text-contents need escape
+  filtering as well ?

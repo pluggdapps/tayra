@@ -21,6 +21,7 @@ _ttlfile = %r
 """
 
 interfaceClass = """
+from  %s import %s
 class %s( object ):
   implements(%s)
 %s = %s()
@@ -156,33 +157,37 @@ class InstrGen( object ) :
         self.cr()
         self.outfd.write( '_m.inherit( %r, globals() )' % ttlloc, )
 
-    def importinterface( self, interface ):
-        self.putstatement( 'import %s' % interface )
-
     def implement_interface( self, implements, interfaces ):
         interfaces_ = {}
-        [ interfaces_.setdefault( ifname, [] ).append( method ) 
-          for ifname, method in interfaces ]
+        [ interfaces_.setdefault( ifname, [] ).append( methodname ) 
+          for ifname, methodname in interfaces ]
         # Define interface class, hitch the methods and register the plugin
         for i in range(len(implements)) :
             # Define interface implementer class
-            interface, pluginname = implements[i]
+            module, interfacename, pluginname = implements[i]
             infcls = 'Interface_' + str(i+1)
             infobj = '%s_obj' % infcls
-            codeblock = interfaceClass % ( infcls, interface, infobj, infcls )
+            codeblock = interfaceClass % (
+                module, interfacename, infcls, interfacename, infobj, infcls )
             self.putblock( codeblock )
             # hitch methods with interface class
-            for method in interfaces_.get( interface, [] ) :
+            for method in interfaces_.get( interfacename, [] ) :
                 line = '%s.%s = _m.hitch( %s, %s, %s )' % (
                             infobj, method, infobj, infcls, method )
                 self.putstatement( line )
             # register the interface providing object
-            line = '_m.register( %s_obj, %s, %r )' % ( infcls, interface,
+            line = '_m.register( %s_obj, %s, %r )' % ( infcls, interfacename,
                    pluginname )
             self.putstatement(line)
 
-    def useinterface( self, interface, pluginname, name ):
-        line = '%s = _m.use( %s, %r )' % ( name, interface, pluginname )
+    def useinterface( self, module, interfacename, pluginname, name ):
+        line = 'from  %s import %s' % ( module, interfacename )
+        self.putstatement(line)
+        if isinstance(pluginname, tuple) :
+            line = '%s = _m.use( %s, _m.evalexprs(%s, %r) )' % (
+                        name, interfacename, pluginname[0], pluginname[1] )
+        else :
+            line = '%s = _m.use( %s, %r )' % ( name, interfacename, pluginname )
         self.putstatement(line)
 
     def footer( self, ttlhash, ttlfile ):

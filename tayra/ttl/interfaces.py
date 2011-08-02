@@ -150,3 +150,11 @@ class ITTLPlugins( Interface ):
         """
         return []
 
+
+#---- This interface will be used for testing
+
+class ITestInterface( Interface ):
+
+    def render( *args, **kwargs ):
+        """Return renderable html-text"""
+

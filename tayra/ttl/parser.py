@@ -479,9 +479,13 @@ class TTLParser( object ):
         args = [ p[1], p[2], p[3] ] if len(p) == 4 else [ None, p[1], p[2] ]
         p[0] = Attributes( p.parser, *args )
 
-    def p_attr( self, p ) :
+    def p_attr_1( self, p ) :
+        """attr         : attrname ATOM"""
+        p[0] = Attr( p.parser, p[1], ATOM(p.parser, p[2]), None )
+
+    def p_attr_2( self, p ) :
         """attr         : attrname smartstring"""
-        p[0] = Attr( p.parser, p[1], p[2] )
+        p[0] = Attr( p.parser, p[1], None, p[2] )
 
     def p_attrname_1( self, p ) :
         """attrname     : ATOM EQUAL"""

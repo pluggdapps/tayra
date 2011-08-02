@@ -1521,14 +1521,17 @@ class Attributes( NonTerminal ):
 class Attr( NonTerminal ):
     """class to handle `attr` grammar."""
 
-    def __init__( self, parser, attrname, smartstring ) :
-        NonTerminal.__init__( self, parser, attrname, smartstring )
+    def __init__( self, parser, attrname, atom, smartstring ) :
+        NonTerminal.__init__( self, parser, attrname, atom, smartstring )
+        self._terms = (self.ATOM,) = (atom,)
+        self._terms = filter( None, self._terms )
         self._nonterms = self.attrname, self.smartstring = attrname, smartstring
+        self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        return self._nonterms
+        return filter( None, ( self.attrname, self.ATOM, self.smartstring ))
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):

@@ -3,19 +3,10 @@
 
 Feature requests :
 
-* @use directive should include ${...} expression evaluation syntax.
-
-* For attributes, the value, along with the "=" character, can be omitted
-  altogether if the value is the empty string, eg,
-    disabled, selected etc ...
-  In some cases the attribute values can be specified as an atom, like
-    disabled=disabled.
-
-* inlinetag, `contents` must include inline-tag elements.
-
 * Sandbox the execution environment for the templates.
     implement interface. do isintance( <interface>, Interface ) to make sure it
     is alright.
+    try __builtins__ = {}
 
 * Optional configuration to ignore indentation output.
 
@@ -61,3 +52,10 @@ Feature requests :
 
 * html-entity-escaping in escape-filters, should text-contents need escape
   filtering as well ?
+
+* For attributes, the value, along with the "=" character, can be omitted
+  altogether if the value is the empty string, eg,
+    disabled, selected etc ...
+  To be handled as specifier option.
+
+* Enable wiki text as `content` selectable as a tag's specifier.

@@ -21,8 +21,26 @@ from   tayra.ttl                import DEFAULT_ENCODING, queryTTLPlugin
 
 gsm = getGlobalSiteManager()
 
+class Attributes( dict ):
+    def __init__( self, *args, **kwargs ):
+        self.attrstext = kwargs.pop( '_attrstext', [] )
+        self.attrslist = kwargs.pop( '_attrslist', [] )
+        dict.__init__( self, *args, **kwargs )
+
+    def __str__( self ):
+        s = self.attrstext + ' '.join( 
+            self.attrslist + map( lambda x : '%s="%s"' % x, self.items() )
+        )
+        return s
+
+    def __repr__( self ):
+        return '%s' % self.__str__()
+
 class StackMachine( object ) :
     DEFAULT_TAGS = [ 'html', 'customhtml', 'forms' ]
+
+    Attributes = Attributes
+
     def __init__( self,
                   ifile,
                   compiler,
@@ -37,7 +55,6 @@ class StackMachine( object ) :
         self.compiler = compiler
         self.encoding = self.ttlconfig.get( 'input_encoding', DEFAULT_ENCODING )
         self.htmlindent = ''
-        self.emptystring = ''
 
     _cache_taghandlers = {}
     def _buildtaghandlers( self, usetagplugins ):
@@ -97,24 +114,14 @@ class StackMachine( object ) :
 
     def popbuftext( self ) :
         buf = self.popbuf()
-        return self.emptystring.join( buf )
+        return ''.join( buf )
 
-    def handletag( self, contents, tag, indent=False, newline='' ):
+    def handletag( self, contents, tag, indent=False, nl='' ):
         """Entry point to handle tags"""
-        tagname, specifiers, style, attrs, tagfinish = tag
-        # Compute and push tag element
-        tagnm = tagname.strip(' \t\r\n')[1:]
-        tagplugin = self.tagplugins.get( tagnm, self.tagplugins['_default'] )
+        tagplugin = self.tagplugins.get( tag[0], self.tagplugins['_default'] )
         self.append(
-            tagplugin.handle( tagname, specifiers, style, attrs, tagfinish )
+            tagplugin.handle( self, tag, contents, indent=indent, newline=nl )
         )
-        # Just push tag content
-        self.append( ''.join(contents) )
-        # Close tag
-        tail = self.htmlindent if indent else ''
-        tail += ('</%s>'%tagnm).decode( self.encoding )
-        tail += newline
-        self.append( tail )
 
     def evalexprs( self, val, filters ) :
         filters = [ f.strip().split('.',1) for f in filters.split(',') if f ]
@@ -189,3 +196,4 @@ class Namespace( object ):
         while parnm : nm, parnm = parnm, parnm._parentnm
         nm._parentnm = parentnm
         return parentnm
+

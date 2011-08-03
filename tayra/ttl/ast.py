@@ -1466,19 +1466,9 @@ class Tag( NonTerminal ):
             self.pruneinner, self.pruneindent = self.TAGCLOSE.checkprune()
 
     def generate( self, igen, *args, **kwargs ):
-        self.TAGOPEN.generate(igen, *args, **kwargs)
-        items = [ (self.specifiers,True), (self.style,True),
-                  (self.attributes,False) ]
-        for item, astext in items :
-            if item :
-                compute = lambda : item.generate(igen, *args, **kwargs)
-                self.stackcompute( igen, compute, astext=astext )
-            else :
-                igen.puttext( '' )
+        # Will be handled by the TagPlugin and its derivatives.
+        pass
 
-        self.TAGEND and self.TAGEND.generate(igen, *args, **kwargs)
-        self.TAGCLOSE and self.TAGCLOSE.generate(igen, *args, **kwargs)
-        
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         lead = ' ' * offset
@@ -1523,7 +1513,13 @@ class Attributes( NonTerminal ):
     def flatten( self ) :
         return NonTerminal.flatten( self, 'attributes', 'attribute' )
 
+    def has_exprs( self ) :
+        return any([ x.has_exprs() for x in self.flatten() ])
 
+    attrslist = property(
+        lambda self : None if self.has_exprs() else [ 
+                           x.dump(None) for x in self.flatten() ]
+    )
 
 class Attr( NonTerminal ):
     """class to handle `attr` grammar."""
@@ -1548,6 +1544,10 @@ class Attr( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    def has_exprs( self ) :
+        return self.attrname.has_exprs() or \
+               ( self.smartstring and self.smartstring.has_exprs() )
 
 
 class AttrName( NonTerminal ):
@@ -1574,6 +1574,8 @@ class AttrName( NonTerminal ):
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
 
+    def has_exprs( self ) :
+        return self.exprs and self.exprs.has_exprs() or False
 
 #---- Common ASTs
 
@@ -1605,14 +1607,20 @@ class Contents( NonTerminal ):
     def flatten( self ) :
         return NonTerminal.flatten( self, 'contents', 'content' )
 
+    def has_exprs( self ) :
+        return any([ x.has_exprs() for x in self.flatten() ])
+
+    conttext = property(
+        lambda self : None if self.has_exprs() else self.dump( None )
+    )
 
 class Content( NonTerminal ):
     """class to handle `content` grammar."""
 
-    def __init__( self, parser, term, exprs ) :
-        NonTerminal.__init__( self, parser, term, exprs )
+    def __init__( self, parser, term, nonterm ) :
+        NonTerminal.__init__( self, parser, term, nonterm )
         self._terms = (self.TERMINAL,) = (term,)
-        self._nonterms = (self.exprs,) = (exprs,)
+        self._nonterms = (self.nonterm,) = (nonterm,)
         self._terms = filter( None, self._terms )
         self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
@@ -1629,6 +1637,10 @@ class Content( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    def has_exprs( self ) :
+        fn = getattr( self.nonterm, 'has_exprs', False )
+        return fn and fn() or False
 
 #---- Specifiers
 
@@ -1658,6 +1670,13 @@ class Specifiers( NonTerminal ):
     def flatten( self ) :
         return NonTerminal.flatten( self, 'specifiers', 'specifier' )
 
+    def has_exprs( self ) :
+        return any([ x.has_exprs() for x in self.flatten() ])
+
+    spectext = property(
+        lambda self : None if self.has_exprs() else self.dump( None )
+    )
+
 
 class Specifier( NonTerminal ):
     """class to handle `specifier` grammar."""
@@ -1681,6 +1700,9 @@ class Specifier( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    def has_exprs( self ) :
+        return self.nonterm and self.nonterm.has_exprs() or False
 
 #---- SmartString
 
@@ -1715,6 +1737,9 @@ class SmartString( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    def has_exprs( self ) :
+        return self.strcontents and self.strcontents.has_exprs() or False
 
 
 class StrContents( NonTerminal ):
@@ -1753,6 +1778,9 @@ class StrContents( NonTerminal ):
     def flatten( self ) :
         return NonTerminal.flatten( self, 'strcontents', 'strcontent' )
 
+    def has_exprs( self ) :
+        return any([ x.has_exprs() for x in self.flatten() ])
+
 
 class StrContent( NonTerminal ):
     """class to handle `strcontent` grammar."""
@@ -1777,6 +1805,10 @@ class StrContent( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    def has_exprs( self ) :
+        fn = getattr( self.nonterm, 'has_exprs', False )
+        return fn and fn() or False
 
 #---- Style
 
@@ -1809,6 +1841,13 @@ class Style( NonTerminal ):
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
 
+    def has_exprs( self ):
+        return self.stylecontents and self.stylecontents.has_exprs() or False
+
+    styletext = property(
+        lambda self : None if self.has_exprs() or self.stylecontents==None \
+                           else self.stylecontents.dump(None)
+    )
 
 class StyleContents( NonTerminal ):
     """class to handle `stylecontents` grammar."""
@@ -1848,6 +1887,9 @@ class StyleContents( NonTerminal ):
     def flatten( self ) :
         return NonTerminal.flatten( self, 'stylecontents', 'stylecontent' )
 
+    def has_exprs( self ) :
+        return any([ x.has_exprs() for x in self.flatten() ])
+
 
 class StyleContent( NonTerminal ):
     """class to handle `stylecontent` grammar."""
@@ -1873,6 +1915,9 @@ class StyleContent( NonTerminal ):
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+
+    def has_exprs( self ) :
+        return self.exprs and self.exprs.has_exprs() or False
 
 
 #---- Expression substitution
@@ -1906,6 +1951,8 @@ class Exprs( NonTerminal ):
         buf.write('\n')
         [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
 
+    def has_exprs( self ) :
+        return True
 
 class ExprsContents( NonTerminal ):
     """class to handle `exprs_contents` grammar."""

@@ -99,10 +99,15 @@ class InstrGen( object ) :
             self.outfd.write( '_m.extend( %s )' % self.optimaltext )
             self.optimaltext = []
 
-    def puttext( self, text, force=False ) :
+    def puttext( self, text, force=False ):
         self.optimaltext.append( text )
-        if force or sum(map( lambda x : len(x), self.optimaltext)) > 100 :
+        if force :
             self.flushtext()
+
+    def putattrs( self, attrstext ):
+        self.flushtext()
+        self.cr()
+        self.outfd.write( '_m.append( _m.Attributes( _attrstext=%r ))' % attrstext )
 
     def putstatement( self, stmt ):
         self.flushtext()
@@ -143,7 +148,7 @@ class InstrGen( object ) :
         self.cr()
         # first arg is `content` and second arg is `tag`
         self.outfd.write(
-            '_m.handletag( _m.popbuf(), _m.popbuf(), indent=%s, newline=%r )'%(
+            '_m.handletag( _m.popbuf(), _m.popbuf(), indent=%s, nl=%r )'%(
                 indent, newline
             )
         )

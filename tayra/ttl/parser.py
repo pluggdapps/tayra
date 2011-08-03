@@ -637,22 +637,17 @@ class TTLParser( object ):
         terms = [ (NEWLINES,1), None, None, None ]
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
 
-    #def p_style_content_2( self, p ) :
-    #    """style_content    : S"""
-    #    terms = [ None, (S,1), None, None ]
-    #    p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
-
-    def p_style_content_3( self, p ) :
+    def p_style_content_2( self, p ) :
         """style_content    : TEXT"""
         terms = [ None, None, (TEXT,1), None ]
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
                         
-    def p_style_content_4( self, p ) :
+    def p_style_content_3( self, p ) :
         """style_content    : SPECIALCHARS"""
         terms = [ None, None, (SPECIALCHARS,1), None ]
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )
                         
-    def p_style_content_5( self, p ) :
+    def p_style_content_4( self, p ) :
         """style_content    : exprs"""
         terms = [ None, None, None, p[1] ]
         p[0] = StyleContent( p.parser, *self._buildterms(p, terms) )

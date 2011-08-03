@@ -3,15 +3,6 @@
 
 Feature requests :
 
-* Nested functions should remain nested !
-
-* Micro-templating similar to mako. This will demonstrate the true power of
-  StackMachine based design.
-
-* find out an inheritable way for generic tag handling parts. Especially
-  composing tags during compile time and thus avoiding handletag() during
-  run-time.
-
 * Automatically detect the user-agent compatibility level with html and
   generate elements in confirmance to it. This must play safe with the
   following knobs,
@@ -55,3 +46,8 @@ Feature requests :
     <div etx> **hello** world
 
 * making `devmod` as False seems to have degrading effect on performance.
+
+* Micro-templating similar to mako. This will demonstrate the true power of
+  StackMachine based design.
+  This requires a change in the filter-block syntax and symantics. It would be
+  better if it is possible to parse the filter-block as signature + siblings.

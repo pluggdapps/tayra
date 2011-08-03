@@ -17,5 +17,5 @@
     @if list_items :
       <ul>
         @for i, list_item in enumerate(list_items) :
-          <li ${i+1==len(list_items) and "class='last'" or ""}> ${list_item}
+          <li class="${i+1==len(list_items) and 'last' or ''}"> ${list_item}
     ${ footer.body() }

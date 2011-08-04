@@ -2,6 +2,7 @@ from   zope.component       import getGlobalSiteManager
 from   zope.interface       import implements
 
 from   tayra.ttl.tags       import TagPlugin
+from   tayra.ttl.interfaces import ITayraTag
 
 gsm = getGlobalSiteManager()
 
@@ -347,8 +348,8 @@ class HtmlMeter( TagPlugin ):
             except :
                 pass
             value = atom
-        defattrs += ' value="%s"' % value if value else None
-    return defattrs, []
+        defattrs += ' value="%s"' % value if value else ''
+        return defattrs, []
 
 
 class HtmlObject( TagPlugin ):
@@ -416,3 +417,99 @@ class HtmlOutput( TagPlugin ):
             except:
                 pass
         return defattrs, []
+
+
+class HtmlParam( TagPlugin ):
+    tagname='param'
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        defattrs += ' value="%s"' % atoms[0] if atoms else None
+        return defattrs, []
+
+    def specstrings2attrs( self, strings ):
+        return 'value=%s' % strings[0]
+
+
+class HtmlProgress( TagPlugin ):
+    tagname = 'progress'
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        if atoms :
+            try : defattrs += ' max="%s" value="%s"' % atoms.split(',')
+            except : pass
+        return defattrs, []
+
+class HtmlQ( TagPlugin ):
+    tagname = 'q'
+    def specstrings2attrs( self, strings ):
+        return 'cite=%s' % strings[0]
+
+
+class HtmlScript( TagPlugin ):
+    tagname = 'script'
+    atom2attr = {
+        'async' : ' async="async"',
+        'defer' : ' defer="defer"',
+    }
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        type_ = None
+        for atom in atoms :
+            x = self.atom2attr.get( atom, '' )
+            if x :
+                defattrs += x
+                continue
+            else :
+                type_ = atom
+        defattrs += ' type="%s"' % type_ if type_ else ''
+        return defattrs, []
+
+    def specstrings2attrs( self, strings ):
+        return 'src=%s' % strings[0]
+
+
+class HtmlSource( TagPlugin ):
+    tagname = 'source'
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        defattrs += ' type=%s"' % atoms[0] if atoms else ''
+        return defattrs, []
+
+    def specstrings2attrs( self, strings ):
+        return 'src=%s' % strings[0]
+
+
+class HtmlStyle( TagPlugin ):
+    tagname = 'style'
+    atom2attr = {
+        'text/css' : ' type="text/css"',
+        'scoped'   : ' scoped="scoped"',
+    }
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        for atom in atoms :
+            defattrs += self.atom2attr.get( atom, '')
+        return defattrs, []
+
+
+class HtmlTable( TagPlugin ):
+    tagname = 'table'
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        defattrs += ' border="1"' % atoms[0] if atoms else ''
+        return defattrs, []
+
+
+class HtmlTime( TagPlugin ):
+    tagname = 'time'
+    def specatoms2attrs( self, atoms ):
+        defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
+        defattrs += ' pubdate="%s"' % atoms[0] if atom else ''
+        return defattrs, []
+
+    def specstrings2attrs( self, strings ):
+        return 'datetime=%s' % strings[0]
+
+for k,cls in globals().items() :
+    if k.startswith( 'Html' ) :
+        gsm.registerUtility( cls(), ITayraTag, cls.tagname )

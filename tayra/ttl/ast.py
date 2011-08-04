@@ -1461,7 +1461,7 @@ class Tag( NonTerminal ):
 
     def headpass1( self, igen ):
         if self.TAGOPEN :
-            self.pruneouter = self.TAGOPEN.checkprune()
+            self.pruneouter, self.pruneindent = self.TAGOPEN.checkprune()
         if self.TAGCLOSE :
             self.pruneinner, self.pruneindent = self.TAGCLOSE.checkprune()
 
@@ -2209,7 +2209,7 @@ class TAGOPEN( Terminal ):
         self.pruneouter = tagopen[1] == TTLLexer.prunews
         if self.pruneouter :
             self.terminal = tagopen[0] + tagopen[2:]
-        return self.pruneouter
+        return self.pruneouter, None
 
     def _tagname( self ):
         from  tayra.ttl.lexer import TTLLexer
@@ -2227,7 +2227,7 @@ class TAGCLOSE( Terminal ) :
         self.pruneindent = TTLLexer.pruneindent in tagclose
         if self.pruneinner or self.pruneindent :
             self.terminal = re.sub( r'[!%]', '', tagclose )
-        return (self.pruneinner, self.pruneindent)
+        return self.pruneinner, self.pruneindent
 
 class OPENEXPRS( Terminal ) : pass
 class EQUAL( Terminal ) : pass

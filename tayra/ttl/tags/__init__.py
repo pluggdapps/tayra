@@ -153,10 +153,10 @@ class TagPlugin( object ):
 
     def handle_specifiers( self, spectext ):
         if spectext :
-            id_, classes, strings, atoms = self.parsespecifiers( spectext )
+            attr, strings, atoms = self.parsespecifiers( spectext )
             str2attrs = self.specstrings2attrs(strings) if strings else ''
-            atom2attrs, leftover = self.specatoms2attrs(atoms) if atoms else '', []
-            return ' ' + ' '.join(filter(None, [ id_, classes, str2attrs, atom2attrs ]))
+            atom2attrs, leftover = self.specatoms2attrs(atoms) if atoms else ('', [])
+            return ' ' + ' '.join(filter(None, [ attr, str2attrs, atom2attrs ]))
         else :
             return ''
 
@@ -176,28 +176,31 @@ class TagPlugin( object ):
     parseexp = re.compile(
         r'(\'[^\']+\'%s)|(\"[^"]+\"%s)|([^" \t\r\n\']+%s)' % (ws,ws,ws)
     )
+    skipchar = '" \t\r\n\'#\.:'
+    primespec = re.compile(
+            r'(\#[^%s]+)|(\.[^%s]+)|(:[^%s]+)' % (skipchar,skipchar,skipchar)
+    )
     def parsespecifiers( self, spectext ):
         parsed = self.parseexp.findall( spectext )
         idclass = parsed and parsed[0][-1]
-        if idclass and idclass[0] == '#' :
-            parts = idclass.split('.')
-            if len(parts) > 1 :
-                id_, classes = parts[0], ' '.join( parts[1:] )
-            else :
-                id_, classes = parts[0], ''
+        attr = []
+        if idclass and idclass[0] in '#.:' :
             parsed.pop(0)
-        elif idclass and idclass[0] == '.' :
-            id_, classes = '', idclass[1:].replace('.', ' ')
-            parsed.pop(0)
-        else :
-            id_ = classes = ''
-
-        id_ = 'id="%s"' % id_[1:] if id_ else ''
-        classes = 'class="%s"' % classes if classes else ''
+            primespecs = self.primespec.findall( idclass )
+            ids, classes, name = [], [], []
+            for id_, cls, nm in primespecs :
+                id_ and ids.append(id_) 
+                cls and classes.append(cls)
+                nm and name.append(nm)
+            attr.append( 'id="%s"' % ids[0][1:] if ids else '' )
+            attr.append(
+                'class="%s"' % ''.join(classes)[1:].replace('.',' ') if classes else ''
+            )
+            attr.append( 'name="%s"' % name[0][1:] if name else '' )
 
         strings = filter( None, reduce( lambda x, t : x + list(t[:2]), parsed, [] ))
         atoms   = filter( None, map( lambda t : t[2], parsed ))
-        return id_, classes, strings, atoms
+        return ' '.join(attr), strings, atoms
 
     atom2attr = {
       # global attributes
@@ -222,7 +225,7 @@ class TagPlugin( object ):
       'defer'   : 'defer="defer"',
     }
     def specatoms2attrs( self, atoms ):
-        leftover, attrs = [], []
+        attrs, leftover = [], []
         for atom in atoms :
             if atom.startswith( 'key:' ):
                 attr = 'accesskey="%s"' % atom.split(':', 1)[1]
@@ -231,7 +234,7 @@ class TagPlugin( object ):
             else :
                 attr = self.atom2attr.get( atom, None )
             attrs.append(attr) if attr != None else leftover.append(atom)
-        return ' '.join( attr ), leftover
+        return (' '.join(attrs), leftover)
 
     def specstrings2attrs( self, strings ):
         return ' '.join(filter( None, strings ))

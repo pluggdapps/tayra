@@ -1,2 +1,2 @@
-<div#header.class1.class2>
+<div#header.class1.class2:name>
   <h1> ${title}

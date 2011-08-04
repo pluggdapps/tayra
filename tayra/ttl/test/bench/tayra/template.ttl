@@ -17,5 +17,126 @@
     @if list_items :
       <ul>
         @for i, list_item in enumerate(list_items) :
-          <li class="${i+1==len(list_items) and 'last' or ''}"> ${list_item}
+          <li ${i+1==len(list_items) and "class='last'" or ""}> ${list_item}
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
+    <video width="320" height="240" controls="controls">
+      <source src="movie.ogg" type="video/ogg" />
+      <source src="movie.mp4" type="video/mp4" />
+      <source src="movie.webm" type="video/webm" />
+        Your browser does not support the video tag.
+
     ${ footer.body() }

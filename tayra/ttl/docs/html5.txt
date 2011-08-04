@@ -1,0 +1,90 @@
+Global attributes:
+  accesskey, class, dir, id, lang, style, title, tabindex, 
+  contenteditable, contextmenu, draggable, dropzone, hidden, spellcheck
+
+Attributes in tags:
+
+alt             : area, img, input
+accept          : input
+accept-charset  : form
+autoplay        : audio
+checked         : command, input
+cite            : blockquote, del, ins
+controls        : audio
+coords          : area
+disabled        : button, command, fieldset, input, optgroup, option
+datetime        : del, ins
+data            : object
+height          : canvas, embed, iframe, img, input, object
+href            : a, area, link
+hreflang        : a, area, link
+icon            : command
+label           : command, menu, optgroup, option
+loop            : audio
+media           : a, area, link
+manifest        : html
+name            : map
+open            : details
+preload         : audio
+radiogroup      : command
+reversed        : ol
+rel             : a, area, link
+sizes           : link
+shape           : area
+span            : col, colgroup
+src             : audio, embed, iframe, img, input
+srcdoc          : iframe
+start           : ol
+sandbox         : iframe
+seamless        : iframe
+selected        : option
+target          : a, area
+type            : a, area, button, command, embed, input, link, menu, object, ol
+value           : li
+width           : canvas, embed, iframe, img, input, object
+
+charset         : meta
+content         : meta
+http-equiv      : meta
+xmlns           : html
+
+(forms-attributes)
+
+autocomplete        : form, input
+autofocus           : button, input
+(form)action        : button, form, input
+for                 : label, output
+form                : button, fieldset, input, label, meter, object, output
+(form)enctype       : button, form, input
+(form)method        : button, form, input
+(form)novalidate    : button, form, input
+(form)target        : button, form, input
+list                : input
+min,max             : input, meter
+high,low,optimum    : meter
+maxlength           : input
+multiple            : input
+name                : button, fieldset, form, iframe, input, object, output
+pattern             : input
+placeholder         : input
+readonly            : input
+required            : input
+size                : input
+step                : input
+value               : button, input, meter, option
+
+Gobal attributes not in:
+  base
+
+Events attributes not in:
+  base, head, html
+
+FAQ :
+
+* How does 'hidden' attribute play with CSS properties, 'display' and
+  'visibility' ?
+
+* What is <keygen> element ?
+
+* What are the elements that invoke a browser plugin ?
+    <object>, <embed>

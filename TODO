@@ -3,6 +3,8 @@
 
 Feature requests :
 
+* Syntax to break the text.
+
 * Automatically detect the user-agent compatibility level with html and
   generate elements in confirmance to it. This must play safe with the
   following knobs,

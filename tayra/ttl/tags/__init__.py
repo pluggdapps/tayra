@@ -154,8 +154,8 @@ class TagPlugin( object ):
     def handle_specifiers( self, spectext ):
         if spectext :
             id_, classes, strings, atoms = self.parsespecifiers( spectext )
-            str2attrs = self.specstrings2attrs( strings )
-            atom2attrs = self.specatoms2attrs( atoms )
+            str2attrs = self.specstrings2attrs(strings) if strings else ''
+            atom2attrs, leftover = self.specatoms2attrs(atoms) if atoms else '', []
             return ' ' + ' '.join(filter(None, [ id_, classes, str2attrs, atom2attrs ]))
         else :
             return ''
@@ -171,9 +171,6 @@ class TagPlugin( object ):
 
     def handle_tagclose( self, tagnm ):
         return  '</%s>'%tagnm
-
-    def specstrings2attrs( self, strings ):
-        return ' '.join(filter( None, strings ))
 
     ws = r'[ \r\n\t]*'
     parseexp = re.compile(
@@ -213,26 +210,9 @@ class TagPlugin( object ):
       'hidden'       : 'hidden',
       'spellcheck'   : 'spellcheck="true',
       'nospellcheck' : 'spellcheck="false',
-      # encoding type
-      'application/x-www-form-urlencoded': 'enctype="application/x-www-form-urlencoded"',
-      'multipart/form-data': 'enctype="multipart/form-data"',
-      'text/plain': 'enctype="text/plain"',
-      # shape
-      'default' : 'shape="default"',
-      'rect'    : 'shape="rect"',
-      'circle'  : 'shape="circle"',
-      'poly'    : 'shape="poly"',
       # dir
-      'ltr'     : 'shape="ltr"',
-      'rtl'     : 'shape="rtl"',
-      # target
-      '_blank'  : 'target="_blank"',
-      '_self'   : 'target="_self"',
-      '_parent' : 'target="_parent"',
-      '_top'    : 'target="_top"',
-      # method
-      'get'     : 'method="get"',
-      'post'    : 'method="post"',
+      'ltr'     : 'dir="ltr"',
+      'rtl'     : 'dir="rtl"',
       # atoms
       'disabled': 'disabled="disabled"',
       'checked' : 'checked="checked"',
@@ -243,14 +223,17 @@ class TagPlugin( object ):
     }
     def specatoms2attrs( self, atoms ):
         leftover, attrs = [], []
-        for token in atoms :
-            if token.startswith( 'key:' ):
-                attr = 'accesskey="%s"' % token.split(':', 1)[1]
-            if token.startswith( 'tab:' ):
-                attr = 'tabindex="%s"' % token.split(':', 1)[1]
+        for atom in atoms :
+            if atom.startswith( 'key:' ):
+                attr = 'accesskey="%s"' % atom.split(':', 1)[1]
+            elif atom.startswith( 'tab:' ):
+                attr = 'tabindex="%s"' % atom.split(':', 1)[1]
             else :
-                attr = self.atom2attr.get( token, None )
-            attrs.append( attr ) if attr != None else leftover.append( token )
-        return ' '.join(filter( None, attrs + leftover ))
+                attr = self.atom2attr.get( atom, None )
+            attrs.append(attr) if attr != None else leftover.append(atom)
+        return ' '.join( attr ), leftover
+
+    def specstrings2attrs( self, strings ):
+        return ' '.join(filter( None, strings ))
 
 gsm.registerUtility( TagPlugin(), ITayraTag, '_default' )

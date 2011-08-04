@@ -5,6 +5,14 @@ Feature requests :
 
 * Syntax to break the text.
 
+* ITayraTag plugin registration using namespace like,
+    html
+    html.jq
+    html.form
+    html.form.jq
+
+-----
+
 * Automatically detect the user-agent compatibility level with html and
   generate elements in confirmance to it. This must play safe with the
   following knobs,

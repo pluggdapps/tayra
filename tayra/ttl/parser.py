@@ -10,7 +10,7 @@
 # Notes  :
 # Todo   : 
 
-import logging, re, sys, copy
+import logging, re, sys, copy, codecs
 from   types                import StringType
 from   os.path              import splitext, dirname
 from   hashlib              import sha1
@@ -770,10 +770,9 @@ class Coord( object ):
 if __name__ == "__main__":
     import pprint, time
     
-    text   = open(sys.argv[1]).read() if len(sys.argv) > 1 else "hello" 
-    parser = TTLParser(
-                lex_optimize=True, yacc_debug=True, yacc_optimize=False
-             )
+    text   = codecs.open( sys.argv[1], encoding='utf-8' 
+             ).read() if len(sys.argv) > 1 else "hello" 
+    parser = TTLParser( lex_optimize=True, yacc_debug=True, yacc_optimize=False )
     t1     = time.time()
     # set debuglevel to 2 for debugging
     t = parser.parse( text, 'x.c', debuglevel=2 )

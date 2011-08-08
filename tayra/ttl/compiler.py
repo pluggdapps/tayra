@@ -1,4 +1,4 @@
-import imp, os, stat, posixpath, re, codecs
+import imp, os, codecs
 from   os.path                  import isfile, isdir, abspath, basename, \
                                        join, dirname
 from   hashlib                  import sha1
@@ -7,21 +7,7 @@ from   StringIO                 import StringIO
 from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
-from   tayra.ttl                import DEFAULT_ENCODING
 
-"""
-: ttlconfig ::
-    memcache
-        boolean, to cache ttl code objects in memory
-    directories 
-        a list of directories to look for .ttl files
-    module_directory 
-        cache directory to store the .py intermediate files
-    devmod 
-        boolean, to enable development mode.
-    plugin_packages 
-        a comma seperated list of packages to import for loading plugins.
-"""
 
 class Compiler( object ):
     _memcache = {}
@@ -90,7 +76,9 @@ class Compiler( object ):
         if code == None and pyfile and pytext :
             code = compile( pytext, pyfile, 'exec')
         elif code == None and pyfile :
-            pytext = codecs.open( pyfile, encoding=DEFAULT_ENCODING ).read()
+            pytext = codecs.open(
+                        pyfile, encoding=self.ttlconfig['input_encoding'] 
+                     ).read()
             code = compile( pytext, pyfile, 'exec')
         elif code == None :
             pytext = self.topy()
@@ -131,7 +119,7 @@ class Compiler( object ):
 
 class TemplateLookup( object ) :
     TTLCONFIG = [
-        ('directories', []),
+        ('directories', ''),
         ('module_directory',None),
         ('devmod', True)
     ]
@@ -140,19 +128,25 @@ class TemplateLookup( object ) :
           for k, default in self.TTLCONFIG ]
         self.ttlconfig = ttlconfig
         self.ttlloc = os.sep.join(ttlloc) if hasattr(ttlloc, '__iter__') else ttlloc
-        self.directories = [ d.rstrip(' \t/') for d in self.directories ]
+        self.directories = [ d.rstrip(' \t/') for d in self.directories.split(',') ]
         self.ttlfile = self._locatettl()
         self.pyfile, self.pytext = self._locatepy()
         self.pytext = self.pytext or (
                         self.pyfile and \
-                        codecs.open( self.pyfile, encoding=DEFAULT_ENCODING ).read()
+                        codecs.open( 
+                            self.pyfile, encoding=ttconfig['input_encoding']
+                        ).read()
                       )
 
     def _locatettl( self ):
         uri = self.ttlloc
-        # If uri is simple absoulte path
-        if isfile( abspath( uri )) :
-            return uri
+
+        # If uri is relative to one of the template directories
+        files = filter(
+            lambda f : isfile(f), [ join(d, uri) for d in self.directories ]
+        )
+        if files : return files[0]
+
         # If uri is provided in asset specification format
         try :
             mod, loc = uri.split(':', 1)
@@ -161,14 +155,8 @@ class TemplateLookup( object ) :
             return ttlfile
         except :
             return None
-        # If uri is relative to one of the template directories
-        files = filter(
-            lambda f : isfile(f), [ join(d, uri) for d in self.directories ]
-        )
-        if files :
-            files[0]
-        else :
-            raise Exception( 'Error locating TTL file %r' % uri )
+
+        raise Exception( 'Error locating TTL file %r' % uri )
 
     def _locatepy( self ):
         pyfile = self.computepyfile()
@@ -176,7 +164,9 @@ class TemplateLookup( object ) :
         if self.devmod :
             return None, None
         elif pyfile and isfile(pyfile) :
-            return pyfile, codecs.open(pyfile, encoding=DEFAULT_ENCODING).read()
+            return pyfile, codecs.open( 
+                                pyfile, encoding=self.ttlconfig['input_encoding']
+                           ).read()
         else :
             return None, None
 
@@ -194,7 +184,8 @@ class TemplateLookup( object ) :
             d = dirname(pyfile)
             if not isdir(d) :
                 os.makedirs(d)
-            codecs.open( pyfile, mode='w', encoding=DEFAULT_ENCODING ).write( pytext )
+            codecs.open( pyfile, mode='w', encoding=self.ttlconfig['input_encoding']
+                       ).write( pytext )
             return len(pytext)
         return None
 

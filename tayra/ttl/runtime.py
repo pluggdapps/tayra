@@ -4,13 +4,13 @@
 
 # -*- coding: utf-8 -*-
 
-import imp, re
+import re
 from   StringIO                 import StringIO
 from   os.path                  import basename
 
 from   zope.component           import getGlobalSiteManager
 
-from   tayra.ttl                import DEFAULT_ENCODING, queryTTLPlugin
+from   tayra.ttl                import queryTTLPlugin
 
 # Note :
 # Special variables that the context should not mess with,
@@ -48,12 +48,16 @@ class StackMachine( object ) :
                 ):
         self.escfilters = ttlconfig.get( 'escfilters', {} )
         self.tagplugins = ttlconfig.get( 'tagplugins', {} )
+        self.def_escfilters = [
+            f.strip().split('.',1)
+            for f in ttlconfig['escape_filters'].split(',') if f
+        ]
         self.ttlconfig = ttlconfig
 
         self.bufstack = [ [] ]
         self.ifile = ifile
         self.compiler = compiler
-        self.encoding = self.ttlconfig.get( 'input_encoding', DEFAULT_ENCODING )
+        self.encoding = self.ttlconfig['input_encoding']
         self.htmlindent = ''
 
     _cache_taghandlers = {}
@@ -124,16 +128,12 @@ class StackMachine( object ) :
         )
 
     def evalexprs( self, val, filters ) :
-        filters = [ f.strip().split('.',1) for f in filters.split(',') if f ]
-        unins = filters.pop(0) if filters and filters[0][0] == 'uni' else None
+        filters = self.def_escfilters + \
+                  [ f.strip().split('.',1) for f in filters.split(',') if f ]
         skip  = filters.pop(0) if filters and filters[0][0] == 'n' else None
-        # Default filters
-        if skip == None :
-            text = self.escfilters['uni']( self, val, unins )
-        else :
+        if skip == None :   # No filtering
             text = val
-        # Pluggable filters
-        if filters and skip == None :
+        elif filters :      # Pluggable filters
             for filt in filters :
                 text = self.escfilters.get( filt[0], None )( self, text, filt )
         return text

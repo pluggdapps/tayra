@@ -12,11 +12,11 @@
 # Notes  :
 # Todo   :
 #   1. There is a dirty thing going on in this lexer rules, we find that there
-#   are several tokens with consume a trailing newline sequence. Ideally
+#   are several tokens which consume a trailing newline sequence. Ideally
 #   newlines should be parsed as a separate token.
 
 
-import re, sys, logging
+import re, sys, logging, codecs
 
 import ply.lex
 from   ply.lex          import TOKEN, LexToken
@@ -124,7 +124,7 @@ class TTLLexer( object ) :
         calling lex.lex inside __init__"""
         self.lexer = ply.lex.lex(
                         module=self,
-                        reflags=re.MULTILINE | re.UNICODE | re.IGNORECASE,
+                        reflags=re.MULTILINE | re.UNICODE,
                         **kwargs
                      )
 
@@ -641,7 +641,7 @@ if __name__ == "__main__":
             print "Lexing file %r ..." % f
             ttllex = TTLLexer( errfoo, filename=f )
             ttllex.build()
-            ttllex.input( open(f).read() )
+            ttllex.input( codecs.open(f, encoding='utf-8').read() )
             tok = _fetchtoken( ttllex, stats )
             while tok :
                 tok = _fetchtoken( ttllex, stats )

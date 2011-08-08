@@ -63,10 +63,6 @@ class Node( object ):
         """Post-processing phase 1, useful to implement multi-pass compilers"""
         [ x.tailpass( igen ) for x in self.children() ]
 
-    def execute( self, context ):
-        """Execute the generated code to get HTML output"""
-        pass
-
     def lstrip( self, chars ):
         """Strip the leftmost chars from the Terminal nodes. Each terminal node
         must return the remaining the characters.
@@ -209,7 +205,6 @@ class Terminal( Node ) :
         lead = ' ' * offset
         buf.write(lead + '<%s>: %r' % (self.__class__.__name__, self.terminal))
         buf.write('\n')
-
 
 
 class NonTerminal( Node ):      # Non-terminal

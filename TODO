@@ -61,3 +61,5 @@ Feature requests :
   StackMachine based design.
   This requires a change in the filter-block syntax and symantics. It would be
   better if it is possible to parse the filter-block as signature + siblings.
+
+* Find a way to pass the body arguments programmatically via Renderer()

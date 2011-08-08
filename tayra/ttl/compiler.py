@@ -13,7 +13,8 @@ class Compiler( object ):
     _memcache = {}
 
     def __init__( self,
-                  ttllookup,
+                  ttlloc=None,
+                  ttltext=None,
                   # Template options
                   ttlconfig={},
                   # TTLParser options
@@ -21,23 +22,28 @@ class Compiler( object ):
                   # InstrGen options
                   igen=None,
                 ):
-        self.ttlconfig = ttlconfig
-        # Lookup files
-        self.ttllookup = ttllookup if isinstance( ttllookup, TemplateLookup ) \
-                         else TemplateLookup( ttllookup, self.ttlconfig )
-        self.ttlfile = self.ttllookup.ttlfile
+        # Source TTL
+        if isinstance( ttlloc, TemplateLookup ) :
+            self.ttllookup = ttlloc
+        elif ttlloc or ttltext :
+            self.ttllookup = TemplateLookup(
+                ttlloc=ttlloc, ttltext=ttltext, ttlconfig=ttlconfig
+            )
+        else :
+            raise Exception( 'To compile, provide a valid ttl source' )
+        self.ttlfile, self.ttltext = self.ttllookup.ttlfile, self.ttllookup.ttltext
         self.pyfile, self.pytext = self.ttllookup.pyfile, self.ttllookup.pytext
-        self.ttltext = None
+        self.ttlconfig = ttlconfig
         # Parser phase
         self.ttlparser = ttlparser or TTLParser( ttlconfig=self.ttlconfig )
         # Instruction generation phase
         self.igen = igen or InstrGen( self, ttlconfig=self.ttlconfig )
 
-    def __call__( self, ttllookup, ttlparser=None ):
+    def __call__( self, ttlloc=None, ttltext=None, ttlparser=None ):
         ttlparser = ttlparser or self.ttlparser
-        clone = Compiler(
-            ttllookup, ttlconfig=self.ttlconfig, ttlparser=ttlparser
-        )
+        clone = Compiler( ttlloc=ttlloc, ttltext=ttltext,
+                          ttlconfig=self.ttlconfig, ttlparser=ttlparser
+                        )
         return clone
 
     def execttl( self, code=None, context={} ):
@@ -62,41 +68,33 @@ class Compiler( object ):
         exec code in module.__dict__, module.__dict__
         return module
 
-    def ttl2code( self, pyfile=None, pytext=None ):
+    def ttl2code( self ):
         """Code loading involves, picking up the intermediate python file from
         the cache (if disk persistence is enabled and the file is available)
         or, generate afresh using `igen` Instruction Generator.
         """
-        pyfile = pyfile or self.pyfile
-        pytext = pytext or self.pytext
-        if pytext :
-            code = compile( pytext, pyfile or self.ttlfile, 'exec' )
-            return code
+        pyfile, pytext = self.pyfile, self.pytext
         code = self._memcache.get( self.ttlfile, None )
-        if code == None and pyfile and pytext :
-            code = compile( pytext, pyfile, 'exec')
+        if code == None and self.pytext :
+            code = compile( pytext, pyfile or self.ttlfile, 'exec' )
         elif code == None and pyfile :
             pytext = codecs.open(
-                        pyfile, encoding=self.ttlconfig['input_encoding'] 
-                     ).read()
+                              pyfile, encoding=self.ttlconfig['input_encoding']
+                            ).read()
+            self.pytext = pytext
             code = compile( pytext, pyfile, 'exec')
         elif code == None :
             pytext = self.topy()
-            code = compile( pytext, self.ttlfile, 'exec')
+            code = compile( pytext, self.ttlfile, 'exec' )
+
         # Cache output to file
         self.ttllookup.modcachepy( pyfile, pytext )
-        if self.ttlconfig.get( 'memcache', '' ).lower() == 'true' :
+        if self.ttlconfig['memcache'] :
             self._memcache.setdefault( self.ttlfile, code )
         return code
 
     def toast( self ):
-        encoding = self.ttlconfig['input_encoding']
-        tu = None
-        if self.ttlfile and self.ttltext :
-            tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
-        elif self.ttlfile :
-            self.ttltext = codecs.open( self.ttlfile, encoding=encoding ).read()
-            tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
+        tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
         return tu
 
     def topy( self, *args, **kwargs ):
@@ -118,68 +116,64 @@ class Compiler( object ):
 
 
 class TemplateLookup( object ) :
-    TTLCONFIG = [
-        ('directories', ''),
-        ('module_directory',None),
-        ('devmod', True)
-    ]
-    def __init__( self, ttlloc, ttlconfig ):
-        [ setattr( self, k, ttlconfig.get(k, default) )
-          for k, default in self.TTLCONFIG ]
+    TTLCONFIG = [ 'directories', 'module_directory', 'devmod' ]
+    def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
+        [ setattr( self, k, ttlconfig[k] ) for k in self.TTLCONFIG ]
         self.ttlconfig = ttlconfig
-        self.ttlloc = os.sep.join(ttlloc) if hasattr(ttlloc, '__iter__') else ttlloc
         self.directories = [ d.rstrip(' \t/') for d in self.directories.split(',') ]
-        self.ttlfile = self._locatettl()
-        self.pyfile, self.pytext = self._locatepy()
-        self.pytext = self.pytext or (
-                        self.pyfile and \
-                        codecs.open( 
-                            self.pyfile, encoding=ttconfig['input_encoding']
-                        ).read()
-                      )
+        self.ttlloc, self.ttltext = ttlloc, ttltext
+        if self.ttlloc :
+            self.ttlfile = self._locatettl( self.ttlloc, self.directories )
+            self.ttltext = codecs.open(
+                    self.ttlfile, encoding=ttlconfig['input_encoding']
+            ).read()
+            self.pyfile, self.pytext = self._locatepy( ttlloc, ttlconfig )
+        elif self.ttltext :
+            self.ttlfile = '<Source provided as raw text>'
+            self.pyfile, self.pytext = None, None
+        else :
+            raise Exception( 'Invalid ttl source !!' )
 
-    def _locatettl( self ):
-        uri = self.ttlloc
-
-        # If uri is relative to one of the template directories
-        files = filter(
-            lambda f : isfile(f), [ join(d, uri) for d in self.directories ]
-        )
+    def _locatettl( self, ttlloc, dirs ):
+        # If ttlloc is relative to one of the template directories
+        files = filter( lambda f : isfile(f), [ join(d, ttlloc) for d in dirs ])
         if files : return files[0]
 
-        # If uri is provided in asset specification format
+        # If ttlloc is provided in asset specification format
         try :
-            mod, loc = uri.split(':', 1)
+            mod, loc = ttlloc.split(':', 1)
             _file, path, _descr = imp.find_module( mod )
             ttlfile = join( path.rstrip(os.sep), loc )
             return ttlfile
         except :
             return None
 
-        raise Exception( 'Error locating TTL file %r' % uri )
+        raise Exception( 'Error locating TTL file %r' % ttlloc )
 
-    def _locatepy( self ):
-        pyfile = self.computepyfile()
-        # Check whether the python intermediate file is not outdated, in devmod
-        if self.devmod :
+    def _locatepy( self, ttlloc, ttlconfig ):
+        devmod = ttlconfig['devmod']
+        pyfile = self.computepyfile( ttlloc, ttlconfig )
+        if devmod :    # In `devmod` always compile !!
             return None, None
         elif pyfile and isfile(pyfile) :
-            return pyfile, codecs.open( 
-                                pyfile, encoding=self.ttlconfig['input_encoding']
-                           ).read()
+            pytext = codecs.open(pyfile, encoding=ttlconfig['input_encoding']
+                                ).read()
+            return pyfile, pytext
+        elif pyfile :
+            return pyfile, None
         else :
             return None, None
 
-    def computepyfile( self ) :
-        if self.module_directory :
-            ttlloc = self.ttlloc[1:] if self.ttlloc.startswith('/') else self.ttlloc
-            pyfile = join( self.module_directory, ttlloc+'.py' )
+    def computepyfile( self, ttlloc, ttlconfig ) :
+        module_directory = ttlconfig['module_directory']
+        if module_directory :
+            ttlloc = ttlloc[1:] if ttlloc.startswith('/') else ttlloc
+            pyfile = join( module_directory, ttlloc+'.py' )
         else :
             pyfile = None
         return pyfile
 
     def modcachepy( self, pyfile, pytext ):
-        pyfile = pyfile or self.computepyfile()
         if pyfile :
             d = dirname(pyfile)
             if not isdir(d) :

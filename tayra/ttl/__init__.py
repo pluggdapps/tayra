@@ -34,7 +34,7 @@ defaultconfig = {
     'module_directory'  : None,
     # CSV of escape filter names to be applied for expression substitution
     'escape_filters'    : '',
-    # Default input endcoding for .ttl file, the output will always be in utf-8
+    # Default input endcoding for .ttl file.
     'input_encoding'    : DEFAULT_ENCODING,
     # Standard list of tag plugins to use
     'usetagplugins'     : 'html',
@@ -42,6 +42,8 @@ defaultconfig = {
     'uglyhtml'          : False,
     # CSV list of plugin packages that needs to be imported, before compilation.
     'plugin_packages'   : '',
+    # In memory cache for ttlfile to compiled python code
+    'memcache'          : False,
 }
 
 def _findttls():
@@ -63,9 +65,8 @@ def _loadttls( ttllocs, ttlconfig, context={} ):
     """Only when the plugins are compile and loaded, it is available for rest
     of the system.
     """
-    from   tayra.ttl.compiler       import Compiler, TemplateLookup
-    [ Compiler( TemplateLookup( ttlloc, ttlconfig ), ttlconfig=ttlconfig 
-              ).execttl( context=context )
+    from tayra.ttl.compiler import Compiler
+    [ Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig ).execttl( context=context )
       for ttlloc in ttllocs ]
 
 ttlplugins = {}         # { interfaceName : {plugin-name: instance, ... }, ... }
@@ -129,7 +130,7 @@ def queryTTLPlugin( interface, name='' ):
 #---- APIs for executing Tayra Template Language
 
 class Renderer( object ):
-    def __init__( self, ttlloc, ttlconfig_ ):
+    def __init__( self, ttlloc=None, ttltext=None, ttlconfig_={} ):
         """`ttlconfig` parameter will find its way into every object defined
         by the templating engine.
             TODO : somehow find a way to pass the arguments to `body` function
@@ -138,24 +139,26 @@ class Renderer( object ):
         ttlconfig.update( ttlconfig_ )
         # Initialize plugins
         self.ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
-        self.ttlloc = ttlloc
+        self.ttlloc, self.ttltext = ttlloc, ttltext
         self.ttlparser = TTLParser( ttlconfig=ttlconfig )
 
-    def __call__( self, entry=None, context={} ):
-        from   tayra.ttl.compiler       import Compiler, TemplateLookup
-        self.compiler = Compiler(
-            self.ttlloc, ttlconfig=self.ttlconfig, ttlparser=self.ttlparser
-        )
+    def __call__( self, entryfn='body', context={} ):
+        from tayra.ttl.compiler import Compiler
+        self.compiler = Compiler( ttltext=self.ttltext,
+                                  ttlloc=self.ttlloc,
+                                  ttlconfig=self.ttlconfig,
+                                  ttlparser=self.ttlparser
+                                )
         context['_ttlcontext'] = context
         module = self.compiler.execttl( context=context )
         # Fetch parent-most module
-        entry = getattr( module.self, entry or 'body' )
+        entry = getattr( module.self, entryfn )
         # TODO : Optionally translate the return string into unicode
         html = entry() if callable( entry ) else ''
         return html
 
 def ttl_cmdline( ttlloc, **kwargs ):
-    from   tayra.ttl.compiler       import Compiler, TemplateLookup
+    from   tayra.ttl.compiler       import Compiler
     from   datetime                 import datetime as dt
 
     ttlconfig = deepcopy( defaultconfig )
@@ -172,41 +175,34 @@ def ttl_cmdline( ttlloc, **kwargs ):
     encoding = ttlconfig['input_encoding']
 
     # Initialize plugins
-    ttlconfig = initplugins( ttlconfig, force=ttlconfig.get('devmod', True) )
+    ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
 
     # Setup parser
     ttlparser = TTLParser( debug=debuglevel, ttlconfig=ttlconfig )
-    compiler = Compiler( ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
-    pyfile = compiler.ttlfile+'.py'
-    htmlfile = compiler.ttlfile.rsplit('.', 1)[0] + '.html'
+    comp = Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
+    pyfile = comp.ttlfile+'.py'
+    htmlfile = comp.ttlfile.rsplit('.', 1)[0] + '.html'
 
     if debuglevel :
         print "AST tree ..."
-        tu = compiler.toast()
+        tu = comp.toast()
     elif show :
         print "AST tree ..."
-        tu = compiler.toast()
+        tu = comp.toast()
         tu.show()
     elif dump :
-        tu = compiler.toast()
+        tu = comp.toast()
         rctext =  tu.dump()
-        if rctext != codecs.open( compiler.ttlfile, encoding=encoding ).read() :
+        if rctext != codecs.open( comp.ttlfile, encoding=encoding ).read() :
             print "Mismatch ..."
         else : print "Success ..."
     else :
         print "Generating py / html file ... "
-        pytext = compiler.topy()
+        pytext = comp.topy()
         # Intermediate file should always be encoded in 'utf-8'
         codecs.open(pyfile, mode='w', encoding=DEFAULT_ENCODING).write(pytext)
 
-        #code = compiler.ttl2code( pyfile=pyfile, pytext=pytext )
-        #context['_ttlcontext'] = context
-        #module = compiler.execttl( code, context=context )
-        ## Fetch parent-most module
-        #body = getattr( module.self, 'body' )
-        #html = body( *args ) if callable( body ) else ''
-
-        ttlconfig.setdefault( 'memcache', 'true' )
+        ttlconfig.setdefault( 'memcache', True )
         r = Renderer( ttlloc, ttlconfig )
         html = r( context=context )
         codecs.open( htmlfile, mode='w', encoding=encoding).write( html )

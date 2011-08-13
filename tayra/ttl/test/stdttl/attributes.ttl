@@ -11,7 +11,7 @@ Copyright (c) 2009 SKR Farms (P) LTD.
   <body>
     Let us experiment with different ways of using attributes.
     Note that attributes always follow `specifiers` and `styles`
-    <div title="hello world"> attribute value is provided as a string.
+    <div title="hello world"!> attribute value is provided as a string.
     <div disabled=disabled> attribute value is provided as an atom.
     <div#specid.floatr.fgblue dummy spec disabled=disabled>
       attribute value is provided as an atom, along with specifiers

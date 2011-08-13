@@ -9,16 +9,11 @@
 # -*- coding: utf-8 -*-
 
 # Gotcha : None
-#   1. Bug in PLY ???
-#   Enabling optimize screws up the order of regex match (while lexing)
-#       parser = Parser( yacc_debug=True )
 # Notes  : None
 # Todo   : None
 
-import os, re
 from   optparse             import OptionParser
-from   os.path              import isfile, splitext
-from   StringIO             import StringIO
+from   os.path              import isfile
 
 import tayra
 import tayra.ttl

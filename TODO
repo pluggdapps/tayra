@@ -3,6 +3,8 @@
 
 Feature requests :
 
+* Remove the redundant opening after push_state.
+
 * Syntax to break the text.
 
 * ITayraTag plugin registration using namespace like,
@@ -12,6 +14,9 @@ Feature requests :
     html.form.jq
 
 -----
+
+* Do not maintain context information with `igen` instead maintain that with
+  parser object.
 
 * Automatically detect the user-agent compatibility level with html and
   generate elements in confirmance to it. This must play safe with the
@@ -63,3 +68,5 @@ Feature requests :
   better if it is possible to parse the filter-block as signature + siblings.
 
 * Find a way to pass the body arguments programmatically via Renderer()
+
+* Generate beautiful html, using lxml

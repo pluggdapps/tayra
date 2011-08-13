@@ -2,7 +2,6 @@ import imp, os, codecs
 from   os.path                  import isfile, isdir, abspath, basename, \
                                        join, dirname
 from   hashlib                  import sha1
-from   StringIO                 import StringIO
 
 from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
@@ -31,8 +30,8 @@ class Compiler( object ):
             )
         else :
             raise Exception( 'To compile, provide a valid ttl source' )
-        self.ttlfile, self.ttltext = self.ttllookup.ttlfile, self.ttllookup.ttltext
-        self.pyfile, self.pytext = self.ttllookup.pyfile, self.ttllookup.pytext
+        self.ttlfile = self.ttllookup.ttlfile
+        self.pyfile = self.ttllookup.pyfile
         self.ttlconfig = ttlconfig
         # Parser phase
         self.ttlparser = ttlparser or TTLParser( ttlconfig=self.ttlconfig )
@@ -73,34 +72,31 @@ class Compiler( object ):
         the cache (if disk persistence is enabled and the file is available)
         or, generate afresh using `igen` Instruction Generator.
         """
-        pyfile, pytext = self.pyfile, self.pytext
-        code = self._memcache.get( self.ttlfile, None )
-        if code == None and self.pytext :
-            code = compile( pytext, pyfile or self.ttlfile, 'exec' )
-        elif code == None and pyfile :
-            pytext = codecs.open(
-                              pyfile, encoding=self.ttlconfig['input_encoding']
-                            ).read()
-            self.pytext = pytext
-            code = compile( pytext, pyfile, 'exec')
-        elif code == None :
-            pytext = self.topy()
+        code = self._memcache.get( self.ttllookup.hashkey, None 
+               ) if self.ttlconfig['devmod'] == False else None
+        if code : return code
+        pytext = self.ttllookup.pytext
+        if pytext :
+            ttlhash = None
             code = compile( pytext, self.ttlfile, 'exec' )
+        else :
+            pytext = self.topy( ttlhash=self.ttllookup.ttlhash )
+            code = compile( pytext, self.ttlfile, 'exec' )
+            self.ttllookup.pytext = pytext
 
-        # Cache output to file
-        self.ttllookup.modcachepy( pyfile, pytext )
         if self.ttlconfig['memcache'] :
-            self._memcache.setdefault( self.ttlfile, code )
+            self._memcache.setdefault( self.ttllookup.hashkey, code )
         return code
 
     def toast( self ):
-        tu = self.ttlparser.parse( self.ttltext, ttlfile=self.ttlfile )
+        ttltext = self.ttllookup.ttltext
+        tu = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
         return tu
 
     def topy( self, *args, **kwargs ):
         encoding = self.ttlconfig['input_encoding']
         tu = self.toast()
-        kwargs['ttlhash'] = sha1( self.ttltext.encode(encoding) ).hexdigest()
+        ttltext = self.ttllookup.ttltext
         if tu :
             tu.validate()
             tu.headpass1( self.igen )                   # Head pass, phase 1
@@ -120,19 +116,43 @@ class TemplateLookup( object ) :
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         [ setattr( self, k, ttlconfig[k] ) for k in self.TTLCONFIG ]
         self.ttlconfig = ttlconfig
-        self.directories = [ d.rstrip(' \t/') for d in self.directories.split(',') ]
-        self.ttlloc, self.ttltext = ttlloc, ttltext
+        self.encoding = ttlconfig['input_encoding']
+        self.ttlloc, self._ttltext = ttlloc, ttltext
+        self._ttlhash, self._pytext = None, None
         if self.ttlloc :
             self.ttlfile = self._locatettl( self.ttlloc, self.directories )
-            self.ttltext = codecs.open(
-                    self.ttlfile, encoding=ttlconfig['input_encoding']
-            ).read()
-            self.pyfile, self.pytext = self._locatepy( ttlloc, ttlconfig )
-        elif self.ttltext :
+            self.pyfile = self.computepyfile( ttlloc, ttlconfig )
+        elif self._ttltext :
             self.ttlfile = '<Source provided as raw text>'
-            self.pyfile, self.pytext = None, None
+            self.pyfile = None
         else :
             raise Exception( 'Invalid ttl source !!' )
+
+    def _getttltext( self ):
+        if self._ttltext == None :
+            self._ttltext = codecs.open( self.ttlfile, encoding=self.encoding ).read()
+        return self._ttltext
+
+    def _getpytext( self ):
+        if self.pyfile and isfile(self.pyfile) and self._pytext == None :
+            self._pytext = codecs.open( self.pyfile, encoding=self.encoding ).read()
+        return self._pytext
+
+    def _setpytext( self, pytext ):
+        if self.pyfile :
+            d = dirname(self.pyfile)
+            os.makedirs(d) if not isdir(d) else None
+            codecs.open( self.pyfile, mode='w', encoding=self.encoding ).write(pytext)
+            return len(pytext)
+        return None
+
+    def _getttlhash( self ):
+        if self._ttlhash == None and self._ttltext :
+            self._ttlhash = sha1( self._ttltext ).hexdigest()
+        return self._ttlhash
+
+    def _gethashkey( self ):
+        return self.ttlhash if self.ttlconfig['text_as_hashkey'] else self.ttlfile
 
     def _locatettl( self, ttlloc, dirs ):
         # If ttlloc is relative to one of the template directories
@@ -150,38 +170,24 @@ class TemplateLookup( object ) :
 
         raise Exception( 'Error locating TTL file %r' % ttlloc )
 
-    def _locatepy( self, ttlloc, ttlconfig ):
-        devmod = ttlconfig['devmod']
-        pyfile = self.computepyfile( ttlloc, ttlconfig )
-        if devmod :    # In `devmod` always compile !!
-            return None, None
-        elif pyfile and isfile(pyfile) :
-            pytext = codecs.open(pyfile, encoding=ttlconfig['input_encoding']
-                                ).read()
-            return pyfile, pytext
-        elif pyfile :
-            return pyfile, None
-        else :
-            return None, None
-
     def computepyfile( self, ttlloc, ttlconfig ) :
+        """Plainly compute the intermediate file, whether it exists or not is
+        immaterial.
+        """
         module_directory = ttlconfig['module_directory']
-        if module_directory :
+        if self.devmod :
+            pyfile = None
+        elif module_directory :
             ttlloc = ttlloc[1:] if ttlloc.startswith('/') else ttlloc
             pyfile = join( module_directory, ttlloc+'.py' )
         else :
             pyfile = None
         return pyfile
 
-    def modcachepy( self, pyfile, pytext ):
-        if pyfile :
-            d = dirname(pyfile)
-            if not isdir(d) :
-                os.makedirs(d)
-            codecs.open( pyfile, mode='w', encoding=self.ttlconfig['input_encoding']
-                       ).write( pytext )
-            return len(pytext)
-        return None
+    ttltext = property( _getttltext )
+    pytext  = property( _getpytext, _setpytext )
+    ttlhash = property( _getttlhash )
+    hashkey = property( _gethashkey )
 
 
 def supermost( module ):

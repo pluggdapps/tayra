@@ -1,9 +1,11 @@
 import time, codecs
-from   os.path                  import dirname
+from   os.path                  import dirname, basename, join
 from   copy                     import deepcopy
+from   datetime                 import datetime as dt
 
 from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
+from   paste.util.converters    import asbool
 
 # Import tag-plugins so that they can register themselves.
 import tayra.ttl.tags
@@ -28,6 +30,7 @@ defaultconfig = {
     'devmod'            : True,
     'reload_templates'  : False,
     'debug_templates'   : False,
+    'strict_undefined'  : False,
     # List of directories to look for the .ttl file
     'directories'       : '.',
     # path to store the compiled .py file (intermediate file)
@@ -37,14 +40,55 @@ defaultconfig = {
     # Default input endcoding for .ttl file.
     'input_encoding'    : DEFAULT_ENCODING,
     # Standard list of tag plugins to use
-    'usetagplugins'     : 'html',
+    'usetagplugins'     : 'html5',
     # Don't bother about indentation for output html file
-    'uglyhtml'          : False,
+    'uglyhtml'          : True,
     # CSV list of plugin packages that needs to be imported, before compilation.
     'plugin_packages'   : '',
-    # In memory cache for ttlfile to compiled python code
-    'memcache'          : False,
+    # In memory cache for compiled ttlfile
+    'memcache'          : True,
+    'text_as_hashkey'   : False,
 }
+
+def normalizeconfig( config ):
+    """Convert the string representation of config parameters into
+    programmable types. It is assumed that all config parameters are atleast
+    initialized with default value.
+    """
+    config['devmod'] = asbool( config['devmod'] )
+    config['reload_templates'] = asbool( config['reload_templates'] )
+    config['debug_templates'] = asbool( config['debug_templates'] )
+    config['strict_undefined'] = asbool( config['strict_undefined'] )
+    try :
+        config['directories'] = [
+            x.strip() for x in config['directories'].split(',') if x.strip()
+        ]
+    except :
+        pass
+    config['module_directory'] = config['module_directory'] or None
+    try :
+        config['escape_filters'] = [
+            x.strip() for x in config['escape_filters'].split(',') if x.strip()
+        ]
+    except :
+        pass
+    try :
+        config['usetagplugins'] = [
+            x.strip() for x in config['usetagplugins'].split(',') if x.strip()
+        ]
+    except :
+        pass
+    config['uglyhtml'] = asbool( config['uglyhtml'] )
+    try :
+        config['plugin_packages'] = [
+            x.strip() for x in config['plugin_packages'].split(',') if x.strip()
+        ]
+    except :
+        pass
+    config['memcache'] = asbool( config['memcache'] )
+    config['text_as_hashkey'] = asbool( config['text_as_hashkey'] )
+    return config
+
 
 def _findttls():
     """Search for tayra template plugins."""
@@ -88,16 +132,19 @@ def initplugins( ttlconfig, force=False ):
         # Load and classify plugins
         init_status = 'progress'
         gsm = getGlobalSiteManager()
+        usetagplugins = ttlconfig['usetagplugins']
 
         # Load plugin packages
         packages = ttlconfig['plugin_packages']
-        packages = filter(None, [ x.strip(' \t') for x in packages.split(',') ])
+        packages = filter(None, [ x.strip(' \t') for x in packages ])
         [ __import__(pkg) for pkg in filter(None, packages) ]
 
         # Gather plugins template tag handlers, filter-blocks
         for x in gsm.registeredUtilities() :
-            if x.provided == ITayraTag :           # Tag handlers
-                tagplugins[x.name] = x.component
+            if x.provided == ITayraTag :            # Tag handlers
+                try    : namespace, tagname = x.name.rsplit('.', 1)
+                except : namespace, tagname = '', x.name
+                tagplugins[tagname] = x.component
             if x.provided == ITayraFilterBlock :    # Filter blocks
                 fbplugins[x.name] = x.component
             if x.provided == ITayraEscapeFilter :   # Escape Filters
@@ -130,17 +177,17 @@ def queryTTLPlugin( interface, name='' ):
 #---- APIs for executing Tayra Template Language
 
 class Renderer( object ):
-    def __init__( self, ttlloc=None, ttltext=None, ttlconfig_={} ):
+    def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         """`ttlconfig` parameter will find its way into every object defined
         by the templating engine.
             TODO : somehow find a way to pass the arguments to `body` function
         """
-        ttlconfig = deepcopy( defaultconfig )
-        ttlconfig.update( ttlconfig_ )
+        ttlconfig_ = deepcopy( defaultconfig )
+        ttlconfig_.update( ttlconfig )
         # Initialize plugins
-        self.ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
+        self.ttlconfig = initplugins( ttlconfig_, force=ttlconfig_['devmod'] )
         self.ttlloc, self.ttltext = ttlloc, ttltext
-        self.ttlparser = TTLParser( ttlconfig=ttlconfig )
+        self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
 
     def __call__( self, entryfn='body', context={} ):
         from tayra.ttl.compiler import Compiler
@@ -159,7 +206,6 @@ class Renderer( object ):
 
 def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.ttl.compiler       import Compiler
-    from   datetime                 import datetime as dt
 
     ttlconfig = deepcopy( defaultconfig )
     # directories, module_directory, devmod
@@ -178,10 +224,11 @@ def ttl_cmdline( ttlloc, **kwargs ):
     ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
 
     # Setup parser
-    ttlparser = TTLParser( debug=debuglevel, ttlconfig=ttlconfig )
+    ttlparser = TTLParser( ttlconfig=ttlconfig, debug=debuglevel )
     comp = Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
     pyfile = comp.ttlfile+'.py'
-    htmlfile = comp.ttlfile.rsplit('.', 1)[0] + '.html'
+    htmlfile = basename( comp.ttlfile ).rsplit('.', 1)[0] + '.html'
+    htmlfile = join( dirname(comp.ttlfile), htmlfile )
 
     if debuglevel :
         print "AST tree ..."
@@ -198,12 +245,12 @@ def ttl_cmdline( ttlloc, **kwargs ):
         else : print "Success ..."
     else :
         print "Generating py / html file ... "
-        pytext = comp.topy()
+        pytext = comp.topy( ttlhash=comp.ttllookup.ttlhash )
         # Intermediate file should always be encoded in 'utf-8'
         codecs.open(pyfile, mode='w', encoding=DEFAULT_ENCODING).write(pytext)
 
         ttlconfig.setdefault( 'memcache', True )
-        r = Renderer( ttlloc, ttlconfig )
+        r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
         html = r( context=context )
         codecs.open( htmlfile, mode='w', encoding=encoding).write( html )
 

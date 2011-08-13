@@ -49,8 +49,7 @@ class StackMachine( object ) :
         self.escfilters = ttlconfig.get( 'escfilters', {} )
         self.tagplugins = ttlconfig.get( 'tagplugins', {} )
         self.def_escfilters = [
-            f.strip().split('.',1)
-            for f in ttlconfig['escape_filters'].split(',') if f
+            f.strip().split('.',1) for f in ttlconfig['escape_filters'] if f
         ]
         self.ttlconfig = ttlconfig
 
@@ -59,20 +58,6 @@ class StackMachine( object ) :
         self.compiler = compiler
         self.encoding = self.ttlconfig['input_encoding']
         self.htmlindent = ''
-
-    _cache_taghandlers = {}
-    def _buildtaghandlers( self, usetagplugins ):
-        key = ''.join( usetagplugins )
-        if key in self._cache_taghandlers :
-            return self._cache_taghandlers[key]
-
-        taghandlers = {}
-        for pluginname in usetagplugins :
-            handlers = self.tagplugins.get( pluginname, None )
-            if handlers :
-                taghandlers.update( handlers[1] )
-        self._cache_taghandlers.setdefault( key, taghandlers )
-        return taghandlers
 
     #---- Stack machine instructions
 
@@ -139,13 +124,13 @@ class StackMachine( object ) :
         return text
 
     def importas( self, ttlloc, modname, childglobals ):
-        compiler = self.compiler( ttlloc )
+        compiler = self.compiler( ttlloc=ttlloc )
         parent_context = childglobals['_ttlcontext']
         module = compiler.execttl( context=parent_context )
         return module
 
     def inherit( self, ttlloc, childglobals ):
-        compiler = self.compiler( ttlloc )
+        compiler = self.compiler( ttlloc=ttlloc )
         # inherit module
         parent_context = childglobals['_ttlcontext']
         parent_context.update({

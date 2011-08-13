@@ -15,6 +15,7 @@ from   types                import StringType
 from   os.path              import splitext, dirname
 from   hashlib              import sha1
 from   StringIO             import StringIO
+from   copy                 import deepcopy
 
 import ply.yacc
 from   tayra.ttl.lexer      import TTLLexer
@@ -103,13 +104,16 @@ class TTLParser( object ):
         self.parser.ttlparser = self     # For AST nodes to access `this`
 
         # Parser initialization
-        self._initialize( ttlconfig=ttlconfig )
+        self._ttlconfig = ttlconfig
+        self._initialize()
 
     def _initialize( self, ttlfile=None, ttlconfig={} ) :
         self.ttlfile = ttlfile
-        self.ttlconfig = ttlconfig
+        self.ttlconfig = deepcopy( self._ttlconfig )
+        self.ttlconfig.update( ttlconfig )
+        self.ttllex.reset_lineno()
 
-    def parse( self, text, ttlfile=None, ttlconfig=None, debuglevel=0 ):
+    def parse( self, text, ttlfile=None, ttlconfig={}, debuglevel=0 ):
         """Parse tayra templage language and creates an AST tree. For every
         parsing invocation, the same lex, yacc, app options and objects will
         be used.
@@ -121,11 +125,9 @@ class TTLParser( object ):
         """
         # Parser Initialize
         ttlfile = ttlfile if ttlfile != None else self.ttlfile
-        ttlconfig = ttlconfig if ttlconfig != None else self.ttlconfig
         self._initialize( ttlfile=ttlfile, ttlconfig=ttlconfig )
 
         self.ttllex.ttlfile = self.ttlfile = ttlfile
-        self.ttllex.reset_lineno()
 
         # parse and get the Translation Unit
         debuglevel = self.debug or debuglevel

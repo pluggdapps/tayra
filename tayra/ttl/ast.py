@@ -322,7 +322,6 @@ class Template( NonTerminal ):
             ForBlock, WhileBlock
             # Other siblings are,
             #   dirtyblocks, interfaceblock, filterblock, functionblock,
-            #   ifelfiblock, forblock, whileblock
         )
         siblings = self.siblings and self.siblings.flatten() or []
         for sibling in siblings :   # flattened siblings
@@ -334,8 +333,8 @@ class Template( NonTerminal ):
         """Generate the body function only when there is valid content in the
         global scope.
         """
+        igen.cr()
         if self._is_generate() or self.doctypes :
-            igen.cr()
             # Body function signature
             signature = signature and signature.strip(', \t') or ''
             ', '.join([ signature, '*args', '**kwargs' ])
@@ -354,6 +353,14 @@ class Template( NonTerminal ):
             igen.flushtext()
             igen.popreturn( astext=True )
             igen.codeindent( down='  ' )
+        else :
+            # Comments and emptyspaces
+            if self.dirtyblocks :
+                self.dirtyblocks.generate( igen, *args, **kwargs )
+            # Non body code
+            self.siblings and self.siblings.generate( igen, *args, **kwargs )
+            # finish body function
+            igen.flushtext()
 
     def children( self ):
         return self._nonterms
@@ -366,7 +373,6 @@ class Template( NonTerminal ):
         NonTerminal.headpass2( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
-        from   tayra.ttl        import DEFAULT_ENCODING
         self.ttlhash = kwargs.pop( 'ttlhash', '' )
         self.ttlfile = self.parser.ttlparser.ttlfile
 
@@ -467,8 +473,7 @@ class Siblings( NonTerminal ):
         [ x.headpass2( igen ) for x in self.flatten() ]
 
     def generate( self, igen, *args, **kwargs ) :
-        for x in self.flatten() :
-            x.generate( igen, *args, **kwargs )
+        [ x.generate( igen, *args, **kwargs ) for x in self.flatten() ]
 
     def tailpass( self, igen ) :
         # Flatten the nodes, to avoid deep recursion.

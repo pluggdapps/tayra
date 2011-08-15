@@ -194,8 +194,8 @@ class TTLLexer( object ) :
     # Special chars
     escseq       = r'(\\.?)|(\\$)'
     spchars      = r'[${]'
-    tags_spchars = r'[/$]'
-    styl_spchars = r'[${]'
+    tag_spchars  = r'[/$]'
+    style_spchars= r'[${]'
 
     # Suffix definition for lookahead match for text
     style_text_s= r'(?!\}|\$\{)'                # till style_close, exprs_open
@@ -531,7 +531,7 @@ class TTLLexer( object ) :
     def t_tag_TEXT( self, t ) :
         return t
 
-    @TOKEN( tags_spchars )
+    @TOKEN( tag_spchars )
     def t_tag_SPECIALCHARS( self, t ) :
         return t
 
@@ -562,7 +562,7 @@ class TTLLexer( object ) :
     def t_style_TEXT( self, t ) :
         return t
 
-    @TOKEN( styl_spchars )
+    @TOKEN( style_spchars )
     def t_style_SPECIALCHARS( self, t ) :
         return t
 

@@ -13,6 +13,12 @@ Feature requests :
     html.form
     html.form.jq
 
+* Document the scope of escape (\) character.
+
+* Whitespace removal, in and around the tag element.
+
+* White space preservation.
+
 -----
 
 * Do not maintain context information with `igen` instead maintain that with

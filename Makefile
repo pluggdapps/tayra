@@ -6,6 +6,17 @@ develop :
 testall :
 	echo "Pending ...."
 
+bench-setup :
+	bash -c "source tayra-env/bin/activate ; easy_install mako"
+	bash -c "source tayra-env/bin/activate ; easy_install cheetah"
+	bash -c "source tayra-env/bin/activate ; easy_install django"
+	bash -c "source tayra-env/bin/activate ; easy_install genshi"
+	bash -c "source tayra-env/bin/activate ; easy_install kid"
+	bash -c "source tayra-env/bin/activate ; easy_install myghty"
+
+benchmark :
+	cd tayra/ttl/test/bench/ ; bash -c "source tayra-env/bin/activate; ./basic.py"
+
 bdist_egg :
 	python ./setup.py bdist_egg
 

@@ -24,6 +24,7 @@ interfaceClass = """
 from  %s import %s
 class %s( object ):
   implements(%s)
+  itype = 'ttlplugin'
 %s = %s()
 """
 
@@ -104,10 +105,15 @@ class InstrGen( object ) :
         if force :
             self.flushtext()
 
-    def putattrs( self, attrstext ):
+    def putattrs( self, attrstext=None, attrslist=None ):
         self.flushtext()
         self.cr()
-        self.outfd.write( '_m.append( _m.Attributes( _attrstext=%r ))' % attrstext )
+        attrstext and self.outfd.write(
+            '_m.append( _m.Attributes( _attrstext=%r ))' % attrstext
+        )
+        attrslist and self.outfd.write(
+            '_m.append( _m.Attributes( _attrslist=%r ))' % attrslist
+        )
 
     def putstatement( self, stmt ):
         self.flushtext()

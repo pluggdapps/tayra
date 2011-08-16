@@ -159,10 +159,9 @@ def initplugins( ttlconfig, force=False ):
         # Setup ttlplugin lookup table
         for x in gsm.registeredUtilities() :
             # Skip plugins for tags, filters and filter-blocks
-            if x.provided in [ ITayraTag, ITayraFilterBlock, ITayraEscapeFilter
-               ] : continue
-            z = ttlplugins.setdefault( x.provided, {} )
-            z.setdefault( x.name, x.component )
+            if getattr( x.component, 'itype', None ) == 'ttlplugin' :
+                z = ttlplugins.setdefault( x.provided, {} )
+                z.setdefault( x.name, x.component )
 
     init_status = 'done'
     return ttlconfig

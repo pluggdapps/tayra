@@ -7,6 +7,11 @@ from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
 
+try :
+    import  paste.reloader
+    reloader = paste.reloader
+except :
+    pass
 
 class Compiler( object ):
     _memcache = {}
@@ -110,9 +115,9 @@ class Compiler( object ):
     modulename = property(lambda s : basename( s.ttlfile ).split('.', 1)[0] )
 
 
-
 class TemplateLookup( object ) :
-    TTLCONFIG = [ 'directories', 'module_directory', 'devmod' ]
+    TTLCONFIG = [ 'directories', 'module_directory', 'devmod',
+                  'reload_templates' ]
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         [ setattr( self, k, ttlconfig[k] ) for k in self.TTLCONFIG ]
         self.ttlconfig = ttlconfig
@@ -122,6 +127,8 @@ class TemplateLookup( object ) :
         if self.ttlloc :
             self.ttlfile = self._locatettl( self.ttlloc, self.directories )
             self.pyfile = self.computepyfile( ttlloc, ttlconfig )
+            if self.ttlfile and self.reload_templates and reloader :
+                reloader.watch_file( self.ttlfile )
         elif self._ttltext :
             self.ttlfile = '<Source provided as raw text>'
             self.pyfile = None
@@ -134,7 +141,9 @@ class TemplateLookup( object ) :
         return self._ttltext
 
     def _getpytext( self ):
-        if self.pyfile and isfile(self.pyfile) and self._pytext == None :
+        if self.devmod :
+            return None
+        elif self.pyfile and isfile(self.pyfile) and self._pytext == None :
             self._pytext = codecs.open( self.pyfile, encoding=self.encoding ).read()
         return self._pytext
 
@@ -175,9 +184,7 @@ class TemplateLookup( object ) :
         immaterial.
         """
         module_directory = ttlconfig['module_directory']
-        if self.devmod :
-            pyfile = None
-        elif module_directory :
+        if module_directory :
             ttlloc = ttlloc[1:] if ttlloc.startswith('/') else ttlloc
             pyfile = join( module_directory, ttlloc+'.py' )
         else :

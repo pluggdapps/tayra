@@ -51,6 +51,9 @@ syn match   controlKeywords contained "@if\|@elif\|@else\|@for\|@while"
 syn match   prologDoctype   "^!!!.*;[ \t]*" contains=prologKeywords
 syn region  prolog          start="^@[!ibuc]" end=";[ \t]*$" contains=prologKeywords,ttlString
 
+"Filterblock
+syn match   filterKeywords  contained ":fb-[^ \t]*\|:fbend"
+
 " Textline
 syn match   textLine        "^[^<:@!].*$" contains=pythonExprs
 syn match   commentLine     "[ \t]*##.*$"
@@ -96,12 +99,16 @@ TTLHiLink htmlStyleArg ttlString
 syn include @htmlJavaScript     syntax/javascript.vim
 unlet b:current_syntax
 syn region  jsstyle             start=+[ ]*<[!%]\?script+ keepend end=+^$+ contains=ttlTag,@htmlJavaScript,pythonExprs
+
+"Embedded python
+syn region  pythonBlock     start=+^[ \t]*:fb-pycode+ keepend end=+^[ \t]*:fbend+ contains=filterKeywords,@Python
 ,
 TTLHiLink ttlSpecialChar    Special
 TTLHiLink comment           Comment
 TTLHiLink prologKeywords    Operator
 TTLHiLink funcKeywords      Function
 TTLHiLink controlKeywords   Operator
+TTLHiLink filterKeywords    Operator
 TTLHiLink prolog            NonText
 TTLHiLink prologDoctype     NonText
 TTLHiLink ttlString         String

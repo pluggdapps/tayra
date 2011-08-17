@@ -12,7 +12,7 @@ from   hashlib      import sha1
 prolog = """
 from   StringIO             import StringIO
 from   zope.interface       import implements
-import tayra
+from   tayra.ttl            import BaseTTLPlugin
 """
 
 footer = """
@@ -22,11 +22,9 @@ _ttlfile = %r
 
 interfaceClass = """
 from  %s import %s
-class %s( object ):
+class %s( BaseTTLPlugin ):
   implements(%s)
-  itype = 'ttlplugin'
-%s = %s()
-"""
+  itype = 'ttlplugin'"""
 
 class InstrGen( object ) :
     machname = '_m'
@@ -124,9 +122,11 @@ class InstrGen( object ) :
         [ self.putstatement(line) for line in codeblock.splitlines() ]
 
     def evalexprs( self, code, filters ) :
-        self.flushtext()
-        self.cr()
-        self.outfd.write('_m.append( _m.evalexprs(%s, %r) )' % (code, filters))
+        code = code.strip()
+        if code :
+            self.flushtext()
+            self.cr()
+            self.outfd.write('_m.append( _m.evalexprs(%s, %r) )' % (code, filters))
 
     def pushbuf( self ):
         self.flushtext()
@@ -181,18 +181,13 @@ class InstrGen( object ) :
             # Define interface implementer class
             module, interfacename, pluginname = implements[i]
             infcls = 'Interface_' + str(i+1)
-            infobj = '%s_obj' % infcls
-            codeblock = interfaceClass % (
-                module, interfacename, infcls, interfacename, infobj, infcls )
-            self.putblock( codeblock )
+            codeblock = interfaceClass % (module, interfacename, infcls, interfacename)
             # hitch methods with interface class
-            for method in interfaces_.get( interfacename, [] ) :
-                line = '%s.%s = _m.hitch( %s, %s, %s )' % (
-                            infobj, method, infobj, infcls, method )
-                self.putstatement( line )
+            methodlines = [ '  %s = %s' % ( method, method )
+                            for method in interfaces_.get(interfacename, []) ]
+            self.putblock( '\n'.join( [codeblock] + methodlines ) )
             # register the interface providing object
-            line = '_m.register( %s_obj, %s, %r )' % ( infcls, interfacename,
-                   pluginname )
+            line = '_m.register( %s(), %s, %r )' % (infcls, interfacename, pluginname)
             self.putstatement(line)
 
     def useinterface( self, module, interfacename, pluginname, name ):

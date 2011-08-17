@@ -23,6 +23,8 @@ from   tayra.ttl.ast        import *
 
 log = logging.getLogger( __name__ )
 rootdir = dirname( __file__ )
+LEXTAB = 'lextyrtab'
+YACCTAB = 'parsetyrtab'
 
 class ParseError( Exception ):
     pass
@@ -31,12 +33,12 @@ class TTLParser( object ):
 
     def __init__( self,
                   ttlconfig={},
-                  outputdir=None,
+                  outputdir='',
                   lex_optimize=None,
-                  lextab=None,
+                  lextab=LEXTAB,
                   lex_debug=None,
                   yacc_optimize=None,
-                  yacctab=None,
+                  yacctab=YACCTAB,
                   yacc_debug=None,
                   debug=None
                 ) :
@@ -99,7 +101,7 @@ class TTLParser( object ):
         kwargs = {'optimize' : yacc_optimize} if yacc_optimize != None else {}
         kwargs.update(debug=yacc_debug) if yacc_debug else None
         kwargs.update(outputdir=outputdir) if outputdir else None
-        kwargs.update(yacctab=yacctab) if yacctab else None
+        kwargs.update(tabmodule=yacctab)
         self.parser = ply.yacc.yacc( module=self, **kwargs )
         self.parser.ttlparser = self     # For AST nodes to access `this`
 

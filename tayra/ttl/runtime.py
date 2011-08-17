@@ -116,9 +116,8 @@ class StackMachine( object ) :
         filters = self.def_escfilters + \
                   [ f.strip().split('.',1) for f in filters.split(',') if f ]
         skip  = filters.pop(0) if filters and filters[0][0] == 'n' else None
-        if skip == None or (not filters) :   # No filtering
-            text = str( val ).decode( self.encoding )
-        elif filters :      # Pluggable filters
+        text = val if isinstance(val, unicode) else str(val).decode(self.encoding)
+        if skip != None :           # Pluggable filters
             for filt in filters :
                 text = self.escfilters.get( filt[0], None )( self, text, filt )
         return text

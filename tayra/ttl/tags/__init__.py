@@ -27,7 +27,7 @@ class TagPlugin( object ):
         # Specifier
         if spectext :           # Static specifier content
             tagspec = self.handle_specifiers( spectext )
-            fnspec, astext = lambda : igen.putattrs( tagspec ), False
+            fnspec, astext = lambda : igen.putattrs( attrstext=tagspec ), False
         elif specifiers :       # Dynamic specifier content
             fnspec, astext = lambda : specifiers.generate(igen, *args, **kwargs), True
             has_exprs = True
@@ -39,7 +39,7 @@ class TagPlugin( object ):
         # Style
         if styletext :          # Static style content
             tagstyle = self.handle_style( styletext )
-            fnstyle, astext = lambda : igen.putattrs( tagstyle ), False
+            fnstyle, astext = lambda : igen.puttext( tagstyle ), False
         elif style :            # Dynamic style content
             fnstyle, astext = lambda : style.generate( igen, *args, **kwargs ), True
             has_exprs = True
@@ -51,7 +51,7 @@ class TagPlugin( object ):
         # Attributes
         if attrslist :              # Static attribute content
             tagattrs = self.handle_attributes( attrslist )
-            fnattrs = lambda : igen.putattrs( tagattrs )
+            fnattrs = lambda : igen.puttext( tagattrs )
         elif attributes :           # Dynamic attribute content
             fnattrs = lambda : attributes.generate(igen, *args, **kwargs)
             has_exprs = True
@@ -134,13 +134,13 @@ class TagPlugin( object ):
         if len(tag) == 7 :
             tagnm, tagopen, spec, style, attr, tagclose, tagfinish = tag
             t = tagopen
-            spec  = str(spec)  if spec and isinstance(spec[0], A) \
+            spec  = str(spec[0])  if spec and isinstance(spec[0], A) \
                                else self.handle_specifiers(spec)
-            style = str(style) if style and isinstance(style[0], A) \
+            style = str(style[0]) if style and isinstance(style[0], A) \
                                else self.handle_style(style)
-            attr  = str(attr)  if attr and isinstance(attr[0], A) \
+            attr  = str(attr[0])  if attr and isinstance(attr[0], A) \
                                else self.handle_attributes(attr)
-            t += spec + style + attr
+            t += spec + style + attr + tagclose
         elif len(tag) == 3 :
             tagnm, t, tagfinish = tag
         else :

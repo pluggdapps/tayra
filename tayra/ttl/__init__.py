@@ -159,19 +159,29 @@ def initplugins( ttlconfig, force=False ):
         # Setup ttlplugin lookup table
         for x in gsm.registeredUtilities() :
             # Skip plugins for tags, filters and filter-blocks
-            if x.provided in [ ITayraTag, ITayraFilterBlock, ITayraEscapeFilter
-               ] : continue
-            z = ttlplugins.setdefault( x.provided, {} )
-            z.setdefault( x.name, x.component )
+            if getattr( x.component, 'itype', None ) == 'ttlplugin' :
+                z = ttlplugins.setdefault( x.provided, {} )
+                z.setdefault( x.name, x.component )
 
     init_status = 'done'
     return ttlconfig
 
 def queryTTLPlugin( interface, name='' ):
     if name :
-        return ttlplugins[interface][name]
+        plugin = ttlplugins[interface][name]
+        return plugin() if callable(plugin) else plugin
     else :
-        return ttlplugins[interface].values()
+        plugins = ttlplugins[interface].values()
+        return map( lambda p: callable(p) and p() or p, plugins )
+
+
+class BaseTTLPlugin( object ):
+    def __init__( self, *args, **kwargs ):
+        self.args = args
+        self.kwargs = kwargs
+
+    def __call__( self, *args, **kwargs ):
+        return self.__class__( *args, **kwargs )
 
 
 #---- APIs for executing Tayra Template Language
@@ -224,7 +234,8 @@ def ttl_cmdline( ttlloc, **kwargs ):
     ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
 
     # Setup parser
-    ttlparser = TTLParser( ttlconfig=ttlconfig, debug=debuglevel )
+    ttlparser = TTLParser(
+            ttlconfig=ttlconfig, debug=debuglevel )
     comp = Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
     pyfile = comp.ttlfile+'.py'
     htmlfile = basename( comp.ttlfile ).rsplit('.', 1)[0] + '.html'

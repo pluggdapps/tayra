@@ -252,7 +252,7 @@ class HtmlImg( TagPlugin ):
                 defattrs += 'usemap="%s"' % atom
                 continue
             try :
-                defattrs += ' width="%s" height="%s"' % atom.split(',')
+                defattrs += ' width="%s" height="%s"' % tuple(atom.split(','))
             except :
                 defattrs += self.atom2attr.get( atom, '' )
         return defattrs, []
@@ -297,7 +297,7 @@ class HtmlLink( TagPlugin ):
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         if atoms :
-            defattrs += ' type="%s"' % atoms[0]
+            defattrs += ' type="%s"' % atoms[0].strip()
         return defattrs, []
 
     def specstrings2attrs( self, strings ):

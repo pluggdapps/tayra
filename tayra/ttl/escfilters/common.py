@@ -17,7 +17,7 @@ class Unicode( object ):
     implements( ITayraEscapeFilter )
     def __call__( self, mach, val, filterns=None ):
         try :
-            _, encoding = filterns
+            encoding = filterns
         except :
             encoding = mach.encoding
         if isinstance(val, unicode) :

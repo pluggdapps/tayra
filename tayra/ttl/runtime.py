@@ -112,14 +112,18 @@ class StackMachine( object ) :
             tagplugin.handle( self, tag, contents, indent=indent, newline=nl )
         )
 
+    filtregex = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
     def evalexprs( self, val, filters ) :
-        filters = self.def_escfilters + \
-                  [ f.strip().split('.',1) for f in filters.split(',') if f ]
-        skip  = filters.pop(0) if filters and filters[0][0] == 'n' else None
+        filters = self.filtregex.findall( filters.strip() + ',' )
+        skip = filters.pop(0) if filters and filters[0][0] == 'n' else None
         text = val if isinstance(val, unicode) else str(val).decode(self.encoding)
-        if skip != None :           # Pluggable filters
-            for filt in filters :
-                text = self.escfilters.get( filt[0], None )( self, text, filt )
+        if skip == None :                       # Pluggable filters
+            for filt in self.def_escfilters :   # default filters
+                fn = self.escfilters.get( filt, None )
+                text = fn(self, text, filt) if fn else text
+            for filt, ns in filters :           # evaluate filters
+                fn = self.escfilters.get( filt, None )
+                text = fn(self, text, ns) if fn else text
         return text
 
     def importas( self, ttlloc, modname, childglobals ):

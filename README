@@ -129,7 +129,7 @@ The .egg package will be availabe under dist/ directory
 -----
 
 {{{ Nested 
-@ { 'font-size' : 'small', 'color' : 'gray' }
+# { 'font-size' : 'small', 'color' : 'gray' }
 Document edited using Vim <br>
 /* vim: set filetype=etx : */
 }}}

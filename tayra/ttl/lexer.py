@@ -443,12 +443,8 @@ class TTLLexer( object ) :
     def t_TEXT( self, t ) :
         return t
 
-    @TOKEN( openexprs )
-    def t_exprs_OPENEXPRS( self, t ) :               # <---- `exprs` state
-        return t
-
     @TOKEN( escseq )
-    def t_exprs_ESCAPED( self, t ) :
+    def t_exprs_ESCAPED( self, t ) :                    # <---- `exprs` state
         return self._onescaped( t )
 
     @TOKEN( closebrace )
@@ -470,13 +466,8 @@ class TTLLexer( object ) :
     def t_exprs_TEXT( self, t ) :
         return t
 
-    @TOKEN( tagopen )
-    def t_tag_TAGOPEN( self, t ) :                   # <---- `tag` state
-        self._incrlineno(t)
-        return t
-
     @TOKEN( escseq )
-    def t_tag_ESCAPED( self, t ) :
+    def t_tag_ESCAPED( self, t ) :                      # <---- `tag` state
         return self._onescaped( t )
 
     @TOKEN( tagend )
@@ -535,12 +526,8 @@ class TTLLexer( object ) :
     def t_tag_SPECIALCHARS( self, t ) :
         return t
 
-    @TOKEN( whitespac+openbrace )
-    def t_style_OPENBRACE( self, t ) :              # <---- `style` state
-        return t
-
     @TOKEN( escseq )
-    def t_style_ESCAPED( self, t ) :
+    def t_style_ESCAPED( self, t ) :                    # <---- `style` state
         return self._onescaped( t )
 
     @TOKEN( closebrace+whitespac )
@@ -566,12 +553,8 @@ class TTLLexer( object ) :
     def t_style_SPECIALCHARS( self, t ) :
         return t
 
-    @TOKEN( commentopen )
-    def t_comment_COMMENTOPEN( self, t ):           # <---- `comment` state
-        return t
-
     @TOKEN( commentclose )
-    def t_comment_COMMENTCLOSE( self, t ):
+    def t_comment_COMMENTCLOSE( self, t ):          # <---- `comment` state
         self._incrlineno(t)
         t.lexer.pop_state()
         return t
@@ -581,12 +564,8 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         return t
 
-    @TOKEN( filteropen )
-    def t_filter_FILTEROPEN( self, t ):             #<---- `filter` state
-        return t 
-
     @TOKEN( filterclose )
-    def t_filter_FILTERCLOSE( self, t ):
+    def t_filter_FILTERCLOSE( self, t ):            #<---- `filter` state
         self._incrlineno(t)
         t.lexer.pop_state()
         self._onemptyindent(t)

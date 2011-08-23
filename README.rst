@@ -25,7 +25,7 @@ Some interesting features in tayra are,
   ** expression substitution
   ** control-blocks like if-elif-else
   ** looping contructs like for / while
-* abstract templates using function blocks, with its own local scope.
+* templates abstraction using function blocks, with its own local scope.
 * import other template files into the local namespace and access their
   functions
 * template inheritance for re-usable web-layouting.

@@ -1,5 +1,11 @@
 include AUTHORS
+include CHANGELOG
+include COPYING
+include LICENSE
+include README
+include README.rst
 include RELEASE
+include ROADMAP
 
 recursive-include tayra *.etx *.css *.js
 recursive-include docs *.etx

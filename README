@@ -102,7 +102,7 @@ which,
   [<PRE python ./setup.py develop >]
 
 To start using the tayra package, enter the virtual environment by doing,
-``{c} source ./eazytext-env/bin/activate ``
+``{c} source ./tayra-env/bin/activate ``
 
 ''To create an egg packages'',
 

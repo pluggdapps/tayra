@@ -3,9 +3,6 @@ develop :
 	virtualenv tayra-env --no-site-packages
 	bash -c "source tayra-env/bin/activate ; python ./setup.py develop"
 
-testall :
-	echo "Pending ...."
-
 bench-setup :
 	bash -c "source tayra-env/bin/activate ; easy_install mako"
 	bash -c "source tayra-env/bin/activate ; easy_install cheetah"

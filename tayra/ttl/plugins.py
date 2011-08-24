@@ -6,4 +6,4 @@ class TestPlugins( object ):
 
     def implementers( self ):
         # return ['tayra:ttl/test/stdttl/implementer.ttl']
-        pass
+        return []

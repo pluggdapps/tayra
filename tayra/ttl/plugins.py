@@ -5,4 +5,5 @@ class TestPlugins( object ):
     implements( ITTLPlugins )
 
     def implementers( self ):
-        return ['tayra:ttl/test/stdttl/implementer.ttl']
+        # return ['tayra:ttl/test/stdttl/implementer.ttl']
+        pass

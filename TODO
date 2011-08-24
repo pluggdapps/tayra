@@ -2,3 +2,5 @@
   tayra using that.
 
 * Document the scope of escape (\) character.
+
+* ITTLPlugin under tayra/ttl/plugins.py is to be removed.

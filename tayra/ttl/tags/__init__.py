@@ -1,8 +1,8 @@
 import re
 from   copy                     import deepcopy
 
-from   zope.interface           import implements
 from   zope.component           import getGlobalSiteManager
+from   zope.interface           import implements
 
 from   tayra.ttl.interfaces     import ITayraTag
 
@@ -14,6 +14,7 @@ class Context( object ):
 
 class TagPlugin( object ):
     implements( ITayraTag )
+    pluginname = '_default'
 
     def dotag( self, node, igen, *args, **kwargs ):
         has_exprs = False
@@ -239,4 +240,4 @@ class TagPlugin( object ):
     def specstrings2attrs( self, strings ):
         return ' '.join(filter( None, strings ))
 
-gsm.registerUtility( TagPlugin(), ITayraTag, '_default' )
+gsm.registerUtility( TagPlugin(), ITayraTag, TagPlugin.pluginname )

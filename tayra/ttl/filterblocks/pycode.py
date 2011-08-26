@@ -7,6 +7,7 @@ gsm = getGlobalSiteManager()
 
 class PyCode( object ):
     implements( ITayraFilterBlock )
+    pluginname = 'pycode'
 
     def __init__( self, *args, **kwargs ):
         if args :
@@ -41,4 +42,4 @@ class PyCode( object ):
         pass
 
 # Register this plugin
-gsm.registerUtility( PyCode(), ITayraFilterBlock, 'pycode' )
+gsm.registerUtility( PyCode(), ITayraFilterBlock, PyCode.pluginname )

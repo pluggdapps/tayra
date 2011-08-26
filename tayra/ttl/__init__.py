@@ -136,7 +136,8 @@ def initplugins( ttlconfig, force=False ):
 
         # Load plugin packages
         packages = ttlconfig['plugin_packages']
-        packages = filter(None, [ x.strip(' \t') for x in packages ])
+        if isinstance( packages, basestring ):
+            packages = [ x.strip(' \t') for x in packages.split(',') ]
         [ __import__(pkg) for pkg in filter(None, packages) ]
 
         # Gather plugins template tag handlers, filter-blocks
@@ -145,10 +146,17 @@ def initplugins( ttlconfig, force=False ):
                 try    : namespace, tagname = x.name.rsplit('.', 1)
                 except : namespace, tagname = '', x.name
                 tagplugins[tagname] = x.component
-            if x.provided == ITayraFilterBlock :    # Filter blocks
+            elif x.provided == ITayraFilterBlock :    # Filter blocks
                 fbplugins[x.name] = x.component
-            if x.provided == ITayraEscapeFilter :   # Escape Filters
+            elif x.provided == ITayraEscapeFilter :   # Escape Filters
                 escfilters[x.name] = x.component
+            else :
+                continue
+            if not hasattr( x.component, 'pluginname' ) :
+                raise Exception(
+                    '%r plugin must have `pluginname` attribute' % x.component
+                )
+
         ttlconfig['tagplugins'] = tagplugins
         ttlconfig['fbplugins'] = fbplugins
         ttlconfig['escfilters'] = escfilters
@@ -166,13 +174,17 @@ def initplugins( ttlconfig, force=False ):
     init_status = 'done'
     return ttlconfig
 
-def queryTTLPlugin( interface, name='' ):
+
+def queryTTLPlugin( interface, name, *args, **kwargs ):
+    foriface = ttlplugins.get( interface, None )
+    if foriface == None : return None
+
     if name :
-        plugin = ttlplugins[interface][name]
-        return plugin() if callable(plugin) else plugin
+        p = foriface.get( name, None )
+        return p( *args, **kwargs ) if p and callable(p) else p
     else :
-        plugins = ttlplugins[interface].values()
-        return map( lambda p: callable(p) and p() or p, plugins )
+        return map( lambda p : p(*args, **kwargs) if callable(p) else p,
+                    foriface.values() )
 
 
 class BaseTTLPlugin( object ):

@@ -66,14 +66,15 @@ class ITayraTag( Interface ):
         """
 
     def handle( node ):
-        """Return a dictionary of tag->handler, where the handler is expected
+        """Called during runtime,
+        return a dictionary of tag->handler, where the handler is expected
         to have the following signature
             handler( mach, tagname, specifiers, style, attrs tagfinish )
         """
 
 class ITayraEscapeFilter( Interface ):
 
-    def __call__( self, mach, text, filterns=None ):
+    def do( self, mach, text, filterns=None ):
         """Apply the filter logic to the text string and return processed
         text.
 

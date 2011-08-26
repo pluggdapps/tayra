@@ -120,10 +120,10 @@ class StackMachine( object ) :
         if skip == None :                       # Pluggable filters
             for filt in self.def_escfilters :   # default filters
                 fn = self.escfilters.get( filt, None )
-                text = fn(self, text, filt) if fn else text
+                text = fn.do( self, text, filt ) if fn else text
             for filt, ns in filters :           # evaluate filters
                 fn = self.escfilters.get( filt, None )
-                text = fn(self, text, ns) if fn else text
+                text = fn.do( self, text, ns ) if fn else text
         return text
 
     def importas( self, ttlloc, modname, childglobals ):

@@ -5,6 +5,8 @@ syntax: glob
 *~
 tayra-env
 eggs/
+build/
+dist/
 yacctab.py
 parsetab.py
 parser.out

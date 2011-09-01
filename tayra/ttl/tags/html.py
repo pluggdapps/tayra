@@ -9,19 +9,19 @@ gsm = getGlobalSiteManager()
 class HtmlA( TagPlugin ):
     pluginname = 'html5.a'
     def specstrings2attrs( self, strings ):
-        return 'href=%s' % strings[0]
+        return 'href=%s' % strings[0] if strings else ''
 
 
 class HtmlAbbr( TagPlugin ):
     pluginname = 'html5.abbr'
     def specstrings2attrs( self, strings ):
-        return 'title=%s' % strings[0]
+        return 'title=%s' % strings[0] if strings else ''
 
 
 class HtmlArea( TagPlugin ):
     pluginname = 'html5.area'
     def specstrings2attrs( self, strings ):
-        return 'href=%s' % strings[0]
+        return 'href=%s' % strings[0] if strings else ''
 
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
@@ -45,13 +45,13 @@ class HtmlAudio( TagPlugin ):
         'metadata' : ' preload="metadata"',
         'none' : ' preload="none"',
     }
+    def specstrings2attrs( self, strings ):
+        return 'src=%s' % strings[0] if strings else ''
+
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         defattrs += ''.join([ self.atom2attr.get(x, '') for x in atoms ])
         return defattrs, []
-
-    def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0]
 
 
 class HtmlBase( TagPlugin ):
@@ -65,7 +65,7 @@ class HtmlBase( TagPlugin ):
 class HtmlBlockquote( TagPlugin ):
     pluginname = 'html5.blockquote'
     def specstrings2attrs( self, strings ):
-        return 'cite=%s' % strings[0]
+        return 'cite=%s' % strings[0] if strings else ''
 
 
 class HtmlButton( TagPlugin ):
@@ -102,17 +102,16 @@ class HtmlButton( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'formaction=%s' % strings[0]
+        return 'formaction=%s' % strings[0] if strings else ''
          
 
 class HtmlCanvas( TagPlugin ):
     pluginname = 'html5.canvas'
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        try :
-            defattrs += ' width="%s" height="%s"' % atoms[0].split(',')
-        except :
-            pass
+        for atom in atoms :
+            try : defattrs += ' width="%s" height="%s"' % atom.split(',')
+            except : pass
         return defattrs, []
 
 
@@ -120,7 +119,7 @@ class HtmlCol( TagPlugin ):
     pluginname = 'html5.col'
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        defattrs = ' span="%s"' % atoms[0] if atoms else ''
+        defattrs += ' span="%s"' % atoms[0] if atoms else ''
         return defattrs, []
 
 
@@ -128,7 +127,7 @@ class HtmlColgroup( TagPlugin ):
     pluginname = 'html5.colgroup'
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        defattrs = ' span="%s"' % atoms[0] if atoms else ''
+        defattrs += ' span="%s"' % atoms[0] if atoms else ''
         return defattrs, []
 
 class HtmlCommand( TagPlugin ):
@@ -144,7 +143,7 @@ class HtmlCommand( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'icon=%s' % strings[0]
+        return 'icon=%s' % strings[0] if strings else ''
 
 
 class HtmlDel( TagPlugin ):
@@ -155,7 +154,7 @@ class HtmlDel( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'cite=%s' % strings[0]
+        return 'cite=%s' % strings[0] if strings else ''
 
 class HtmlDetails( TagPlugin ):
     pluginname = 'html5.details'
@@ -169,14 +168,13 @@ class HtmlEmbed( TagPlugin ):
     pluginname = 'html5.embed'
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        try :
-            defattrs += ' width="%s" height="%s"' % atoms[0].split(',') if atoms else ''
-        except :
-            pass
+        for atom in atoms :
+            try : defattrs += ' width="%s" height="%s"' % atom.split(',')
+            except : pass
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0]
+        return 'src=%s' % strings[0] if strings else ''
 
 
 class HtmlFieldset( TagPlugin ):
@@ -184,7 +182,7 @@ class HtmlFieldset( TagPlugin ):
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         for atom in atoms :
-            if atom.startwith( 'form:' ):
+            if atom.startwith( 'f:' ):
                 defattrs += ' form="%s"' % atom.replace(',', ' ')
                 continue
         return defattrs, []
@@ -205,17 +203,17 @@ class HtmlForm( TagPlugin ):
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         for atom in atoms :
-            defattrs = self.atom2attr.get( atom, '' )
+            defattrs += self.atom2attr.get( atom, '' )
         return defattrs, atoms
 
     def specstrings2attrs( self, strings ):
-        return 'action=%s' % strings[0]
+        return 'action=%s' % strings[0] if strings else ''
 
 
 class HtmlHtml( TagPlugin ):
     pluginname = 'html5.html'
     def specstrings2attrs( self, strings ):
-        return 'manifest=%s' % strings[0]
+        return 'manifest=%s' % strings[0] if strings else ''
 
 
 class HtmlIframe( TagPlugin ):
@@ -230,15 +228,17 @@ class HtmlIframe( TagPlugin ):
             if atom.startswith( 'allow-' ) :
                 sandbox.append( atom )
                 continue
-            try :
-                defattrs += ' width="%s" height="%s"' % atom.split(',')
-            except :
-                defattrs += self.atom2attr.get( atom, '' )
+            s = self.atom2attr.get( atom, '' )
+            if s :
+                defattrs += s
+                continue
+            try : defattrs += ' width="%s" height="%s"' % atom.split(',')
+            except : pass
         defattrs += ' sandbox="%s"' % ','.join(sandbox) if sandbox else None
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0]
+        return 'src=%s' % strings[0] if strings else ''
 
 class HtmlImg( TagPlugin ):
     pluginname = 'html5.img'
@@ -251,14 +251,16 @@ class HtmlImg( TagPlugin ):
             if atom[0] == '#' :
                 defattrs += 'usemap="%s"' % atom
                 continue
-            try :
-                defattrs += ' width="%s" height="%s"' % tuple(atom.split(','))
-            except :
-                defattrs += self.atom2attr.get( atom, '' )
+            s = self.atom2attr.get( atom, '' )
+            if s :
+                defattrs += s
+                continue
+            try : defattrs += ' width="%s" height="%s"' % tuple(atom.split(','))
+            except : pass
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0]
+        return 'src=%s' % strings[0] if strings else ''
 
 
 class HtmlIns( TagPlugin ):
@@ -269,18 +271,19 @@ class HtmlIns( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'cite=%s' % strings[0]
+        return 'cite=%s' % strings[0] if strings else ''
 
 class HtmlLabel( TagPlugin ):
     pluginname = 'html5.label'
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        if atoms :
-            try : 
-                form, forel = atoms[0].split(':')
-                defattrs += ' form="%s" for="%s"' % (form.replace(',', ' '), forel)
-            except:
-                pass
+        forel = ''
+        for atom in atoms :
+            if atom.startswith( 'f:' ) :
+                defattrs += ' form="%s"' % atom
+            else :
+                forel += ' for="%s"' % atom
+        defattrs += forel
         return defattrs, []
 
 class HtmlLi( TagPlugin ):
@@ -288,7 +291,7 @@ class HtmlLi( TagPlugin ):
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         if atoms :
-            try : defattrs = ' value="%s"' % atoms[0]
+            try : defattrs += ' value="%s"' % atoms[0]
             except : pass
         return defattrs, []
 
@@ -296,12 +299,11 @@ class HtmlLink( TagPlugin ):
     pluginname = 'html5.link'
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        if atoms :
-            defattrs += ' type="%s"' % atoms[0].strip()
+        defattrs += ' type="%s"' % atoms[0].strip() if atoms else ''
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'href=%s' % strings[0]
+        return 'href=%s' % strings[0] if strings else ''
 
 class HtmlMenu( TagPlugin ):
     pluginname = 'html5.menu'
@@ -311,7 +313,7 @@ class HtmlMenu( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'label=%s' % strings[0]
+        return 'label=%s' % strings[0] if strings else ''
 
 class HtmlMeta( TagPlugin ):
     pluginname = 'html5.meta'
@@ -321,7 +323,7 @@ class HtmlMeta( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'content="%s"' % strings[0]
+        return 'content="%s"' % strings[0] if strings else ''
 
 class HtmlMeter( TagPlugin ):
     pluginname = 'html5.meter'
@@ -329,8 +331,8 @@ class HtmlMeter( TagPlugin ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         value = None
         for atom in atoms :
-            if atom.startswith('form:') :
-                defattrs = ' form="%s"' % form.replace(',', ' ')
+            if atom.startswith('f:') :
+                defattrs += ' form="%s"' % form.replace(',', ' ')
                 continue
             try :
                 parts = atom.split('<')
@@ -357,7 +359,7 @@ class HtmlObject( TagPlugin ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         for atom in atom :
             if atom.startswith( 'form:' ) :
-                defattrs = ' form="%s"' % form.replace(',', ' ')
+                defattrs += ' form="%s"' % form.replace(',', ' ')
                 continue
             try :
                 defattrs += ' width="%s" height="%s"' % atom.split(',')
@@ -367,7 +369,7 @@ class HtmlObject( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'data=%s' % strings[0]
+        return 'data=%s' % strings[0] if strings else ''
 
 class HtmlOl( TagPlugin ):
     pluginname = 'html5.ol'
@@ -396,13 +398,13 @@ class HtmlOl( TagPlugin ):
 class HtmlOptgroup( TagPlugin ):
     pluginname = 'html5.optgroup'
     def specstrings2attrs( self, strings ):
-        return 'label=%s' % strings[0]
+        return 'label=%s' % strings[0] if strings else ''
 
 
 class HtmlOption( TagPlugin ):
     pluginname = 'html5.option'
     def specstrings2attrs( self, strings ):
-        return 'value=%s' % strings[0]
+        return 'value=%s' % strings[0] if strings else ''
 
 
 class HtmlOutput( TagPlugin ):
@@ -426,7 +428,7 @@ class HtmlParam( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'value=%s' % strings[0]
+        return 'value=%s' % strings[0] if strings else ''
 
 
 class HtmlProgress( TagPlugin ):
@@ -441,7 +443,7 @@ class HtmlProgress( TagPlugin ):
 class HtmlQ( TagPlugin ):
     pluginname = 'html5.q'
     def specstrings2attrs( self, strings ):
-        return 'cite=%s' % strings[0]
+        return 'cite=%s' % strings[0] if strings else ''
 
 
 class HtmlScript( TagPlugin ):
@@ -464,7 +466,7 @@ class HtmlScript( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0]
+        return 'src=%s' % strings[0] if strings else ''
 
 
 class HtmlSource( TagPlugin ):
@@ -475,7 +477,7 @@ class HtmlSource( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0]
+        return 'src=%s' % strings[0] if strings else ''
 
 
 class HtmlStyle( TagPlugin ):
@@ -507,7 +509,7 @@ class HtmlTime( TagPlugin ):
         return defattrs, []
 
     def specstrings2attrs( self, strings ):
-        return 'datetime=%s' % strings[0]
+        return 'datetime=%s' % strings[0] if strings else ''
 
 for k,cls in globals().items() :
     if k.startswith( 'Html' ) :

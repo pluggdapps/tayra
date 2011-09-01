@@ -199,7 +199,8 @@ class TTLLexer( object ) :
 
     # Suffix definition for lookahead match for text
     style_text_s= r'(?!\}|\$\{)'                # till style_close, exprs_open
-    tabspace    = r' \t'
+    tabspace    = ' \t'
+    ws          = '\r\n' + tabspace
 
     commentopen = r'[%s]*<!--' % tabspace
     commenttext = r'(.|[\r\n])+?(?=-->)'                # Non greedy
@@ -212,8 +213,8 @@ class TTLLexer( object ) :
     nl          = r'(\n|\r\n)+'
     spac        = r'[%s]*' % tabspace
     space       = r'[%s]+' % tabspace
-    whitespac   = r'[\r\n%s]*' % tabspace
-    whitespace  = r'[\r\n%s]+' % tabspace
+    whitespac   = r'[%s]*' % ws
+    whitespace  = r'[%s]+' % ws
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9-_]+'
     # Escape newlines available for text, tag_text, style_text, exprs_text

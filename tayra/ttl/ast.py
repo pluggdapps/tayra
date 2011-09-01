@@ -354,9 +354,6 @@ class Template( NonTerminal ):
             igen.popreturn( astext=True )
             igen.codeindent( down='  ' )
         else :
-            # Comments and emptyspaces
-            if self.dirtyblocks :
-                self.dirtyblocks.generate( igen, *args, **kwargs )
             # Non body code
             self.siblings and self.siblings.generate( igen, *args, **kwargs )
             # finish body function
@@ -794,10 +791,9 @@ class InterfaceBlock( NonTerminal ):
         return filter(None, x)
 
     def _parseline( self, line ):
-        interface, signature = line.strip().split(' ', 1)
+        interface, signature = line.strip().split('(', 1)
         signature = '(' + signature
-        interfacename, method = interface.rsplit('.', 1)
-        methodname = method.strip('( ')
+        interfacename, methodname = interface.rsplit('.', 1)
         funcline = 'def ' + methodname + signature
         return interfacename, methodname, funcline
 
@@ -2213,7 +2209,7 @@ class TAGOPEN( Terminal ):
 
     def _tagname( self ):
         from  tayra.ttl.lexer import TTLLexer
-        return self.terminal.rstrip( TTLLexer.whitespac ).lstrip( '<!' )
+        return self.terminal.rstrip( TTLLexer.ws ).lstrip( '<!' )
 
     tagname = property( lambda self : self._tagname() )
 

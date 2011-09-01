@@ -86,8 +86,8 @@ class Compiler( object ):
             code = compile( pytext, self.ttlfile, 'exec' )
         else :
             pytext = self.topy( ttlhash=self.ttllookup.ttlhash )
-            code = compile( pytext, self.ttlfile, 'exec' )
             self.ttllookup.pytext = pytext
+            code = compile( pytext, self.ttlfile, 'exec' )
 
         if self.ttlconfig['memcache'] :
             self._memcache.setdefault( self.ttllookup.hashkey, code )

@@ -3,4 +3,15 @@
 
 * Document the scope of escape (\) character.
 
+* Document the special characters that are not allowed in tag-specifiers.
+
+* Document the special characters that are not allowed in content.
+
+Errors and warnings :
+
+* Flag error if @function is used in-place of @interface, and vice-versa.
+
+* Flag error if an interfaced is being declared as implemented but 
+  some of the methods are not implemented using @interface.
+
 * ITTLPlugin under tayra/ttl/plugins.py is to be removed.

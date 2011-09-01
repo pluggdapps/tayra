@@ -14,16 +14,19 @@ class Context( object ):
 
 class TagPlugin( object ):
     implements( ITayraTag )
-    pluginname = '_default'
 
     def dotag( self, node, igen, *args, **kwargs ):
         has_exprs = False
         specifiers, style, attributes = node.specifiers, node.style, node.attributes
-        spectext  = specifiers and specifiers.spectext
+        spectext  = specifiers and specifiers.spectext or ''
         styletext = style and style.styletext
         attrslist = attributes and attributes.attrslist
 
         items = []      # Items to stack-compute
+
+        # Tagname 
+        tagopen = node.TAGOPEN.dump(None)
+        tagnm   = self.maketagname( tagopen.strip(' \t\r\n')[1:] )
 
         # Specifier
         if spectext :           # Static specifier content
@@ -32,8 +35,8 @@ class TagPlugin( object ):
         elif specifiers :       # Dynamic specifier content
             fnspec, astext = lambda : specifiers.generate(igen, *args, **kwargs), True
             has_exprs = True
-        else :
-            tagspec = ''
+        else :                  # Empty specifier, by call them anyhow
+            tagspec = self.handle_specifiers( spectext )
             fnspec, astext = lambda : igen.puttext( tagspec ), True
         items.append( (fnspec, astext) )
 
@@ -61,19 +64,17 @@ class TagPlugin( object ):
             fnattrs = lambda : igen.puttext( tagattrs )
         items.append( (fnattrs, False) )# pop-out as list
     
-        tagopen = node.TAGOPEN.dump(None)
-        tagnm   = tagopen.strip(' \t\r\n')[1:]
         igen.puttext( tagnm )
         if has_exprs == False : # Tag definition is fully static
-            tagdef = tagopen + ' '.join(filter(None, [ tagspec, tagstyle, tagattrs ]))
+            tagdef = '<' + tagnm + ' ' + ' '.join(filter(None, [ tagspec, tagstyle, tagattrs ]))
             tagdef += node.TAGEND and node.TAGEND.dump(None) or ''
             tagdef += node.TAGCLOSE and node.TAGCLOSE.dump(None) or ''
             igen.puttext( tagdef )
         else :
             node.TAGOPEN.generate( igen, *args, **kwargs )
             [ node.stackcompute(igen, fn, astext=astext) for fn, astext in items ]
-            node.TAGEND and node.TAGEND.generate(igen, *args, **kwargs)
-            node.TAGCLOSE and node.TAGCLOSE.generate(igen, *args, **kwargs)
+            node.TAGEND and node.TAGEND.generate( igen, *args, **kwargs )
+            node.TAGCLOSE and node.TAGCLOSE.generate( igen, *args, **kwargs )
         igen.puttext( self.handle_tagclose(tagnm) if node.TAGCLOSE else '' )
         return has_exprs
 
@@ -153,13 +154,10 @@ class TagPlugin( object ):
         return t
 
     def handle_specifiers( self, spectext ):
-        if spectext :
-            attr, strings, atoms = self.parsespecifiers( spectext )
-            str2attrs = self.specstrings2attrs(strings) if strings else ''
-            atom2attrs, leftover = self.specatoms2attrs(atoms) if atoms else ('', [])
-            return ' ' + ' '.join(filter(None, [ attr, str2attrs, atom2attrs ]))
-        else :
-            return ''
+        attr, strings, atoms = self.parsespecifiers( spectext )
+        str2attrs = self.specstrings2attrs(strings)
+        atom2attrs, leftover = self.specatoms2attrs( atoms if atoms else [] )
+        return ' ' + ' '.join(filter(None, [ attr, str2attrs, atom2attrs ]))
 
     def handle_style( self, styletext ):
         return 'style="%s"' % styletext if styletext else ''
@@ -200,7 +198,7 @@ class TagPlugin( object ):
             attr.append( 'name="%s"' % name[0][1:] if name else '' )
 
         strings = filter( None, reduce( lambda x, t : x + list(t[:2]), parsed, [] ))
-        atoms   = filter( None, map( lambda t : t[2], parsed ))
+        atoms   = filter( None, map( lambda t : t[2].strip(), parsed ))
         return ' '.join(attr), strings, atoms
 
     atom2attr = {
@@ -240,4 +238,10 @@ class TagPlugin( object ):
     def specstrings2attrs( self, strings ):
         return ' '.join(filter( None, strings ))
 
-gsm.registerUtility( TagPlugin(), ITayraTag, TagPlugin.pluginname )
+    def maketagname( self, tagopen ):
+        return tagopen
+
+class HtmlDefault( TagPlugin ):
+    pluginname = '_default'
+
+gsm.registerUtility( HtmlDefault(), ITayraTag, HtmlDefault.pluginname )

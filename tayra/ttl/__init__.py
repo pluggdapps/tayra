@@ -10,8 +10,8 @@ from   paste.util.converters    import asbool
 # Import tag-plugins so that they can register themselves.
 import tayra.ttl.tags
 import tayra.ttl.tags.html
-import tayra.ttl.tags.customhtml
 import tayra.ttl.tags.forms
+import tayra.ttl.tags.customhtml
 # Import filterblock-plugins so that they can register themselves.
 import tayra.ttl.filterblocks.pycode
 # Import escapefilter-plugins so that they can register themselves.
@@ -40,7 +40,7 @@ defaultconfig = {
     # Default input endcoding for .ttl file.
     'input_encoding'    : DEFAULT_ENCODING,
     # Standard list of tag plugins to use
-    'usetagplugins'     : 'html5',
+    'usetagplugins'     : 'html5, html5.forms',
     # Don't bother about indentation for output html file
     'uglyhtml'          : True,
     # CSV list of plugin packages that needs to be imported, before compilation.
@@ -145,7 +145,10 @@ def initplugins( ttlconfig, force=False ):
             if x.provided == ITayraTag :            # Tag handlers
                 try    : namespace, tagname = x.name.rsplit('.', 1)
                 except : namespace, tagname = '', x.name
-                tagplugins[tagname] = x.component
+                if namespace in usetagplugins:
+                    tagplugins[tagname] = x.component
+                elif namespace == '' :
+                    tagplugins[tagname] = x.component
             elif x.provided == ITayraFilterBlock :    # Filter blocks
                 fbplugins[x.name] = x.component
             elif x.provided == ITayraEscapeFilter :   # Escape Filters

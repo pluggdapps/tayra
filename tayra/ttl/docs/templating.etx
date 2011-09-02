@@ -14,13 +14,6 @@ a template file into html.
     A boolean value, when //True// puts the tayra engine into development mode.
     For instance, the tempate file (text) is always translated, bypassing the
     cache even it available.
-: reload_templates ::
-    A boolean. Can be used with web-application, when the application is
-    running any changes made to the template file will automatically reload
-    it into the cache.
-: debug_templates ::
-    A boolean. Provided debug trace and a simple python console via web
-    in case of template errors.
 : strict_undefined ::
     A boolean to raise exceptions for undefined variables (variables that are
     neither defined in the template nor available from the context.

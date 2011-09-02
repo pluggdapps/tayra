@@ -1,3 +1,10 @@
+"""The following HTML5 elements pertain to browser form handling,
+    <keygen>
+    <button>,   <datalist>,
+    <fieldset>, <legend>,   <form>
+    <input>,    <label>,    <optgroup>, <option>    <select>    <textarea>
+"""
+
 import re
 
 from   zope.component       import getGlobalSiteManager

@@ -7,12 +7,6 @@ from   tayra.ttl.parser         import TTLParser
 from   tayra.ttl.codegen        import InstrGen
 from   tayra.ttl.runtime        import StackMachine, Namespace
 
-try :
-    import  paste.reloader
-    reloader = paste.reloader
-except :
-    pass
-
 class Compiler( object ):
     _memcache = {}
 
@@ -116,8 +110,7 @@ class Compiler( object ):
 
 
 class TemplateLookup( object ) :
-    TTLCONFIG = [ 'directories', 'module_directory', 'devmod',
-                  'reload_templates' ]
+    TTLCONFIG = [ 'directories', 'module_directory', 'devmod' ]
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         [ setattr( self, k, ttlconfig[k] ) for k in self.TTLCONFIG ]
         self.ttlconfig = ttlconfig
@@ -127,8 +120,6 @@ class TemplateLookup( object ) :
         if self.ttlloc :
             self.ttlfile = self._locatettl( self.ttlloc, self.directories )
             self.pyfile = self.computepyfile( ttlloc, ttlconfig )
-            if self.ttlfile and self.reload_templates and reloader :
-                reloader.watch_file( self.ttlfile )
         elif self._ttltext :
             self.ttlfile = '<Source provided as raw text>'
             self.pyfile = None

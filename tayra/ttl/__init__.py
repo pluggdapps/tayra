@@ -28,8 +28,6 @@ DEFAULT_ENCODING = 'utf-8'
 defaultconfig = {
     # Development mode settings
     'devmod'            : True,
-    'reload_templates'  : False,
-    'debug_templates'   : False,
     'strict_undefined'  : False,
     # List of directories to look for the .ttl file
     'directories'       : '.',
@@ -56,8 +54,6 @@ def normalizeconfig( config ):
     initialized with default value.
     """
     config['devmod'] = asbool( config['devmod'] )
-    config['reload_templates'] = asbool( config['reload_templates'] )
-    config['debug_templates'] = asbool( config['debug_templates'] )
     config['strict_undefined'] = asbool( config['strict_undefined'] )
     try :
         config['directories'] = [

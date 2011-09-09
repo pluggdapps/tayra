@@ -210,8 +210,8 @@ class TagPlugin( object ):
       'draglink'     : 'draggable="true" dragzone="link"',
       'nodrag'       : 'draggable="false"',
       'hidden'       : 'hidden',
-      'spellcheck'   : 'spellcheck="true',
-      'nospellcheck' : 'spellcheck="false',
+      'spellcheck'   : 'spellcheck="true"',
+      'nospellcheck' : 'spellcheck="false"',
       # dir
       'ltr'     : 'dir="ltr"',
       'rtl'     : 'dir="rtl"',

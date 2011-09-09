@@ -2,6 +2,9 @@ h3. Template language
 
 Roadmap for tayra templating language
 
+Move tayra.ttl.* to tayra.*, let us create a different project for CSS
+extension language.
+
 h4. Language syntax and feature.
 
 * Syntax to break the text. like,
@@ -23,6 +26,8 @@ h4. Language syntax and feature.
 
 * Enable wiki text as content selectable using the tag's specifier. like,
     <div etx> **hello** world
+
+* Decorator for generating HTML based on client-agent.
 
 h4. Other features and functions.
 

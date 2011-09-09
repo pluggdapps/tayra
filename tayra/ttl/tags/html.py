@@ -210,6 +210,12 @@ class HtmlForm( TagPlugin ):
         return 'action=%s' % strings[0] if strings else ''
 
 
+class HtmlHead( TagPlugin ):
+    pluginname = 'html5.head'
+    def specstrings2attrs( self, strings ):
+        return 'manifest=%s' % strings[0] if strings else ''
+
+
 class HtmlHtml( TagPlugin ):
     pluginname = 'html5.html'
     def specstrings2attrs( self, strings ):

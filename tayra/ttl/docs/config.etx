@@ -1,7 +1,0 @@
-`ttlconfig` is chained all the way from the caller (who had to supply that as part
-of Renderer() argument) to all the template objects and related that are invoked via @import
-and @inherit directives.
-
-While compiling and executing a template, the following class's objects will
-have access to `ttlconfig`,
-    Compiler, StackMachine, InstrGen

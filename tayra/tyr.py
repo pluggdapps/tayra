@@ -14,10 +14,7 @@
 
 from   optparse             import OptionParser
 from   os.path              import isfile
-
 import tayra
-import tayra.ttl
-import tayra.ttl.tags
 
 def _option_parse() :
     '''Parse the options and check whether the semantics are correct.'''

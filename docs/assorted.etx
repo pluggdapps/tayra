@@ -1,0 +1,29 @@
+h3. Creating and distributing template plugins
+
+A key strength in tayra templates is that it is possible to create template
+blocks are plugins and distribute them as packages. During the init-phase of
+tayra-module, all such template-plugins will be detected, compiled and loaded
+into the memory to be queried and consumed by others.
+
+h4. Interface specification
+
+h4. Implementing interface specifications (a.k.a plugin)
+
+h4. Exporting plugins
+
+Template-plugins will have to be automatically loaded during tayra-module
+initialization. This can happen only when there is a mechanism that provides a
+list of plugin implementers (as .ttl files) as part of package entry-point.
+Something like,
+{{{ Code ini
+  [tayra.plugins]
+  ITTLPlugin = bootstrap.implement:TTLPlugins
+}}}
+to be more specific, //ITTLPlugin// is the interface specification for this
+entry point.
+
+:Gotcha ::
+    Plugin implementers please note that the TTL plugins should have any
+    code executing in the global context (for instance, using ``{b}fb-pycode
+    global``) that depends on other plugins, it is bound to fail or
+    trigger an error.

@@ -1,0 +1,5 @@
+!!! html;
+@implement tayra.interfaces:ITestInterface as testinterface ;
+
+@interface ITestInterface.render( *args, **kwargs ):
+  <div> interface successfully invoked

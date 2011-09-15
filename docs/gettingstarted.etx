@@ -1,20 +1,5 @@
 {{ Toc( float='right' ) }}
 
-h3. Overview
-
-Tayra templating is a full-featured abstract markup language used to describe
-web-documents. It is primarily inspired from
-[[ http://www.makotemplates.org/ | mako-templates ]] and
-[[ http://haml-lang.com/ | HAML ]] (especially the indentation based
-markup definitions). Although it is young and relatively a new kid among
-the old-timers, it can be considered as the evolutionary next step for some of
-them ( if not all :) ). And probably it is the only templating
-language that allows developers to build and distribute their templates
-as plugins, not to mention the fact that tayra's implementation itself is
-heavily based on plugins. We will finish this short introduction by stating
-that, inspite of being a younger sibling to its likes, it is faster than many
-of them.
-
 h3. Install tayra
 
 Installing via package management
@@ -70,7 +55,7 @@ in your python path, use the command-line tool, like,
 h3. Using it as library, in python
 
 {{{ Code python
-    from   tayra  import Renderer
+    from   tayraimport Renderer
 
     # `ttlloc` specifies the path to template file, ttlloc is interpreted as
     # relative path or asset specification format
@@ -85,46 +70,69 @@ h3. Using it as library, in python
 
 }}}
   
-h3. Development
+h3. Start templating
 
-It is always better to setup the development tree under a virtual environemnt.
-To begin with, first checkout the source tree from the latest repository tree
-and then use the ''make'' command to create a development environment.
+It starts with your .ttl file, where ''ttl'' stands for tayra template language.
+Open your favorite editor and we will start writing our first template.
+Ofcourse our first template is going to be a welcome message to this world.
 
-{{{ Code sh
-  cd tayra
-  make develop
+{{{ Code ttl
+
+## File name : eg1.ttl
+
+<html>
+  <head>
+  <body>
+    <p> hello world
 }}}
 
-which,
-* sets-up a virtual environment under // tayra-env/ // directory.
-* Installs tayra under the virtual environment in development mode,
-  [<PRE python ./setup.py develop >]
-
-To start using the tayra package, enter the virtual environment by doing,
-``{c} source ./tayra-env/bin/activate ``
-
-''To create an egg packages'',
+Let us now translate this to a html document,
 
 {{{ Code bash
-  make bdist_egg        # For creating binary distribution
-  make sdist            # For creating source distribution
+# Assuming that tayra is available in your environment,
+$ tayra/tyr.py eg1.ttl
 }}}
 
-The .egg package will be availabe under dist/ directory
+which looks like,
 
-''To test the package'',
-
-{{{ Code bash
-  source tayra-env/bin/activate
-  make test
+{{{ Code html
+# { 'background-color' : '#EEE' }
+<html>
+  <head></head>
+  <body>
+    <p> hello world</p>
+  </body>
+</html>
 }}}
 
-''Finally, Build the egg and upload it into pypi''
+Now, we will add an id and couple of class attributes to the paragraph tag that
+contains the //hello world// text.
 
-{{{ Code bash
-  make upload
+{{{ Code ttl
+
+## File name : eg1.ttl
+
+<html>
+  <head>
+  <body>
+    <p#welcome.intro.highlight> hello world
 }}}
+
+''#welcome'' attributes the tag with id-name //welcome// and
+''.intro.highlight'' attributes the tag with class-names //intro// and
+//highlight//. And our translated html looks like
+
+{{{ Code html
+# { 'background-color' : '#EEE' }
+<html>
+  <head></head>
+  <body>
+    <p id="welcome" class="intro highlight"> hello world</p>
+  </body>
+</html>
+}}}
+
+That is all it takes to get you started. You will know everything about tayra here.
 
 -----
 
@@ -133,4 +141,3 @@ The .egg package will be availabe under dist/ directory
 Document edited using Vim <br>
 /* vim: set filetype=etx : */
 }}}
-

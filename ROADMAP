@@ -2,9 +2,6 @@ h3. Template language
 
 Roadmap for tayra templating language
 
-Move tayra.ttl.* to tayra.*, let us create a different project for CSS
-extension language.
-
 h4. Language syntax and feature.
 
 * Syntax to break the text. like,

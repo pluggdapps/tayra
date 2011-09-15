@@ -43,8 +43,8 @@ setup(
         'console_scripts' : [
            'tayra = tayra.tyr:main',
         ],
-        'tayra.ttlplugins' : [
-            'ITTLPlugin = tayra.ttl.plugins:TestPlugins',
+        'tayra.plugins' : [
+            'ITTLPlugin = tayra.plugins:TestPlugins',
         ],
     },
     install_requires=[                      # setuptools

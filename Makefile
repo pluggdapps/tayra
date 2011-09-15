@@ -12,7 +12,7 @@ bench-setup :
 	bash -c "source tayra-env/bin/activate ; easy_install myghty"
 
 benchmark :
-	cd tayra/ttl/test/bench/ ; bash -c "source tayra-env/bin/activate; ./basic.py"
+	cd tayra/test/bench/ ; bash -c "source tayra-env/bin/activate; ./basic.py"
 
 bdist_egg :
 	python ./setup.py bdist_egg
@@ -38,9 +38,9 @@ clean :
 	rm -rf `find ./ -name "*.pyc"`;
 	rm -rf `find ./ -name "yacctab.py"`;
 	rm -rf `find ./ -name "lextab.py"`;
-	rm -f tayra/ttl/test/stdttl/*.ttl.py;
-	rm -f tayra/ttl/test/stdttl/*.html;
-	rm -f tayra/ttl/test/bench/tayra/*.html;
-	rm -f tayra/ttl/test/bench/tayra/*.ttl.py;
-	rm -f tayra/ttl/test/tagsttl/*.html;
-	rm -f tayra/ttl/test/tagsttl/*.ttl.py;
+	rm -f tayra/test/stdttl/*.ttl.py;
+	rm -f tayra/test/stdttl/*.html;
+	rm -f tayra/test/bench/tayra/*.html;
+	rm -f tayra/test/bench/tayra/*.ttl.py;
+	rm -f tayra/test/tagsttl/*.html;
+	rm -f tayra/test/tagsttl/*.ttl.py;

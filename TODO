@@ -14,4 +14,4 @@ Errors and warnings :
 * Flag error if an interfaced is being declared as implemented but 
   some of the methods are not implemented using @interface.
 
-* ITTLPlugin under tayra/ttl/plugins.py is to be removed.
+* ITTLPlugin under tayra/plugins.py is to be removed.

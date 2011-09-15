@@ -1,7 +1,0 @@
-!!! html;
-@use tayra.ttl.interfaces:ITestInterface ${plugin} as iface;
-
-<html>
-  <head>
-  <body>
-    ${ iface.render() }

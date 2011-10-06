@@ -3,6 +3,9 @@ Rlease check-list
 
 * Fix copyright header in all the files.
 
+* `defaultconfig` under tayra/__init__.py must be consistent with
+  docs/config.etx document. Must also be consistent with pluggdapps-bootstrap
+  definition of tayra config parameters.
 * Change the release version in 
     ./CHANGELOG,
     ./tayra/__init__.py

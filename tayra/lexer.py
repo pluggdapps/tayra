@@ -202,6 +202,14 @@ class TTLLexer( object ) :
     tabspace    = ' \t'
     ws          = '\r\n' + tabspace
 
+    nl          = r'(\n|\r\n)+'
+    spac        = r'[%s]*' % tabspace
+    space       = r'[%s]+' % tabspace
+    whitespac   = r'[%s]*' % ws
+    whitespace  = r'[%s]+' % ws
+    atom        = r'[a-zA-Z0-9\._\#-]+'
+    tagname     = r'[a-zA-Z0-9-_]+'
+
     commentopen = r'[%s]*<!--' % tabspace
     commenttext = r'(.|[\r\n])+?(?=-->)'                # Non greedy
     commentclose= r'-->[%s]*' % tabspace
@@ -210,13 +218,6 @@ class TTLLexer( object ) :
     pass_       = r'@@pass(\n|\r\n)+'
     emptyspace  = r'^[%s]+(\n|\r\n)+' % tabspace
     indent      = r'^[ ]+'
-    nl          = r'(\n|\r\n)+'
-    spac        = r'[%s]*' % tabspace
-    space       = r'[%s]+' % tabspace
-    whitespac   = r'[%s]*' % ws
-    whitespace  = r'[%s]+' % ws
-    atom        = r'[a-zA-Z0-9\._\#-]+'
-    tagname     = r'[a-zA-Z0-9-_]+'
     # Escape newlines available for text, tag_text, style_text, exprs_text
     text        = r'[^\r\n<${\\]+'
     tag_text    = r'[^%s\r\n/>${"\'=\\]+' % tabspace
@@ -236,14 +237,14 @@ class TTLLexer( object ) :
     inherit     = r'^@inherit.*?' + suffix1
     use         = r'^@use.*?' + suffix1
 
-    interface   = r'^@interface.*?' + suffix2
+    interface   = r'^@interface(.|\n)*?%s' % (suffix2,)  # Matches newlines
 
-    function    = r'@function.*?' + suffix2
-    if_         = r'@if.*?' + suffix2
-    elif_       = r'@elif.*?' + suffix2
-    else_       = r'@else.*?' + suffix2
-    for_        = r'@for.*?' + suffix2
-    while_      = r'@while.*?' + suffix2
+    function    = r'@function(.|%s)*?%s' % (ws, suffix2)    # Matches newlines
+    if_         = r'@if(.|%s)*?%s' % (ws, suffix2)          # Matches newlines
+    elif_       = r'@elif(.|%s)*?%s' % (ws, suffix2)        # Matches newlines
+    else_       = r'@else(.|%s)*?%s' % (ws, suffix2)        # Matches newlines
+    for_        = r'@for(.|%s)*?%s' % (ws, suffix2)         # Matches newlines
+    while_      = r'@while(.|%s)*?%s' % (ws, suffix2)       # Matches newlines
     filteropen  = r':fb-%s' % atom
     filtertext  = r'(.|[\r\n])+?(?=:fbend)'             # Non greedy
     filterclose = r':fbend[%s]*(\n|\r\n)*' % tabspace
@@ -345,6 +346,8 @@ class TTLLexer( object ) :
     def t_INTERFACE( self, t ) :
         self._incrlineno(t)
         self._onemptyindent(t)
+        # Replace new lines with spaces.
+        t.value = ' '.join( t.value.splitlines() )
         return t
 
     @TOKEN( emptyspace )

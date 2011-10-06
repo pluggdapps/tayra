@@ -12,7 +12,7 @@ bench-setup :
 	bash -c "source tayra-env/bin/activate ; easy_install myghty"
 
 benchmark :
-	cd tayra/test/bench/ ; bash -c "source tayra-env/bin/activate; ./basic.py"
+	cd tayra/test/bench/; bash -c "source tayra-env/bin/activate; ./basic.py"
 
 bdist_egg :
 	python ./setup.py bdist_egg

@@ -1,9 +1,17 @@
-h3. Creating and distributing template plugins
+glossary :
 
-A key strength in tayra templates is that it is possible to create template
-blocks are plugins and distribute them as packages. During the init-phase of
-tayra-module, all such template-plugins will be detected, compiled and loaded
-into the memory to be queried and consumed by others.
+: .ttl ::
+    Extension of files containing tayra templates. These templates can be
+    compiled into an intermediate //.py// file which can them be loaded
+    and executed (with context) to generate the final .html file.
+
+    A key strength in tayra templates is that it is possible to create template
+blocks as plugins and distribute them as packages. Tayra package comes with
+initialization routines that can be used to pre-load the template plugins
+provided by installed packages. If this initialization is not done explicitly,
+it will automatically be done when compiling a .ttl file.
+    Once template-plugins are loaded, they can be queried and consumed by parent
+parent templates generating the final page.
 
 h4. Interface specification
 

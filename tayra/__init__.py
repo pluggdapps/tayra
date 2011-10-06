@@ -1,4 +1,29 @@
-import time, codecs
+# This file is subject to the terms and conditions defined in
+# file 'LICENSE', which is part of this source code package.
+#       Copyright (c) 2010 SKR Farms (P) LTD.
+
+"""Package code handles following functions,
+
+* Command script APIs for,
+  * dump(), regenerate ttl text from its AST, formed by parsing the text.
+  * show(), display AST in human readable form.
+  * Compile .ttl file into .ttl.py file and finally generate the .html file.
+* API for web frameworks to render tayra-templates.
+* API to query TTLPlugins. Template plugins implemented using Tayra template
+  language in .ttl files.
+* Import modules implementing plugins, which are expected to be registered with
+  global-site-manager by modules themselves.
+* Define package version.
+* Default configuration for template engine.
+* Normalization function for configuration values.
+* Plugin initialization, loading and setting-up tag-plugins, plugins defining
+  escape filters (for expression substitution) and filter blocks.
+* Find template plugins defined in setuptools packages, compile them and load
+  them registering the Template plugins. queryTTLPlugin() works only after
+  this this is successfully completed.
+"""
+
+import codecs
 from   os.path                  import dirname, basename, join
 from   copy                     import deepcopy
 from   datetime                 import datetime as dt
@@ -7,6 +32,8 @@ from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
 from   paste.util.converters    import asbool
 
+from   tayra.interfaces import ITayraTag, ITayraFilterBlock, ITayraEscapeFilter
+from   tayra.parser     import TTLParser
 # Import tag-plugins so that they can register themselves.
 import tayra.tags
 import tayra.tags.html
@@ -17,37 +44,85 @@ import tayra.filterblocks.pycode
 # Import escapefilter-plugins so that they can register themselves.
 import tayra.escfilters.common
 
-from   tayra.interfaces         import ITayraTag, ITayraFilterBlock, \
-                                       ITayraEscapeFilter
-from   tayra.parser             import TTLParser
-
 __version__ = '0.1dev'
 
-EP_TTLGROUP = 'tayra.ttlplugins'
+EP_TTLGROUP = 'tayra.plugins'
 EP_TTLNAME  = 'ITTLPlugin'
 DEFAULT_ENCODING = 'utf-8'
 
-defaultconfig = {
-    # Development mode settings
-    'devmod'            : True,
-    'strict_undefined'  : False,
-    # List of directories to look for the .ttl file
-    'directories'       : '.',
-    # path to store the compiled .py file (intermediate file)
-    'module_directory'  : None,
-    # CSV of escape filter names to be applied for expression substitution
-    'escape_filters'    : '',
-    # Default input endcoding for .ttl file.
-    'input_encoding'    : DEFAULT_ENCODING,
-    # Standard list of tag plugins to use
-    'usetagplugins'     : 'html5, html5.forms',
-    # Don't bother about indentation for output html file
-    'uglyhtml'          : True,
-    # CSV list of plugin packages that needs to be imported, before compilation.
-    'plugin_packages'   : '',
-    # In memory cache for compiled ttlfile
-    'memcache'          : True,
-    'text_as_hashkey'   : False,
+defaultconfig = h.ConfigDict()
+defaultconfig.__doc__ = """Configuration settings for tayra template engine."""
+defaultconfig['devmod']    = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "A boolean value, when //True// puts the tayra engine in "
+                "development mode. For instance, the tempate file (text) is "
+                "always translated, bypassing the cache even if available."
+
+}
+defaultconfig['strict_undefined']    = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "Boolean to raise exception for un-defined context variables. "
+                "If set to false, undefined variables will be silently "
+                "digested as 'None' string. "
+}
+defaultconfig['directories']             = {
+    'default' : '.',
+    'types'   : ('csv', list),
+    'help'    : "Comma seperated list of directory path to look for a "
+                "template file. the default will be the current-directory."
+
+}
+defaultconfig['module_directory']        = {
+    'default' : None,
+    'types'   : (str,),
+    'help'    : "Directory path telling the compiler where to persist (cache) "
+                "intermediate python file."
+}
+defaultconfig['escape_filters']          = {
+    'default' : '',
+    'types'   : ('csv', list),
+    'help'    : "Comma seperated list of default escape filters to be applied "
+                "during expression substitution."
+}
+defaultconfig['input_encoding']          = {
+    'default' : 'utf-8',
+    'types'   : (str,),
+    'help'    : "Default input endcoding for .ttl file."
+}
+defaultconfig['usetagplugins']           = {
+    'default' : ['html5', 'html5.forms'],
+    'types'   : ('csv', list),
+    'help'    : "Comma seperated list of tag plugin namespaces to use. Only "
+                "plugins that are registered under the requested namespace will "
+                "be used to generate the html."
+}
+defaultconfig['uglyhtml']                = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "Boolean, to freely generate the output html file without "
+                "bothering about indentation."
+}
+defaultconfig['plugin_packages']         = {
+    'default' : '',
+    'types'   : ('csv', list),
+    'help'    : "Comma seperated list of plugin packages that needs to be "
+                "imported, before compiling the template files."
+}
+defaultconfig['memcache']                = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "Cache the compiled python code in-memory to avoid "
+                "re-generation of the .py file and compiling the same."
+}
+defaultconfig['text_as_hashkey']         = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "To be used with 'memcache' option, where the cache tag "
+                "will be computed using the .ttl file's text content. This "
+                "will have a small performance penalty instead of using "
+                "template's filename as key."
 }
 
 def normalizeconfig( config ):
@@ -103,6 +178,7 @@ def _findttls():
     return [ ( pkgname, ep.load()().implementers() )
              for pkgname, ep in entrypoints.items() ]
 
+
 def _loadttls( ttllocs, ttlconfig, context={} ):
     """Only when the plugins are compile and loaded, it is available for rest
     of the system.
@@ -111,9 +187,10 @@ def _loadttls( ttllocs, ttlconfig, context={} ):
     [ Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig ).execttl( context=context )
       for ttlloc in ttllocs ]
 
+
 ttlplugins = {}         # { interfaceName : {plugin-name: instance, ... }, ... }
 tagplugins = {}         # { plugin-name   : (instance, hander-dict), ... }
-fbplugins  = {}         # { plugin-name   : instance }
+fbplugins = {}          # { plugin-name   : instance }
 escfilters = {}         # { plugin-name   : instance }
 init_status = 'pending'
 def initplugins( ttlconfig, force=False ):
@@ -171,12 +248,19 @@ def initplugins( ttlconfig, force=False ):
             if getattr( x.component, 'itype', None ) == 'ttlplugin' :
                 z = ttlplugins.setdefault( x.provided, {} )
                 z.setdefault( x.name, x.component )
+        ttlconfig['ttlplugins'] = ttlplugins
 
     init_status = 'done'
     return ttlconfig
 
 
 def queryTTLPlugin( interface, name, *args, **kwargs ):
+    """Query for template plugins providing ``interface`` and registered
+    under ``name``. If ``name`` is None, then a list of plugins providing
+    (a.k.a implementing) the ``interface`` will be returned. If __call__
+    method is defined by the template plugin component, a new clone of it
+    will be created by calling the component with ``args`` and ``kwargs``.
+    """
     foriface = ttlplugins.get( interface, None )
     if foriface == None : return None
 
@@ -189,6 +273,8 @@ def queryTTLPlugin( interface, name, *args, **kwargs ):
 
 
 class BaseTTLPlugin( object ):
+    """Base class for all plugins implementing one or more template
+    interfaces."""
     def __init__( self, *args, **kwargs ):
         self.args = args
         self.kwargs = kwargs
@@ -200,12 +286,15 @@ class BaseTTLPlugin( object ):
 #---- APIs for executing Tayra Template Language
 
 class Renderer( object ):
+    """Render a template into HTML.
+
+    `ttlconfig` parameter will find its way into every object defined
+    by the templating engine.
+
+    TODO : somehow find a way to pass the arguments to `body` function
+    """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
-        """`ttlconfig` parameter will find its way into every object defined
-        by the templating engine.
-            TODO : somehow find a way to pass the arguments to `body` function
-        """
-        ttlconfig_ = deepcopy( defaultconfig )
+        ttlconfig_ = deepcopy( defaultconfig.items() )
         ttlconfig_.update( ttlconfig )
         # Initialize plugins
         self.ttlconfig = initplugins( ttlconfig_, force=ttlconfig_['devmod'] )
@@ -230,7 +319,7 @@ class Renderer( object ):
 def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.compiler       import Compiler
 
-    ttlconfig = deepcopy( defaultconfig )
+    ttlconfig = deepcopy( defaultconfig.items() )
     # directories, module_directory, devmod
     ttlconfig.update( kwargs )
     ttlconfig.setdefault( 'module_directory', dirname( ttlloc ))

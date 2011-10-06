@@ -49,7 +49,7 @@ def main() :
         print tayra.__version__
 
     elif args and isfile( args[0] ) :
-        tayra.ttl.ttl_cmdline(
+        tayra.ttl_cmdline(
             args[0],
             args=options.args,
             context=options.context,

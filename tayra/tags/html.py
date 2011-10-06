@@ -89,7 +89,7 @@ class HtmlButton( TagPlugin ):
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         for atom in atoms :
-            attr = atom2attr.get( atom, None )
+            attr = self.atom2attr.get( atom, None )
             if attr != None :
                 defattrs += attr
                 continue
@@ -139,7 +139,7 @@ class HtmlCommand( TagPlugin ):
     }
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
-        defattrs += atom2attr[atoms[0]] if atoms else ''
+        defattrs += self.atom2attr[atoms[0]] if atoms else ''
         return defattrs, []
 
     def specstrings2attrs( self, strings ):

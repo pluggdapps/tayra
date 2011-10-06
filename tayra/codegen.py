@@ -24,6 +24,7 @@ interfaceClass = """
 from  %s import %s
 class %s( BaseTTLPlugin ):
   implements(%s)
+  pluginname = %r
   itype = 'ttlplugin'"""
 
 class InstrGen( object ) :
@@ -181,7 +182,8 @@ class InstrGen( object ) :
             # Define interface implementer class
             module, interfacename, pluginname = implements[i]
             infcls = 'Interface_' + str(i+1)
-            codeblock = interfaceClass % (module, interfacename, infcls, interfacename)
+            codeblock = interfaceClass % (
+                    module, interfacename, infcls, interfacename, pluginname)
             # hitch methods with interface class
             methodlines = [ '  %s = %s' % ( method, method )
                             for method in interfaces_.get(interfacename, []) ]

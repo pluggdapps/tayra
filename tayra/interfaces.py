@@ -1,10 +1,27 @@
 from zope.interface import Interface
 
 class ITayraPlugin( Interface ):
-    """Base class for all `tayra` interface specifications."""
+    """The design of tayra template language is heavily based on plugins. The
+    lexer and parser are just a glue logic over a very sophisticated plugin
+    framework which does most of the language level heavy lifting. The plugin
+    architecture is based on Zope Component Architecture (ZCA) with interfaces
+    specifying how plugins need to be implemented and consumed. ITayraPlugin
+    acts as the base class for all of tayra's interface specifications, which
+    are,
+        > ITayraTag
+        > ITayraEscapeFilter
+        > ITayraFilterBlock
+    ''Note that these interface specs. have nothing to do with template plugins
+    that can be created using TTL (Tayra Template Language).''
+    """
 
 class ITayraTag( ITayraPlugin ):
-    """Defines the plugin that handles tag generattion. This will will be used
+    """Tayra templating is a HTML templating tool (it can also be used for any
+    xml compatible markups). Assuming that you are familiar with HTML, we will
+    explain how tags are generated while translating a .ttl file into .html
+    format.
+
+    Defines the plugin that handles tag generattion. This will will be used
     by the AST node, TagLine and TagBlock during every pass, i.e headpass1,
     headpass2, generate, tailpass.
 

@@ -1,0 +1,179 @@
+The following is a non-exhaustive reference to tayra template language.
+For practical purposes, //getting-started// guide and //tutorial// text
+are enough to get you started with tayra templating. Nevertheless,
+having a broader picture on its syntax and semantics will help you further.
+
+The following are the key ideas behind tayra templating language.
+# Tayra is a text processing language, more specifically it is suited for
+  HTML or XML templating.
+# All programmable expressions, statements and other language-like concepts
+  are nothing but pure python, wrapped with convenient syntax.
+# TTL (Tayra Template Language) files are compiled into python text containing
+  stack-machine instructions, interpreted using a stack machine object.
+# Language syntax is just a glue logic to access a plugin framework that does
+  most of the heavy lifting. There are atleast three interface specifications
+  for plugins to implement their logic.
+# Almost every aspect of language functionalities (except the programmable
+  parts) are extensible via plugins.
+# Define template-interfaces and implement them as plugins. Probably, Tayra is
+  the only template engine that enables frontend designers (HTML/CSS/JS) to
+  define, create and distribute their templates as plugins.
+
+We will first define couple of terms that will keep recurring through out the
+text,
+
+: indentation ::
+  HTML is all about nested tags and text content. A HTML document is naturally
+  organised as a tree with a root-node. Hence tayra took its inspiration
+  from HAML (ruby community) and imposes a strict indentation between
+  parent tag and its children. Each indentation level takes up 2 blank-space,
+  thus, for a child tag that is nested 3 levels deep should have 6
+  blank-spaces. The indentation syntax is followed very strictly unless
+  otherwise explicitly mentioned.
+: tag ::
+  A tag in a .ttl text has an exact correspondence to HTML tags. It starts with
+  ''<'', a //tagname// followed by a sequence of //attributes//
+  (name,value pairs) finally ends with ''>''. Other than this, it can also
+  contain, //expressions//, //specifiers// and //styles// within its
+  angle-brackets.
+: expressions ::
+  A key requirement in dynamically generating HTML page, is to be able to
+  substitute variable content inside the template. In tayra, like many other
+  templating language, substitution is performed using [<PRE ${ ... } >]
+  syntax. Text between //${// and //}// will be interpreted as python
+  expression, and the value emitted by the expression shall be stringified.
+: specifiers ::
+  Specifiers are tokens (more specifically atoms and string) that can be
+  specified inside a tag element. There are standard specifiers that are common
+  to all ttl tag elements. Also, corresponding tag-handlers can define their
+  own specifier syntax.
+: style ::
+  HTML //style// attribute is quite often used element attribute (few
+  might suggest to separate styling into CSS file, nevertheless!), hence a
+  special syntax is provided off-the-shelf, [<PRE { ... } >]. Text between
+  curly brace will be interpreted as the element's style.
+: attributes ::
+  Tag attributes are same as attributes defined by HTML. They will be translated
+  as it is.
+: tag-handlers ::
+  Tag handlers are plugins that handle ttl tag elements. If no tag-handlers are
+  registered for the //tagname//, a default handler will be used to translate
+  the tag element in safest possible way.
+: directives ::
+  Directives are meta constructs that provide more information on how to
+  interpret rest of the TTL text. Specifying document-type, importing other ttl
+  files, inhertance and plugin definition are possible through directives.
+: statements ::
+  Statements are programmable logic that spans an entire line and typically
+  starts with ''@'' or ''@@''
+: comment ::
+  Two types are commenting are allowed, one that will be translated along with
+  ttl text and the other that will be ignored silently.
+: filter-blocks ::
+  Filter blocks are blocks of text that does not follow intendation rules and
+  have their own parsing logic.
+
+h3. Directives
+
+h4. Importing another template
+
+h4. Passing arguments to templates
+
+h3. Anatomy of tag definitions
+
+h4. Specifiers
+
+h4. Style 
+
+h4. Attributes
+
+h4. Implementing plugins for tag handlers
+
+h3. Expression substitution
+
+h4. Escape filters for expression substitution
+
+h4. Implementing plugins for escape filters
+
+h3. Control logic
+
+h3. Functions
+
+h3. Creating and using template plugins
+
+Probably, tayra is the only template language that enable designers to define,
+create and distribute their template code as plugins. The first step while
+creating a plugin is by specifying an interface to the plugin's template, the
+whole purpose of template-interface is to create adaptable and re-usable 
+template blocks (a.k.a functions in programming parlance). Specifying template
+interfaces are always coded as python class inside a python module, and these
+modules must be importable 
+
+h4. Plugin specification
+
+h4. Plugin definition
+
+h4. Using template plugins inside your template
+
+h3. Extending tayra with plugins
+
+h3. Comments
+
+h3. Filter blocks
+
+h4. Implementing plugins for filter blocks.
+
+h3. Miscellaneous
+
+Tayra templating language is made up of grammars with special tokens i.e few
+characters and sequence of characters are interpreted differently. Hence
+template authors should take special care when using them. Sometimes, it is
+required to have the special characters part of the text. This document gives an
+overview of how to handle such scenarios.
+
+Tayra is indentation oriented. Hence beginning of a line and beginning text (non
+whitespace) of a line are specially treated. Characters that are special when
+occuring in the begnining of a line.
+* ''whitespace'', if the line begins with a blank-space, it will be consumed as
+  indentation, expect in the following cases,
+  ** comment-blocks, spanning across multiple lines
+  ** filter-blocks, between ``{c}:fb-`` and ``{c}:fbend``
+* ''newlines'', which has a special-meaning, since indentation is expected to
+  follow them.
+* ''doctype'', starts with ``{c}!!!``, will generate html DOCTYPE.
+* ''directives'', start with ``{c}@``, attaches special meaning to the
+  template document.
+
+These characters and sequences are special anywhere inside the text.
+* ''commentline'',  starts with ``{c}##``, will not skipped.
+* ''comment-block'', starts with ``{c}<!--`` and ends with ``-->``, will be
+  present in the output html.
+* ''filter-block'', starts with ``{c}:fb-`` and ends with ``{c}:fbend``,
+  can be extended with plugins
+* ''statements'', starts with ``{c}@@``
+* ''control-blocks'', if lines that follow beginning whitespace start with
+  ``{c}@`` it will be interpreted as one of the many control blocks, like,
+  function, if-else, while, for.
+
+The following characters and sequences are special within the tag definition,
+that comes between ''<''...''>'',
+* ''newlines'', will be consumped as whitespace separating tokes.
+* ''>'', will be consumed as end of tag definition.
+* ''/>'', will be consumed as self-closing end of tag definition.
+* ''${...}'', expression substitution.
+* '' {...} '', element styling.
+* ''" or ' '', string quotes.
+* ''='', token that joins attribute name and value.
+* ''!>'' and ''%>'', will prune the whitespace and intendations.
+* The following characters and sequences are special within tag's style
+  specification, that comes between ''{'' .... ''}''
+  ** ''${...}'', expression substitution.
+
+escaping special characters,
+* To escape special characters, or to break special sequence of characters, use
+  escape character, ''\''. This type of escaping is applicable anywhere in the
+  text, for instance
+
+    \< this line begins with a less-than(<) character. But still will be
+    interpreted as text line.
+  

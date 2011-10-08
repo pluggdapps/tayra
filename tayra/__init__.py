@@ -32,8 +32,10 @@ from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
 from   paste.util.converters    import asbool
 
-from   tayra.interfaces import ITayraTag, ITayraFilterBlock, ITayraEscapeFilter
-from   tayra.parser     import TTLParser
+from   tayra.interfaces         import ITayraTag, ITayraFilterBlock, \
+                                       ITayraEscapeFilter
+from   tayra.utils              import ConfigDict
+from   tayra.parser             import TTLParser
 # Import tag-plugins so that they can register themselves.
 import tayra.tags
 import tayra.tags.html
@@ -50,7 +52,7 @@ EP_TTLGROUP = 'tayra.plugins'
 EP_TTLNAME  = 'ITTLPlugin'
 DEFAULT_ENCODING = 'utf-8'
 
-defaultconfig = h.ConfigDict()
+defaultconfig = ConfigDict()
 defaultconfig.__doc__ = """Configuration settings for tayra template engine."""
 defaultconfig['devmod']    = {
     'default' : False,
@@ -294,7 +296,7 @@ class Renderer( object ):
     TODO : somehow find a way to pass the arguments to `body` function
     """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
-        ttlconfig_ = deepcopy( defaultconfig.items() )
+        ttlconfig_ = deepcopy( dict(defaultconfig.items()) )
         ttlconfig_.update( ttlconfig )
         # Initialize plugins
         self.ttlconfig = initplugins( ttlconfig_, force=ttlconfig_['devmod'] )

@@ -3,6 +3,9 @@ develop :
 	virtualenv tayra-env --no-site-packages
 	bash -c "source tayra-env/bin/activate ; python ./setup.py develop"
 
+testall :
+	cd tayra/test/; python ./teststd.py
+
 bench-setup :
 	bash -c "source tayra-env/bin/activate ; easy_install mako"
 	bash -c "source tayra-env/bin/activate ; easy_install cheetah"
@@ -18,9 +21,17 @@ bdist_egg :
 	python ./setup.py bdist_egg
 
 sdist :
+	cp CHANGELOG docs/CHANGELOG
+	cp LICENSE docs/LICENSE
+	cp README docs/README
+	cp ROADMAP docs/ROADMAP
 	python ./setup.py sdist
 
 upload : 
+	cp CHANGELOG docs/CHANGELOG
+	cp LICENSE docs/LICENSE
+	cp README docs/README
+	cp ROADMAP docs/ROADMAP
 	python ./setup.py bdist_egg register upload --show-response 
 	
 vimplugin :

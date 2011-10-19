@@ -15,3 +15,5 @@ Errors and warnings :
   some of the methods are not implemented using @interface.
 
 * ITTLPlugin under tayra/plugins.py is to be removed.
+
+* Flag errors when circular inheritance or circular import/include are detected.

@@ -32,11 +32,10 @@ from   datetime                 import datetime as dt
 
 from   zope.component           import getGlobalSiteManager
 import pkg_resources            as pkg
-from   paste.util.converters    import asbool
 
 from   tayra.interfaces         import ITayraTag, ITayraFilterBlock, \
                                        ITayraEscapeFilter
-from   tayra.utils              import ConfigDict
+from   tayra.utils              import ConfigDict, asbool
 from   tayra.parser             import TTLParser
 # Import tag-plugins so that they can register themselves.
 import tayra.tags
@@ -62,7 +61,6 @@ defaultconfig['devmod']    = {
     'help'    : "A boolean value, when //True// puts the tayra engine in "
                 "development mode. For instance, the tempate file (text) is "
                 "always translated, bypassing the cache even if available."
-
 }
 defaultconfig['strict_undefined']    = {
     'default' : False,
@@ -76,7 +74,6 @@ defaultconfig['directories']             = {
     'types'   : ('csv', list),
     'help'    : "Comma seperated list of directory path to look for a "
                 "template file. the default will be the current-directory."
-
 }
 defaultconfig['module_directory']        = {
     'default' : None,

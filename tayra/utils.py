@@ -35,3 +35,15 @@ class ConfigItem( dict ):
     types = property( 
         lambda self : ', '.join([ t.__name__ for t in self['types'] ])
     )
+
+
+def asbool( obj ):
+    if not isinstance(obj, (str, unicode)) : return bool(obj)
+
+    obj = obj.strip().lower()
+    if obj in ['true', 'yes', 'on', 'y', 't', '1']:
+        return True
+    elif obj in ['false', 'no', 'off', 'n', 'f', '0']:
+        return False
+    else:
+        raise ValueError( "String is not true/false: %r" % obj )

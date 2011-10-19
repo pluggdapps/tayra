@@ -2,7 +2,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2010 SKR Farms (P) LTD.
 
-import os, re
+import re
 from   setuptools import setup, find_packages
 from   os.path    import abspath, dirname, join
 
@@ -51,7 +51,6 @@ setup(
         'ply>=3.4',
         'zope.component',
         'zope.interface',
-        'paste',
         'MarkupSafe>=0.9.2',
     ],
     extras_require={},                      # setuptools

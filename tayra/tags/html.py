@@ -1,3 +1,9 @@
+# This file is subject to the terms and conditions defined in
+# file 'LICENSE', which is part of this source code package.
+#       Copyright (c) 2011 SKR Farms (P) LTD.
+
+# -*- coding: utf-8 -*-
+
 from   zope.component       import getGlobalSiteManager
 from   zope.interface       import implements
 
@@ -240,7 +246,7 @@ class HtmlIframe( TagPlugin ):
                 continue
             try : defattrs += ' width="%s" height="%s"' % atom.split(',')
             except : pass
-        defattrs += ' sandbox="%s"' % ','.join(sandbox) if sandbox else None
+        defattrs += ( ' sandbox="%s"' % ','.join(sandbox) ) if sandbox else ''
         return defattrs, []
 
     def specstrings2attrs( self, strings ):

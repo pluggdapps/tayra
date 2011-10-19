@@ -1,3 +1,9 @@
+# This file is subject to the terms and conditions defined in
+# file 'LICENSE', which is part of this source code package.
+#       Copyright (c) 2011 SKR Farms (P) LTD.
+
+# -*- coding: utf-8 -*-
+
 class ConfigDict( dict ):
     """Configuration class to implement settings.py module providing the
     package-default options. Along with the default options, it is possible to

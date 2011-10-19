@@ -1,9 +1,15 @@
+# This file is subject to the terms and conditions defined in
+# file 'LICENSE', which is part of this source code package.
+#       Copyright (c) 2011 SKR Farms (P) LTD.
+
 """The following HTML5 elements pertain to browser form handling,
     <keygen>
     <button>,   <datalist>,
     <fieldset>, <legend>,   <form>
     <input>,    <label>,    <optgroup>, <option>    <select>    <textarea>
 """
+
+# -*- coding: utf-8 -*-
 
 import re
 
@@ -209,7 +215,7 @@ class HtmlTextArea( TagPlugin ):
         rematoms = ' '.join( rematoms )
         matches = ta_regexp.findall( rematoms )
         for match in matches :
-            for i in range(8) :
+            for i in range(5) :
                 if not match[i] : continue
                 try : defattrs += ta_handlers[i]( match[i] )
                 except : continue

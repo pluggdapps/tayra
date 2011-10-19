@@ -15,9 +15,13 @@ The following are the key ideas behind tayra templating language.
   for plugins to implement their logic.
 # Almost every aspect of language functionalities (except the programmable
   parts) are extensible via plugins.
-# Define template-interfaces and implement them as plugins. Probably, Tayra is
-  the only template engine that enables frontend designers (HTML/CSS/JS) to
-  define, create and distribute their templates as plugins.
+# A key strength in tayra templates is that it is possible to create template
+  blocks as plugins and distribute them as packages. Tayra package comes with
+  initialization routines that can be used to pre-load the template plugins
+  provided by installed packages. If this initialization is not done explicitly,
+  it will automatically be done when compiling a .ttl file. Once
+  template-plugins are loaded, they can be queried and consumed by parent
+  parent templates generating the final page.
 
 We will first define couple of terms that will keep recurring through out the
 text,
@@ -72,6 +76,27 @@ text,
 : filter-blocks ::
   Filter blocks are blocks of text that does not follow intendation rules and
   have their own parsing logic.
+: .ttl ::
+  File extensions containing tayra templates. These templates can be compiled
+  into an intermediate //.py// file which can then be loaded and executed
+  (with context) to generate the final .html file.
+
+
+h3. Configuration
+
+Many parts of tayra template engine is configurabe by providing a
+dictionary of //(key,value)// pairs. Configuration dictionary provided by
+caller program will override package default configuration. Final configuration
+will be remembered by Compiler() object as ''ttlconfig''. //ttlconfig//
+is chained all the way from Compiler() object to all objects that are part of
+template instance, including referred templates via @import and @inherit
+directives.
+
+A template instance will have //Compiler()// object, //StachMachine()// object,
+//InstrGen()// object, while compiling and executing a template. [[ View ]] a
+complete list of configuration parameters. Developers can take a look at
+// tayra/\__init\__.py // module, where the default set of configuration
+parameters are defined.
 
 h3. Directives
 
@@ -99,15 +124,38 @@ h3. Control logic
 
 h3. Functions
 
-h3. Creating and using template plugins
+h3. Template plugins
 
 Probably, tayra is the only template language that enable designers to define,
-create and distribute their template code as plugins. The first step while
-creating a plugin is by specifying an interface to the plugin's template, the
-whole purpose of template-interface is to create adaptable and re-usable 
-template blocks (a.k.a functions in programming parlance). Specifying template
-interfaces are always coded as python class inside a python module, and these
-modules must be importable 
+create and distribute their template code as plugins.
+
+h4. Creating template plugins
+
+The first step while creating a plugin is by specifying an interface to the
+plugin's template, the whole purpose of which is to create adaptable and
+re-usable template blocks (a.k.a functions in programming parlance). Specifying
+template interfaces are always coded as python class inside a python module,
+and these modules must be importable.
+
+Plugin implementers please note that the TTL plugins should not have any
+code executing in the global context that depends on other plugins,
+(for instance, using ``{b}fb-pycode global``) it is bound to fail or
+trigger an error.
+
+h4. Exporting, distributing template plugins
+
+Template-plugins will have to be automatically loaded during tayra-module
+initialization. This can happen only when there is a mechanism that provides a
+list of plugin implementers (in .ttl files) as part of package entry-point.
+Something like,
+{{{ Code ini
+  [tayra.plugins]
+  ITTLPlugin = bootstrap.implement:TTLPlugins
+}}}
+to be more specific, //ITTLPlugin// is the interface specification for this
+entry point.
+
+h4. Using template plugins
 
 h4. Plugin specification
 

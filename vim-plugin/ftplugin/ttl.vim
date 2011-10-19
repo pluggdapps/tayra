@@ -1,3 +1,7 @@
+" This file is subject to the terms and conditions defined in
+" file 'LICENSE', which is part of this source code package.
+"       Copyright (c) 2010 SKR Farms (P) LTD.
+
 let b:did_ftplugin = 1
 
 setlocal matchpairs+=<:>

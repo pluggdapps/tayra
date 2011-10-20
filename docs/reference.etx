@@ -98,6 +98,8 @@ complete list of configuration parameters. Developers can take a look at
 // tayra/\__init\__.py // module, where the default set of configuration
 parameters are defined.
 
+h3. Comments
+
 h3. Directives
 
 h4. Importing another template
@@ -129,13 +131,15 @@ h3. Template plugins
 Probably, tayra is the only template language that enable designers to define,
 create and distribute their template code as plugins.
 
-h4. Creating template plugins
+h4. Specifying template plugins as interfaces
 
 The first step while creating a plugin is by specifying an interface to the
 plugin's template, the whole purpose of which is to create adaptable and
 re-usable template blocks (a.k.a functions in programming parlance). Specifying
 template interfaces are always coded as python class inside a python module,
 and these modules must be importable.
+
+h4. Implementing template plugins
 
 Plugin implementers please note that the TTL plugins should not have any
 code executing in the global context that depends on other plugins,
@@ -153,19 +157,27 @@ Something like,
   ITTLPlugin = bootstrap.implement:TTLPlugins
 }}}
 to be more specific, //ITTLPlugin// is the interface specification for this
-entry point.
+entry point. When a package has .ttl files implementing plugins, it needs to
+provide implement //ITTLPlugin// interface and define an entry-point for the 
+same in its //setup.py// file.
+
+''How template plugins are loaded''
+
+Template plugins are loaded explicitly by calling //initplugins()// with
+//ttlconfig// dictionary of configuration parameters as parameter. initplugin
+will detect all packages implementing plugin interfaces (as .ttl files),
+compile them and load them. Loaded //.ttl// plugins will be saved inside
+ttlconfig dictionary as //ttlplugins// key. If you are using tayra via a
+frame work like pyramid, then this initialization is automatically handled
+by the frame-work code. Even otherwise, when you are going to directly compile
+a ttl file using //tayra-API//, plugin loading will be automatically done, if
+the supplied //ttlconfig// parameter does not contain //ttlplugins// key.
 
 h4. Using template plugins
-
-h4. Plugin specification
-
-h4. Plugin definition
 
 h4. Using template plugins inside your template
 
 h3. Extending tayra with plugins
-
-h3. Comments
 
 h3. Filter blocks
 

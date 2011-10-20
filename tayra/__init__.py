@@ -306,7 +306,7 @@ class Renderer( object ):
 def ttl_cmdline( ttlloc, **kwargs ):
     from   tayra.compiler       import Compiler
 
-    ttlconfig = deepcopy( defaultconfig.items() )
+    ttlconfig = deepcopy( dict( defaultconfig.items() ))
     # directories, module_directory, devmod
     ttlconfig.update( kwargs )
     ttlconfig.setdefault( 'module_directory', dirname( ttlloc ))

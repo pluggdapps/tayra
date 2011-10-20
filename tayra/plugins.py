@@ -11,5 +11,4 @@ class TestPlugins( object ):
     implements( ITTLPlugins )
 
     def implementers( self ):
-        # return ['tayra:test/stdttl/implementer.ttl']
-        return []
+        return ['tayra:test/stdttl/implementer.ttl']

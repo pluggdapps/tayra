@@ -41,22 +41,19 @@ class StackMachine( object ) :
 
     Attributes = Attributes
 
-    def __init__( self,
-                  ifile,
-                  compiler,
-                  ttlconfig={},
-                ):
+    def __init__( self, ifile, compiler, ttlconfig={} ):
+        self.ttlconfig  = ttlconfig
         self.escfilters = ttlconfig.get( 'escfilters', {} )
         self.tagplugins = ttlconfig.get( 'tagplugins', {} )
+        self.ttlplugins = ttlconfig.get( 'ttlplugins', {} )
         self.def_escfilters = [
             f.strip().split('.',1) for f in ttlconfig['escape_filters'] if f
         ]
-        self.ttlconfig = ttlconfig
+        self.encoding = self.ttlconfig['input_encoding']
 
         self.bufstack = [ [] ]
         self.ifile = ifile
         self.compiler = compiler
-        self.encoding = self.ttlconfig['input_encoding']
         self.htmlindent = ''
 
     #---- Stack machine instructions
@@ -156,7 +153,7 @@ class StackMachine( object ) :
         return fnhitched.__get__( obj, cls )
 
     def use( self, interface, pluginname='' ):
-        return queryTTLPlugin( interface, pluginname )
+        return queryTTLPlugin( self.ttlplugins, interface, pluginname )
 
 
 class Namespace( object ):

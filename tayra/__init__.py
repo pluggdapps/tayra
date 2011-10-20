@@ -22,7 +22,7 @@
   escape filters (for expression substitution) and filter blocks.
 * Find template plugins defined in setuptools packages, compile them and load
   them registering the Template plugins. queryTTLPlugin() works only after
-  this this is successfully completed.
+  this phase is successfully completed.
 """
 
 import codecs
@@ -35,7 +35,7 @@ import pkg_resources            as pkg
 
 from   tayra.interfaces         import ITayraTag, ITayraFilterBlock, \
                                        ITayraEscapeFilter
-from   tayra.utils              import ConfigDict, asbool
+from   tayra.utils              import ConfigDict, asbool, parsecsv
 from   tayra.parser             import TTLParser
 # Import tag-plugins so that they can register themselves.
 import tayra.tags
@@ -127,45 +127,31 @@ defaultconfig['text_as_hashkey']         = {
 }
 
 def normalizeconfig( config ):
-    """Convert the string representation of config parameters into
-    programmable types. It is assumed that all config parameters are atleast
-    initialized with default value.
+    """Convert string representation of config parameters into programmable
+    data types. It is assumed that all config parameters are atleast initialized
+    with default value.
     """
     config['devmod'] = asbool( config['devmod'] )
     config['strict_undefined'] = asbool( config['strict_undefined'] )
-    try :
-        config['directories'] = [
-            x.strip() for x in config['directories'].split(',') if x.strip()
-        ]
-    except :
-        pass
     config['module_directory'] = config['module_directory'] or None
-    try :
-        config['escape_filters'] = [
-            x.strip() for x in config['escape_filters'].split(',') if x.strip()
-        ]
-    except :
-        pass
-    try :
-        config['usetagplugins'] = [
-            x.strip() for x in config['usetagplugins'].split(',') if x.strip()
-        ]
-    except :
-        pass
     config['uglyhtml'] = asbool( config['uglyhtml'] )
-    try :
-        config['plugin_packages'] = [
-            x.strip() for x in config['plugin_packages'].split(',') if x.strip()
-        ]
-    except :
-        pass
     config['memcache'] = asbool( config['memcache'] )
     config['text_as_hashkey'] = asbool( config['text_as_hashkey'] )
+    try    : config['directories'] = parsecsv( config['directories'] )
+    except : pass
+    try    : config['escape_filters'] = parsecsv( config['escape_filters'] )
+    except : pass
+    try    : config['usetagplugins'] = parsecsv( config['usetagplugins'] )
+    except : pass
+    try    : config['plugin_packages'] = parsecsv( config['plugin_packages'] )
+    except : pass
     return config
 
 
 def _findttls():
-    """Search for tayra template plugins."""
+    """Search for template plugins, and return a list of tuples,
+    ( pkgname, list-of-ttl-files ).
+    """
     packages = pkg.WorkingSet().by_key
     entrypoints = {}
     for pkgname, d in packages.items() :
@@ -175,7 +161,6 @@ def _findttls():
             try : ep = d.get_entry_info( EP_TTLGROUP, name )
             except : continue
             entrypoints.setdefault( pkgname, ep )
-
     return [ ( pkgname, ep.load()().implementers() )
              for pkgname, ep in entrypoints.items() ]
 
@@ -189,28 +174,33 @@ def _loadttls( ttllocs, ttlconfig, context={} ):
       for ttlloc in ttllocs ]
 
 
-ttlplugins = {}         # { interfaceName : {plugin-name: instance, ... }, ... }
-tagplugins = {}         # { plugin-name   : (instance, hander-dict), ... }
-fbplugins = {}          # { plugin-name   : instance }
-escfilters = {}         # { plugin-name   : instance }
-init_status = 'pending'
 def initplugins( ttlconfig, force=False ):
-    """Collect and organize Tayra template plugins including, plugins for
-    interfaces,
-        ITayraTag, ITayraFilterBlock, ITayraEscapeFilter
-    """
+    """Collect and organize Tayra template plugins, and plugins implementing
+    language interfaces, like, ITayraTag, ITayraFilterBlock, ITayraEscapeFilter,
 
-    global ttlplugins, tagplugins, init_status
-    if init_status == 'progress' :
-        return ttlconfig
+    Plugins are loaded and organised in the following format,
+    `ttlplugins`,
+        { interfaceName : {plugin-name: instance, ... }, ... }
+    `tagplugins`,
+        { plugin-name   : instance ... }
+    `fbplugins`,
+        { plugin-name   : instance ... }
+    `escfilters`,
+        { plugin-name   : instance ... }
+        
+    and also saved inside ttlconfig for further processing.
+    """
+    ttlplugins = {}
+    tagplugins = {}
+    fbplugins  = {}
+    escfilters = {}
 
     if (force == True) or ttlconfig.get( 'tagplugins', None ) == None :
         # Load and classify plugins
-        init_status = 'progress'
         gsm = getGlobalSiteManager()
-        usetagplugins = ttlconfig['usetagplugins']
+        usetagplugins = ttlconfig['usetagplugins'] + ['']
 
-        # Load plugin packages
+        # import plugin packages defined in `ttlconfig`
         packages = ttlconfig['plugin_packages']
         if isinstance( packages, basestring ):
             packages = [ x.strip(' \t') for x in packages.split(',') ]
@@ -221,9 +211,7 @@ def initplugins( ttlconfig, force=False ):
             if x.provided == ITayraTag :            # Tag handlers
                 try    : namespace, tagname = x.name.rsplit('.', 1)
                 except : namespace, tagname = '', x.name
-                if namespace in usetagplugins:
-                    tagplugins[tagname] = x.component
-                elif namespace == '' :
+                if namespace in usetagplugins :
                     tagplugins[tagname] = x.component
             elif x.provided == ITayraFilterBlock :    # Filter blocks
                 fbplugins[x.name] = x.component
@@ -250,12 +238,10 @@ def initplugins( ttlconfig, force=False ):
                 z = ttlplugins.setdefault( x.provided, {} )
                 z.setdefault( x.name, x.component )
         ttlconfig['ttlplugins'] = ttlplugins
-
-    init_status = 'done'
     return ttlconfig
 
 
-def queryTTLPlugin( interface, name, *args, **kwargs ):
+def queryTTLPlugin( ttlplugins, interface, name, *args, **kwargs ):
     """Query for template plugins providing ``interface`` and registered
     under ``name``. If ``name`` is None, then a list of plugins providing
     (a.k.a implementing) the ``interface`` will be returned. If __call__

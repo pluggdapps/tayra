@@ -38,6 +38,7 @@ class ConfigItem( dict ):
 
 
 def asbool( obj ):
+    """Convert ``obj`` to Boolean value based on its string representation"""
     if not isinstance(obj, (str, unicode)) : return bool(obj)
 
     obj = obj.strip().lower()
@@ -47,3 +48,11 @@ def asbool( obj ):
         return False
     else:
         raise ValueError( "String is not true/false: %r" % obj )
+
+
+def parsecsv( line ) :
+    """parse a comma separated `line`, into a list of strings"""
+    vals = line and line.split( ',' ) or []
+    vals = filter( None, [ v.strip(' \t') for v in vals ] )
+    return vals
+

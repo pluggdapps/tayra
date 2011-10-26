@@ -1,6 +1,6 @@
-The following is a non-exhaustive reference to tayra template language.
-For practical purposes, //getting-started// guide and //tutorial// text
-are enough to get you started with tayra templating. Nevertheless,
+The following is a non-exhaustive narrative reference to tayra template
+language. For practical purposes, //getting-started// guide and //tutorial//
+text are enough to get you started with tayra templating. Nevertheless,
 having a broader picture on its syntax and semantics will help you further.
 
 The following are the key ideas behind tayra templating language.
@@ -18,18 +18,31 @@ The following are the key ideas behind tayra templating language.
 # A key strength in tayra templates is that it is possible to create template
   blocks as plugins and distribute them as packages. Tayra package comes with
   initialization routines that can be used to pre-load the template plugins
-  provided by installed packages. If this initialization is not done explicitly,
-  it will automatically be done when compiling a .ttl file. Once
-  template-plugins are loaded, they can be queried and consumed by parent
-  parent templates generating the final page.
+  implemented in installed packages. If this initialization is not done
+  explicitly, it will automatically be done when compiling a .ttl file. Once
+  template-plugins are loaded, they can be queried and consumed to generate
+  final HTML.
 
-We will first define couple of terms that will keep recurring through out the
-text,
+Before continuing we will see how a snippet of ttl text looks like,
+
+{{{ Code ttl
+<ul>
+  <li> Search the web using
+    <a title="Go-to google" href="http://google.com"> google
+    search engine.
+  <li>
+    You can buy books from
+    <a title="Go-to amazon" href="http://amazon.com"> amazon
+    with excellent discounts
+}}}
+
+And we will first define couple of terms that will keep recurring through out
+the text,
 
 : indentation ::
   HTML is all about nested tags and text content. A HTML document is naturally
   organised as a tree with a root-node. Hence tayra took its inspiration
-  from HAML (ruby community) and imposes a strict indentation between
+  from HAML (rails community) and imposes a strict indentation between
   parent tag and its children. Each indentation level takes up 2 blank-space,
   thus, for a child tag that is nested 3 levels deep should have 6
   blank-spaces. The indentation syntax is followed very strictly unless
@@ -74,8 +87,18 @@ text,
   Two types are commenting are allowed, one that will be translated along with
   ttl text and the other that will be ignored silently.
 : filter-blocks ::
-  Filter blocks are blocks of text that does not follow intendation rules and
+  Filter blocks are blocks of text that does not follow indentation rules and
   have their own parsing logic.
+: global context ::
+  Global context is the context passed by the caller while translating .ttl
+  documents into HTML text. Since tayra embedds python programming within the
+  template document, it is possible to create side-effects to global context
+  using globals() or using //pycode (with global param)// filter-block.
+: local context ::
+  Functions and Interfaces can create a local context of its own during
+  execution. Even the root level template text that is not part of any function
+  or interface will be processed under an implicitly defined function
+  //body()//.
 : .ttl ::
   File extensions containing tayra templates. These templates can be compiled
   into an intermediate //.py// file which can then be loaded and executed
@@ -88,9 +111,9 @@ Many parts of tayra template engine is configurabe by providing a
 dictionary of //(key,value)// pairs. Configuration dictionary provided by
 caller program will override package default configuration. Final configuration
 will be remembered by Compiler() object as ''ttlconfig''. //ttlconfig//
-is chained all the way from Compiler() object to all objects that are part of
-template instance, including referred templates via @import and @inherit
-directives.
+is chained all the way from Compiler() object to every object that are part of
+the template instance, including referred templates via ''{b}@import'' and 
+''{b} @inherit'' directives.
 
 A template instance will have //Compiler()// object, //StachMachine()// object,
 //InstrGen()// object, while compiling and executing a template. [[ View ]] a
@@ -98,33 +121,631 @@ complete list of configuration parameters. Developers can take a look at
 // tayra/\__init\__.py // module, where the default set of configuration
 parameters are defined.
 
+h3. Overview
+
+Much of this documentation is about tayra templating language on how to
+write template files (its syntax and semantics). A brief introduction to its
+internals and developer guidelines are provided in the last few sections.
+
+Tayra template document contains directives and tags, directives can be used
+in the beginning of the document, following which are tags. The beginning tag
+of tag defnition is exactly similar to HTML syntax, but there is no need to
+specify the end tag ( </*> ) since they are all nested using indentation
+syntax. Every nesting tag must be indented with 2 spaces from its containing
+tag definition. Other than directives and tags, a document can contain,
+* plain-text
+* comments
+* single-line python statements.
+* control statements with if-elif-else, for and while constructs.
+* functionalised template blocks
+* functions implementing interface API
+* filter-blocks
+
+Expression-substitution can be applied pretty much anywhere in the document,
+with few exceptions like, inside the comments, control statements.
+
+Tag definitions can be abstracted into functions with its own local context.
+Tags that are not part of any functions / interface-apis will be grouped under
+the function name ''body'' which is defined implicit. It is by making a call
+to body(), that the final html is generated and returned.
+
 h3. Comments
+
+Two types are commenting is allowed, one that will be retained in the final
+html text and the other type that will be silentyly ignored. To retain comments
+in the html text, use the following syntax.
+
+{{{ Code ttl
+<!--
+This file is subject to the terms and conditions defined in
+file 'LICENSE', which is part of this source code package.
+      Copyright (c) .... ..................
+-->
+}}}
+
+Doesn't it look similar to HTML comment syntax. These comments can be added
+any-where in the document, like nested inside a tag element, function blocks,
+or within text content. The other type of comment always starts with a new line
+and spans through the entire line, like,
+
+{{{ Code ttl
+@function func7() :
+  ## This comment will be silently ignored.
+  <div {} >
+    <a#${'idname'}.${'cls'} "http://pluggdapps.com"> hello {world}
+}}}
 
 h3. Directives
 
+Directives are meta commands that set-up the context to interpret the document
+and generate the final html. They are also used to import other templates,
+define / use plugins that are defined else where. A directive typically starts
+with ''!!!'' or ''@'' and ends with '';''.
+
+h5. Document type directive
+
+This directive can be used to specify html document's DTD
+(Document-Type-Definition). Available specifications are,
+
+{{{ Code ttl
+!!! xml
+!!! xhtml+rdfa 1.0 ;
+!!! xhtml 1.1 mobile ;
+!!! xhtml 1.1 basic ;
+!!! xhtml 1.1 ;
+!!! xhtml 1.0 frameset ;
+!!! xhtml 1.0 strict ;
+!!! xhtml 1.0 transitional ;
+!!! html4.01 frameset ;
+!!! html4.01 strict ;
+!!! html4.01 transitional ;
+}}}
+
+If template document does not have doctype specification, it is assumed
+as, [<PRE <!DOCTYPE html> >]. For more information on doctypes refer
+[[ here | http://www.w3schools.com/tags/tag_doctype.asp ]].
+
+h5. Body directive
+
+As mentioned before, tags that are not part of any functions or interface-apis
+will be grouped under the function name ''body'' which is defined implicit, and
+a call to //body()// will return the final html text. It is also possible to
+define a call signature for //body()// function using body-directive, where
+text following //@body// till //;// will be interpreted as function signature
+in python syntax. Like,
+
+{{{ Code ttl
+@body id, cls, style='{}';
+
+<div#${id}.${cls} {${style}} >
+}}}
+
 h4. Importing another template
 
-h4. Passing arguments to templates
+Template functions can be organised as library files and imported as and when
+needed. //@import// directive specifies which template file to be imported
+and the name to access the template module.
+
+{{{ Code ttl
+@import etsite:templates/_base/elements.ttl as e ;
+@import os, sys;
+
+@function body_leftpane() :
+  ${e.leftpane( menupane )}
+}}}
+
+format to specify template file is same as else-where and explained
+[[ here | #Looking up template files ]].
+
+h4. Inheriting templates
+
+HTML designers seem to have a pattern of templating their pages
+that are stacked up on a base template. For example, pages can have its
+layout as header, footer, and left / right panes. The format and
+styling of such layout can be handled by a base template, that can be
+inherited by pages that wants to use the same theme. Tayra provides an 
+inheritance feature (inspired by [[ mako ]] ) which enables designer to
+abstract and organize their templates in more interesting ways. This section
+just explains the syntax of //@inherit// directive to declare template
+inheritance, more details on how inheritance works and its usage are discussed
+further down in a separate section.
+
+{{{ Code ttl
+@inherit app:templates/_base/base.ttl ;
+
+@function hd_styles() :
+  ${ parent.hd_styles() }
+  <style text/css>
+    table.config {
+      width : 95%;
+      margin : 0px auto;
+    }
+}}}
+
+Inherit directive just accepts a single parameter, which is the location of
+parent template.
+
+h4. Implementing plugins
+
+Interfaces are central to template plugins and interface specifications are
+coded as python class.
+
+{{{ Code ttl
+@implement tayra.interfaces:ITestInterface as testinterface;
+
+@interface ITestInterface.render( *args, **kwargs ):
+  <div> interface successfully invoked
+}}}
+
+In the above example, //tayra.interfaces// is a python module containing
+//ITestInterface// specification. A specification is a class deriving from
+//zope.interface.Interface// base class and documents a collection of
+attributes and methods, which are to be implemented by plugins. //@implement//
+directive declares that the ttl document implements //ITestInterface//.
+
+Subsequently, //@interface// statement defines a //render()//
+method specified by //ITestInterface// with same function signature.
+
+h4. Using plugins
+
+Following example illustrates how to use a plugin,
+
+{{{ Code ttl
+@use tayra.interfaces:ITestInterface pa as obj;
+
+<html>
+  <head>
+  <body>
+    ${ obj.render() }
+}}}
+
+//@use// directive will query plugins implementing
+//tayra.interfaces:ITestInterface// specification, by name //pa// and import
+that as //obj// in the template's global name-space. If plugin name is
+omitted, then all plugins implementing the interface will be returned as a
+list, otherwise, only plugin object by the specified name (in this example
+//pa//) will be returned. It is also possible to do //expression-substitution//
+for plugin name, like,
+
+{{{ Code ttl
+@use tayra.interfaces:ITestInterface ${plugin_name} as iface;
+}}}
+
+where, //plugin_name// is expected in template's context. 
 
 h3. Anatomy of tag definitions
 
+As described before, tag definitions have indentation rules and follow HTML
+syntax. Because of the indentation rule, it is not required to close tags
+elemtents with end tags. Let us start with an example,
+
+{{{ Code ttl
+<ul>
+  <li> Search the web using
+    <a title="Go-to google" href="http://google.com"> google
+    search engine.
+  <li>
+    You can buy books from
+    <a title="Go-to amazon" href="http://amazon.com"> amazon
+    with excellent discounts
+}}}
+
+In the above snippet, we will pick on anchor tag //a// and see how it compares
+with HTML anchor tag definition. Except that there is no closing tag </a>,
+there is no difference at all. Any text following the opening-tag is treated
+as child node. Now, attribute spec is more or less same as that of HTML
+attributes. Apart from this, there are other ways of defining attributes,
+* specifiers
+* style
+
+Diving a little bit into the internals, every tag definition will be handled
+by a registered tag handler which will return an equivalent HTML snippet, it is
+upto the tag-handler to interpret specifiers, styles and attributes.
+It is also theoritically possible for the tag-handlers to interpret child
+elements / text. Tag handlers are plugins, which can be selected via
+config-parameters.
+
 h4. Specifiers
+
+Specifiers are space separated tokens or single-quoted / double-quoted strings.
+They are interpreted in tag handlers to generate HTML text. Let us take the
+anchor tag example in the previous example and see who specifiers can make it
+more concise,
+
+{{{ Code ttl
+You can buy books from
+<a#am.link.blue:highlt "http://amazon.com" title="Go-to amazon"> amazon
+with excellent discounts
+}}}
+
+We see that //href="http://amazon.com" // attribute is simply replaced with
+//"http://amazon.com" // string, and a sequence of tokens
+//#am.link.blue:highlt//. While the interpretation of double-quoted string as
+href is specific to anchor-tag handler, //#am.link.blue:highlt// is a standard
+specifier syntax that is applicable to all tags, where it is tranlated to,
+
+{{{ Code ttl
+You can buy books from
+<a id="am" class="link blue" name="highlt" href="http://amazon.com" title="Go-to amazon"> amazon
+with excellent discounts
+}}}
+
+Tag handlers can augment the specifier syntax with its own. Take a look at
+complete list of specifier syntax that are extended by each tag-handlers.
 
 h4. Style 
 
+Like, //id//, //class//, //name// attributes, //style// is one of the most
+commonly used attributes. There is a special syntax to defined inline-styling
+for elements. Continuing with the same example,
+
+{{{ Code ttl
+You can buy books from
+<a#am.link.blue:highlt "http://amazon.com" {background : gray;} title="Go-to amazon"> amazon
+with excellent discounts
+}}}
+
+we see that //"background: gray;"// inline-styling is added to the tag definition
+right after specifier tokens before normal HTML attributes. Text between
+'' {...} '' will interpreted as style value.
+
 h4. Attributes
 
-h4. Implementing plugins for tag handlers
+Attibutes are defined in exactly same way as HTML attributes, including
+definitions like //disabled=disabled// ... An important point to note is that,
+attributes are always defined after specifiers and styles.
 
 h3. Expression substitution
 
+Templating supports stuffing dynamic content in the final HTML text. Most of the
+time it is done via expression substitution ''${...}'' which contains any valid
+python expression. Expression will be evaluated under template's context
+(including global and local), and the value emitted by the expression will be
+converted to unicoded-string (based on encoding-type supplied via config
+parameters) and substituted in place of ''${...}''. Expression substitution
+is available pretty much any-where in the ttl text, and can span multiple lines.
+
+{{{ Code ttl
+<div#${id}.${cls} { ${style} } ${attrs}> ${text}
+}}}
+
+In the above example, we have used expression substitution to dynamically
+generate value for //id//, //class//, //style// attributes and any other
+attributes available in //attrs//. Including the div elements text content.
+
 h4. Escape filters for expression substitution
 
-h4. Implementing plugins for escape filters
+After converting the expression's value to string and before using the string
+for substitution, it can be applied on any number of filters. The following is
+an example on how to apply escape filters on expressions.
 
-h3. Control logic
+{{{ Code ttl
+<div> ${ html_example | h }
+}}}
+
+''|'' syntax can be suffixed with expression followed by a comma seperated list
+of filters. In the above example, //h// denotes //html-escape// filter, since
+//html_example// would contain a html snippet that needs to be rendered as-is.
+
+: default filters ::
+  Frameworks can use configuration parameters, to supply a list default escape
+  filters to be applied on every expression substitution. Default filters will
+  be applied before applying filters specified in the substitution syntax.
+: filter namespace ::
+  Filter names can use namespace notation to pass parameters to filters. For
+  instance in above example can be changed to
+  [<PRE ${ html_example | h, uni.utf-8 } >] where, //uni.utf-8// is unicode
+  decoding filter applied on the text returned by html-escape-filter. //utf-8//
+  in //uni.utf-8// specifies what encoding-type must be used for unicode
+  decoding.
+
+''standard filters'' supplied with package,
+
+: u ::
+  Assume ``text`` as url and quoted using urllib.quote().
+: uni.<encoding-type> ::
+  Decode text into unicoded string, using encoding-type provided in
+  configuration parameter or using the namespace parameter supplied in 
+  this filter, like, [<PRE ${ text | uni.utf-8 } >].
+: x ::
+  Assume ``text`` as XML, and apply escape encoding.
+: h ::
+  Assume ``text`` as HTML and apply markupsafe.escape().
+: t ::
+  Strip (trim) whitespaces before and after ``text`` using strip().
+
+h3. Statements and control logic
+
+Statement, branching and looping are fundamental control-logic for structured
+programming. Although tayra is a templating language, adding programmability
+will help localizing view logic and algorithms within the view side of MVC (i.e)
+your templates. Looping (for and while) and branching (if-elif-else) contructs
+follow python statements and expressions. It also follows indentation rules.
+Only difference is that, the control blocks are as usual template text and
+control logic on template text.
+
+h4. Statements
+
+A statement is a valid python line, that will be compiled as is, without
+interpreting the value emitted by the statement, The primary purpose of
+statements lie on the side-effects it creates to the global or local context.
+Statements are prefixed by ''@@'' and follow indentation rules. If a statement
+is defined in the scope of a function or interface, it is local to the function
+with its side-effects similar to executing a statement inside python function.
+
+h4. Alternate templates with if-elif-else
+
+Branch control logic follow python's if-elif-else 
+[[ syntax | http://docs.python.org/tutorial/controlflow.html ]] with an ''@''
+prefixed to the statments, and ends as-usual with '':'' as a single line.
+If statements had to span multiple lines, newlines had to be escaped. After the
+statement line, one or more lines of template text must follow, all kinds of
+template text are allowed except directives. In the absence of a template
+block, use ''@@pass'' to pass the control block as empty. Let us see an example
+ttl snippet using if-elif-else block,
+
+{{{ Code ttl
+@if a == 'pass' :
+  @@pass
+@elif a== 2 :
+  The program, designed by Odyssey Space Research, will allow crew members to
+  conduct several experiments with the phones' cameras, gyroscopes and other
+@elif a == 3 :
+  <abbr "World Health Organization"> WHO
+  <button#id_ reset disabled makefriend "button value"/>
+}}}
+
+An mentioned earlier, branch control logic's blocks are indented 2 spaces and
+contains template text, tags, statements and nested control blocks.
+
+h4. Looping on templates
+
+To repeate template blocks with dynamic content, use looping
+constructs. There are two types of looping syntax available, ''for'' and
+''while'' and both map to python's version of //for// and //while//.
+Like if-elif-else logic, looping logic follow python's syntax with an ''@''
+prefixed to the statements, and ends as-usual with '':'', as a single line.
+If statements had to span multiple lines, newlines had to be escaped. After the
+statement line, one or more lines of template text must follow, all kinds of
+template text are allowed except directives. In the absence of a template
+block, use ''@@pass'' to pass the control block as empty. Let us see an example
+ttl snippet for and while constructs,
+
+{{{ Code ttl
+<table>
+  @for i in range(100):
+    <tr>
+      @@j = 0
+      @while j < 4 :
+        <td> sample text
+        @@j += 1
+}}}
 
 h3. Functions
+
+Functions are not program functions, it is a way to abstract and reuse
+templates. Functions can be called with parameters (with positional arguments
+and key-word arguments) and returns html text that can be substituted in the
+caller's context. Functions are always called inside expression substitution
+syntax ''${ ... }''. Functions also provides a local context for templates
+that are encapsulated under it. Functions can be nested and follows the same
+scoping rules defined by python functions. A function's definition signature
+starts with ''@function'' keyword followed by spaces, then function name
+(must be a valid python symbol), open paranthesis followed by comma separated
+positional arguments and keyword arguments, close paranthesis and ends with
+'':''. Syntax and rules after ''@function'' keyword is exactly same as that of
+python's function signature. Function statement (containing the function
+signature) must be contained in a single line. Statements that span multiple
+lines, must escape newlines.
+
+{{{ Code ttl
+
+@function justtext() : 
+  Google will join its biggest mobile rival, Apple, on the space trip as well.
+  Apple's iPhone 4 will join a crew running an app, called "SpaceLab for iOS."
+
+@function involved(z=10):
+  <abbr "World Health Organization"> WHO
+  @function nestedfunc() :
+    <b!> this is nested function
+    @function nestednestedfunc() :
+      <em!> this is nested nested function
+    ${ nestednestedfunc() }
+  <button#id_ reset disabled makefriend "button value"/>
+  ${ nestedfunc() }
+  ${ func3() }
+}}}
+
+When functions are combined with template modules, it will provide a powerful
+way to abstract and organise your view-templates.
+
+h3. Filter blocks
+
+Filter blocks are extension mechanism for templates. Some times tags and
+indendation are not enough, other times it may come our way for creating nice
+templates. To overcome that filter-block syntax is created. A filter block
+should be opened in a new-line prefixed by any number of spaces and then
+'':fb-<filtername>'', and ends with '':fbend'', which again should start in a
+new line and must be flush with characters till end of line. Any text inside
+the filter block is directly passed to the implementing plugin by name
+//<filtername>// (yep, plugin name must be same as the filtername specifieoind in
+opening the filter block). Filter plugins can take part in compilation phase
+and can even generate stack machine instructions directly. We believe this open
+ended design will lead us to more interesting language features. Another point
+to note is that intendation rules are not applicable within filter-text. Let us
+look at an example,
+
+{{{ Code ttl
+:fb-pycode global
+  a = 'empty'
+  def insideroot_butglobal():
+    return '<div> insideroot_butglobal </div>'
+:fbend
+:fb-pycode
+  b = '<div> insideroot_insidebody </div>'
+:fbend
+${ a } ${ insideroot_butglobal() }
+${ b }
+
+@function func() :
+  <div> hello world
+}}}
+
+The above example is using ''pycode'' filter plugin that interprets filter-text
+as python code, which gets evaluated inside the function in which filter-block
+is defined. If you carefully look into the above example, you might
+observe that the filter blocks are globally defined (i.e) they are not part of
+any function, but we must remember that templates that are defined outside
+functions are automatically encapsulated inside an implicitly defined function
+called //body// (we explain this in previous section). Hence, variables defined
+inside these filter blocks are not accessible inside other functions like,
+//func//. Now, to define a block of python code in global scope. we can simply
+simply pass a parameter ''global'' to '':fb-pycode'' filter block's opening
+line, like in the above example, where variable //a// is available in global
+scope.
+
+Didn't we say that filter blocks are open ended design that can lead to
+interesting features //pycode// is one such feature. Although //pycode// is
+implemented purely as a plugin (it is not part of the core design), it can
+still fiddle with the scope of execution.
+
+h3. Inheritance
+
+For small sites and web applications template inheritance would not be that
+exciting. But once past the toy developments, there will be serious need in
+organising templates, prototyping with multiple layouts etc ... and that is
+when inheritance feature from tayra will take you long distance. Inheritance
+is not new in tayra, especially if have worked with [[ mako ]] templates. So,
+inheritance works like this,
+
+There is a base template which will provide the body() function (top-level 
+template structure) that typically defines the page layout, and the layout
+simply calls template functions whose return text (html) will be substituted
+inside the layout. HTML Page templates can inherit from base template
+overriding the template functions. Here is an example,
+
+{{{ Code ttl
+## base.ttl
+!!! xhtml 1.0 strict ;
+<html>
+  <head.bootstrap>
+    <link image/ico "${favicon}" rel="icon">
+    ${self.hd_title()}
+    ${self.hd_styles()}
+    ${self.hd_script()}
+
+  <body.bootstrap>
+    ${self.bd_header()}
+    ${self.bd_body()}
+    ${self.bd_footer()}
+
+@function hd_title() :
+  <title> ${title}
+
+@function hd_styles():
+  @@pass
+
+@function hd_script():
+  @@jqueryfile = request.static_url('bootstrap:static/jquery-1.6.2.min.js')
+  @@jqlibfile = request.static_url('bootstrap:static/jqlib.js')
+  <script text/javascript "${jqueryfile}">
+  <script text/javascript "${jqlibfile}">
+
+@function bd_header() :
+  ${ metanav.render( cssasset=False ) }
+
+@function bd_body():
+  <div.ralign> Welcome,
+    <a.fntbold "${url_prefern}"> ${ remote_user }
+
+@function bd_footer():
+  <div#footer>
+    Website content copyright © by ... ...... All rights reserved.
+    pluggdapps program and its documentation are licensed under "GPL version-3".
+}}}
+
+{{{ Code ttl
+## index.ttl
+
+@inherit bootstrap:templates/_base/base.ttl ;
+
+@function hd_styles() :
+  ${ parent.hd_styles() }
+  <style text/css>
+    .welcome {
+      width : 80%;
+      margin : 0px auto;
+      text-align : center;
+    }
+
+@function bd_body() :
+  <div#page>
+    ${ parent.bd_body() }
+    <div.welcome>
+      Welcome to Pluggdapps, bootstrap application. The platform is currently running in
+      <span.hl> ${ settings['devmod'] and 'development mode' or 'production mode' }.
+      It has booted with
+      <span.hl> ${ settings['bootwith'] }
+      settings and uses
+      <span.hl> ${ store.pluginname }
+      database client, version
+      <span.hl> ${ dbx_version }
+      . Character encoding for this application is,
+      <span.hl> ${ settings['encoding'] }.
+    <div.welcome>
+      If you are server administrator, you will be able to do many modification
+      to the platform.
+}}}
+
+In the above example, //index.ttl// has inherited from //base.ttl//. Where,
+base.ttl defines the page layout and provided default template functions that
+can be overriden by inheriting templates, and index.ttl overrides the functions
+//hd_styles()// and //bd_body()//. The HTML text supplied by these functions
+will be substituted in place of [<PRE ${ self.hd_style() } >] and
+[<PRE ${ self.bd_style() } >]. For functions that are not overriden by
+index.ttl, the ones defined in base.ttl will be used.
+
+Inheritance can go any level deep, (i.e) designers can have a base template
+which inherited by any number of intermediate templates and finally by the page
+template. While doing inheritance, the global context is slightly modified to
+help programmablity. The following //variables// are automatically made
+available in the global context,
+
+: local ::
+  Always points to the current template module (i.e) the //.ttl// file.
+: self ::
+  Always points to the template instance with all its inheritance chained
+  together.
+: parent ::
+  Refers to the template module inherited by the current template. By
+  traversing the //parent// attribute, it possible to reach the top-most (base)
+  template in the chain.
+: next ::
+  Refers to the template module in the opposite direction. By traversing the
+  //next// attribute, it is possible to reach the bottom-most (child) template
+  in the chain.
+
+h3. Interface functions
+
+Interface functions are special type of template functions that follow all the
+rules of a template-function except,
+* It starts with a key word ''@interface''
+* Function name must be specified in namespace format which will resolve to a
+  method specified in an //Interface// class residing in a python module. For
+  instance, in the example mentioned bellow, //render()// is the method
+  specified by the interface class //IHTMLFormSignin//. It is also important
+  that ''@implement'' directive is specified in the beginning.
+* The first argument to interface functions is //this//, that refers to the
+  plugin instance that encapsulates this interface function definition.
+
+{{{ Code ttl
+## Implementing interface IHTMLFormSignin defined in module interfaces.py
+## under package bootstrap/templates.
+
+@implement bootstrap.templates.interfaces:IHTMLFormSignin as pa ;
+
+@interface IHTMLFormSignin.render( this, id='', cssasset='bootstrap:static/paview_signin.css' ) :
+}}}
 
 h3. Template plugins
 
@@ -136,7 +757,7 @@ h4. Specifying template plugins as interfaces
 The first step while creating a plugin is by specifying an interface to the
 plugin's template, the whole purpose of which is to create adaptable and
 re-usable template blocks (a.k.a functions in programming parlance). Specifying
-template interfaces are always coded as python class inside a python module,
+template interfaces are always done via python class inside a python module,
 and these modules must be importable.
 
 h4. Implementing template plugins
@@ -173,15 +794,162 @@ by the frame-work code. Even otherwise, when you are going to directly compile
 a ttl file using //tayra-API//, plugin loading will be automatically done, if
 the supplied //ttlconfig// parameter does not contain //ttlplugins// key.
 
-h4. Using template plugins
-
-h4. Using template plugins inside your template
-
 h3. Extending tayra with plugins
 
-h3. Filter blocks
+h4. Implementing plugins for tag handlers
+
+h4. Implementing plugins for escape filters
 
 h4. Implementing plugins for filter blocks.
+
+h3. Developing with tayra
+
+You can checkout the source tree, build and install tayra from that, or you can
+install tayra via //easy_install// in your system environment or virtual
+environment. It is always better to setup the development tree under a virtual
+environmnt.
+
+h4. Installing tayra
+
+Installing via package management
+
+{{{ Code bash
+  # -Z to do unzipped install. The reason for installing it in un-zipped form
+  #    is to make use of the command line tool.
+  # -U to upgrade install
+  easy_install -Z -U tayra
+}}}
+
+''Source code''
+
+Download the latest tar.gz from http://pypi.python.org/pypi/tayra
+
+Check out hg repository from [[ http://code.google.com/p/tayra/ | google-code ]]
+{{{ Code bash
+  hg clone https://code.google.com/p/tayra/
+}}}
+
+h4. Command line usage
+
+Make sure that tayra package is installed in your environment (using
+easy_install) or available via //PYTHONPATH//. 
+''tayra/tyr.py'' script under tayra-package can be used as command
+line tool. Either invoke it from its original path, or create a symbolic link
+to a bin/ directory.
+
+script-file:    <site-package>/tayra/tyr.py
+
+symbolic link to your binary path, like,
+
+{{{ Code bash
+
+    ln -s <site-package>/tayra/tyr.py $(HOME)/bin/tyr.py
+    # or,
+    ln -s <site-package>/tayra/tyr.py /usr/bin/tyr.py
+
+}}}
+
+Once `tyr.py` is available as an executable command and `tayra` module 
+in your python path, use the command-line tool, like,
+
+{{{ Code bash
+  # A corresponding .html file will be generated in the same directory
+  tyr.py <template-file>
+  # For more help, try
+  tyr.py -h
+}}}
+   
+h4. Using it as library, in python
+
+Web-frameworks and similar software can use tayra as a library tool, via
+//Renderer// API class, like,
+
+{{{ Code python
+    from   tayra  import Renderer
+
+    # `ttlloc` specifies the path to template file, ttlloc is interpreted as
+    # relative path or asset specification format
+    # `ttlconfig` passes the configuration parameters
+    r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
+    html = r( context=context )
+    codecs.open( htmlfile, mode='w', encoding=encoding).write( html )
+
+    # To pass template text directly (instead of file-path)
+    r = Renderer( ttltext=ttltext, ttlconfig=ttlconfig )
+    html = r( context=context )
+}}}
+
+//Renderer// class is just a wrapper around a punch of API into //TTLParser//
+and ttl //Compiler// classes. If need be, developers can also use these API
+classes directly.
+  
+h4. Internal design overview
+
+Tayra templating language is based on formal parser grammar and implementer
+using formal methods of lexing and parsing (right now it is done using
+[[ PLY ]]). The output of the parse phase is an AST where each node is
+either derived from //Terminal// class or //NonTerminal// class. Once the AST
+is constructed, multi pass compilation via //headpass1// (for meta-processing),
+//headpass2// (pre-processing), //generate// (generating stack-machine
+instruction), //tailpass// (clean-up) is invoked, the output of which should be
+a python file containing stack machine instruction that can generate the final
+html based on context. //InstrGen// class is used by AST nodes (and plugins
+implementing the AST) to generate stack-machine instruction. //StackMachine//
+class implements the actual stack-machine.
+
+h4. Looking up template files
+
+When invoked as library, using //Renderer()// API, //ttlloc// specifies the
+template file to be translated, which can be in either of 2 formats,
+# As relative path name to one of the lookup //directories// provided in the
+  configuration parameter. Each directory in the list will be looke-up in the
+  given order until a file by that path and name is found.
+# As static asset, relative to package resource. For instance, if there is a
+  .ttl file packaged in <site-package>/<package-name>/path/to/template.ttl,
+  ttlloc can be specified as <package-name>:path/to/template.ttl
+
+h4. Complete list of make commands
+
+For developers who would like to check out the source tree and play with it,
+can use a bunch of //make commands//, 
+To begin with, first checkout the source tree from the latest repository tree
+and then use the ''make'' command to create a development environment, if you
+
+{{{ Code sh
+  cd tayra
+  make develop
+}}}
+
+which,
+* sets-up a virtual environment under // tayra-env/ // directory.
+* Installs tayra under the virtual environment in development mode,
+  [<PRE python ./setup.py develop >]
+
+To start using the tayra package, enter the virtual environment by doing,
+``{c} source ./tayra-env/bin/activate ``
+
+''To create an egg packages'',
+
+{{{ Code bash
+  make bdist_egg        # For creating binary distribution
+  make sdist            # For creating source distribution
+}}}
+
+The .egg package will be availabe under dist/ directory
+
+''To test the package'',
+
+{{{ Code bash
+  source tayra-env/bin/activate
+  make test
+}}}
+
+''Finally, Build the egg and upload it into pypi''
+
+{{{ Code bash
+  make upload
+}}}
+
 
 h3. Miscellaneous
 
@@ -224,7 +992,7 @@ that comes between ''<''...''>'',
 * '' {...} '', element styling.
 * ''" or ' '', string quotes.
 * ''='', token that joins attribute name and value.
-* ''!>'' and ''%>'', will prune the whitespace and intendations.
+* ''!>'' and ''%>'', will prune the whitespace and indentations.
 * The following characters and sequences are special within tag's style
   specification, that comes between ''{'' .... ''}''
   ** ''${...}'', expression substitution.

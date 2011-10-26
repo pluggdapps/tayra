@@ -25,7 +25,7 @@
   this phase is successfully completed.
 """
 
-import codecs
+import codecs, re
 from   os.path                  import dirname, basename, join
 from   copy                     import deepcopy
 from   datetime                 import datetime as dt
@@ -52,6 +52,7 @@ __version__ = '0.1dev'
 EP_TTLGROUP = 'tayra.plugins'
 EP_TTLNAME  = 'ITTLPlugin'
 DEFAULT_ENCODING = 'utf-8'
+ESCFILTER_RE = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
 
 defaultconfig = ConfigDict()
 defaultconfig.__doc__ = """Configuration settings for tayra template engine."""
@@ -139,7 +140,11 @@ def normalizeconfig( config ):
     config['text_as_hashkey'] = asbool( config['text_as_hashkey'] )
     try    : config['directories'] = parsecsv( config['directories'] )
     except : pass
-    try    : config['escape_filters'] = parsecsv( config['escape_filters'] )
+    try    :
+        filters = ESCFILTER_RE.findall( config['escape_filters'].strip() + ',' )
+        filters = [] if filters and filters[0][0] == 'n' else filters
+        filters = [ ( f[0], f[1].strip('. ,') ) for f in filters if f ]
+        config['escape_filters'] = filters
     except : pass
     try    : config['usetagplugins'] = parsecsv( config['usetagplugins'] )
     except : pass
@@ -198,7 +203,7 @@ def initplugins( ttlconfig, force=False ):
     if (force == True) or ttlconfig.get( 'tagplugins', None ) == None :
         # Load and classify plugins
         gsm = getGlobalSiteManager()
-        usetagplugins = ttlconfig['usetagplugins'] + ['']
+        usetagplugins = ttlconfig['usetagplugins'] + [u'']
 
         # import plugin packages defined in `ttlconfig`
         packages = ttlconfig['plugin_packages']
@@ -210,7 +215,7 @@ def initplugins( ttlconfig, force=False ):
         for x in gsm.registeredUtilities() :
             if x.provided == ITayraTag :            # Tag handlers
                 try    : namespace, tagname = x.name.rsplit('.', 1)
-                except : namespace, tagname = '', x.name
+                except : namespace, tagname = u'', x.name
                 if namespace in usetagplugins :
                     tagplugins[tagname] = x.component
             elif x.provided == ITayraFilterBlock :    # Filter blocks
@@ -248,15 +253,15 @@ def queryTTLPlugin( ttlplugins, interface, name, *args, **kwargs ):
     method is defined by the template plugin component, a new clone of it
     will be created by calling the component with ``args`` and ``kwargs``.
     """
-    foriface = ttlplugins.get( interface, None )
-    if foriface == None : return None
+    iface = ttlplugins.get( interface, None )
+    if iface == None : return None
 
     if name :
-        p = foriface.get( name, None )
+        p = iface.get( name, None )
         return p( *args, **kwargs ) if p and callable(p) else p
     else :
         return map( lambda p : p(*args, **kwargs) if callable(p) else p,
-                    foriface.values() )
+                    iface.values() )
 
 
 class BaseTTLPlugin( object ):
@@ -278,7 +283,6 @@ class Renderer( object ):
     `ttlconfig` parameter will find its way into every object defined
     by the templating engine.
 
-    TODO : somehow find a way to pass the arguments to `body` function
     """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         ttlconfig_ = deepcopy( dict(defaultconfig.items()) )
@@ -289,6 +293,23 @@ class Renderer( object ):
         self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
 
     def __call__( self, entryfn='body', context={} ):
+        """Compile, execute and return html text corresponding the template
+        document.
+
+        key-word arguments,
+        ``entryfn``,
+            name of entry function to be called.
+        ``context``,
+            dictionary of key,value pairs to be used as context for generating
+            html document.
+
+        Arguments to body() function can be passed via context variables,
+        ``_bodyargs`` (a list of positional arguments) and ``_bodykwargs`` a
+        dictionary of key-word arguments.
+
+        dictionary object ``context`` will also be available as _ttlcontext
+        variable.
+        """
         from tayra.compiler import Compiler
         self.compiler = Compiler( ttltext=self.ttltext,
                                   ttlloc=self.ttlloc,
@@ -299,8 +320,9 @@ class Renderer( object ):
         module = self.compiler.execttl( context=context )
         # Fetch parent-most module
         entry = getattr( module.self, entryfn )
-        # TODO : Optionally translate the return string into unicode
-        html = entry() if callable( entry ) else ''
+        args = context.get( '_bodyargs', [] )
+        kwargs = context.get( '_bodykwargs', {} )
+        html = entry( *args, **kwargs ) if callable( entry ) else u''
         return html
 
 def ttl_cmdline( ttlloc, **kwargs ):
@@ -314,6 +336,7 @@ def ttl_cmdline( ttlloc, **kwargs ):
     # Parse command line arguments and configuration
     args = eval( ttlconfig.pop( 'args', '[]' ))
     context = eval( ttlconfig.pop( 'context', '{}' ))
+    context.update( _bodyargs=args ) if args else None
     debuglevel = ttlconfig.pop( 'debuglevel', 0 )
     show = ttlconfig.pop( 'show', False )
     dump = ttlconfig.pop( 'dump', False )
@@ -358,4 +381,3 @@ def ttl_cmdline( ttlloc, **kwargs ):
         st = dt.now()
         [ r( context=context ) for i in range(2) ]
         print (dt.now() - st) / 2
-

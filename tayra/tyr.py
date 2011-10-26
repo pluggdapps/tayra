@@ -17,7 +17,7 @@ from   os.path              import isfile
 import tayra
 
 def _option_parse() :
-    '''Parse the options and check whether the semantics are correct.'''
+    """Parse the options and check whether the semantics are correct."""
     parser = OptionParser(usage="usage: %prog [options] filename")
     parser.add_option( '-o', '--outfile', dest='ofile', default=None,
                        help='Output html file to store translated result' )

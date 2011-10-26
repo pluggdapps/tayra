@@ -27,13 +27,13 @@ class ConfigDict( dict ):
 
 class ConfigItem( dict ):
     def _options( self ):
-        opts = self.get( 'options', '' )
+        opts = self.get( 'options', u'' )
         return opts() if callable(opts) else opts
 
     # Compulsory fields
     default = property( lambda self : self['default'] )
     types = property( 
-        lambda self : ', '.join([ t.__name__ for t in self['types'] ])
+        lambda self : u', '.join([ t.__name__ for t in self['types'] ])
     )
 
 

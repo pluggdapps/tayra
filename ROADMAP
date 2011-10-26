@@ -38,6 +38,8 @@ h4. Other features and functions.
     - HTTP headers (or any other real-time info available from user agent)
       denoting the user agent capabilities.
 
+* somehow find a way to pass the arguments to `body` function.
+
 * Just saw Adobe Egdge ... Can tayra be the keyboard version for addressing
   the same market place as Adobe's ?
 

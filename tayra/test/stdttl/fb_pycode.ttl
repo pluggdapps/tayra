@@ -20,9 +20,10 @@ ${ b }
 
 <html>
   @@b = 'hello'   
-  <head#headid.cls1.${a.strip()} "title" {color:red} lang="en" data="hello">
-  <body>
-    <h1 { color : red; border : 1px solid gray; }/> I am the space station ${ "These "} seven cameras
+  @@c = '10px'
+  <head#headid.cls1.${a.strip()} "title" {color:red;} lang="en" data="hello">
+  <body {margin : ${c}} >
+    <h1 { color : red; border : 1px solid gray; }> I am the space station ${ "These "} seven cameras
     have a zoom range 
     <p first second!> of any 12x or more,  ${20}  
     and some of the wide-angle view 

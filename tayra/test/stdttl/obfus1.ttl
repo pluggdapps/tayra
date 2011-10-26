@@ -1,0 +1,3 @@
+@@world = 'world'
+<div#id {' title= hello ${world}}>
+<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>

@@ -50,11 +50,11 @@ dtdurls = {
 }
 
 def ttl2doctype( doctype ) :
-    doctype = ' '.join( doctype.splitlines() ).rstrip(' ')
+    doctype = u' '.join( doctype.splitlines() ).rstrip(' ')
     values = [ w for w in re.split(r'[ \t]', doctype[3:-1]) if w ]
-    doc = values.pop(0) if values else ''
-    ver = values.pop(0) if values else ''
-    level = values.pop(0) if values else ''
+    doc = values.pop(0) if values else u''
+    ver = values.pop(0) if values else u''
+    level = values.pop(0) if values else u''
     key = doc+ver+level
     if key in dtdurls :
         html = "<!DOCTYPE %s PUBLIC %s %s" % dtdurls[key]

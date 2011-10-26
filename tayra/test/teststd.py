@@ -18,6 +18,7 @@ STDTTLREFDIR = join( THISDIR, 'stdttl', 'ref' )
 
 contexts = {
     'useinterface.ttl' : '{ "plugin" : "testinterface" }',
+    'body.ttl'         : '{ "_bodyargs" : ["hello", "world"] }',
 }
 def test_stdttl() :
     for f in os.listdir(STDTTLDIR) :

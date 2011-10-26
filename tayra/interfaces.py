@@ -125,7 +125,7 @@ class ITayraFilterBlock( ITayraPlugin ):
             dictionary provided by the application code.
         ``filteropen``
             will be the syntax including the preceeding whitespace that starts
-            the filter block, [ \t]*:fb-
+            the filter block, [ \t]*:fb-name
         ``filtertext``
             filter text including indentations and newlines that happen to
             come after the `filteropen`

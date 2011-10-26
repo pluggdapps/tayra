@@ -1,6 +1,6 @@
-<div> ${ "hello {}" + str([
+<div> ${ "hello {} עברית" + str([
   str(10) ]) + 
-  ' world' }
+  ' world' | uni.utf8 }
   <a#${'idname'}.${'cls'
     'name'} "${"http://"
             'google.com'}" { ${'color : ' }

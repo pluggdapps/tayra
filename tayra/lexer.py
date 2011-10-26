@@ -82,7 +82,7 @@ class TTLLexer( object ) :
         while self.indentstack :
             x = self.indentstack.pop(-1)
             self._addtokens( self._lextoken(x[0], x[1]) )
-        self.currindent = ''
+        self.currindent = u''
 
     def _onemptyindent( self, token ) :
         if len(token.lexer.lexdata) == token.lexer.lexpos :     # End of text
@@ -103,7 +103,7 @@ class TTLLexer( object ) :
     
     ## --------------- Interface methods ------------------------------
 
-    def __init__( self, error_func=None, conf={}, filename='', ):
+    def __init__( self, error_func=None, conf={}, filename=u'', ):
         """ Create a new Lexer.
         error_func :
             An error function. Will be called with an error message, line
@@ -112,7 +112,7 @@ class TTLLexer( object ) :
         self.error_func = error_func
         self.filename = filename
         self.conf = conf
-        self.currindent = ''
+        self.currindent = u''
         self.indentstack = []
         self.ttltokens = []
 
@@ -347,7 +347,7 @@ class TTLLexer( object ) :
         self._incrlineno(t)
         self._onemptyindent(t)
         # Replace new lines with spaces.
-        t.value = ' '.join( t.value.splitlines() )
+        t.value = u' '.join( t.value.splitlines() )
         return t
 
     @TOKEN( emptyspace )

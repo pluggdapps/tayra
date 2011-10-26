@@ -17,30 +17,25 @@ class PyCode( object ):
 
     def __init__( self, *args, **kwargs ):
         if args :
-            self.parser, self.filteropen, self.filtertext, self.filterclose = \
-                    args
+            self.parser, self.opensyn, self.text, self.closesyn = args
         else :
-            self.parser = self.filteropen = self.filtertext = \
-            self.filterclose = None
+            self.parser = self.opensyn = self.text = self.closesyn = None
 
     def __call__( self, parser=None, filteropen=None, filtertext=None,
                   filterclose=None ):
         parser = parser or self.parser
-        filteropen = filteropen or self.filteropen
-        filtertext = filtertext or self.filtertext
-        filterclose = filterclose or self.filterclose
-        return PyCode( parser, filteropen, filtertext, filterclose )
+        opensyn = filteropen or self.opensyn
+        text = filtertext or self.text
+        closesyn = filterclose or self.closesyn
+        return PyCode( parser, opensyn, text, closesyn )
 
     def headpass1( self, igen ):                        # Global
-        lines = self.filtertext.splitlines()
-        # Signature
-        self.signature = lines.pop(0) if lines else None
-        self.tokens = tokens = self.signature.strip().split(' ')
+        lines = self.text.splitlines()
+        self.tokens = tokens = lines.pop(0).strip().split(' ') if lines else []
         # Align indentation
         striplen = ( len(lines[0]) - len(lines[0].lstrip(' \t')) ) if lines else 0
         if tokens and tokens[0] == 'global' :
-            lines = [ line[striplen:] for line in lines ]
-            [ igen.putstatement( line ) for line in lines ]
+            [ igen.putstatement( line[striplen:] ) for line in lines ]
             self.lines = []
         else :
             self.lines = [ line[striplen:] for line in lines ]
@@ -49,8 +44,7 @@ class PyCode( object ):
         pass
 
     def generate( self, igen, *args, **kwargs ):        # Inline
-        lines = self.lines
-        [ igen.putstatement( line ) for line in lines ]
+        [ igen.putstatement( line ) for line in self.lines ]
 
     def tailpass( self, igen ):
         pass

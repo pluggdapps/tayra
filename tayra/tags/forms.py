@@ -96,17 +96,17 @@ typeattrs = {
 
 class TagInput( TagPlugin ):
     def specstrings2attrs( self, strings ):
-        return 'value=%s' % strings[0] if strings else ''
+        return 'value=%s' % strings[0] if strings else u''
 
     def specatoms2attrs( self, atoms ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         rematoms = []
         for atom in atoms :
-            s = _atom2attrs.get( atom, '' )
+            s = _atom2attrs.get( atom, u'' )
             if s : defattrs += s
             else : rematoms.append( atom )
 
-        rematoms = ' '.join( rematoms )
+        rematoms = u' '.join( rematoms )
         matches = regexp.findall( rematoms )
         for match in matches :
             for i in range(8) :
@@ -114,7 +114,7 @@ class TagInput( TagPlugin ):
                 try : defattrs += handlers[i]( match[i] )
                 except : continue
                 break
-        defattrs += typeattrs.get( self.pluginname[12:], '' )
+        defattrs += typeattrs.get( self.pluginname[12:], u'' )
         return defattrs, []
 
     def maketagname( self, tagopen ):
@@ -151,7 +151,7 @@ class HtmlInphidden( TagInput ):
 class HtmlInpimg( TagInput ):
     pluginname = 'html5.forms.inpimg'
     def specstrings2attrs( self, strings ):
-        return 'src=%s' % strings[0] if strings else ''
+        return 'src=%s' % strings[0] if strings else u''
 
 class HtmlInpmonth( TagInput ):
     pluginname = 'html5.forms.inpmonth'
@@ -208,11 +208,11 @@ class HtmlTextArea( TagPlugin ):
         defattrs, atoms = TagPlugin.specatoms2attrs( self, atoms )
         rematoms = []
         for atom in atoms :
-            s = _atom2attrs.get( atom, '' )
+            s = _atom2attrs.get( atom, u'' )
             if s : defattrs += s
             else : rematoms.append( atom )
 
-        rematoms = ' '.join( rematoms )
+        rematoms = u' '.join( rematoms )
         matches = ta_regexp.findall( rematoms )
         for match in matches :
             for i in range(5) :

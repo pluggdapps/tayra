@@ -33,7 +33,7 @@ class TTLParser( object ):
 
     def __init__( self,
                   ttlconfig={},
-                  outputdir='',
+                  outputdir=u'',
                   lex_optimize=None,
                   lextab=LEXTAB,
                   lex_debug=None,
@@ -751,7 +751,7 @@ class TTLParser( object ):
             self._parse_error( 'before: %s ' % (p.value,),
                                self._coord(p.lineno, column) )
         else:
-            self._parse_error( 'At end of input', '' )
+            self._parse_error( 'At end of input', u'' )
 
 class Coord( object ):
     """ Coordinates of a syntactic element. Consists of:

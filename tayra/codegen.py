@@ -37,7 +37,7 @@ class InstrGen( object ) :
         self.devmod = self.ttlconfig['devmod']
         self.uglyhtml = self.ttlconfig['uglyhtml']
         self.outfd = StringIO()
-        self.pyindent = ''
+        self.pyindent = u''
         self.optimaltext = []
         self.pytext = None
         # prolog for python translated template
@@ -75,13 +75,13 @@ class InstrGen( object ) :
             self.cr()
             self.outfd.write( '_m.indent()' )
 
-    def upindent( self, up='' ):
+    def upindent( self, up=u'' ):
         if self.uglyhtml == False :
             self.flushtext()
             self.cr()
             self.outfd.write( '_m.upindent( up=%r )' % up )
 
-    def downindent( self, down='' ):
+    def downindent( self, down=u'' ):
         if self.uglyhtml == False :
             self.flushtext()
             self.cr()
@@ -91,7 +91,7 @@ class InstrGen( object ) :
         if self.devmod :
             self.flushtext()
             self.cr()
-            self.outfd.write( '# ' + ' '.join(comment.rstrip('\r\n').splitlines()) )
+            self.outfd.write( '# ' + u' '.join(comment.rstrip('\r\n').splitlines()) )
 
     def flushtext( self ) :
         if self.optimaltext :
@@ -127,7 +127,7 @@ class InstrGen( object ) :
         if code :
             self.flushtext()
             self.cr()
-            self.outfd.write('_m.append( _m.evalexprs(%s, %r) )' % (code, filters))
+            self.outfd.write('_m.append( _m.evalexprs(%s, %s) )' % (code, filters))
 
     def pushbuf( self ):
         self.flushtext()
@@ -150,7 +150,7 @@ class InstrGen( object ) :
         else :
             self.outfd.write( 'return _m.popbuf()' )
 
-    def handletag( self, indent=False, newline='' ):
+    def handletag( self, indent=False, newline=u'' ):
         self.flushtext()
         self.cr()
         # first arg is `content` and second arg is `tag`
@@ -187,7 +187,7 @@ class InstrGen( object ) :
             # hitch methods with interface class
             methodlines = [ '  %s = %s' % ( method, method )
                             for method in interfaces_.get(interfacename, []) ]
-            self.putblock( '\n'.join( [codeblock] + methodlines ) )
+            self.putblock( u'\n'.join( [codeblock] + methodlines ) )
             # register the interface providing object
             line = '_m.register( %s(), %s, %r )' % (infcls, interfacename, pluginname)
             self.putstatement(line)

@@ -15,7 +15,7 @@ from   tayra.interfaces         import ITayraTag
 gsm = getGlobalSiteManager()
 
 class Context( object ):
-    def __init__( self, htmlindent='' ):
+    def __init__( self, htmlindent=u'' ):
         self.htmlindent = htmlindent
 
 class TagPlugin( object ):
@@ -24,7 +24,7 @@ class TagPlugin( object ):
     def dotag( self, node, igen, *args, **kwargs ):
         has_exprs = False
         specifiers, style, attributes = node.specifiers, node.style, node.attributes
-        spectext  = specifiers and specifiers.spectext or ''
+        spectext  = specifiers and specifiers.spectext or u''
         styletext = style and style.styletext
         attrslist = attributes and attributes.attrslist
 
@@ -48,13 +48,13 @@ class TagPlugin( object ):
 
         # Style
         if styletext :          # Static style content
-            tagstyle = self.handle_style( styletext )
+            tagstyle = 'style="%s"' % self.handle_style(styletext)
             fnstyle, astext = lambda : igen.puttext( tagstyle ), False
         elif style :            # Dynamic style content
             fnstyle, astext = lambda : style.generate( igen, *args, **kwargs ), True
             has_exprs = True
         else :
-            tagstyle = ''
+            tagstyle = u''
             fnstyle, astext = lambda : igen.puttext( tagstyle ), True
         items.append( (fnstyle, astext) )
 
@@ -66,22 +66,22 @@ class TagPlugin( object ):
             fnattrs = lambda : attributes.generate(igen, *args, **kwargs)
             has_exprs = True
         else :
-            tagattrs = ''
+            tagattrs = u''
             fnattrs = lambda : igen.puttext( tagattrs )
         items.append( (fnattrs, False) )# pop-out as list
     
         igen.puttext( tagnm )
         if has_exprs == False : # Tag definition is fully static
-            tagdef = '<' + tagnm + ' ' + ' '.join(filter(None, [ tagspec, tagstyle, tagattrs ]))
-            tagdef += node.TAGEND and node.TAGEND.dump(None) or ''
-            tagdef += node.TAGCLOSE and node.TAGCLOSE.dump(None) or ''
+            tagdef = u'<' + tagnm + u' ' + u' '.join(filter(None, [ tagspec, tagstyle, tagattrs ]))
+            tagdef += node.TAGEND and node.TAGEND.dump(None) or u''
+            tagdef += node.TAGCLOSE and node.TAGCLOSE.dump(None) or u''
             igen.puttext( tagdef )
         else :
             node.TAGOPEN.generate( igen, *args, **kwargs )
             [ node.stackcompute(igen, fn, astext=astext) for fn, astext in items ]
             node.TAGEND and node.TAGEND.generate( igen, *args, **kwargs )
             node.TAGCLOSE and node.TAGCLOSE.generate( igen, *args, **kwargs )
-        igen.puttext( self.handle_tagclose(tagnm) if node.TAGCLOSE else '' )
+        igen.puttext( self.handle_tagclose(tagnm) if node.TAGCLOSE else u'' )
         return has_exprs
 
     def dotagline( self, node, igen, pruneinner, handletag,
@@ -136,40 +136,41 @@ class TagPlugin( object ):
     def tailpass( self, node, igen ):
         return True
     
-    def handle( self, mach, tag, contents, indent=False, newline='' ):
+    def handle( self, mach, tag, contents, indent=False, newline=u'' ):
         A = mach.Attributes
         # Tag definition
         if len(tag) == 7 :
             tagnm, tagopen, spec, style, attr, tagclose, tagfinish = tag
             t = tagopen
-            spec  = str(spec[0])  if spec and isinstance(spec[0], A) \
+            spec  = unicode(spec[0])  if spec and isinstance(spec[0], A) \
                                else self.handle_specifiers(spec)
-            style = str(style[0]) if style and isinstance(style[0], A) \
+            style = unicode(style[0]) if style and isinstance(style[0], A) \
                                else self.handle_style(style)
-            attr  = str(attr[0])  if attr and isinstance(attr[0], A) \
+            attr  = unicode(attr[0])  if attr and isinstance(attr[0], A) \
                                else self.handle_attributes(attr)
-            t += spec + style + attr + tagclose
+            style = u'style="%s"' % style
+            t += u' ' + u' '.join(filter(None, [ spec, style, attr, tagclose ]))
         elif len(tag) == 3 :
             tagnm, t, tagfinish = tag
         else :
             raise Exception( 'Tag definition not in the expected format' )
         # Tag content
-        t += self.handle_content( ''.join(contents) )
+        t += self.handle_content( u''.join(contents) )
         # Tag close
         t += tagfinish
         return t
 
     def handle_specifiers( self, spectext ):
-        attr, strings, atoms = self.parsespecifiers( spectext )
+        attr, strings, atoms = self.parsespecifiers( spectext or u'' )
         str2attrs = self.specstrings2attrs(strings)
         atom2attrs, leftover = self.specatoms2attrs( atoms if atoms else [] )
-        return ' ' + ' '.join(filter(None, [ attr, str2attrs, atom2attrs ]))
+        return u' '.join(filter(None, [ attr, str2attrs, atom2attrs ]))
 
     def handle_style( self, styletext ):
-        return 'style="%s"' % styletext if styletext else ''
+        return u''.join(styletext) if styletext else u''
 
     def handle_attributes( self, attrslist ):
-        return ' '.join(filter( None, attrslist)) if attrslist else ''
+        return u' '.join(filter( None, attrslist)) if attrslist else u''
 
     def handle_content( self, text ):
         return text
@@ -197,15 +198,15 @@ class TagPlugin( object ):
                 id_ and ids.append(id_) 
                 cls and classes.append(cls)
                 nm and name.append(nm)
-            attr.append( 'id="%s"' % ids[0][1:] if ids else '' )
+            attr.append( 'id="%s"' % ids[0][1:] if ids else u'' )
             attr.append(
-                'class="%s"' % ''.join(classes)[1:].replace('.',' ') if classes else ''
+                u'class="%s"' % u''.join(classes)[1:].replace('.',' ') if classes else u''
             )
-            attr.append( 'name="%s"' % name[0][1:] if name else '' )
+            attr.append( u'name="%s"' % name[0][1:] if name else u'' )
 
         strings = filter( None, reduce( lambda x, t : x + list(t[:2]), parsed, [] ))
         atoms   = filter( None, map( lambda t : t[2].strip(), parsed ))
-        return ' '.join(attr), strings, atoms
+        return u' '.join(attr), strings, atoms
 
     atom2attr = {
       # global attributes
@@ -239,10 +240,10 @@ class TagPlugin( object ):
             else :
                 attr = self.atom2attr.get( atom, None )
             attrs.append(attr) if attr != None else leftover.append(atom)
-        return (' '.join(attrs), leftover)
+        return (u' '.join(attrs), leftover)
 
     def specstrings2attrs( self, strings ):
-        return ' '.join(filter( None, strings ))
+        return u' '.join(filter( None, strings ))
 
     def maketagname( self, tagopen ):
         return tagopen

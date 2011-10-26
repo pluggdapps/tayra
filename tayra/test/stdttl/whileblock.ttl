@@ -1,5 +1,13 @@
 @@ a = x = y = z = 10;  s='hello '
 
+<table>
+  @for i in range(100):
+    <tr>
+      @@j = 0
+      @while j < 4 :
+        <td> sample text
+        @@j += 1
+
 @while False :
      
   @@pass

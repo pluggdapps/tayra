@@ -28,9 +28,8 @@ class Attributes( dict ):
         dict.__init__( self, *args, **kwargs )
 
     def __str__( self ):
-        s = self.attrstext + ' '.join( 
-            self.attrslist + map( lambda x : '%s="%s"' % x, self.items() )
-        )
+        attrslist = self.attrslist + map(lambda x: '%s="%s"'% x, self.items())
+        s = u' '.join(filter( None, [ self.attrstext, attrslist ]))
         return s
 
     def __repr__( self ):
@@ -46,15 +45,13 @@ class StackMachine( object ) :
         self.escfilters = ttlconfig.get( 'escfilters', {} )
         self.tagplugins = ttlconfig.get( 'tagplugins', {} )
         self.ttlplugins = ttlconfig.get( 'ttlplugins', {} )
-        self.def_escfilters = [
-            f.strip().split('.',1) for f in ttlconfig['escape_filters'] if f
-        ]
+        self.def_escfilters = ttlconfig['escape_filters']
         self.encoding = self.ttlconfig['input_encoding']
 
         self.bufstack = [ [] ]
         self.ifile = ifile
         self.compiler = compiler
-        self.htmlindent = ''
+        self.htmlindent = u''
 
     #---- Stack machine instructions
 
@@ -69,11 +66,11 @@ class StackMachine( object ) :
     #        text = repr( text )
     #        return unicode( text, self.encoding )
 
-    def upindent( self, up='' ) :
+    def upindent( self, up=u'' ) :
         self.htmlindent += up
         return self.htmlindent
 
-    def downindent( self, down='' ) :
+    def downindent( self, down=u'' ) :
         self.htmlindent = self.htmlindent[:-len(down)]
         return self.htmlindent
 
@@ -100,27 +97,23 @@ class StackMachine( object ) :
 
     def popbuftext( self ) :
         buf = self.popbuf()
-        return ''.join( buf )
+        return u''.join( buf )
 
-    def handletag( self, contents, tag, indent=False, nl='' ):
+    def handletag( self, contents, tag, indent=False, nl=u'' ):
         """Entry point to handle tags"""
         tagplugin = self.tagplugins.get( tag[0], self.tagplugins['_default'] )
         self.append(
             tagplugin.handle( self, tag, contents, indent=indent, newline=nl )
         )
 
-    filtregex = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
     def evalexprs( self, val, filters ) :
-        filters = self.filtregex.findall( filters.strip() + ',' )
-        skip = filters.pop(0) if filters and filters[0][0] == 'n' else None
         text = val if isinstance(val, unicode) else str(val).decode(self.encoding)
-        if skip == None :                       # Pluggable filters
-            for filt in self.def_escfilters :   # default filters
-                fn = self.escfilters.get( filt, None )
-                text = fn.do( self, text, filt ) if fn else text
-            for filt, ns in filters :           # evaluate filters
-                fn = self.escfilters.get( filt, None )
-                text = fn.do( self, text, ns ) if fn else text
+        for filt, params in self.def_escfilters :   # default filters
+            fn = self.escfilters.get( filt, None )
+            text = fn.do( self, text, params ) if fn else text
+        for filt, params in filters :               # evaluate filters
+            fn = self.escfilters.get( filt, None )
+            text = fn.do( self, text, params ) if fn else text
         return text
 
     def importas( self, ttlloc, modname, childglobals ):
@@ -152,7 +145,7 @@ class StackMachine( object ) :
             return interfacefunc( self, *(args+a), **kwargs )
         return fnhitched.__get__( obj, cls )
 
-    def use( self, interface, pluginname='' ):
+    def use( self, interface, pluginname=u'' ):
         return queryTTLPlugin( self.ttlplugins, interface, pluginname )
 
 

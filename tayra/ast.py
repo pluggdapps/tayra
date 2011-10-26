@@ -25,7 +25,7 @@ class ASTError( Exception ):
     pass
 
 class Context( object ):
-    def __init__( self, htmlindent='' ):
+    def __init__( self, htmlindent=u'' ):
         self.htmlindent = htmlindent
 
 # ------------------- AST Nodes (Terminal and Non-Terminal) -------------------
@@ -82,7 +82,7 @@ class Node( object ):
     def dump( self, context ):
         """Simply dump the contents of this node and its children node and
         return the same."""
-        return ''.join([ x.dump(context) for x in self.children() ])
+        return u''.join([ x.dump(context) for x in self.children() ])
 
     def ismatched( self, context ):
         """This interface should return a boolean indicating whether the html
@@ -218,7 +218,7 @@ class NonTerminal( Node ):      # Non-terminal
     def lstrip( self, chars ):
         """Strip off the leftmost characters from children nodes. Stop
         stripping on recieving non null string."""
-        value = ''
+        value = u''
         for c in self.children() :
             value = c.lstrip( chars )
             if value : break
@@ -227,7 +227,7 @@ class NonTerminal( Node ):      # Non-terminal
     def rstrip( self, chars ):
         """Strip off the rightmost characters from children nodes. Stop
         stripping on recieving non null string."""
-        value = ''
+        value = u''
         children = list(self.children())
         children.reverse()
         for c in children :
@@ -329,15 +329,15 @@ class Template( NonTerminal ):
         else :
             return False
 
-    def _generatebody( self, igen, signature='', *args, **kwargs ):
+    def _generatebody( self, igen, signature=u'', *args, **kwargs ):
         """Generate the body function only when there is valid content in the
         global scope.
         """
         igen.cr()
         if self._is_generate() or self.doctypes :
             # Body function signature
-            signature = signature and signature.strip(', \t') or ''
-            ', '.join([ signature, '*args', '**kwargs' ])
+            signature = signature and signature.strip(', \t') or u''
+            u', '.join([ signature, '*args', '**kwargs' ])
             line = "def body( %s ) :" % signature
             igen.putstatement( line )
             igen.codeindent( up='  ' )
@@ -370,7 +370,7 @@ class Template( NonTerminal ):
         NonTerminal.headpass2( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
-        self.ttlhash = kwargs.pop( 'ttlhash', '' )
+        self.ttlhash = kwargs.pop( 'ttlhash', u'' )
         self.ttlfile = self.parser.ttlparser.ttlfile
 
         # prologs
@@ -393,7 +393,7 @@ class Template( NonTerminal ):
 
     def dump( self, context=None ):
         c = context or Context()
-        return ''.join([ x.dump(c) for x in self.children() ])
+        return u''.join([ x.dump(c) for x in self.children() ])
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -477,7 +477,7 @@ class Siblings( NonTerminal ):
         [ x.tailpass( igen ) for x in self.flatten() ]
 
     def dump( self, context ) :
-        return ''.join([ x.dump(context) for x in self.flatten() ])
+        return u''.join([ x.dump(context) for x in self.flatten() ])
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -550,7 +550,7 @@ class DocType( NonTerminal ):
 
 
 class Body( NonTerminal ):
-    """class to handle `body` grammar."""
+    """class to handle ``body`` grammar."""
 
     def __init__( self, parser, body ) :
         NonTerminal.__init__( self, parser, body )
@@ -626,12 +626,12 @@ class ImportAs( NonTerminal ):
 
     def headpass2( self, igen ):
         line = self.IMPORTAS.dump(None).rstrip(';\r\n')
-        parts = ' '.join( line.splitlines() ).split(' ')
+        parts = u' '.join( line.splitlines() ).split(' ')
         if parts[1].endswith('.ttl') and parts[2] == 'as' :
             ttlloc, modname = parts[1], parts[3]
             igen.putimport_ttl( ttlloc, modname )
         else :
-            igen.putimport( ' '.join(parts[1:]) )
+            igen.putimport( u' '.join(parts[1:]) )
         NonTerminal.headpass2( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
@@ -661,7 +661,7 @@ class Inherit( NonTerminal ):
 
     def headpass2( self, igen ):
         line = self.INHERIT.dump(None).rstrip(';\r\n')
-        parts = ' '.join( line.splitlines() ).split(' ')
+        parts = u' '.join( line.splitlines() ).split(' ')
         ttlloc = parts[1]
         igen.putinherit( ttlloc )
         NonTerminal.headpass2( self, igen )
@@ -693,7 +693,7 @@ class Implement( NonTerminal ):
 
     def headpass1( self, igen ):
         line = self.IMPLEMENT.dump(None).rstrip(';\r\n')
-        parts = [ x.strip() for x in ' '.join( line.splitlines() ).split(' ') ]
+        parts = [ x.strip() for x in u' '.join( line.splitlines() ).split(' ') ]
         if parts[2] == 'as' :
             interface, pluginname = parts[1], parts[3]
             module, interfacename = interface.split(':')
@@ -734,7 +734,7 @@ class Use( NonTerminal ):
         if len(parts) == 5 and (parts[0], parts[3]) == ('@use', 'as') :
             interface, pluginname, importname = parts[1], parts[2], parts[4]
         elif len(parts) == 4 and (parts[0], parts[2]) == ('@use', 'as') :
-            interface, pluginname, importname = parts[1], '', parts[3]
+            interface, pluginname, importname = parts[1], u'', parts[3]
         else :
             raise Exception( 'use directive syntax error' )
         module, interfacename = interface.split(':')
@@ -748,7 +748,7 @@ class Use( NonTerminal ):
         return self._terms
 
     def headpass2( self, igen ):
-        line = ' '.join( self.USE.dump(None).rstrip(';\r\n').splitlines() )
+        line = u' '.join( self.USE.dump(None).rstrip(';\r\n').splitlines() )
         self.module, self.interfacename, self.pluginname, self.name = \
                 self._parseline( line )
         igen.useinterface(
@@ -798,7 +798,7 @@ class InterfaceBlock( NonTerminal ):
         return interfacename, methodname, funcline
 
     def headpass1( self, igen ):
-        line = ' '.join( self.INTERFACE.dump(None)[10:].splitlines() )
+        line = u' '.join( self.INTERFACE.dump(None)[10:].splitlines() )
         self.interfacename, self.methodname, self.funcline = self._parseline( line )
         self.bubbleupaccum( 'interfaces', (self.interfacename, self.methodname) )
         NonTerminal.headpass1( self, igen )
@@ -813,7 +813,7 @@ class InterfaceBlock( NonTerminal ):
 
     def dump( self, context ) :
         text = self.INTERFACE.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -921,7 +921,7 @@ class FilterBlock( NonTerminal ):
 
     def dump( self, context ) :
         text = self.FILTER.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -957,7 +957,7 @@ class FunctionBlock( NonTerminal ):
     def headpass1( self, igen ):
         # Function signature
         line = self.FUNCTION.dump(None)
-        self.line = ' '.join( line.replace( '@function', 'def' ).splitlines() )
+        self.line = u' '.join( line.replace( '@function', 'def' ).splitlines() )
         NonTerminal.headpass1( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
@@ -976,7 +976,7 @@ class FunctionBlock( NonTerminal ):
 
     def dump( self, context ) :
         text = self.FUNCTION.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -1039,15 +1039,15 @@ class IfBlock( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         line = self.IF.dump(None)
-        line = ' '.join( line.replace( '@if', 'if' ).splitlines() )
+        line = u' '.join( line.replace( '@if', 'if' ).splitlines() )
         # if block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        self.gencontrolblock( igen, line, u'', *args, **kwargs )
         return None
 
     def dump( self, context ) :
         text = self.IF.dump(context)
         context.htmlindent += self.INDENT.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
         return text
@@ -1083,14 +1083,14 @@ class ElifBlock( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         line = self.ELIF.dump(None)
-        line = ' '.join( line.replace( '@elif', 'elif' ).splitlines() )
+        line = u' '.join( line.replace( '@elif', 'elif' ).splitlines() )
         # elif block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        self.gencontrolblock( igen, line, u'', *args, **kwargs )
         return None
 
     def dump( self, context ) :
         text = self.ELIF.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -1126,14 +1126,14 @@ class ElseBlock( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         line = self.ELSE.dump(None)
-        line = ' '.join( line.replace( '@else', 'else' ).splitlines() )
+        line = u' '.join( line.replace( '@else', 'else' ).splitlines() )
         # else block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        self.gencontrolblock( igen, line, u'', *args, **kwargs )
         return None
 
     def dump( self, context ) :
         text = self.ELSE.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -1169,14 +1169,14 @@ class ForBlock( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         line = self.FOR.dump(None)
-        line = ' '.join( line.replace( '@for', 'for' ).splitlines() )
+        line = u' '.join( line.replace( '@for', 'for' ).splitlines() )
         # for block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        self.gencontrolblock( igen, line, u'', *args, **kwargs )
         return None
 
     def dump( self, context ) :
         text = self.FOR.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -1212,14 +1212,14 @@ class WhileBlock( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         line = self.WHILE.dump(None)
-        line = ' '.join( line.replace( '@while', 'while' ).splitlines() )
+        line = u' '.join( line.replace( '@while', 'while' ).splitlines() )
         # while block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        self.gencontrolblock( igen, line, u'', *args, **kwargs )
         return None
 
     def dump( self, context ) :
         text = self.WHILE.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
+        text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
         context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
@@ -1757,7 +1757,7 @@ class StrContents( NonTerminal ):
         for cont in contents :
             if isinstance(cont, Exprs) :
                 igen.puttext(text); cont.generate( igen, *args, **kwargs );
-                text = ''
+                text = u''
             else :
                 text += cont.dump( Context() )
         text and igen.puttext(text)
@@ -1862,11 +1862,11 @@ class StyleContents( NonTerminal ):
     def generate( self, igen, *args, **kwargs ):
         contents = self.flatten()
         #contents = filter( lambda x : not isinstance(x, NEWLINES), contents )
-        text = ''
+        text = u''
         for cont in contents :
             if cont.exprs:
                 igen.puttext(text); cont.generate(igen, *args, **kwargs);
-                text = ''
+                text = u''
             else :
                 text += cont.dump( Context() )
         text and igen.puttext(text)
@@ -1967,10 +1967,15 @@ class ExprsContents( NonTerminal ):
         return self._nonterms
 
     def generate( self, igen, *args, **kwargs ):
+        from tayra  import ESCFILTER_RE
         contents = self.flatten()
         contents = filter( lambda x : not x.NEWLINES, contents )
-        text = ''.join([ x.dump( Context() ) for x in contents ])
+        text = u''.join([ x.dump( Context() ) for x in contents ])
         text, filters = ExprsContents.parseexprs( text )
+        # Pre-process escape filters
+        filters = ESCFILTER_RE.findall( filters.strip() + ',' )
+        filters = [] if filters and filters[0][0] == 'n' else filters
+        filters = [ ( f[0], f[1].strip('. ,') ) for f in filters if f ]
         igen.evalexprs( text, filters=filters )
         return None
 
@@ -1989,7 +1994,7 @@ class ExprsContents( NonTerminal ):
     @classmethod
     def parseexprs( cls, text ):
         try    : text, filters = text.rsplit( cls.FILTER_DELIMITER, 1 )
-        except : text, filters = text, ''
+        except : text, filters = text, u''
         return text, filters
 
 
@@ -2112,7 +2117,7 @@ class EmptyLines( NonTerminal ):
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         lead = ' ' * offset
-        text = ''.join([ item.dump(None) for item in self.flatten() ])
+        text = u''.join([ item.dump(None) for item in self.flatten() ])
         buf.write( lead + 'emptylines: %r' % text )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
@@ -2140,7 +2145,7 @@ class WhiteSpace( NonTerminal ):
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         lead = ' ' * offset
-        text = ''.join([ item.dump(None) for item in self.flatten() ])
+        text = u''.join([ item.dump(None) for item in self.flatten() ])
         buf.write( lead + 'whitespace: %r' % text )
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
@@ -2222,7 +2227,7 @@ class TAGCLOSE( Terminal ) :
         self.pruneinner = TTLLexer.prunews in tagclose
         self.pruneindent = TTLLexer.pruneindent in tagclose
         if self.pruneinner or self.pruneindent :
-            self.terminal = re.sub( r'[!%]', '', tagclose )
+            self.terminal = re.sub( r'[!%]', u'', tagclose )
         return self.pruneinner, self.pruneindent
 
 class OPENEXPRS( Terminal ) : pass

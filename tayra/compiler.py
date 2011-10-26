@@ -161,6 +161,8 @@ class TemplateLookup( object ) :
         return self.ttlhash if self.ttlconfig['text_as_hashkey'] else self.ttlfile
 
     def _locatettl( self, ttlloc, dirs ):
+        """TODO : can reordering the sequence of ttlloc interpretation improve
+        performance ?"""
         # If ttlloc is relative to one of the template directories
         files = filter( lambda f : isfile(f), [ join(d, ttlloc) for d in dirs ])
         if files : return files[0]

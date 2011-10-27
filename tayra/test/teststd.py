@@ -16,9 +16,22 @@ THISDIR = abspath( '.' )
 STDTTLDIR = join( THISDIR, 'stdttl' )
 STDTTLREFDIR = join( THISDIR, 'stdttl', 'ref' )
 
+
+ua1 = """Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.10 """ \
+      """(KHTML, like Gecko) Ubuntu/10.10 Chromium/8.0.552.237 """      \
+      """Chrome/8.0.552.237 Safari/534.10"""
+ua2 = """Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20100101 Firefox/5.0.1"""
+
+class O( object ):
+    pass
+
+req = O()
+req.headers = { 'User-Agent': ua2 }
+
 contexts = {
     'useinterface.ttl' : '{ "plugin" : "testinterface" }',
     'body.ttl'         : '{ "_bodyargs" : ["hello", "world"] }',
+    'dec_useragent.ttl': { "request" : req },
 }
 def test_stdttl() :
     for f in os.listdir(STDTTLDIR) :

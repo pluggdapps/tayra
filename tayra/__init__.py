@@ -63,6 +63,35 @@ defaultconfig['devmod']    = {
                 "development mode. For instance, the tempate file (text) is "
                 "always translated, bypassing the cache even if available."
 }
+defaultconfig['parse_optimize']    = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "PLY-Lexer-Yacc option. "
+                "Set to False when you're modifying the lexer/parser. "
+                "Otherwise, changes in the lexer/parser won't be used, "
+                "if some lextab.py file exists. When releasing with a stable "
+                "version, set to True to save the re-generation of the "
+                "lexer/parser table on each run. Also note that, using "
+                "python's optimization feature can break this option, refer, "
+                "    http://www.dabeaz.com/ply/ply.html#ply_nn38 "
+}
+defaultconfig['lextab']    = {
+    'default' : None,
+    'types'   : (str,unicode),
+    'help'    : "PLY-Lexer option. "
+                "Points to the lex table that's used for optimized mode. Only "
+                "if you're modifying the lexer and want some tests to avoid "
+                "re-generating the table, make this point to a local lex table "
+                "file. "
+}
+defaultconfig['yacctab']    = {
+    'default' : None,
+    'types'   : (str,unicode),
+    'help'    : "PLY-Yacc option. "
+                "Points to the yacc table that's used for optimized mode. Only "
+                "if you're modifying the parser, make this point to a local "
+                "yacc table file."
+}
 defaultconfig['strict_undefined']    = {
     'default' : False,
     'types'   : (bool,),
@@ -285,10 +314,9 @@ class Renderer( object ):
 
     """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
-        ttlconfig_ = deepcopy( dict(defaultconfig.items()) )
-        ttlconfig_.update( ttlconfig )
+        ttlconfig = ttlconfig or deepcopy( dict(defaultconfig.items()) )
         # Initialize plugins
-        self.ttlconfig = initplugins( ttlconfig_, force=ttlconfig_['devmod'] )
+        self.ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
         self.ttlloc, self.ttltext = ttlloc, ttltext
         self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
 
@@ -335,7 +363,8 @@ def ttl_cmdline( ttlloc, **kwargs ):
 
     # Parse command line arguments and configuration
     args = eval( ttlconfig.pop( 'args', '[]' ))
-    context = eval( ttlconfig.pop( 'context', '{}' ))
+    context = ttlconfig.pop( 'context', {} )
+    context = eval(context) if isinstance(context, basestring) else context
     context.update( _bodyargs=args ) if args else None
     debuglevel = ttlconfig.pop( 'debuglevel', 0 )
     show = ttlconfig.pop( 'show', False )

@@ -50,7 +50,7 @@ syn include @Python         syntax/python.vim
 
 " Prolog
 syn match   prologKeywords  contained "!!!\|@import\| as \|@body\|@inherit\|@implement\|@use\|@charset"
-syn match   funcKeywords    contained "@function\|@interface"
+syn match   funcKeywords    contained "@function\|@interface\|@dec"
 syn match   controlKeywords contained "@if\|@elif\|@else\|@for\|@while"
 syn match   prologDoctype   "^!!!.*;[ \t]*" contains=prologKeywords
 syn region  prolog          start="^@[!ibuc]" end=";[ \t]*$" contains=prologKeywords,ttlString
@@ -76,6 +76,7 @@ syn region  ttlTag          contained start=+^[ ]*<[!%]\?[^/]+   end=+>+ contain
 syn region  ttlTagline      start=+^[ ]*<[!%]\?[^/]+  end=+[^\r\n]\{-}$+ contains=ttlTag,pythonExprs
 
 " Function block
+syn region  decLine         start=+^[ ]*@dec+  end=+)[ \t]*$+ contains=funcKeywords,@Python
 syn region  funcLine        start=+^[ ]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
 syn region  ifaceLine       start=+^@interface+ end=+:[ ]*$+ contains=funcKeywords,@Python
 

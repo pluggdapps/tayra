@@ -181,7 +181,7 @@ class TTLLexer( object ) :
         # directives
         'DOCTYPE', 'CHARSET', 'BODY', 'IMPORTAS', 'IMPLEMENT', 'INHERIT',
         'USE',
-        'FUNCTION', 'INTERFACE',
+        'FUNCTION', 'INTERFACE', 'DECORATOR',
         'IF', 'ELIF', 'ELSE', 'FOR', 'WHILE',
 
         #
@@ -207,6 +207,7 @@ class TTLLexer( object ) :
     space       = r'[%s]+' % tabspace
     whitespac   = r'[%s]*' % ws
     whitespace  = r'[%s]+' % ws
+    decname     = r'[a-zA-Z0-9_]+'
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9-_]+'
 
@@ -237,8 +238,9 @@ class TTLLexer( object ) :
     inherit     = r'^@inherit.*?' + suffix1
     use         = r'^@use.*?' + suffix1
 
-    interface   = r'^@interface(.|\n)*?%s' % (suffix2,)  # Matches newlines
+    interface   = r'^@interface(.|\n)*?%s' % (suffix2,)     # Matches newlines
 
+    decorator   = r'@dec[%s]+%s\([^)\r\n]*\)%s' % (tabspace, decname, nl)
     function    = r'@function(.|%s)*?%s' % (ws, suffix2)    # Matches newlines
     if_         = r'@if(.|%s)*?%s' % (ws, suffix2)          # Matches newlines
     elif_       = r'@elif(.|%s)*?%s' % (ws, suffix2)        # Matches newlines
@@ -385,6 +387,12 @@ class TTLLexer( object ) :
                  (INDENTSPACE,) + self._make_tok_location( t ) )
             )
         return self.poptoken()
+
+    @TOKEN( decorator )
+    def t_DECORATOR( self, t ) :
+        self._incrlineno(t)
+        self._onemptyindent(t)
+        return t
 
     @TOKEN( function )
     def t_FUNCTION( self, t ) :

@@ -34,11 +34,7 @@ class TTLParser( object ):
     def __init__( self,
                   ttlconfig={},
                   outputdir=u'',
-                  lex_optimize=None,
-                  lextab=LEXTAB,
                   lex_debug=None,
-                  yacc_optimize=None,
-                  yacctab=YACCTAB,
                   yacc_debug=None,
                   debug=None
                 ) :
@@ -53,53 +49,28 @@ class TTLParser( object ):
             To change the directory in which the parsetab.py file (and other
             output files) are written.
                         
-        : lex_optimize ::
-            PLY-Lexer option.
-            Set to False when you're modifying the lexer. Otherwise, changes
-            in the lexer won't be used, if some lextab.py file exists.
-            When releasing with a stable lexer, set to True to save the
-            re-generation of the lexer table on each run.
-            
-        : lextab ::
-            PLY-Lexer option.
-            Points to the lex table that's used for optimized mode. Only if
-            you're modifying the lexer and want some tests to avoid
-            re-generating the table, make this point to a local lex table file
-            (that's been earlier generated with lex_optimize=True)
-            
         : lex_debug ::
             PLY-Yacc option.
 
-        : yacc_optimize ::
-            PLY-Yacc option.
-            Set to False when you're modifying the parser. Otherwise, changes
-            in the parser won't be used, if some parsetab.py file exists.
-            When releasing with a stable parser, set to True to save the
-            re-generation of the parser table on each run.
-            
-        : yacctab ::
-            PLY-Yacc option.
-            Points to the yacc table that's used for optimized mode. Only if
-            you're modifying the parser, make this point to a local yacc table
-            file.
-                        
         : yacc_debug ::
             Generate a parser.out file that explains how yacc built the parsing
             table from the grammar.
         """
         self.debug = lex_debug or yacc_debug or debug
-
+        optimize = ttlconfig.get( 'parse_optimize', False )
+        lextab = ttlconfig.get( 'lextab', LEXTAB ) or LEXTAB
+        yacctab = ttlconfig.get( 'yacctab', YACCTAB ) or YACCTAB
         # Build Lexer
         self.ttllex = TTLLexer( error_func=self._lex_error_func )
-        kwargs = {'optimize' : lex_optimize} if lex_optimize != None else {}
-        kwargs.update(debug=lex_debug) if lex_debug else None
+        kwargs = {'optimize' : optimize} if optimize else {}
+        kwargs.update(debug=lex_debug)
         kwargs.update(lextab=lextab) if lextab else None
         self.ttllex.build( **kwargs )
         self.tokens = self.ttllex.tokens
 
         # Build Yaccer
-        kwargs = {'optimize' : yacc_optimize} if yacc_optimize != None else {}
-        kwargs.update(debug=yacc_debug) if yacc_debug else None
+        kwargs = {'optimize' : optimize} if optimize else {}
+        kwargs.update(debug=yacc_debug)
         kwargs.update(outputdir=outputdir) if outputdir else None
         kwargs.update(tabmodule=yacctab)
         self.parser = ply.yacc.yacc( module=self, **kwargs )
@@ -277,12 +248,20 @@ class TTLParser( object ):
 
     #---- Function block / Interface block
 
-    def p_functionblock( self, p ) :
+    def p_functionblock_1( self, p ) :
         """functionblock    : FUNCTION dirtyblocks INDENT siblings DEDENT
                             | FUNCTION INDENT siblings DEDENT"""
-        terms = [ (FUNCTION,1), p[2], (INDENT,3), p[4], (DEDENT,5)
+        terms = [ None, (FUNCTION,1), p[2], (INDENT,3), p[4], (DEDENT,5)
                 ] if len(p) == 6 else [ 
-                  (FUNCTION,1), None, (INDENT,2), p[3], (DEDENT,4) ]
+                  None, (FUNCTION,1), None, (INDENT,2), p[3], (DEDENT,4) ]
+        p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
+
+    def p_functionblock_2( self, p ) :
+        """functionblock    : DECORATOR FUNCTION dirtyblocks INDENT siblings DEDENT
+                            | DECORATOR FUNCTION INDENT siblings DEDENT"""
+        terms = [ (DECORATOR,1), (FUNCTION,2), p[3], (INDENT,4), p[5], (DEDENT,6)
+                ] if len(p) == 7 else [ 
+                  (DECORATOR,1), (FUNCTION,2), None, (INDENT,3), p[4], (DEDENT,5) ]
         p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_interfaceblock( self, p ) :
@@ -776,7 +755,7 @@ if __name__ == "__main__":
     
     text   = codecs.open( sys.argv[1], encoding='utf-8' 
              ).read() if len(sys.argv) > 1 else "hello" 
-    parser = TTLParser( lex_optimize=True, yacc_debug=True, yacc_optimize=False )
+    parser = TTLParser( yacc_debug=True )
     t1     = time.time()
     # set debuglevel to 2 for debugging
     t = parser.parse( text, 'x.c', debuglevel=2 )

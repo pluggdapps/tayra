@@ -252,14 +252,15 @@ class NonTerminal( Node ):      # Non-terminal
             igen.putstatement('pass')
         return None
 
-    def genfunction( self, igen, line, *args, **kwargs ):
+    def genfunction( self, igen, dline, fline, *args, **kwargs ):
         """Generate function block for 
             @function and @interface.
         """
         igen.cr()
-        igen.comment( line )
+        igen.comment( ('%s (with) %s' % (fline, dline)) if dline else fline )
         # function signature
-        igen.putstatement( line )
+        igen.putstatement( dline ) if dline else None
+        igen.putstatement( fline )
         igen.codeindent( up='  ' )
         # function body
         if self.siblings :
@@ -807,7 +808,7 @@ class InterfaceBlock( NonTerminal ):
         self.args, self.kwargs = args, kwargs
 
     def tailpass( self, igen ):
-        self.genfunction( igen, self.funcline, *self.args, **self.kwargs )
+        self.genfunction( igen, None, self.funcline, *self.args, **self.kwargs )
         # Do tail pass after the deferred generation.
         NonTerminal.tailpass( self, igen )
 
@@ -940,24 +941,33 @@ class FilterBlock( NonTerminal ):
 class FunctionBlock( NonTerminal ):
     """class to handle `functionblock` grammar."""
 
-    def __init__(self, parser, function, dirtyblocks, indent, siblings, dedent):
-        NonTerminal.__init__( self, parser, function, indent, siblings, dedent )
-        self._terms = self.FUNCTION, self.INDENT, self.DEDENT = \
-                function, indent, dedent
-        self._nonterms = self.dirtyblocks,self.siblings = dirtyblocks, siblings
+    def __init__( self, parser, decorator, function, dirtyblocks, indent,
+                  siblings, dedent ):
+        NonTerminal.__init__( self, parser, decorator, function, indent,
+                              siblings, dedent )
+        self._terms = self.DECORATOR, self.FUNCTION, self.INDENT, self.DEDENT =\
+                decorator, function, indent, dedent
+        self._nonterms = self.dirtyblocks, self.siblings = dirtyblocks, siblings
         self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.FUNCTION, self.dirtyblocks, self.INDENT, self.siblings,
-              self.DEDENT )
+        x = ( self.DECORATOR, self.FUNCTION, self.dirtyblocks, self.INDENT,
+              self.siblings, self.DEDENT )
         return filter( None, x )
 
+    re_dec = re.compile( '@dec[ \t]+([^(]+)\(([^)]*)\)' )
     def headpass1( self, igen ):
         # Function signature
-        line = self.FUNCTION.dump(None)
-        self.line = u' '.join( line.replace( '@function', 'def' ).splitlines() )
+        fline = self.FUNCTION.dump(None)
+        self.fline = u' '.join( fline.replace( '@function', 'def' ).splitlines() )
+        self.dline = ''
+        if self.DECORATOR :
+            f = self.re_dec.findall( self.DECORATOR.dump(None) )
+            fnname, argstr = f[0] if f and f[0] else (None, None)
+            self.dline = ('@%s('%fnname) + ( argstr + ', ' if argstr else '' )
+            self.dline += '_ttlcontext=_ttlcontext )'
         NonTerminal.headpass1( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
@@ -965,17 +975,20 @@ class FunctionBlock( NonTerminal ):
         self.args, self.kwargs = args, kwargs
         if self.localfunc :
             # Function block, siblings will be generated via genfunction.
-            self.genfunction( igen, self.line, *self.args, **self.kwargs )
+            self.genfunction( igen, self.dline, self.fline,
+                              *self.args, **self.kwargs )
 
     def tailpass( self, igen ):
         if self.localfunc == False :
             # Function block, siblings will be generated via genfunction
-            self.genfunction( igen, self.line, *self.args, **self.kwargs )
+            self.genfunction( igen, self.dline, self.fline,
+                              *self.args, **self.kwargs )
         # Do tail pass after the deferred generation.
         NonTerminal.tailpass( self, igen )
 
     def dump( self, context ) :
-        text = self.FUNCTION.dump(context)
+        text = self.DECORATOR.dump(context)
+        text += self.FUNCTION.dump(context)
         text += self.dirtyblocks and self.dirtyblocks.dump(context) or u''
         context.htmlindent += self.INDENT.dump(context)
         text += self.siblings.dump(context)
@@ -2183,6 +2196,7 @@ class IMPLEMENT( Terminal ) : pass
 class INHERIT( Terminal ) : pass
 class USE( Terminal ) : pass
 class FILTER( Terminal ) : pass
+class DECORATOR( Terminal ) : pass
 class FUNCTION( Terminal ) : pass
 class INTERFACE( Terminal ) : pass
 

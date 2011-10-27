@@ -7,6 +7,9 @@
 
 * Document the special characters that are not allowed in content.
 
+* parser.restart() and lex.restart() doesnot seem to be sufficient, for now
+  avoiding reuse of parser and lexer objects. Find a long term solution.
+
 Errors and warnings :
 
 * Flag error if @function is used in-place of @interface, and vice-versa.
@@ -17,3 +20,4 @@ Errors and warnings :
 * ITTLPlugin under tayra/plugins.py is to be removed.
 
 * Flag errors when circular inheritance or circular import/include are detected.
+

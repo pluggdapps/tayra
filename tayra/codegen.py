@@ -13,6 +13,7 @@ prolog = """
 from   StringIO             import StringIO
 from   zope.interface       import implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 """
 
 footer = """

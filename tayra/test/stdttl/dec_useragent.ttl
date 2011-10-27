@@ -1,0 +1,14 @@
+@dec useragent( 'ff5' )
+@function func( a ) :
+  <div> hey firefox 5 ${a}
+
+@dec useragent( 'ch8' )
+@function func( a ) :
+  <div> hey chromium 8 ${a}
+
+@dec useragent()
+@function func( a ) :
+  <div> Hey everyone ${a}
+
+<html>
+  ${ func("hello world") }

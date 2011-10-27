@@ -56,3 +56,11 @@ def parsecsv( line ) :
     vals = filter( None, [ v.strip(' \t') for v in vals ] )
     return vals
 
+
+def hitch( function, *args, **kwargs ) :
+    """Hitch a function with a different object and different set of
+    arguments."""
+    def fnhitched( *a, **kw ) :
+        kwargs.update( kw )
+        return function( *(args+a), **kwargs )
+    return fnhitched

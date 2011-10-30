@@ -4,9 +4,9 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 SKR Farms (P) LTD.
 
-"""Lexing rules for Tayra Template Language"""
-
 # -*- coding: utf-8 -*-
+
+"""Lexing rules for Tayra Template Language"""
 
 # Gotcha :
 # Notes  :

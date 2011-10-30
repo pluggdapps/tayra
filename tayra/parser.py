@@ -2,9 +2,9 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 SKR Farms (P) LTD.
 
-"""Parser grammer for Tayra Template Language"""
-
 # -*- coding: utf-8 -*-
+
+"""Parser grammer for Tayra Template Language"""
 
 # Gotcha : None
 # Notes  :

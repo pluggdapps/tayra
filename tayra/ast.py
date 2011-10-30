@@ -2,6 +2,8 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 SKR Farms (P) LTD.
 
+# -*- coding: utf-8 -*-
+
 """Module containing Node definition for all non-teminals nodes.
 
 The AST tree is constructed according to the grammar. From the root
@@ -11,8 +13,6 @@ To walk throug the AST,
   * parse() the text, which returns the root non-terminal
   * Use children() method on every non-terminal node.
 """
-
-# -*- coding: utf-8 -*-
 
 # Gotcha : None
 # Notes  : None

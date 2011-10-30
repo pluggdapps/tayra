@@ -148,7 +148,7 @@ class TagPlugin( object ):
                                else self.handle_style(style)
             attr  = unicode(attr[0])  if attr and isinstance(attr[0], A) \
                                else self.handle_attributes(attr)
-            style = u'style="%s"' % style
+            style = u'style="%s"' % style if style else style
             t += u' ' + u' '.join(filter(None, [ spec, style, attr, tagclose ]))
         elif len(tag) == 3 :
             tagnm, t, tagfinish = tag

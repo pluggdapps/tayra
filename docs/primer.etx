@@ -23,8 +23,8 @@ Let us try to justify the need, point-by-point,
 * Composing HTML via a programming language (like, python, php, ruby) can be
   more cumbersome and could involve more coding. By the time the developer is
   satisfied with the web page, it would have gone through dozens of trial.
-  A templating language is supposed to help developers concentrate on the
-  look and feel (sometimes function) of the document.
+  A templating language is supposed to help developers focus on the look and
+  feel (sometimes function) of the document and less on programming it.
 * Expression substitution, is probably the main feature which allows dynamic
   content to be substituted inside a template.
 * Template re-use by abstracting them into function blocks.
@@ -40,11 +40,10 @@ get you started, here is a non-exhaustive list of features and functions
 available from tayra.
 
 : expression substitution ::
-  Substitute anywhere in your document with dynamic content, that can be
-  specified as python expression.
+  Substitute dynamic content anywhere in your document using python expression.
 : escaping text ::
-  While substituting text, it can be escaped with one or more filters. And
-  the escape-filters themselves can be added as plugins to tayra package.
+  While substituting text, it can be escaped with one or more filters. While
+  escape-filters themselves can be added as plugins to tayra package.
 : filter blocks :::
   Process non-template text and substitute the filter block with
   processed text (optional). One such example can be a block of python code
@@ -62,10 +61,10 @@ available from tayra.
   template's namespace and access their function blocks.
 : inheritance ::
   There is a simple yet powerful idea of inheritance, whereby templates
-  can have a long chain of inheritance from the base layout. Any template
-  module in the chain can access the other template modules using the
-  ''parent'' and ''next'' names, and the ''self'' namespace provides
-  you the magic of overriding.
+  can have a long chain of inheritance from the base layout. A template
+  module in the chain can access any other inheriting or inherited templates
+  using the ''parent'' and ''next'' namespace, while ''self'' namespace
+  provides you the magic of overriding.
 : how to use ::
   Can be used via its well-defined API or from command line.
 
@@ -83,14 +82,13 @@ compromising their MVC design pattern, not a bit.
 Now, tayra templating engine itself is nothing but a specification of syntax
 spun around a collection of plugin framework. And advanced users
 may find it exiting that, they can change and extend the behaviour
-(to some extent even the sytax) of the template language. Fact is, tayra
+(to some extent even the syntax) of the template language. Fact is, tayra
 cannot even parse simple html tags by itself. Fortunately a 'html5'
 collection of plugins are shipped with the package, that can interpret the
 standard html tags and generate the html-text for you.
 
 But personally I would love to do tayra-templating just for the way the 
-template code looks - concise and beautiful (thanks to HAML for the
-inspiration)
+template code looks - concise and beautiful (thanks to HAML).
 
 -----
 

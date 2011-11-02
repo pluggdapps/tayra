@@ -13,12 +13,10 @@ of them.
     
 h2. Why templating at-all ?
 
-Those who are new to the ways of web-app development could be wondering why
-to template html ? If need be, why not use one of the many dynamic languages
-(given the fact that most of the web-apps are written using one of them)
-to directly generate the dynamic parts of a web document ?
-
-Let us try to justify the need, point-by-point,
+Those who are new to web-app development could be wondering why to template
+html ? If need be, why not use one of the many dynamic languages (given the
+fact that most of the web-apps are written using one of them) to directly
+generate the dynamic parts of a web document ?
 
 * Composing HTML via a programming language (like, python, php, ruby) can be
   more cumbersome and could involve more coding. By the time the developer is
@@ -43,12 +41,12 @@ available from tayra.
   Substitute dynamic content anywhere in your document using python expression.
 : escaping text ::
   While substituting text, it can be escaped with one or more filters. While
-  escape-filters themselves can be added as plugins to tayra package.
+  escape-filters themselves can be added as plugins to tayra.
 : filter blocks :::
   Process non-template text and substitute the filter block with
   processed text (optional). One such example can be a block of python code
   that need to do some ''view'' related processing. And ofcourse one can 
-  create any many types of filter-blocks one would want (plugins !!)
+  create any many types of filter-blocks (plugins !!)
 : control blocks ::
   Make use of control blocks like ''if-elif-else'', to conditionally select
   portions of templates. And ''for/while'' loop to repeate blocks of template
@@ -79,7 +77,7 @@ compromising their MVC design pattern, not a bit.
 
 ''Implementation philosopy''
 
-Now, tayra templating engine itself is nothing but a specification of syntax
+Tayra templating engine itself is nothing but a specification of syntax
 spun around a collection of plugin framework. And advanced users
 may find it exiting that, they can change and extend the behaviour
 (to some extent even the syntax) of the template language. Fact is, tayra

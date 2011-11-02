@@ -1,9 +1,11 @@
-The following is a non-exhaustive narrative reference to tayra template
-language. For practical purposes, //getting-started// guide and //tutorial//
-text are enough to get you started with tayra templating. Nevertheless,
-having a broader picture on its syntax and semantics will help you further.
+{{ Toc( float='right' ) }}
 
-The following are the key ideas behind tayra templating language.
+The following is a non-exhaustive narrative reference of tayra template
+language. For practical purposes, //get-started// guide and //tutorial//
+text are enough to start with tayra templating. Nevertheless, having a
+broader picture on its syntax and semantics will help you further.
+
+The following are key ideas behind tayra templating language.
 # Tayra is a text processing language, more specifically it is suited for
   HTML or XML templating.
 # All programmable expressions, statements and other language-like concepts
@@ -23,21 +25,7 @@ The following are the key ideas behind tayra templating language.
   template-plugins are loaded, they can be queried and consumed to generate
   final HTML.
 
-Before continuing we will see how a snippet of ttl text looks like,
-
-{{{ Code ttl
-<ul>
-  <li> Search the web using
-    <a title="Go-to google" href="http://google.com"> google
-    search engine.
-  <li>
-    You can buy books from
-    <a title="Go-to amazon" href="http://amazon.com"> amazon
-    with excellent discounts
-}}}
-
-And we will first define couple of terms that will keep recurring through out
-the text,
+First define couple of terms that will keep recurring through out the text,
 
 : indentation ::
   HTML is all about nested tags and text content. A HTML document is naturally
@@ -58,7 +46,7 @@ the text,
   substitute variable content inside the template. In tayra, like many other
   templating language, substitution is performed using [<PRE ${ ... } >]
   syntax. Text between //${// and //}// will be interpreted as python
-  expression, and the value emitted by the expression shall be stringified.
+  expression, and value emitted by the expression shall be string-ified.
 : specifiers ::
   Specifiers are tokens (more specifically atoms and string) that can be
   specified inside a tag element. There are standard specifiers that are common
@@ -84,7 +72,7 @@ the text,
   Statements are programmable logic that spans an entire line and typically
   starts with ''@'' or ''@@''
 : comment ::
-  Two types are commenting are allowed, one that will be translated along with
+  Two types of commenting are allowed, one that will be translated along with
   ttl text and the other that will be ignored silently.
 : filter-blocks ::
   Filter blocks are blocks of text that does not follow indentation rules and
@@ -104,6 +92,24 @@ the text,
   into an intermediate //.py// file which can then be loaded and executed
   (with context) to generate the final .html file.
 
+Before continuing we will see how a snippet of ttl text looks like,
+
+{{{ Code ttl
+<div> Brief incomplete and mostly wrong history of programming languages
+  looted from,
+  <a "http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html">
+    here.
+  <ul>
+    <li> 1972 - Dennis Ritchie invents a powerful gun that shoots both forward
+      and backward simultaneously. Not satisfied with the number of deaths and
+      permanent maimings from that invention he invents C and Unix.
+    <li>
+      1991 - Dutch programmer Guido van Rossum travels to Argentina for a 
+      mysterious operation. He returns with a large cranial scar, invents Python,
+      is declared Dictator for Life by legions of followers, and announces to
+      the world that "There Is Only One Way to Do It." Poland becomes nervous.
+}}}
+
 
 h3. Configuration
 
@@ -112,12 +118,12 @@ dictionary of //(key,value)// pairs. Configuration dictionary provided by
 caller program will override package default configuration. Final configuration
 will be remembered by Compiler() object as ''ttlconfig''. //ttlconfig//
 is chained all the way from Compiler() object to every object that are part of
-the template instance, including referred templates via ''{b}@import'' and 
-''{b} @inherit'' directives.
+the template instance, including referred templates via ''{y}@import'' and 
+''{y} @inherit'' directives.
 
 A template instance will have //Compiler()// object, //StachMachine()// object,
-//InstrGen()// object, while compiling and executing a template. [[ View ]] a
-complete list of configuration parameters. Developers can take a look at
+//InstrGen()// object, while compiling and executing a template. Complete
+[[ ./config | list of configuration ]] parameters. Developers can take a look at
 // tayra/\__init\__.py // module, where the default set of configuration
 parameters are defined.
 
@@ -128,24 +134,24 @@ write template files (its syntax and semantics). A brief introduction to its
 internals and developer guidelines are provided in the last few sections.
 
 Tayra template document contains directives and tags, directives can be used
-in the beginning of the document, following which are tags. The beginning tag
+in the beginning of the document, following which are tags. The beginning
 of tag defnition is exactly similar to HTML syntax, but there is no need to
 specify the end tag ( </*> ) since they are all nested using indentation
-syntax. Every nesting tag must be indented with 2 spaces from its containing
+syntax. Every nested tag must be indented by 2 spaces from its containing
 tag definition. Other than directives and tags, a document can contain,
 * plain-text
 * comments
 * single-line python statements.
 * control statements with if-elif-else, for and while constructs.
 * functionalised template blocks
-* functions implementing interface API
+* plugins implementing interface API
 * filter-blocks
 
 Expression-substitution can be applied pretty much anywhere in the document,
-with few exceptions like, inside the comments, control statements.
+with few exceptions like, inside comments and control statements.
 
 Tag definitions can be abstracted into functions with its own local context.
-Tags that are not part of any functions / interface-apis will be grouped under
+Tags that are not part of any function or interface-api will be grouped under
 the function name ''body'' which is defined implicit. It is by making a call
 to body(), that the final html is generated and returned.
 
@@ -163,7 +169,7 @@ file 'LICENSE', which is part of this source code package.
 -->
 }}}
 
-Doesn't it look similar to HTML comment syntax. These comments can be added
+Well it is similar to HTML comment syntax. These comments can be added
 any-where in the document, like nested inside a tag element, function blocks,
 or within text content. The other type of comment always starts with a new line
 and spans through the entire line, like,
@@ -172,17 +178,17 @@ and spans through the entire line, like,
 @function func7() :
   ## This comment will be silently ignored.
   <div {} >
-    <a#${'idname'}.${'cls'} "http://pluggdapps.com"> hello {world}
+    <a#${'idname'}.${'cls'} "http://pluggdapps.com"> hello ${name}
 }}}
 
 h3. Directives
 
-Directives are meta commands that set-up the context to interpret the document
-and generate the final html. They are also used to import other templates,
-define / use plugins that are defined else where. A directive typically starts
-with ''!!!'' or ''@'' and ends with '';''.
+Directives are meta commands that set-up the context to interpret rest of the
+document and generate the final html. They are also used to import other
+templates, define / use plugins that are defined else where. A directive
+typically starts with ''{y}!!!'' or ''{y}@'' and ends with ''{y};''.
 
-h5. Document type directive
+h4. Document type directive
 
 This directive can be used to specify html document's DTD
 (Document-Type-Definition). Available specifications are,
@@ -205,14 +211,15 @@ If template document does not have doctype specification, it is assumed
 as, [<PRE <!DOCTYPE html> >]. For more information on doctypes refer
 [[ here | http://www.w3schools.com/tags/tag_doctype.asp ]].
 
-h5. Body directive
+h4. Body directive
 
 As mentioned before, tags that are not part of any functions or interface-apis
 will be grouped under the function name ''body'' which is defined implicit, and
 a call to //body()// will return the final html text. It is also possible to
 define a call signature for //body()// function using body-directive, where
-text following //@body// till //;// will be interpreted as function signature
-in python syntax. Like,
+text following //{y}@body// till the end of directive will be interpreted as
+function signature for //body()//, function signature must be specified in
+python syntax. Like,
 
 {{{ Code ttl
 @body id, cls, style='{}';
@@ -223,7 +230,7 @@ in python syntax. Like,
 h4. Importing another template
 
 Template functions can be organised as library files and imported as and when
-needed. //@import// directive specifies which template file to be imported
+needed. //{y}@import// directive specifies which template file to be imported
 and the name to access the template module.
 
 {{{ Code ttl
@@ -235,7 +242,7 @@ and the name to access the template module.
 }}}
 
 format to specify template file is same as else-where and explained
-[[ here | #Looking up template files ]].
+[[ ./reference# Looking up template files | here ]].
 
 h4. Inheriting templates
 
@@ -280,10 +287,11 @@ coded as python class.
 In the above example, //tayra.interfaces// is a python module containing
 //ITestInterface// specification. A specification is a class deriving from
 //zope.interface.Interface// base class and documents a collection of
-attributes and methods, which are to be implemented by plugins. //@implement//
-directive declares that the ttl document implements //ITestInterface//.
+attributes and methods, which are to be implemented by plugins.
+//{y}@implement// directive declares that the ttl document implements
+//ITestInterface//.
 
-Subsequently, //@interface// statement defines a //render()//
+Subsequently, //{y}@interface// statement defines a //render()//
 method specified by //ITestInterface// with same function signature.
 
 h4. Using plugins
@@ -299,7 +307,7 @@ Following example illustrates how to use a plugin,
     ${ obj.render() }
 }}}
 
-//@use// directive will query plugins implementing
+//{y}@use// directive will query plugins implementing
 //tayra.interfaces:ITestInterface// specification, by name //pa// and import
 that as //obj// in the template's global name-space. If plugin name is
 omitted, then all plugins implementing the interface will be returned as a
@@ -312,6 +320,9 @@ for plugin name, like,
 }}}
 
 where, //plugin_name// is expected in template's context. 
+
+``{f}That pretty much sums up the directives available in tayra-templates,
+we will now move on to tags``
 
 h3. Anatomy of tag definitions
 

@@ -13,18 +13,34 @@ from   tayra.interfaces     import ITayraTag
 gsm = getGlobalSiteManager()
 
 class HtmlA( TagPlugin ):
+    """<a> tag handler.
+    * ''string specifier'' is interpreted as //href// attribute
+
+    | <a "http://pluggdapps.com"> pluggdapps-link
+    translates to
+    | <a href="http://pluggdapps.com"> pluggdapps-link </a>
+    """
     pluginname = 'html5.a'
     def specstrings2attrs( self, strings ):
         return u'href=%s' % strings[0] if strings else u''
 
 
 class HtmlAbbr( TagPlugin ):
+    """<abbr> tag handler.
+    * ''string specifier'' is interpreted as //title// attribute
+    """
     pluginname = 'html5.abbr'
     def specstrings2attrs( self, strings ):
         return u'title=%s' % strings[0] if strings else u''
 
 
 class HtmlArea( TagPlugin ):
+    """<area> tag handler.
+    * ''string specifier'' is interpreted as //href// attribute
+    * ''<shape>:<coords>'' atom, which gets translated to //shape="<shape>"//
+      and //coords="<coords>"// attributes.
+    <area 
+    """
     pluginname = 'html5.area'
     def specstrings2attrs( self, strings ):
         return u'href=%s' % strings[0] if strings else u''

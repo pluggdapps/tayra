@@ -56,15 +56,8 @@ ESCFILTER_RE = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
 
 defaultconfig = ConfigDict()
 defaultconfig.__doc__ = """Configuration settings for tayra template engine."""
-defaultconfig['devmod']    = {
-    'default' : False,
-    'types'   : (bool,),
-    'help'    : "A boolean value, when //True// puts the tayra engine in "
-                "development mode. For instance, the tempate file (text) is "
-                "always translated, bypassing the cache even if available."
-}
 defaultconfig['parse_optimize']    = {
-    'default' : False,
+    'default' : True,
     'types'   : (bool,),
     'help'    : "PLY-Lexer-Yacc option. "
                 "Set to False when you're modifying the lexer/parser. "
@@ -103,7 +96,7 @@ defaultconfig['directories']             = {
     'default' : '.',
     'types'   : ('csv', list),
     'help'    : "Comma seperated list of directory path to look for a "
-                "template file. the default will be the current-directory."
+                "template file. Default will be current-directory."
 }
 defaultconfig['module_directory']        = {
     'default' : None,
@@ -139,19 +132,19 @@ defaultconfig['plugin_packages']         = {
     'default' : '',
     'types'   : ('csv', list),
     'help'    : "Comma seperated list of plugin packages that needs to be "
-                "imported, before compiling the template files."
+                "imported, before compiling template files."
 }
 defaultconfig['memcache']                = {
     'default' : True,
     'types'   : (bool,),
     'help'    : "Cache the compiled python code in-memory to avoid "
-                "re-generation of the .py file and compiling the same."
+                "re-compiling .ttl to .py file."
 }
 defaultconfig['text_as_hashkey']         = {
     'default' : False,
     'types'   : (bool,),
     'help'    : "To be used with 'memcache' option, where the cache tag "
-                "will be computed using the .ttl file's text content. This "
+                "will be computed using .ttl file's text content. This "
                 "will have a small performance penalty instead of using "
                 "template's filename as key."
 }

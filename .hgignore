@@ -12,6 +12,7 @@ parsetab.py
 parser.out
 distribute-0.6.10.tar.gz
 .vim_maindev
+.vim_session
 tayra.egg-info/
 # switch to regexp syntax.
 syntax: regexp

@@ -46,6 +46,7 @@ clean :
 	rm -rf dist;
 	rm -rf tayra.egg-info;
 	rm -rf tayra.egg-info/;
+	rm -rf `find ./ -name parsetyrtab.py`;
 	rm -rf `find ./ -name "*.pyc"`;
 	rm -rf `find ./ -name "yacctab.py"`;
 	rm -rf `find ./ -name "lextab.py"`;

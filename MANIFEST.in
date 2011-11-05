@@ -1,8 +1,4 @@
 include README.rst
-include CHANGELOG
-include LICENSE
-include README
-include ROADMAP
 include docs/CHANGELOG
 include docs/LICENSE
 include docs/README

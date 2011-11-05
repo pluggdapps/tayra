@@ -21,3 +21,6 @@ Errors and warnings :
 
 * Flag errors when circular inheritance or circular import/include are detected.
 
+* Make tutorial.etx and getStarted.etx and updated reference.etx first paragraph.
+
+

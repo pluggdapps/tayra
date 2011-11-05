@@ -13,7 +13,7 @@ from   tayra.interfaces     import  ITayraEscapeFilter
 gsm = getGlobalSiteManager()
 
 class UrlEscape( object ):
-    """Assume ``text`` as url and quoted using urllib.quote()"""
+    """Assume text as url and quote using urllib.quote()"""
     pluginname = 'u'
     implements( ITayraEscapeFilter )
     def do( self, mach, text, filterns=None ):
@@ -24,7 +24,7 @@ class Unicode( object ):
     configuration parameter or using the namespace parameter supplied in 
     this filter, like,
 
-        ${ text | uni.utf-8 }
+    > [<pre ${ text | uni.utf-8 } >]
     """
     pluginname = 'uni'
     implements( ITayraEscapeFilter )
@@ -41,7 +41,7 @@ class Unicode( object ):
             return unicode( str(val), encoding=encoding )
 
 class XmlEscape( object ):
-    """Assume ``text`` as XML, and apply escape encoding."""
+    """Assume text as XML, and apply escape encoding."""
     pluginname = 'x'
     implements( ITayraEscapeFilter )
     escapes = {
@@ -55,14 +55,14 @@ class XmlEscape( object ):
         return re.sub( r'([&<"\'>])', lambda m: self.escapes[m.group()], text )
 
 class HtmlEscape( object ):
-    """Assume ``text`` as HTML and apply markupsafe.escape()"""
+    """Assume text as HTML and apply markupsafe.escape()"""
     pluginname = 'h'
     implements( ITayraEscapeFilter )
     def do( self, mach, text, filterns=None ):
         return markupsafe.escape( text )
 
 class Trim( object ):
-    """Strip whitespaces before and after ``text`` using strip()"""
+    """Strip whitespaces before and after text using strip()"""
     pluginname = 't'
     implements( ITayraEscapeFilter )
     def do( self, mach, text, filterns=None ):

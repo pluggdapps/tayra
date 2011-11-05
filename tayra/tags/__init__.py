@@ -249,26 +249,26 @@ class TagPlugin( object ):
         return tagopen
 
 class HtmlDefault( TagPlugin ):
-    """Default handler to translate TTL tag-definition to HTML tag, when no
+    """Default handler translates TTL tag-definition to HTML tag, when no
     other matching handler is available.
 
-    * ''edit'' atom, translates to //contenteditable="true"//
-    * ''noedit'' atom, translates to //contenteditable="false"//
-    * ''dragcopy'' atom, translates to //draggable="true" dragzone="copy"//
-    * ''dragmove'' atom, translates to //draggable="true" dragzone="move"//
-    * ''draglink'' atom, translates to //draggable="true" dragzone="link"//
-    * ''nodrag'' atom, translates to //draggable="false"//
-    * ''hidden'' atom, translates to //hidden//
-    * ''spellcheck'' atom, translates to //spellcheck="true"//
-    * ''nospellcheck'' atom, translates to //spellcheck="false"//
-    * ''ltr'' atom, translates to //dir="ltr"//
-    * ''rtl'' atom, translates to //dir="rtl"//
-    * ''disabled'' atom, translates to //disabled="disabled"//
-    * ''checked'' atom, translates to //checked="checked"//
-    * ''readonly'' atom, translates to //readonly="readonly"//
-    * ''selected'' atom, translates to //selected="selected"//
-    * ''multiple'' atom, translates to //multiple="multiple"//
-    * ''defer'' atom, translates to //defer="defer"//
+    * ''edit'' atom translates to //contenteditable="true"//
+    * ''noedit'' atom translates to //contenteditable="false"//
+    * ''dragcopy'' atom translates to //draggable="true" dragzone="copy"//
+    * ''dragmove'' atom translates to //draggable="true" dragzone="move"//
+    * ''draglink'' atom translates to //draggable="true" dragzone="link"//
+    * ''nodrag'' atom translates to //draggable="false"//
+    * ''hidden'' atom translates to //hidden//
+    * ''spellcheck'' atom translates to //spellcheck="true"//
+    * ''nospellcheck'' atom translates to //spellcheck="false"//
+    * ''ltr'' atom translates to //dir="ltr"//
+    * ''rtl'' atom translates to //dir="rtl"//
+    * ''disabled'' atom translates to //disabled="disabled"//
+    * ''checked'' atom translates to //checked="checked"//
+    * ''readonly'' atom translates to //readonly="readonly"//
+    * ''selected'' atom translates to //selected="selected"//
+    * ''multiple'' atom translates to //multiple="multiple"//
+    * ''defer'' atom translates to //defer="defer"//
     """
     pluginname = '_default'
 

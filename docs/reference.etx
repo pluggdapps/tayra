@@ -1,9 +1,7 @@
 {{ Toc( float='right' ) }}
 
 The following is a non-exhaustive narrative reference of tayra template
-language. For practical purposes, //get-started// guide and //tutorial//
-text are enough to start with tayra templating. Nevertheless, having a
-broader picture on its syntax and semantics will help you further.
+language. 
 
 The following are key ideas behind tayra templating language.
 # Tayra is a text processing language, more specifically it is suited for
@@ -25,7 +23,8 @@ The following are key ideas behind tayra templating language.
   template-plugins are loaded, they can be queried and consumed to generate
   final HTML.
 
-First define couple of terms that will keep recurring through out the text,
+First let us define couple of terms that will keep recurring through out the
+text,
 
 : indentation ::
   HTML is all about nested tags and text content. A HTML document is naturally
@@ -408,7 +407,7 @@ attributes are always defined after specifiers and styles.
 
 h3. Expression substitution
 
-Templating supports stuffing dynamic content in the final HTML text. Most of the
+Templating supports stuffing dynamic content into final HTML text. Most of the
 time it is done via expression substitution ''${...}'' which contains any valid
 python expression. Expression will be evaluated under template's context
 (including global and local), and the value emitted by the expression will be
@@ -439,9 +438,10 @@ of filters. In the above example, //h// denotes //html-escape// filter, since
 //html_example// would contain a html snippet that needs to be rendered as-is.
 
 : default filters ::
-  Frameworks can use configuration parameters, to supply a list default escape
-  filters to be applied on every expression substitution. Default filters will
-  be applied before applying filters specified in the substitution syntax.
+  Frameworks can use configuration parameters (escape_filters), to supply a
+  list of default escape filters to be applied on every expression substitution.
+  Default filters will be applied before applying filters specified in the
+  substitution syntax.
 : filter namespace ::
   Filter names can use namespace notation to pass parameters to filters. For
   instance in above example can be changed to
@@ -464,6 +464,10 @@ of filters. In the above example, //h// denotes //html-escape// filter, since
   Assume ``text`` as HTML and apply markupsafe.escape().
 : t ::
   Strip (trim) whitespaces before and after ``text`` using strip().
+: n ::
+  Disable escape-filtering. If the first value in the supplied escape-filters
+  is //n//, then escape filtering will altogether be skipped and the string
+  value emitted by the expression is subsituted as it is.
 
 h3. Statements and control logic
 

@@ -12,6 +12,27 @@ from   tayra.interfaces     import  ITayraFilterBlock
 gsm = getGlobalSiteManager()
 
 class PyCode( object ):
+    """Handle python code blocks.
+
+    Follows indentation rules as defined by python language. To maintain
+    consistency, it is better to indent the entire python code block by 2
+    spaces. Each line will be interpreted as a python statement and substituted
+    as is while compiling them into an intermediate .py text. If the //pycode//
+    filter block is defined inside //@function// or //@interface// definition,
+    then the filter block will inherit the same local scope and context as
+    applicable to the function / interface definition. ''Otherwise, it will be
+    considered as local to the implicitly defined body() function and will not
+    be considered at global scope.'' To circumvent this situation, pycode filter
+    block accept a ''global'' token that can be passed while defining the block.
+    For example,
+
+    {{{ Code ttl
+    <div>
+      :fb-pycode global
+        print "hello world"
+      :fbend
+    }}}
+    """
     implements( ITayraFilterBlock )
     pluginname = 'pycode'
 

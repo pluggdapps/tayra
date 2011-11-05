@@ -32,7 +32,7 @@ upload :
 	cp LICENSE docs/LICENSE
 	cp README docs/README
 	cp ROADMAP docs/ROADMAP
-	python ./setup.py bdist_egg register upload --show-response 
+	python ./setup.py sdist register -r http://www.python.org/pypi upload -r http://www.python.org/pypi --show-response 
 	
 vimplugin :
 	rm -rf ./vim-plugin/vim-tayra.tar.gz

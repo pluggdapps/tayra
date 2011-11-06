@@ -16,13 +16,12 @@ v.close()
 description='An integrated web templating environment'
 
 classifiers = [
-'Development Status :: 4 - Development',
+'Development Status :: 4 - Beta',
 'Environment :: Web Environment',
 'Intended Audience :: Developers',
 'Programming Language :: Python :: 2.6',
 'Programming Language :: Python :: 2.7',
 'Programming Language :: JavaScript',
-'Programming Language :: CSS',
 'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
 ]
 

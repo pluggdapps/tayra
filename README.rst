@@ -36,8 +36,8 @@ distribute them.
 Quicklinks
 ==========
 
-* `README <http://tayra.pluggdapps.com/dev/readme>`_
-* `CHANGELOG <http://tayra.pluggdapps.com/dev/changelog>`_
+* `README <http://tayra.pluggdapps.com/readme>`_
+* `CHANGELOG <http://tayra.pluggdapps.com/changelog>`_
 * `Track tayra development `google-code <http://code.google.com/p/tayra/>`_
 * If you have any queries, suggestions
   `discuss with us <http://groups.google.com/group/pluggdapps>`_
@@ -45,4 +45,4 @@ Quicklinks
 Documentation
 =============
 
-* `Tayra reference <http://tayra.pluggdapps.com/doc/markup>`_
+* `Tayra reference <http://tayra.pluggdapps.com/reference>`_

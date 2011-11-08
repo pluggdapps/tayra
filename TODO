@@ -1,3 +1,9 @@
+* Bug fix. Parser should pass for empty ttl files. files containing just
+  directives or tags.
+
+* Bug fix. The following line creates problem.
+    <td.brace1 rowspan="3" {font-size : xx-large;} > {
+
 * Check paper.js (Javascript+canvas) and see how one can write plugins in
   tayra using that.
 

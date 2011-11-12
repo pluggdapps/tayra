@@ -198,4 +198,3 @@ class ITestInterface( Interface ):
 
     def render( *args, **kwargs ):
         """Return renderable html-text"""
-

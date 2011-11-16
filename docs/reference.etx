@@ -811,11 +811,19 @@ the supplied //ttlconfig// parameter does not contain //ttlplugins// key.
 
 h3. Extending tayra with plugins
 
+''<Yet to document>''
+
 h4. Implementing plugins for tag handlers
+
+''<Yet to document>''
 
 h4. Implementing plugins for escape filters
 
+''<Yet to document>''
+
 h4. Implementing plugins for filter blocks.
+
+''<Yet to document>''
 
 h3. Developing with tayra
 
@@ -1019,4 +1027,11 @@ escaping special characters,
 
     \< this line begins with a less-than(<) character. But still will be
     interpreted as text line.
-  
+
+-----
+
+{{{ Nested 
+# { 'font-size' : 'small', 'color' : 'gray' }
+Document edited using Vim <br>
+/* vim: set filetype=etx : */
+}}}

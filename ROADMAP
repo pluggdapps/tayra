@@ -34,7 +34,6 @@ h4. Other features and functions.
   the same market place as Adobe's ?
 * Ruby's code-block style syntax to write event-handlers for tag-elements.
 * Custom tag plugin for form generation.
-* Standard tag for SVG.
 
 h4. Internals
 

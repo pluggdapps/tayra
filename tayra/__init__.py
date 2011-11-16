@@ -88,14 +88,14 @@ defaultconfig['yacctab']    = {
 defaultconfig['strict_undefined']    = {
     'default' : False,
     'types'   : (bool,),
-    'help'    : "Boolean to raise exception for un-defined context variables. "
+    'help'    : "Boolean to raise exception for undefined context variables. "
                 "If set to false, undefined variables will be silently "
                 "digested as 'None' string. "
 }
 defaultconfig['directories']             = {
     'default' : '.',
     'types'   : ('csv', list),
-    'help'    : "Comma seperated list of directory path to look for a "
+    'help'    : "Comma separated list of directory path to look for a "
                 "template file. Default will be current-directory."
 }
 defaultconfig['module_directory']        = {
@@ -107,18 +107,18 @@ defaultconfig['module_directory']        = {
 defaultconfig['escape_filters']          = {
     'default' : '',
     'types'   : ('csv', list),
-    'help'    : "Comma seperated list of default escape filters to be applied "
+    'help'    : "Comma separated list of default escape filters to be applied "
                 "during expression substitution."
 }
 defaultconfig['input_encoding']          = {
     'default' : 'utf-8',
     'types'   : (str,),
-    'help'    : "Default input endcoding for .ttl file."
+    'help'    : "Default input encoding for .ttl file."
 }
 defaultconfig['usetagplugins']           = {
     'default' : ['html5', 'html5.forms'],
     'types'   : ('csv', list),
-    'help'    : "Comma seperated list of tag plugin namespaces to use. Only "
+    'help'    : "Comma separated list of tag plugin namespaces to use. Only "
                 "plugins that are registered under the requested namespace will "
                 "be used to generate the html."
 }
@@ -131,7 +131,7 @@ defaultconfig['uglyhtml']                = {
 defaultconfig['plugin_packages']         = {
     'default' : '',
     'types'   : ('csv', list),
-    'help'    : "Comma seperated list of plugin packages that needs to be "
+    'help'    : "Comma separated list of plugin packages that needs to be "
                 "imported, before compiling template files."
 }
 defaultconfig['memcache']                = {

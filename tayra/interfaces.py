@@ -99,6 +99,9 @@ class ITayraTag( ITayraPlugin ):
         """
 
 class ITayraEscapeFilter( ITayraPlugin ):
+    """Interface specification for escape filters to pipe out of expression
+    substitution via a variable number of filter logic.
+    """
 
     def do( self, mach, text, filterns=None ):
         """Apply the filter logic to the text string and return processed
@@ -113,6 +116,10 @@ class ITayraEscapeFilter( ITayraPlugin ):
         """
 
 class ITayraFilterBlock( ITayraPlugin ):
+    """Interface specification for filter blocks to handle blocks of template
+    code that does not follow indentation rules, can potentially have a
+    separate syntax to themself. They take part in multi-pass compilation.
+    """
 
     def __call__( parser, filteropen, filtertext, filterclose ):
         """Will be called when a new filter block matches with the interface

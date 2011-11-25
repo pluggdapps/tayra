@@ -1,0 +1,9 @@
+@implement bootstrap.templates.interfaces:IHTMLNodeMetanav as pa ;
+
+@interface IHTMLNodeMetanav.render(
+    this, id='', cssasset='bootstrap:static/paview_metanav.css' ):
+
+  <div#${id}.metanav-pa>
+    @if cssasset :
+## <img.logo "${this.sitelogo}">
+      @@pass

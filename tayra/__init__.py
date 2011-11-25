@@ -53,6 +53,7 @@ EP_TTLGROUP = 'tayra.plugins'
 EP_TTLNAME  = 'ITTLPlugin'
 DEFAULT_ENCODING = 'utf-8'
 ESCFILTER_RE = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
+DEVMOD = False
 
 defaultconfig = ConfigDict()
 defaultconfig.__doc__ = """Configuration settings for tayra template engine."""
@@ -154,7 +155,8 @@ def normalizeconfig( config ):
     data types. It is assumed that all config parameters are atleast initialized
     with default value.
     """
-    config['devmod'] = asbool( config['devmod'] )
+    config['devmod'] = asbool( config.get('devmod', DEVMOD) )
+    config['parse_optimize'] = asbool( config['parse_optimize'] )
     config['strict_undefined'] = asbool( config['strict_undefined'] )
     config['module_directory'] = config['module_directory'] or None
     config['uglyhtml'] = asbool( config['uglyhtml'] )
@@ -309,6 +311,7 @@ class Renderer( object ):
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         ttlconfig = ttlconfig or deepcopy( dict(defaultconfig.items()) )
         # Initialize plugins
+        ttlconfig.setdefault('devmod', DEVMOD)
         self.ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
         self.ttlloc, self.ttltext = ttlloc, ttltext
         self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
@@ -365,6 +368,7 @@ def ttl_cmdline( ttlloc, **kwargs ):
     encoding = ttlconfig['input_encoding']
 
     # Initialize plugins
+    ttlconfig.setdefault('devmod', DEVMOD)
     ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
 
     # Setup parser

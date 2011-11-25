@@ -53,11 +53,6 @@ h4. Administrative
 * Find a way to pass the body arguments programmatically via Renderer()
 * Generate beautiful html, using lxml
 
-h3. Extension language
-
-CSS3 parser is available under `tayra.tss` module. Work on the language spec. is
-yet to begin ...
-
 -----
 
 {{{ Nested 

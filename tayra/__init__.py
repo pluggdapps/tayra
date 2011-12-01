@@ -155,6 +155,9 @@ def normalizeconfig( config ):
     data types. It is assumed that all config parameters are atleast initialized
     with default value.
     """
+    config_ = dict( defaultconfig.items() )
+    config_.update( config )
+    config = config_
     config['devmod'] = asbool( config.get('devmod', DEVMOD) )
     config['parse_optimize'] = asbool( config['parse_optimize'] )
     config['strict_undefined'] = asbool( config['strict_undefined'] )
@@ -309,10 +312,12 @@ class Renderer( object ):
 
     """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
-        ttlconfig = ttlconfig or deepcopy( dict(defaultconfig.items()) )
+        self.ttlconfig = dict( defaultconfig.items() )
+        self.ttlconfig.update( ttlconfig )
+        self.ttlconfig.setdefault( 'devmod', DEVMOD )
         # Initialize plugins
-        ttlconfig.setdefault('devmod', DEVMOD)
-        self.ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
+        self.ttlconfig = initplugins(
+                self.ttlconfig, force=self.ttlconfig['devmod'] )
         self.ttlloc, self.ttltext = ttlloc, ttltext
         self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
 
@@ -355,7 +360,6 @@ def ttl_cmdline( ttlloc, **kwargs ):
     ttlconfig = deepcopy( dict( defaultconfig.items() ))
     # directories, module_directory, devmod
     ttlconfig.update( kwargs )
-    ttlconfig.setdefault( 'module_directory', dirname( ttlloc ))
 
     # Parse command line arguments and configuration
     args = eval( ttlconfig.pop( 'args', '[]' ))
@@ -398,7 +402,6 @@ def ttl_cmdline( ttlloc, **kwargs ):
         # Intermediate file should always be encoded in 'utf-8'
         codecs.open(pyfile, mode='w', encoding=DEFAULT_ENCODING).write(pytext)
 
-        ttlconfig.setdefault( 'memcache', True )
         r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
         html = r( context=context )
         codecs.open( htmlfile, mode='w', encoding=encoding).write( html )

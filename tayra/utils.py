@@ -18,6 +18,9 @@ class ConfigItem( dict ):
     ``webconfig``,
         Boolean, specifying whether the settings parameter is configurable via
         web.
+
+    Method call ``html(request=request)`` can be used to translate help text
+    into html.
     """
     typestr = {
         str   : 'str', unicode : 'unicode', list : 'list', tuple : 'tuple',
@@ -26,6 +29,23 @@ class ConfigItem( dict ):
     def _options( self ):
         opts = self.get( 'options', '' )
         return opts() if callable(opts) else opts
+
+    def html( self, request=None ):
+        from  bootstrap.pluggdapp import pyramidapps
+        bootstrap = pyramidapps.get( 'bootstrap', None )
+        helptxt = self.help
+        if bootstrap and request :
+            sett = request.environ['settings']
+            etxconfig = sett.sections['mod:eazytext']
+            fn = lambda m : '[[ %s | %s ]]' % (
+                        m, bootstrap.route_url('ispeccls', cls=m) )
+            helptxt = re.sub(r'IPluggd[a-zA-Z0-9_]*', fn, helptxt )
+        else :
+            etxconfig = {}
+        etxconfig['nested'] = True
+        etxconfig['nested.article'] = False
+        html = etx2html( etxconfig, etxtext=helptxt )
+        return html
 
     # Compulsory fields
     default = property( lambda self : self['default'] )
@@ -56,6 +76,26 @@ class ConfigDict( dict ):
 
     def specifications( self ):
         return self._spec
+
+
+def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ) :
+    """Convert eazytext content either supplied as a file (containing the text)
+    or as raw-text, into html.
+
+    ``etxconfig``,
+        Configuration parameters for eazytext. A deep-copy of this will be used.
+    ``etxloc``,
+        file location, either in asset specification format, or absolute path.
+    ``etxtext``
+        raw-text containing eazytext wiki.
+    ``kwargs``
+        interpreted as config-parameters that will override ``etxconfig``.
+    """
+    from eazytext import Translate as ETXTranslate
+    etxconfig = dict(etxconfig.items())
+    etxconfig.update( kwargs )
+    t = ETXTranslate( etxloc=etxloc, etxtext=etxtext, etxconfig=etxconfig )
+    return t( context={} )
 
 
 

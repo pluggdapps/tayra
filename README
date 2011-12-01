@@ -12,7 +12,7 @@ them ( if not all :) ). And probably it is the only templating
 language that allows developers to build and distribute their templates
 as plugins, not to mention the fact that tayra's implementation itself is
 heavily based on plugins. We will finish this short introduction by stating
-that, inspite of being a younger sibling to its likes, it is faster than many
+that, in spite of being a younger sibling to its likes, it is faster than many
 of them.
 
 h3. Install tayra

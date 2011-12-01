@@ -4,6 +4,14 @@
 * Bug fix. The following line creates problem.
     <td.brace1 rowspan="3" {font-size : xx-large;} > {
 
+* Bug fix. The following expression fails, that is when using dictionary.
+  ${ conf.render( {}, config ) }
+  Once fixed, change template code in config.ttl of etsite, couchpysite, tyrsite.
+
+* Once stripping is made available (or inline tags), 
+    http://localhost:5000/bootstrap/config 
+  config value must not introduce whitespace.
+
 * Check paper.js (Javascript+canvas) and see how one can write plugins in
   tayra using that.
 
@@ -13,7 +21,7 @@
 
 * Document the special characters that are not allowed in content.
 
-* parser.restart() and lex.restart() doesnot seem to be sufficient, for now
+* parser.restart() and lex.restart() does not seem to be sufficient, for now
   avoiding reuse of parser and lexer objects. Find a long term solution.
 
 * Remove ITestInterface and replace it with a valid plugin.

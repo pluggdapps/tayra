@@ -8,7 +8,7 @@ them ( if not all :) ). And probably it is the only templating
 language that allows developers to build and distribute their templates
 as plugins, not to mention the fact that tayra's implementation itself is
 heavily based on plugins. We will finish this short introduction by stating
-that, inspite of being a younger sibling to its likes, it is faster than many
+that, in spite of being a younger sibling to its likes, it is faster than many
 of them.
     
 h2. Why templating at-all ?
@@ -45,11 +45,11 @@ available from tayra.
 : filter blocks :::
   Process non-template text and substitute the filter block with
   processed text (optional). One such example can be a block of python code
-  that need to do some ''view'' related processing. And ofcourse one can 
+  that need to do some ''view'' related processing. And of course one can 
   create any many types of filter-blocks (plugins !!)
 : control blocks ::
   Make use of control blocks like ''if-elif-else'', to conditionally select
-  portions of templates. And ''for/while'' loop to repeate blocks of template
+  portions of templates. And ''for/while'' loop to repeat blocks of template
   text.
 : functions ::
   Abstract re-usable blocks of templates into functions with its own local
@@ -79,7 +79,7 @@ compromising their MVC design pattern, not a bit.
 
 Tayra templating engine itself is nothing but a specification of syntax
 spun around a collection of plugin framework. And advanced users
-may find it exiting that, they can change and extend the behaviour
+may find it exiting that, they can change and extend the behavior
 (to some extent even the syntax) of the template language. Fact is, tayra
 cannot even parse simple html tags by itself. Fortunately a 'html5'
 collection of plugins are shipped with the package, that can interpret the

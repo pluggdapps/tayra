@@ -1,5 +1,9 @@
 {{ Toc( float='right' ) }}
 
+h3. 0.2dev
+
+* Documentation
+
 h3. 0.1dev
 
 Initial version of tayra.  A non-exhaustive list of features and functions

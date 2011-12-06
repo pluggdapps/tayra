@@ -1,23 +1,9 @@
 {{ Toc( float='right' ) }}
 
-h3. Overview
+h3. Installation
 
-Tayra templating is a full-featured abstract markup language used to describe
-web-documents. It is primarily inspired from
-[[ http://www.makotemplates.org/ | mako-templates ]] and
-[[ http://haml-lang.com/ | HAML ]] (especially the indentation based
-markup definitions). Although it is young and relatively a new kid among
-the old-timers, it can be considered as the evolutionary next step for some of
-them ( if not all :) ). And probably it is the only templating
-language that allows developers to build and distribute their templates
-as plugins, not to mention the fact that tayra's implementation itself is
-heavily based on plugins. We will finish this short introduction by stating
-that, in spite of being a younger sibling to its likes, it is faster than many
-of them.
-
-h3. Install tayra
-
-Installing via package management
+There are multiple ways to install tayra, the easiest way is by using
+easy_install.
 
 {{{ Code bash
   # -Z to do unzipped install. The reason for installing it in un-zipped form
@@ -26,14 +12,23 @@ Installing via package management
   easy_install -Z -U tayra
 }}}
 
-''Source code''
+''Install from source code''
 
-Download the latest tar.gz from http://pypi.python.org/pypi/tayra
+You can obtain the source code by,
+downloading the latest [[ http://pypi.python.org/pypi/tayra | tar.gz ]] or
+cloning from mercurial repositories
 
-Check out hg repository from [[ http://code.google.com/p/tayra/ | google-code ]]
 {{{ Code bash
   hg clone https://code.google.com/p/tayra/
+  # or
+  hg clone https://bitbucket.org/prataprc/tayra
 }}}
+
+After untarring the source package, or cloning the source repository into
+your local machine, install source package by executing
+> [<PRE sudo python ./setup.py install >],
+to install the development  version, do,
+> [<PRE sudo python ./setup.py develop >],
 
 h3. Command line usage
 

@@ -15,9 +15,12 @@ Installing via package management
 
 Download the latest tar.gz from http://pypi.python.org/pypi/tayra
 
-Check out hg repository from [[ http://code.google.com/p/tayra/ | google-code ]]
+Check out hg repository from [[ http://code.google.com/p/tayra/ | google-code ]] or
+[[ https://bitbucket.org/prataprc/tayra | bit-bucket ]]
 {{{ Code bash
   hg clone https://code.google.com/p/tayra/
+  # or
+  hg clone https://bitbucket.org/prataprc/tayra
 }}}
 
 h3. Command line usage

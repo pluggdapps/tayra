@@ -1,0 +1,73 @@
+{{ Toc( float='right' ) }}
+
+h3. Start templating
+
+It starts with your .ttl file, where ''ttl'' stands for tayra template language.
+Open your favorite editor and we will start writing our first template.
+Ofcourse our first template is going to be a welcome message to this world.
+
+{{{ Code ttl
+
+## File name : eg1.ttl
+
+<html>
+  <head>
+  <body>
+    <p> hello world
+}}}
+
+Let us now translate this to a html document,
+
+{{{ Code bash
+
+# Assuming that tayra is available in your environment,
+$ tayra/tyr.py eg1.ttl
+}}}
+
+which looks like,
+
+{{{ Code html
+# { 'background-color' : '#EEE' }
+<html>
+  <head></head>
+  <body>
+    <p> hello world</p>
+  </body>
+</html>
+}}}
+
+Now, we will add an id and couple of class attributes to the paragraph tag that
+contains the //hello world// text.
+
+{{{ Code ttl
+
+## File name : eg1.ttl
+
+<html>
+  <head>
+  <body>
+    <p#welcome.intro.highlight> hello world
+}}}
+
+''#welcome'' attributes the tag with id-name //welcome// and
+''.intro.highlight'' attributes the tag with class-names //intro// and
+//highlight//. And our translated html looks like
+
+{{{ Code html
+# { 'background-color' : '#EEE' }
+<html>
+  <head></head>
+  <body>
+    <p id="welcome" class="intro highlight"> hello world</p>
+  </body>
+</html>
+}}}
+
+
+-----
+
+{{{ Nested 
+# { 'font-size' : 'small', 'color' : 'gray' }
+Document edited using Vim <br>
+/* vim: set filetype=etx : */
+}}}

@@ -1,0 +1,9 @@
+<!-- File name : eg3.ttl -->
+
+@@ content = "hello world, %s times"
+@@ rawhtml = "HTML snippet, <pre> hello world </pre>"
+@@ html = "Install couchdb using command <pre> sudo apt-get install couchdb </pre>"
+<div>
+  ${ content % 5 }
+  ${ rawhtml | h }
+  ${ html | n }

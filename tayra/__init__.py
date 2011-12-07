@@ -47,7 +47,7 @@ import tayra.filterblocks.pycode
 # Import escapefilter-plugins so that they can register themselves.
 import tayra.escfilters.common
 
-__version__ = '0.2dev'
+__version__ = '0.21dev'
 
 EP_TTLGROUP = 'tayra.plugins'
 EP_TTLNAME  = 'ITTLPlugin'

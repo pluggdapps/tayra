@@ -2,14 +2,15 @@
 
 h3. Installation
 
-There are multiple ways to install tayra, the easiest way is by using
-easy_install.
+There are multiple ways to install tayra and the easiest way is by easy_install.
 
 {{{ Code bash
-  # -Z to do unzipped install. The reason for installing it in un-zipped form
-  #    is to make use of the command line tool.
+
+  # -Z to do unzipped install. The reason for installing it
+  #    in un-zipped form is to make use of the command line tool.
   # -U to upgrade install
   easy_install -Z -U tayra
+
 }}}
 
 ''Install from source code''
@@ -19,16 +20,18 @@ downloading the latest [[ http://pypi.python.org/pypi/tayra | tar.gz ]] or
 cloning from mercurial repositories
 
 {{{ Code bash
+
   hg clone https://code.google.com/p/tayra/
   # or
   hg clone https://bitbucket.org/prataprc/tayra
+
 }}}
 
 After untarring the source package, or cloning the source repository into
 your local machine, install source package by executing
-> [<PRE sudo python ./setup.py install >],
+> [<PRE sudo python ./setup.py install >]
 to install the development  version, do,
-> [<PRE sudo python ./setup.py develop >],
+> [<PRE sudo python ./setup.py develop >]
 
 h3. Command line usage
 
@@ -71,6 +74,7 @@ h3. Using it as library, in python
     # relative path or asset specification format
     # `ttlconfig` passes the configuration parameters
     r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
+    # Context is python dictionary that will be imported into template namespace
     html = r( context=context )
     codecs.open( htmlfile, mode='w', encoding=encoding).write( html )
 

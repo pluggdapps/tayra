@@ -200,13 +200,13 @@ class TTLLexer( object ) :
     # Suffix definition for lookahead match for text
     style_text_s= r'(?!\}|\$\{)'                # till style_close, exprs_open
     tabspace    = ' \t'
-    ws          = '\r\n' + tabspace
+    ws          = tabspace + '\r\n\f'
 
-    nl          = r'(\n|\r\n)+'
+    nl          = r'(\n|\r\n|\r)+'
     spac        = r'[%s]*' % tabspace
     space       = r'[%s]+' % tabspace
-    whitespac   = r'[%s]*' % ws
-    whitespace  = r'[%s]+' % ws
+    wspac       = r'[%s]*' % ws
+    wspace      = r'[%s]+' % ws
     decname     = r'[a-zA-Z0-9_]+'
     atom        = r'[a-zA-Z0-9\._\#-]+'
     tagname     = r'[a-zA-Z0-9-_]+'
@@ -264,10 +264,10 @@ class TTLLexer( object ) :
     openbrace   = r'\{'
     closebrace  = r'\}'
 
-    tagopen     = lt+tagname+whitespac
-    wssemicolonws = whitespac+semicolon+whitespac
-    tagend      = whitespac+gtend+spac
-    tagclose    = whitespac+gt+spac
+    tagopen     = lt+tagname+wspac
+    wssemicolonws = wspac+semicolon+wspac
+    tagend      = wspac+gtend+spac
+    tagclose    = wspac+gt+spac
 
     # TTL Tokens
 
@@ -511,7 +511,7 @@ class TTLLexer( object ) :
     def t_tag_EQUAL( self, t ) :
         return t
 
-    @TOKEN( whitespac+openbrace )
+    @TOKEN( wspac+openbrace )
     def t_tag_OPENBRACE( self, t ) :
         self._incrlineno(t)
         t.lexer.push_state( 'style' )
@@ -542,7 +542,7 @@ class TTLLexer( object ) :
     def t_style_ESCAPED( self, t ) :                    # <---- `style` state
         return self._onescaped( t )
 
-    @TOKEN( closebrace+whitespac )
+    @TOKEN( closebrace+wspac )
     def t_style_CLOSEBRACE( self, t ) :
         t.lexer.pop_state()
         return t

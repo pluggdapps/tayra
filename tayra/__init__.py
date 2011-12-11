@@ -309,7 +309,6 @@ class Renderer( object ):
 
     `ttlconfig` parameter will find its way into every object defined
     by the templating engine.
-
     """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         self.ttlconfig = dict( defaultconfig.items() )
@@ -322,7 +321,7 @@ class Renderer( object ):
         self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
 
     def __call__( self, entryfn='body', context={} ):
-        """Compile, execute and return html text corresponding the template
+        """Compile, execute and return html text corresponding to this template
         document.
 
         key-word arguments,

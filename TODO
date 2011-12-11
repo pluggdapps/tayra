@@ -8,12 +8,25 @@
   ${ conf.render( {}, config ) }
   Once fixed, change template code in config.ttl of etsite, couchpysite, tyrsite.
 
+* charset directive should be read and based on the character-set encoding
+  the whole text must be re-read. This character set encoding specified in TTL
+  text must override the encoding config-param passed by the caller program.
+  Intermediate python file should also adhere to this encoding.
+
+* Looks like ':' prefix is used for XML namespace. This is in direct conflict
+  with tag name specifier ':', so change it to '::' specifier syntax and translate
+  as is, ':' specifier prefix XML namespace.
+
 * Once stripping is made available (or inline tags), 
     http://localhost:5000/bootstrap/config 
   config value must not introduce whitespace.
 
 * Check paper.js (Javascript+canvas) and see how one can write plugins in
   tayra using that.
+
+* Propose a mail to various community list explaining the exiting future
+  and oppurtunities in HTML5, SVG (and associated standards) and how Tayra
+  can play an important role in that.
 
 * Document the scope of escape (\) character.
 

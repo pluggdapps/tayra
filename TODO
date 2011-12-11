@@ -39,6 +39,8 @@
 
 * Remove ITestInterface and replace it with a valid plugin.
 
+* Test cases / profiling / code-coverage.
+
 Errors and warnings :
 
 * Flag error if @function is used in-place of @interface, and vice-versa.

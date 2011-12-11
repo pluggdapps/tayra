@@ -50,6 +50,8 @@ clean :
 	rm -rf `find ./ -name "lextab.py"`;
 	rm -f tayra/test/stdttl/*.ttl.py;
 	rm -f tayra/test/stdttl/*.html;
+	rm -f tayra/test/tagsttl/*.ttl.py;
+	rm -f tayra/test/tagsttl/*.html;
 	rm -f tayra/test/bench/tayra/*.html;
 	rm -f tayra/test/bench/tayra/*.ttl.py;
 	rm -f tayra/test/tagsttl/*.html;

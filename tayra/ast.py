@@ -18,7 +18,7 @@ To walk throug the AST,
 # Notes  : None
 # Todo   : None
 
-import sys, re, types
+import sys, re
 from   hashlib          import sha1
 
 class ASTError( Exception ):

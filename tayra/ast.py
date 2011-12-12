@@ -4,7 +4,7 @@
 
 # -*- coding: utf-8 -*-
 
-"""Module containing Node definition for all non-teminals nodes.
+"""Module containing Node definition for all terminals and non-teminals nodes.
 
 The AST tree is constructed according to the grammar. From the root
 non-terminal use the children() method on every node to walk through the tree.

@@ -41,18 +41,18 @@ class TTLParser( object ):
         """
         Create a new TTLParser.
 
-        : ttlconfig ::
+        ``ttlconfig``
             All configurations related to tayra templates, are represented in
             this object.
 
-        : outputdir ::
+        ``outputdir``
             To change the directory in which the parsetab.py file (and other
             output files) are written.
                         
-        : lex_debug ::
+        ``lex_debug``
             PLY-Yacc option.
 
-        : yacc_debug ::
+        ``yacc_debug``
             Generate a parser.out file that explains how yacc built the parsing
             table from the grammar.
         """
@@ -67,7 +67,6 @@ class TTLParser( object ):
         kwargs.update(lextab=lextab) if lextab else None
         self.ttllex.build( **kwargs )
         self.tokens = self.ttllex.tokens
-
         # Build Yaccer
         kwargs = {'optimize' : optimize} if optimize else {}
         kwargs.update(debug=yacc_debug)
@@ -91,9 +90,9 @@ class TTLParser( object ):
         parsing invocation, the same lex, yacc, app options and objects will
         be used.
 
-        : ttlfile ::
+        ``ttlfile``
             Name of the file being parsed (for meaningful error messages)
-        : debuglevel ::
+        ``debuglevel``
             Debug level to yacc
         """
         # Parser Initialize
@@ -113,10 +112,7 @@ class TTLParser( object ):
         self._parse_error( msg, self._coord( line, column ))
     
     def _coord( self, lineno, column=None ):
-        return Coord( file=self.ttllex.ttlfile, 
-                      line=lineno,
-                      column=column
-               )
+        return Coord( file=self.ttllex.ttlfile, line=lineno, column=column )
     
     def _parse_error(self, msg, coord):
         raise ParseError("%s: %s" % (coord, msg))

@@ -100,7 +100,6 @@ class Compiler( object ):
     def topy( self, *args, **kwargs ):
         encoding = self.ttlconfig['input_encoding']
         tu = self.toast()
-        ttltext = self.ttllookup.ttltext
         if tu :
             tu.validate()
             tu.headpass1( self.igen )                   # Head pass, phase 1

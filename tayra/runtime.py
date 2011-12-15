@@ -4,12 +4,7 @@
 
 # -*- coding: utf-8 -*-
 
-import re
-from   StringIO                 import StringIO
-from   os.path                  import basename
-
 from   zope.component           import getGlobalSiteManager
-
 from   tayra                    import queryTTLPlugin
 
 # Note :

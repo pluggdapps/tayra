@@ -5,8 +5,7 @@
 # -*- coding: utf-8 -*-
 
 import imp, os, codecs
-from   os.path              import isfile, isdir, abspath, basename, \
-                                       join, dirname
+from   os.path              import isfile, isdir, basename, join, dirname
 from   hashlib              import sha1
 
 from   tayra.parser         import TTLParser
@@ -43,12 +42,12 @@ class Compiler( object ):
         # Instruction generation phase
         self.igen = igen or InstrGen( self, ttlconfig=self.ttlconfig )
 
-    def __call__( self, ttlloc=None, ttltext=None, ttlparser=None ):
+    def __call__(self, ttlloc=None, ttltext=None, ttlconfig={}, ttlparser=None):
+        ttlconfig = ttlconfig or self.ttlconfig
         ttlparser = ttlparser or self.ttlparser
-        clone = Compiler( ttlloc=ttlloc, ttltext=ttltext,
-                          ttlconfig=self.ttlconfig, ttlparser=ttlparser
+        return Compiler( ttlloc=ttlloc, ttltext=ttltext,
+                          ttlconfig=ttlconfig, ttlparser=ttlparser
                         )
-        return clone
 
     def execttl( self, code=None, context={} ):
         """Execute the template code (python compiled) under module's context

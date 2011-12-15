@@ -4,10 +4,7 @@
 
 # -*- coding: utf-8 -*-
 
-from   os.path      import join, splitext, isfile, abspath, basename
 from   StringIO     import StringIO
-from   copy         import deepcopy
-from   hashlib      import sha1
 
 prolog = """
 from   StringIO             import StringIO
@@ -45,8 +42,7 @@ class InstrGen( object ) :
         self.encoding = ttlconfig.get( 'input_encoding', DEFAULT_ENCODING )
 
     def __call__( self ):
-        clone = InstrGen( self.compiler, ttlconfig=self.ttlconfig )
-        return clone
+        return InstrGen( self.compiler, ttlconfig=self.ttlconfig )
 
     def cr( self, count=1 ) :
         self.outfd.write( '\n'*count )

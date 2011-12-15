@@ -13,6 +13,10 @@
   text must override the encoding config-param passed by the caller program.
   Intermediate python file should also adhere to this encoding.
 
+* What is BOM in syntax grammar ? Should this part of string encoding or lexer ?
+    BOM (EF, BB, BF) syntax is not allowed in utf-8 encoding, so where ever
+        codecs.open(...).read() is used stip them off.
+
 * Looks like ':' prefix is used for XML namespace. This is in direct conflict
   with tag name specifier ':', so change it to '::' specifier syntax and translate
   as is, ':' specifier prefix XML namespace.
@@ -55,3 +59,5 @@ Errors and warnings :
 * Make tutorial.etx and getStarted.etx and updated reference.etx first paragraph.
 
 * SVG support, Kendo-UI and Component Art.
+
+* Context-based compilation, context-less compilation.

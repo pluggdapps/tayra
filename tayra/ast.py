@@ -19,7 +19,7 @@ To walk throug the AST,
 # Todo   : None
 
 import sys, re
-from   hashlib          import sha1
+from   tayra.utils      import charset
 
 class ASTError( Exception ):
     pass
@@ -118,7 +118,7 @@ class Node( object ):
         append that to the parent buffer."""
         igen.pushbuf()
         compute()
-        igen.popcompute( astext=astext )
+        igen.popappend( astext=astext )
         return None
 
     def getroot( self ):
@@ -315,7 +315,7 @@ class Template( NonTerminal ):
         self.interfaces = []        # [ (interface, methodname), ... ]
         self.doctypes = []          # [ html, html, ... ]
 
-    def _is_generate( self ) :
+    def _hascontent( self ) :
         """Check whether the body of the template page contains valid content,
         if not then the `body` function should not be generated at all."""
         bodynodes = (
@@ -330,12 +330,12 @@ class Template( NonTerminal ):
         else :
             return False
 
-    def _generatebody( self, igen, signature=u'', *args, **kwargs ):
+    def _body( self, igen, signature=u'', *args, **kwargs ):
         """Generate the body function only when there is valid content in the
         global scope.
         """
         igen.cr()
-        if self._is_generate() or self.doctypes :
+        if self._hascontent() or self.doctypes :
             # Body function signature
             signature = signature and signature.strip(', \t') or u''
             u', '.join([ signature, '*args', '**kwargs' ])
@@ -379,16 +379,16 @@ class Template( NonTerminal ):
             self.prologs.generate( igen, *args, **kwargs )
 
         # Body
-        self._generatebody( igen, self.bodysignature, *args, **kwargs )
+        self._body( igen, self.bodysignature, *args, **kwargs )
 
     def tailpass( self, igen ):
         igen.cr()
-        igen.comment( "---- Global Functions" )
+        igen.comment( "---- Global Functions", force=True )
         NonTerminal.tailpass( self, igen )
-        igen.comment( "---- Interface functions" )
+        igen.comment( "---- Interface functions", force=True )
         if self.implements and self.interfaces :
             igen.implement_interface( self.implements, self.interfaces )
-        igen.comment( "---- Footer" )
+        igen.comment( "---- Footer", force=True )
         igen.footer( self.ttlhash, self.ttlfile )
         igen.finish()
 
@@ -592,13 +592,13 @@ class Charset( NonTerminal ):
     def children( self ):
         return self._terms
 
-    def headpass1( self, igen ):
-        igen.encoding = self.CHARSET.dump(None)[8:].strip(' \t\r\n').rstrip(';')
-        # As of now, we havn't figured out how to use @charset, directive to
-        # override ttlconfig['input_encoding']
-        #igen.comment( "-*- coding: %s -*-" % igen.encoding )
+    def headpass2( self, igen ):
+        parseline = self.CHARSET.dump(None)
+        defencoding = self.parser.ttlparser.encoding
+        igen.encoding = charset( parseline=parseline, encoding=defencoding )
+        igen.comment( "-*- coding: %s -*-" % igen.encoding, force=True )
         igen.putstatement( "_m.setencoding( %r )" % igen.encoding )
-        NonTerminal.headpass1( self, igen )
+        NonTerminal.headpass2( self, igen )
 
     def generate( self, igen, *args, **kwargs ):
         pass

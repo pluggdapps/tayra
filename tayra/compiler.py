@@ -11,6 +11,7 @@ from   hashlib              import sha1
 from   tayra.parser         import TTLParser
 from   tayra.codegen        import InstrGen
 from   tayra.runtime        import StackMachine, Namespace
+from   tayra.utils          import charset
 
 class Compiler( object ):
     _memcache = {}
@@ -37,6 +38,7 @@ class Compiler( object ):
         self.ttlfile = self.ttllookup.ttlfile
         self.pyfile = self.ttllookup.pyfile
         self.ttlconfig = ttlconfig
+        self.encoding = self.ttllookup.encoding
         # Parser phase
         self.ttlparser = ttlparser or TTLParser( ttlconfig=self.ttlconfig )
         # Instruction generation phase
@@ -98,7 +100,6 @@ class Compiler( object ):
         return tu
 
     def topy( self, *args, **kwargs ):
-        encoding = self.ttlconfig['input_encoding']
         tu = self.toast()
         if tu :
             tu.validate()
@@ -117,13 +118,13 @@ class TemplateLookup( object ) :
     TTLCONFIG = [ 'directories', 'module_directory', 'devmod' ]
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         [ setattr( self, k, ttlconfig[k] ) for k in self.TTLCONFIG ]
-        self.ttlconfig = ttlconfig
-        self.encoding = ttlconfig['input_encoding']
+        self.ttlconfig, self.encoding = ttlconfig, ttlconfig['input_encoding']
         self.ttlloc, self._ttltext = ttlloc, ttltext
         self._ttlhash, self._pytext = None, None
         if self.ttlloc :
             self.ttlfile = self._locatettl( self.ttlloc, self.directories )
             self.pyfile = self.computepyfile( ttlloc, ttlconfig )
+            self.encoding = charset(ttlfile=self.ttlfile, encoding=self.encoding)
         elif self._ttltext :
             self.ttlfile = '<Source provided as raw text>'
             self.pyfile = None
@@ -139,20 +140,20 @@ class TemplateLookup( object ) :
         if self.devmod :
             return None
         elif self.pyfile and isfile(self.pyfile) and self._pytext == None :
-            self._pytext = codecs.open( self.pyfile, encoding=self.encoding ).read()
-        return self._pytext
+            self._pytext = open( self.pyfile ).read()
+        return self._pytext         # pytext will be encoded unicode (str)
 
-    def _setpytext( self, pytext ):
+    def _setpytext( self, pytext ): # pytext will be encoded unicode (str)
         if self.pyfile :
             d = dirname(self.pyfile)
             os.makedirs(d) if not isdir(d) else None
-            codecs.open( self.pyfile, mode='w', encoding=self.encoding ).write(pytext)
+            open( self.pyfile, mode='w' ).write(pytext)
             return len(pytext)
         return None
 
     def _getttlhash( self ):
-        if self._ttlhash == None and self._ttltext :
-            self._ttlhash = sha1( self._ttltext ).hexdigest()
+        if self._ttlhash == None and self.ttltext:
+            self._ttlhash = sha1( self.ttltext.encode('utf-8') ).hexdigest()
         return self._ttlhash
 
     def _gethashkey( self ):

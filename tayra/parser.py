@@ -33,6 +33,7 @@ class TTLParser( object ):
 
     def __init__( self,
                   ttlconfig={},
+                  encoding=None,
                   outputdir=u'',
                   lex_debug=None,
                   yacc_debug=None,
@@ -44,6 +45,9 @@ class TTLParser( object ):
         ``ttlconfig``
             All configurations related to tayra templates, are represented in
             this object.
+
+        ``encoding``
+            Character encoding for input Tayra style text.
 
         ``outputdir``
             To change the directory in which the parsetab.py file (and other
@@ -57,6 +61,7 @@ class TTLParser( object ):
             table from the grammar.
         """
         self.debug = lex_debug or yacc_debug or debug
+        self.encoding = encoding
         optimize = ttlconfig.get( 'parse_optimize', False )
         lextab = ttlconfig.get( 'lextab', LEXTAB ) or LEXTAB
         yacctab = ttlconfig.get( 'yacctab', YACCTAB ) or YACCTAB
@@ -69,7 +74,7 @@ class TTLParser( object ):
         self.tokens = self.ttllex.tokens
         # Build Yaccer
         kwargs = {'optimize' : optimize} if optimize else {}
-        kwargs.update(debug=yacc_debug)
+        kwargs.update( debug=(yacc_debug or debug) )
         kwargs.update(outputdir=outputdir) if outputdir else None
         kwargs.update(tabmodule=yacctab)
         self.parser = ply.yacc.yacc( module=self, **kwargs )

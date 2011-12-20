@@ -307,8 +307,14 @@ class BaseTTLPlugin( object ):
 class Renderer( object ):
     """Render a template into HTML.
 
-    `ttlconfig` parameter will find its way into every object defined
-    by the templating engine.
+    ``ttlloc``,
+        Location of Tayra template file, either as relative directory or as
+        asset specification.
+    ``ttltext``,
+        Tayra template text. It is assumed in unicode format. 
+    ``ttlconfig``,
+        Configuration parameter will find its way into every object defined by
+        the templating engine.
     """
     def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
         self.ttlconfig = dict( defaultconfig.items() )
@@ -368,15 +374,13 @@ def ttl_cmdline( ttlloc, **kwargs ):
     debuglevel = ttlconfig.pop( 'debuglevel', 0 )
     show = ttlconfig.pop( 'show', False )
     dump = ttlconfig.pop( 'dump', False )
-    encoding = ttlconfig['input_encoding']
 
     # Initialize plugins
     ttlconfig.setdefault('devmod', DEVMOD)
     ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
 
     # Setup parser
-    ttlparser = TTLParser(
-            ttlconfig=ttlconfig, debug=debuglevel )
+    ttlparser = TTLParser( ttlconfig=ttlconfig, debug=debuglevel )
     comp = Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
     pyfile = comp.ttlfile+'.py'
     htmlfile = basename( comp.ttlfile ).rsplit('.', 1)[0] + '.html'
@@ -392,18 +396,18 @@ def ttl_cmdline( ttlloc, **kwargs ):
     elif dump :
         tu = comp.toast()
         rctext =  tu.dump()
-        if rctext != codecs.open( comp.ttlfile, encoding=encoding ).read() :
+        if rctext != codecs.open( comp.ttlfile, encoding=comp.encoding ).read() :
             print "Mismatch ..."
         else : print "Success ..."
     else :
         print "Generating py / html file ... "
-        pytext = comp.topy( ttlhash=comp.ttllookup.ttlhash )
+        pytext = comp.topy( ttlhash=comp.ttllookup.ttlhash ) # pytext in unicode
         # Intermediate file should always be encoded in 'utf-8'
-        codecs.open(pyfile, mode='w', encoding=DEFAULT_ENCODING).write(pytext)
+        codecs.open( pyfile, mode='w', encoding=comp.encoding ).write(pytext)
 
         r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
         html = r( context=context )
-        codecs.open( htmlfile, mode='w', encoding=encoding).write( html )
+        codecs.open( htmlfile, mode='w', encoding=comp.encoding).write( html )
 
         # This is for measuring performance
         st = dt.now()

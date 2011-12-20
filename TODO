@@ -61,3 +61,9 @@ Errors and warnings :
 * SVG support, Kendo-UI and Component Art.
 
 * Context-based compilation, context-less compilation.
+
+* Code generation optimization.
+
+* Global statements in ttl file should not by body local. They *must* be global.
+
+* How are context functions (from helper file imported) into template context ?

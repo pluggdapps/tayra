@@ -36,30 +36,21 @@ class StackMachine( object ) :
     Attributes = Attributes
 
     def __init__( self, ifile, compiler, ttlconfig={} ):
-        self.ttlconfig  = ttlconfig
+        self.compiler, self.ttlconfig  = compiler, ttlconfig
         self.escfilters = ttlconfig.get( 'escfilters', {} )
         self.tagplugins = ttlconfig.get( 'tagplugins', {} )
         self.ttlplugins = ttlconfig.get( 'ttlplugins', {} )
         self.def_escfilters = ttlconfig['escape_filters']
-        self.encoding = self.ttlconfig['input_encoding']
+        self.encoding = compiler.encoding
 
         self.bufstack = [ [] ]
         self.ifile = ifile
-        self.compiler = compiler
         self.htmlindent = u''
 
     #---- Stack machine instructions
 
     def setencoding( self, encoding ):
-        #self.encoding = encoding
-        pass
-
-    #def encodetext( self, text ) :
-    #    if isinstance( text, unicode) :
-    #        return text
-    #    else :
-    #        text = repr( text )
-    #        return unicode( text, self.encoding )
+        self.encoding = encoding
 
     def upindent( self, up=u'' ) :
         self.htmlindent += up

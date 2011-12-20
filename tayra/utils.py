@@ -4,6 +4,8 @@
 
 # -*- coding: utf-8 -*-
 
+import re
+
 class ConfigItem( dict ):
     """Convenience class encapsulating config value description, which is a
     dictionary of following keys,
@@ -78,7 +80,7 @@ class ConfigDict( dict ):
         return self._spec
 
 
-def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ) :
+def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
     """Convert eazytext content either supplied as a file (containing the text)
     or as raw-text, into html.
 
@@ -112,17 +114,35 @@ def asbool( obj ):
         raise ValueError( "String is not true/false: %r" % obj )
 
 
-def parsecsv( line ) :
+def parsecsv( line ):
     """parse a comma separated `line`, into a list of strings"""
     vals = line and line.split( ',' ) or []
     vals = filter( None, [ v.strip(' \t') for v in vals ] )
     return vals
 
 
-def hitch( function, *args, **kwargs ) :
+def hitch( function, *args, **kwargs ):
     """Hitch a function with a different object and different set of
     arguments."""
     def fnhitched( *a, **kw ) :
         kwargs.update( kw )
         return function( *(args+a), **kwargs )
     return fnhitched
+
+
+def charset( ttlfile=None, parseline=None, encoding=None ):
+    """Charset directive must come in the beginning of the Tayra template
+    text. Parse the text for the directive and return the encoding string.
+    """
+    if ttlfile :
+        for line in open(ttlfile).readlines() :
+            line = line.strip()
+            if re.match( r'^<', line ) :
+                parseline = None
+                break
+            if line.startswith('@charset') :
+                parseline = line
+                break
+    if parseline :
+        encoding = parseline[8:].strip('\'\" \t\r\n;')
+    return encoding

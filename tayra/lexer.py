@@ -632,7 +632,7 @@ if __name__ == "__main__":
             print "Lexing file %r ..." % f
             ttllex = TTLLexer( errfoo, filename=f )
             ttllex.build()
-            ttllex.input( codecs.open(f, encoding='utf-8').read() )
+            ttllex.input( codecs.open(f, encoding='utf-8-sig').read() )
             tok = _fetchtoken( ttllex, stats )
             while tok :
                 tok = _fetchtoken( ttllex, stats )

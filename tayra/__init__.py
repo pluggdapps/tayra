@@ -51,7 +51,7 @@ __version__ = '0.21dev'
 
 EP_TTLGROUP = 'tayra.plugins'
 EP_TTLNAME  = 'ITTLPlugin'
-DEFAULT_ENCODING = 'utf-8'
+DEFAULT_ENCODING = 'utf-8-sig'
 ESCFILTER_RE = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
 DEVMOD = False
 
@@ -112,7 +112,7 @@ defaultconfig['escape_filters']          = {
                 "during expression substitution."
 }
 defaultconfig['input_encoding']          = {
-    'default' : 'utf-8',
+    'default' : 'utf-8-sig',
     'types'   : (str,),
     'help'    : "Default input encoding for .ttl file."
 }
@@ -403,11 +403,12 @@ def ttl_cmdline( ttlloc, **kwargs ):
         print "Generating py / html file ... "
         pytext = comp.topy( ttlhash=comp.ttllookup.ttlhash ) # pytext in unicode
         # Intermediate file should always be encoded in 'utf-8'
-        codecs.open( pyfile, mode='w', encoding=comp.encoding ).write(pytext)
+        enc = comp.encoding.stripr('-sig') # -sig is used to interpret BOM
+        codecs.open( pyfile, mode='w', encoding=enc ).write(pytext)
 
         r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
         html = r( context=context )
-        codecs.open( htmlfile, mode='w', encoding=comp.encoding).write( html )
+        codecs.open( htmlfile, mode='w', encoding=enc ).write( html )
 
         # This is for measuring performance
         st = dt.now()

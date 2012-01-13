@@ -1,3 +1,9 @@
+* Bug fix. Fix charset() function in utils.py similar to the fix done in
+  tss.utils.py
+
+* This whole utf-8-sig business is very patchy. Review the code aand fix
+  it properly
+
 * Bug fix. Parser should pass for empty ttl files. files containing just
   directives or tags.
 
@@ -67,3 +73,9 @@ Errors and warnings :
 * Global statements in ttl file should not by body local. They *must* be global.
 
 * How are context functions (from helper file imported) into template context ?
+
+* In ttl_cmdline, don't mix command line options with ttlconfig.
+
+* Refactor ast.py based on `safedesc()` logic defined in Tayra styles, TSS.
+
+* Add expression filter 'dq' and 'sq' to quote the output as string.

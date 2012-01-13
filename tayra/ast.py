@@ -1984,12 +1984,12 @@ class ExprsContents( NonTerminal ):
         contents = self.flatten()
         contents = filter( lambda x : not x.NEWLINES, contents )
         text = u''.join([ x.dump( Context() ) for x in contents ])
-        text, filters = ExprsContents.parseexprs( text )
+        code, filters = ExprsContents.parseexprs( text )
         # Pre-process escape filters
         filters = ESCFILTER_RE.findall( filters.strip() + ',' )
         filters = [] if filters and filters[0][0] == 'n' else filters
         filters = [ ( f[0], f[1].strip('. ,') ) for f in filters if f ]
-        igen.evalexprs( text, filters=filters )
+        igen.evalexprs( code, filters=filters )
         return None
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,

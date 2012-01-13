@@ -754,7 +754,7 @@ class Coord( object ):
 if __name__ == "__main__":
     import pprint, time
     
-    text   = codecs.open( sys.argv[1], encoding='utf-8' 
+    text   = codecs.open( sys.argv[1], encoding='utf-8-sig'
              ).read() if len(sys.argv) > 1 else "hello" 
     parser = TTLParser( yacc_debug=True )
     t1     = time.time()

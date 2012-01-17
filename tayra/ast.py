@@ -594,8 +594,7 @@ class Charset( NonTerminal ):
 
     def headpass2( self, igen ):
         parseline = self.CHARSET.dump(None)
-        defencoding = self.parser.ttlparser.encoding
-        igen.encoding = charset( parseline=parseline, encoding=defencoding )
+        igen.encoding = charset( parseline=parseline, encoding=igen.encoding )
         igen.comment( "-*- coding: %s -*-" % igen.encoding, force=True )
         igen.putstatement( "_m.setencoding( %r )" % igen.encoding )
         NonTerminal.headpass2( self, igen )

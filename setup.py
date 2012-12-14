@@ -9,11 +9,16 @@ from   setuptools import setup, find_packages
 from   os.path    import abspath, dirname, join
 
 here = abspath( dirname(__file__) )
-README = open(join(here, 'README.rst')).read()
+LONG_DESCRIPTION = open( join( here, 'README.rst' )).read(
+                       ).replace(':class:`', '`'
+                                ).replace(':mod:`', '`'
+                                         ).replace(':meth:`', '`')
 
-v = open(join(dirname(__file__), 'tayra', '__init__.py'))
-version = re.compile(r".*__version__[ ]*=[ ]*'(.*?)'", re.S).match(v.read()).group(1)
-v.close()
+version = re.compile( 
+            r".*__version__[ ]*=[ ]*'(.*?)'",
+            re.S 
+          ).match( 
+            open( join( here, 'pluggdapps', '__init__.py' )).read()).group(1)
 
 description='An integrated web templating environment'
 
@@ -50,8 +55,6 @@ setup(
     },
     install_requires=[                      # setuptools
         'ply>=3.4',
-        'zope.component',
-        'zope.interface',
         'MarkupSafe>=0.9.2',
     ],
     extras_require={},                      # setuptools
@@ -70,9 +73,9 @@ setup(
     maintainer_email='prataprc@gmail.com',
     url='http://tayra.pluggdapps.com',
     download_url='',
-    license='Simplified BSD license',
+    license='General Public License',
     description=description,
-    long_description=README,
+    long_description=LONG_DESCRIPTION,
     platforms='',
     classifiers=classifiers,
     keywords=[ 'template, web, html, css' ],

@@ -12,7 +12,8 @@
 
 * Bug fix. The following expression fails, that is when using dictionary.
   ${ conf.render( {}, config ) }
-  Once fixed, change template code in config.ttl of etsite, couchpysite, tyrsite.
+  Once fixed, change template code in config.ttl of etsite, couchpysite,
+  tyrsite.
 
 * charset directive should be read and based on the character-set encoding
   the whole text must be re-read. This character set encoding specified in TTL
@@ -24,8 +25,8 @@
         codecs.open(...).read() is used stip them off.
 
 * Looks like ':' prefix is used for XML namespace. This is in direct conflict
-  with tag name specifier ':', so change it to '::' specifier syntax and translate
-  as is, ':' specifier prefix XML namespace.
+  with tag name specifier ':', so change it to '::' specifier syntax and 
+  translate as is, ':' specifier prefix XML namespace.
 
 * Once stripping is made available (or inline tags), 
     http://localhost:5000/bootstrap/config 
@@ -52,6 +53,7 @@
 * Test cases / profiling / code-coverage.
 
 Errors and warnings :
+---------------------
 
 * Flag error if @function is used in-place of @interface, and vice-versa.
 
@@ -62,7 +64,8 @@ Errors and warnings :
 
 * Flag errors when circular inheritance or circular import/include are detected.
 
-* Make tutorial.etx and getStarted.etx and updated reference.etx first paragraph.
+* Make tutorial.etx and getStarted.etx and updated reference.etx first 
+  paragraph.
 
 * SVG support, Kendo-UI and Component Art.
 
@@ -79,3 +82,71 @@ Errors and warnings :
 * Refactor ast.py based on `safedesc()` logic defined in Tayra styles, TSS.
 
 * Add expression filter 'dq' and 'sq' to quote the output as string.
+
+Language syntax and feature.
+----------------------------
+* Syntax to break the text. like,
+    hello world <br> how are you
+  where <br> come anywhere in the `content` rule.
+* White space preservation.
+* Whitespace pruning,
+    before and after opening tag and closing tag (for outerprune)
+* @charset directive is pretty much a stale feature. Figure out how to use
+  that, without compromising on ttlconfig['input_encoding']
+* For attributes, the value, along with the "=" character, can be omitted
+  altogether if the value is the empty string, eg,
+    disabled, selected etc ...
+  To be handled as specifier option.
+* Enable wiki text as content selectable using the tag's specifier. like,
+    <div etx> **hello** world
+* Decorator for generating HTML based on client-agent.
+
+Other features and functions.
+-----------------------------
+
+* Automatically detect the user-agent compatibility level with html and
+  generate elements in confirmance to it. This must play safe with the
+  following knobs,
+    - doctype specification in ttl file
+    - encoding specification in ttl file
+    - language specification in ttl file
+    - config params passed to compile the ttl file
+    - HTTP headers (or any other real-time info available from user agent)
+      denoting the user agent capabilities.
+* somehow find a way to pass the arguments to `body` function.
+* Just saw Adobe Egdge ... Can tayra be the keyboard version for addressing
+  the same market place as Adobe's ?
+* Ruby's code-block style syntax to write event-handlers for tag-elements.
+* Custom tag plugin for form generation.
+
+Internals
+---------
+
+* Do not maintain context information with `igen` instead maintain that with
+  parser object.
+* Figure out a way to cache the plugins catogarised by initplugins() function.
+* html-entity-escaping in escape-filters, should text-contents need escape
+  filtering as well ?
+* making `devmod` as False seems to have degrading effect on performance.
+* Micro-templating similar to mako. This will demonstrate the true power of
+  StackMachine based design.
+  This requires a change in the filter-block syntax and symantics. It would be
+  better if it is possible to parse the filter-block as signature + siblings.
+
+Administrative
+--------------
+
+* Find a way to pass the body arguments programmatically via Renderer()
+* Generate beautiful html, using lxml
+
+Release check-list 
+-----------------
+
+* Change the release version in 
+    ./CHANGELOG,
+    ./tayra/__init__.py
+* Update setup.py and MANIFEST.in for release
+* Create a tag and push the tagged branch to code.google.com & bitbucket.com
+* Upload the source into pypi.
+        make upload
+* After making the release, taging the branch, increment the version number.

@@ -8,191 +8,375 @@ import imp, os, codecs
 from   os.path              import isfile, isdir, basename, join, dirname
 from   hashlib              import sha1
 
-from   tayra.parser         import TTLParser
-from   tayra.codegen        import InstrGen
-from   tayra.runtime        import StackMachine, Namespace
-from   tayra.utils          import charset
+from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
+from   pluggdapps.web.webinterfaces import IHTTPRenderer
 
-class Compiler( object ):
+_defaultsettings = h.ConfigDict()
+_defaultsettings.__doc__ = (
+    "Configuration settings for tayra template engine." )
+
+_defaultsettings['debug']  = {
+    'default'  : False,
+    'types'    : (bool,),
+    'help'     : "Compile in debug mode."
+}
+_defaultsettings['parse_optimize']    = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "PLY-Lexer-Yacc option. "
+                "Set to False when you're modifying the lexer/parser. "
+                "Otherwise, changes in the lexer/parser won't be used, "
+                "if some lextab.py file exists. When releasing with a stable "
+                "version, set to True to save the re-generation of the "
+                "lexer/parser table on each run. Also note that, using "
+                "python's optimization feature can break this option, refer, "
+                "    http://www.dabeaz.com/ply/ply.html#ply_nn38 "
+}
+_defaultsettings['lextab']    = {
+    'default' : 'lextyrtab',
+    'types'   : (str,),
+    'help'    : "PLY-Lexer option. "
+                "Points to the lex table that's used for optimized mode. Only "
+                "if you're modifying the lexer and want some tests to avoid "
+                "re-generating the table, make this point to a local lex table "
+                "file. "
+}
+_defaultsettings['lex_debug'] = {
+    'default' : 0,
+    'types'   : (int,),
+    'help'    : "PLY-Lex option. Run lexer in debug mode."
+}
+_defaultsettings['yacctab']    = {
+    'default' : 'parsetyrtab',
+    'types'   : (str,),
+    'help'    : "PLY-Yacc option. "
+                "Points to the yacc table that's used for optimized mode. Only "
+                "if you're modifying the parser, make this point to a local "
+                "yacc table file."
+}
+_defaultsettings['yacc_debug'] = {
+    'default' : 0,
+    'types'   : (int,),
+    'help'    : "PLY-Yacc option. Run yaccer in debug mode."
+}
+_defaultsettings['yacc_outputdir'] = {
+    'default' : '',
+    'types'   : (str,),
+    'help'    : "To change the directory in which the PLY YACC's parsetab.py "
+                "file (and other output files) are written."
+}
+_defaultsettings['strict_undefined']    = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "Boolean to raise exception for undefined context variables. "
+                "If set to false, undefined variables will be silently "
+                "digested as 'None' string. "
+}
+_defaultsettings['encoding']             = {
+    'default' : 'utf-8-sig',
+    'types'   : (str,),
+    'help'    : "Encoding to use while reading the template script file."
+}
+_defaultsettings['directories']             = {
+    'default' : '.',
+    'types'   : ('csv',list),
+    'help'    : "Comma separated list of directory path to look for a "
+                "template file. Default will be current-directory."
+}
+_defaultsettings['module_directory']        = {
+    'default' : None,
+    'types'   : (str,),
+    'help'    : "Directory path telling the compiler where to persist (cache) "
+                "intermediate python file."
+}
+_defaultsettings['escape_filters']          = {
+    'default' : '',
+    'types'   : ('csv', list),
+    'help'    : "Comma separated list of default escape filters to be applied "
+                "during expression substitution."
+}
+_defaultsettings['input_encoding']          = {
+    'default' : 'utf-8-sig',
+    'types'   : (str,),
+    'help'    : "Default input encoding for .ttl file."
+}
+_defaultsettings['usetagplugins']           = {
+    'default' : ['TayraHTML5Forms', 'TayraHTML5', 'TayraTags'],
+    'types'   : ('csv', list),
+    'help'    : "Comma separated list of tag plugin namespaces to use. Only "
+                "plugins that are registered under the requested namespace "
+                "will be used to generate the html."
+}
+_defaultsettings['uglyhtml']                = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "Boolean, to freely generate the output html file without "
+                "bothering about indentation."
+}
+_defaultsettings['plugin_packages']         = {
+    'default' : '',
+    'types'   : ('csv', list),
+    'help'    : "Comma separated list of plugin packages that needs to be "
+                "imported, before compiling template files."
+}
+_defaultsettings['memcache']                = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "Cache the compiled python code in-memory to avoid "
+                "re-compiling .ttl to .py file."
+}
+_defaultsettings['text_as_hashkey']         = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "To be used with 'memcache' option, where the cache tag "
+                "will be computed using .ttl file's text content. This "
+                "will have a small performance penalty instead of using "
+                "template's filename as key."
+}
+_defaultsettings['entry_function']  = {
+    'default'  : 'body',
+    'types'    : (str,),
+    'help'     : "Python entry point into compiled template script."
+}
+
+
+class TTLCompiler( Plugin ):
+    implements( IHTTPRenderer )
+
     _memcache = {}
 
-    def __init__( self,
-                  ttlloc=None,
-                  ttltext=None,
-                  # Template options
-                  ttlconfig={},
-                  # TTLParser options
-                  ttlparser=None,
-                  # InstrGen options
-                  igen=None,
-                ):
-        # Source TTL
-        if isinstance( ttlloc, TemplateLookup ) :
-            self.ttllookup = ttlloc
-        elif ttlloc or ttltext :
-            self.ttllookup = TemplateLookup(
-                ttlloc=ttlloc, ttltext=ttltext, ttlconfig=ttlconfig
-            )
-        else :
-            raise Exception( 'To compile, provide a valid ttl source' )
-        self.ttlfile = self.ttllookup.ttlfile
-        self.pyfile = self.ttllookup.pyfile
-        self.ttlconfig = ttlconfig
-        self.encoding = self.ttllookup.encoding
-        # Parser phase
-        self.ttlparser = ttlparser or TTLParser( ttlconfig=self.ttlconfig )
-        # Instruction generation phase
-        self.igen = igen or InstrGen( self, ttlconfig=self.ttlconfig )
+    ttlloc = None
+    """TemplateLookup object."""
 
-    def __call__(self, ttlloc=None, ttltext=None, ttlconfig={}, ttlparser=None):
-        ttlconfig = ttlconfig or self.ttlconfig
-        ttlparser = ttlparser or self.ttlparser
-        return Compiler( ttlloc=ttlloc, ttltext=ttltext,
-                          ttlconfig=ttlconfig, ttlparser=ttlparser
-                        )
+    ttlfile = ''
+    """Absolute file path pointing to .ttl template script file in."""
 
-    def execttl( self, code=None, context={} ):
-        """Execute the template code (python compiled) under module's context
-        `module`.
-        """
+    ttltext = ''
+    """String of template script either read from the template file or
+    received directly."""
+
+    pyfile = ''
+    """Absolute file path pointing to compiled template script, .py file."""
+
+    pytext = ''
+    """String of python script translated from template script."""
+
+    encoding = ''
+    """Character encoding of original template script file."""
+
+    ttlparser = None
+    """:class:`TTLParser` object."""
+
+    igen = None
+    """:class:`InstrGen` object."""
+
+    mach = None
+    """:class:`StackMachine` object."""
+
+    def __call__( self, **kwargs ):
+        """Clone a plugin with the same settings as this one."""
+        settings = {}
+        settings.update({ k : self[k] for k in self })
+        settings.update( kwargs.pop( 'settings', {} ))
+        kwargs['settings'] = settings
+        return self.query_plugin( ISettings, 'ttlcompiler', **kwargs )
+
+    def _init( self, file=None, text=None ):
+
+        #---- Move this to __init__
+        from tayra.parser   import TTLParser
+        from tayra.codegen  import InstrGen
+        from tayra.runtime  import StackMachine
+
+        self.ttlparser = TTLParser( self )
+        self.igen = InstrGen( self )
         # Stack machine
-        _m  = StackMachine( self.ttlfile, self, ttlconfig=self.ttlconfig )
+        self.mach = StackMachine( self.ttlfile, self )
+        #----
+
+        self.ttlloc = TemplateLookup( self, file, text )
+        self.encoding = self.ttlloc.encoding
+        self.ttlfile = self.ttlloc.ttlfile
+        self.ttltext = self.ttlloc.ttltext
+        self.pyfile = self.ttlloc.pyfile
+        self.modulename = basename( self.ttlfile ).split('.', 1)[0]
+
+        self.pytext = ''
+        if self.ttlfile and isfile( self.ttlfile ) :
+            if self.pyfile and isfile( self.pyfile ) :
+                m1 = os.stat( self.ttlfile ).st_mtime
+                m2 = os.stat( self.pyfile ).st_mtime
+                if m1 == m2 :
+                    self.pytext = open( self.pyfile ).read()
+
+    def toast( self, ttltext=None ):
+        """Convert the template script text into abstract-syntax-tree."""
+        ttltext = ttltext or self.ttltext
+        ast = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
+        return ast
+
+    def topy( self, ast, *args, **kwargs ):
+        """Generate the intermediate python text."""
+        ast.validate()
+        ast.headpass1( self.igen )                   # Head pass, phase 1
+        ast.headpass2( self.igen )                   # Head pass, phase 2
+        ast.generate( self.igen, *args, **kwargs )   # Generation
+        ast.tailpass( self.igen )                    # Tail pass
+        return self.igen.codetext()
+
+    def compile( self, file=None, text=None, args=[], kwargs={} ):
+        """Translate TTL file into intermediate python code. Returns 
+        compiled python intemediate file.
+        
+        ``args``, ``kwargs,
+            position arguments and keyword arguments to use during
+            AST.generate() pass.
+        """
+        self._init( file=file, text=text ) if (file or text) else None
+        self.pytext = self.topy( self.toast(), *args, **kwargs )
+        code = self._memcache.get( self.ttlloc.ttlhash, None )
+        if not code :
+            code = compile( self.pytext, self.ttlfile, 'exec' )
+        if self['memcache'] :
+            self._memcache.setdefault( self.ttlloc.ttlhash, code )
+        return (self.pytext, code)
+
+    def generate( self, context, code ):
+        """Execute compiled template code (in python) under module's 
+        ``context`` to generate the final HTML text.
+        """
+        from tayra.runtime  import Namespace
+
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
         module.__dict__.update({
-            self.igen.machname : _m,
+            self.igen.machname : self.mach,
             'self'   : Namespace( None, module ),
             'local'  : module,
             'parent' : None,
             'next'   : None,
         })
         module.__dict__.update( context )
-        # Load ttl translated python code
-        code = code or self.ttl2code()
         # Execute the code in module's context
-        exec code in module.__dict__, module.__dict__
-        return module
+        exec( code, module.__dict__, module.__dict__ )
+        entry = getattr( module.self, self['entry_function'] )
+        args = context.get( '_bodyargs', [] )
+        kwargs = context.get( '_bodykwargs', {} )
+        return entry( *args, **kwargs ) if callable( entry ) else ''
 
-    def ttl2code( self ):
-        """Code loading involves, picking up the intermediate python file from
-        the cache (if disk persistence is enabled and the file is available)
-        or, generate afresh using `igen` Instruction Generator.
+    #---- IHTTPRenderer interface methods
+
+    def render( self, request, c, file=None, text=None ):
+        """Generate HTML string from template script passed either via 
+        ``ttext`` or via ``tfile``.
+
+        ``tfile``,
+            Location of Tayra template file, either as relative directory or as
+            asset specification.
+
+        ``ttext``,
+            Tayra template text string.
         """
-        code = self._memcache.get( self.ttllookup.hashkey, None 
-               ) if self.ttlconfig['devmod'] == False else None
-        if code : return code
-        pytext = self.ttllookup.pytext
-        if pytext :
-            ttlhash = None
-            code = compile( pytext, self.ttlfile, 'exec' )
-        else :
-            pytext = self.topy( ttlhash=self.ttllookup.ttlhash )
-            self.ttllookup.pytext = pytext
-            code = compile( pytext, self.ttlfile, 'exec' )
+        pytext, code = self.compile( file=file, text=text )
+        return self.generate( c, code )
 
-        if self.ttlconfig['memcache'] :
-            self._memcache.setdefault( self.ttllookup.hashkey, code )
-        return code
+    #---- ISettings interface methods
 
-    def toast( self ):
-        ttltext = self.ttllookup.ttltext
-        tu = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
-        return tu
+    @classmethod
+    def default_settings( cls ):
+        """:meth:`pluggdapps.plugin.ISettings.default_settings` interface 
+        method."""
+        return _defaultsettings
 
-    def topy( self, *args, **kwargs ):
-        tu = self.toast()
-        if tu :
-            tu.validate()
-            tu.headpass1( self.igen )                   # Head pass, phase 1
-            tu.headpass2( self.igen )                   # Head pass, phase 2
-            tu.generate( self.igen, *args, **kwargs )   # Generation
-            tu.tailpass( self.igen )                    # Tail pass
-            return self.igen.codetext()
-        else :
-            return None
-
-    modulename = property(lambda s : basename( s.ttlfile ).split('.', 1)[0] )
-
+    @classmethod
+    def normalize_settings( cls, sett ):
+        """:meth:`pluggdapps.plugin.ISettings.normalize_settings` interface 
+        method."""
+        sett['debug'] = h.asbool( sett['debug'] )
+        sett['parse_optimize'] = h.asbool( sett['parse_optimize'] )
+        sett['lex_debug'] = h.asint( sett['lex_debug'] )
+        sett['yacc_debug'] = h.asint( sett['yacc_debug'] )
+        sett['strict_undefined'] = h.asbool( sett['strict_undefined'] )
+        sett['directories'] = h.parsecsvlines( sett['directories'] )
+        sett['escape_filters'] = h.parsecsvlines( sett['escape_filters'] )
+        sett['usetagplugins'] = h.parsecsvlines( sett['usetagplugins'] )
+        sett['plugin_packages'] = h.parsecsvlines( sett['plugin_packages'] )
+        sett['uglyhtml'] = h.asbool( sett['uglyhtml'] )
+        sett['memcache'] = h.asbool( sett['memcache'] )
+        sett['text_as_hashkey'] = h.asbool( sett['text_as_hashkey'] )
+        return sett
 
 class TemplateLookup( object ) :
-    TTLCONFIG = [ 'directories', 'module_directory', 'devmod' ]
-    def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
-        [ setattr( self, k, ttlconfig[k] ) for k in self.TTLCONFIG ]
-        self.ttlconfig, self.encoding = ttlconfig, ttlconfig['input_encoding']
-        self.ttlloc, self._ttltext = ttlloc, ttltext
-        self._ttlhash, self._pytext = None, None
-        if self.ttlloc :
-            self.ttlfile = self._locatettl( self.ttlloc, self.directories )
-            self.pyfile = self.computepyfile( ttlloc, ttlconfig )
-            self.encoding = charset(ttlfile=self.ttlfile, encoding=self.encoding)
-        elif self._ttltext :
-            self.ttlfile = '<Source provided as raw text>'
-            self.pyfile = None
+
+    ttlfile = ''
+    """Absolute file path pointing to .ttl template script file in."""
+
+    ttltext = ''
+    """String of template script either read from the template file or
+    received directly."""
+
+    pyfile = ''
+    """Absolute file path pointing to compiled template script, .py file."""
+
+    encoding = ''
+    """Character encoding of original template script file."""
+
+    ttlhash = ''
+    """Hash value generated from template text."""
+
+    def __init__( self, compiler, ttlfile=None, ttltext=None ):
+        self.compiler = compiler
+
+        if ttlfile :
+            moddir = compiler['module_directory']
+            self.encoding = self.charset( ttlfile=ttlfile,
+                                          encoding=compiler['encoding'] )
+            self.pyfile = join( moddir, ttlfile.lstrip( os.sep )+'.py' ) \
+                                if moddir else None
+            self.ttlfile = h.locatefile( ttlfile, compiler['directories'] )
+            self.ttltext = open( self.ttlfile, encoding=self.encoding ).read()
+
+        elif ttltext :
+            parselines = ttltext.encode('utf-8').splitlines()
+            self.encoding = self.charset( parselines=parselines,
+                                          encoding=compiler['encoding'] )
+            self.pyfile = '<Source provided directly as text>'
+            self.ttlfile = '<Source provided directly as text>'
+            self.ttltext = ttltext.decode( self.encoding ) \
+                                if isinstance( ttltext, bytes ) else ttltext
+
         else :
             raise Exception( 'Invalid ttl source !!' )
 
-    def _getttltext( self ):
-        if self._ttltext == None :
-            self._ttltext = codecs.open( self.ttlfile, encoding=self.encoding ).read()
-        return self._ttltext
+        self.ttlhash = sha1(self.ttltext.encode('utf-8')).hexdigest() \
+                            if compiler['text_as_hashkey'] else self.ttlfile
 
-    def _getpytext( self ):
-        if self.devmod :
-            return None
-        elif self.pyfile and isfile(self.pyfile) and self._pytext == None :
-            self._pytext = open( self.pyfile ).read()
-        return self._pytext         # pytext will be encoded unicode (str)
+    def charset( self, ttlfile=None, parselines=None, encoding=None ):
+        """Charset must come as parameter specifier for @doctype directive
+        in the beginning of the Tayra template script. Parse the script for
+        the directive and return the encoding string.  Returns encoding string
+        or byte-string.
 
-    def _setpytext( self, pytext ): # pytext will be encoded unicode (str)
-        if self.pyfile :
-            d = dirname(self.pyfile)
-            os.makedirs(d) if not isdir(d) else None
-            open( self.pyfile, mode='w' ).write(pytext)
-            return len(pytext)
-        return None
+        ``ttlfile``,
+            Template script file.
 
-    def _getttlhash( self ):
-        if self._ttlhash == None and self.ttltext:
-            self._ttlhash = sha1( self.ttltext.encode('utf-8') ).hexdigest()
-        return self._ttlhash
-
-    def _gethashkey( self ):
-        return self.ttlhash if self.ttlconfig['text_as_hashkey'] else self.ttlfile
-
-    def _locatettl( self, ttlloc, dirs ):
-        """TODO : can reordering the sequence of ttlloc interpretation improve
-        performance ?"""
-        # If ttlloc is relative to one of the template directories
-        files = filter( lambda f : isfile(f), [ join(d, ttlloc) for d in dirs ])
-        if files : return files[0]
-
-        # If ttlloc is provided in asset specification format
-        try :
-            mod, loc = ttlloc.split(':', 1)
-            _file, path, _descr = imp.find_module( mod )
-            ttlfile = join( path.rstrip(os.sep), loc )
-            return ttlfile
-        except :
-            return None
-
-        raise Exception( 'Error locating TTL file %r' % ttlloc )
-
-    def computepyfile( self, ttlloc, ttlconfig ) :
-        """Plainly compute the intermediate file, whether it exists or not is
-        immaterial.
+        ``parseline``,
+            A line of string or byte-string specifying the @doctype directive.
         """
-        module_directory = ttlconfig['module_directory']
-        if module_directory :
-            ttlloc = ttlloc[1:] if ttlloc.startswith('/') else ttlloc
-            pyfile = join( module_directory, ttlloc+'.py' )
-        else :
-            pyfile = None
-        return pyfile
-
-    ttltext = property( _getttltext )
-    pytext  = property( _getpytext, _setpytext )
-    ttlhash = property( _getttlhash )
-    hashkey = property( _gethashkey )
+        parselines = parselines or open( ttlfile, 'rb' ).readlines()
+        parseline = None
+        for line in parselines :
+            line = line.strip()
+            if line.startswith( b'@doctype' ) :
+                parseline = line
+                break
+            if line.startswith( b'<' ) :
+                break
+        if parseline :
+            m = re.search( r'charset="([^"]+")', parseline[8:] )
+            encoding = m.groups()[0] if m else encoding
+        return encoding
 
 
 def supermost( module ):
@@ -202,3 +386,4 @@ def supermost( module ):
     parmod = module.parent
     while parmod : module, parmod = parmod, parmod.parent
     return module
+

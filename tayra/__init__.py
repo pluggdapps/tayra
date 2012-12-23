@@ -25,27 +25,23 @@
   this phase is successfully completed.
 """
 
-import codecs, re
-from   os.path                  import dirname, basename, join
-from   copy                     import deepcopy
-from   datetime                 import datetime as dt
-
-from   zope.component           import getGlobalSiteManager
+import re
 import pkg_resources            as pkg
 
-from   tayra.interfaces         import ITayraTag, ITayraFilterBlock, \
-                                       ITayraEscapeFilter
-from   tayra.utils              import ConfigDict, asbool, parsecsv
-from   tayra.parser             import TTLParser
-# Import tag-plugins so that they can register themselves.
-import tayra.tags
-import tayra.tags.html
-import tayra.tags.forms
-import tayra.tags.customhtml
-# Import filterblock-plugins so that they can register themselves.
-import tayra.filterblocks.pycode
-# Import escapefilter-plugins so that they can register themselves.
-import tayra.escfilters.common
+# from   tayra.interfaces         import ITayraTags, ITayraFilterBlock, \
+#                                        ITayraEscapeFilter
+# 
+# # Import tag-plugins so that they can register themselves.
+# import tayra.tags
+# import tayra.tags.html
+# import tayra.tags.forms
+# import tayra.tags.customhtml
+# 
+# # Import filterblock-plugins so that they can register themselves.
+# import tayra.filterblocks.pycode
+# 
+# # Import escapefilter-plugins so that they can register themselves.
+# import tayra.escfilters.common
 
 __version__ = '0.21dev'
 
@@ -54,131 +50,6 @@ EP_TTLNAME  = 'ITTLPlugin'
 DEFAULT_ENCODING = 'utf-8-sig'
 ESCFILTER_RE = re.compile( r'([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_.-]+)*,' )
 DEVMOD = False
-
-defaultconfig = ConfigDict()
-defaultconfig.__doc__ = """Configuration settings for tayra template engine."""
-defaultconfig['parse_optimize']    = {
-    'default' : True,
-    'types'   : (bool,),
-    'help'    : "PLY-Lexer-Yacc option. "
-                "Set to False when you're modifying the lexer/parser. "
-                "Otherwise, changes in the lexer/parser won't be used, "
-                "if some lextab.py file exists. When releasing with a stable "
-                "version, set to True to save the re-generation of the "
-                "lexer/parser table on each run. Also note that, using "
-                "python's optimization feature can break this option, refer, "
-                "    http://www.dabeaz.com/ply/ply.html#ply_nn38 "
-}
-defaultconfig['lextab']    = {
-    'default' : None,
-    'types'   : (str,unicode),
-    'help'    : "PLY-Lexer option. "
-                "Points to the lex table that's used for optimized mode. Only "
-                "if you're modifying the lexer and want some tests to avoid "
-                "re-generating the table, make this point to a local lex table "
-                "file. "
-}
-defaultconfig['yacctab']    = {
-    'default' : None,
-    'types'   : (str,unicode),
-    'help'    : "PLY-Yacc option. "
-                "Points to the yacc table that's used for optimized mode. Only "
-                "if you're modifying the parser, make this point to a local "
-                "yacc table file."
-}
-defaultconfig['strict_undefined']    = {
-    'default' : False,
-    'types'   : (bool,),
-    'help'    : "Boolean to raise exception for undefined context variables. "
-                "If set to false, undefined variables will be silently "
-                "digested as 'None' string. "
-}
-defaultconfig['directories']             = {
-    'default' : '.',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of directory path to look for a "
-                "template file. Default will be current-directory."
-}
-defaultconfig['module_directory']        = {
-    'default' : None,
-    'types'   : (str,),
-    'help'    : "Directory path telling the compiler where to persist (cache) "
-                "intermediate python file."
-}
-defaultconfig['escape_filters']          = {
-    'default' : '',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of default escape filters to be applied "
-                "during expression substitution."
-}
-defaultconfig['input_encoding']          = {
-    'default' : 'utf-8-sig',
-    'types'   : (str,),
-    'help'    : "Default input encoding for .ttl file."
-}
-defaultconfig['usetagplugins']           = {
-    'default' : ['html5', 'html5.forms'],
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of tag plugin namespaces to use. Only "
-                "plugins that are registered under the requested namespace will "
-                "be used to generate the html."
-}
-defaultconfig['uglyhtml']                = {
-    'default' : True,
-    'types'   : (bool,),
-    'help'    : "Boolean, to freely generate the output html file without "
-                "bothering about indentation."
-}
-defaultconfig['plugin_packages']         = {
-    'default' : '',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of plugin packages that needs to be "
-                "imported, before compiling template files."
-}
-defaultconfig['memcache']                = {
-    'default' : True,
-    'types'   : (bool,),
-    'help'    : "Cache the compiled python code in-memory to avoid "
-                "re-compiling .ttl to .py file."
-}
-defaultconfig['text_as_hashkey']         = {
-    'default' : False,
-    'types'   : (bool,),
-    'help'    : "To be used with 'memcache' option, where the cache tag "
-                "will be computed using .ttl file's text content. This "
-                "will have a small performance penalty instead of using "
-                "template's filename as key."
-}
-
-def normalizeconfig( config ):
-    """Convert string representation of config parameters into programmable
-    data types. It is assumed that all config parameters are atleast initialized
-    with default value.
-    """
-    config_ = dict( defaultconfig.items() )
-    config_.update( config )
-    config = config_
-    config['devmod'] = asbool( config.get('devmod', DEVMOD) )
-    config['parse_optimize'] = asbool( config['parse_optimize'] )
-    config['strict_undefined'] = asbool( config['strict_undefined'] )
-    config['module_directory'] = config['module_directory'] or None
-    config['uglyhtml'] = asbool( config['uglyhtml'] )
-    config['memcache'] = asbool( config['memcache'] )
-    config['text_as_hashkey'] = asbool( config['text_as_hashkey'] )
-    try    : config['directories'] = parsecsv( config['directories'] )
-    except : pass
-    try    :
-        filters = ESCFILTER_RE.findall( config['escape_filters'].strip() + ',' )
-        filters = [] if filters and filters[0][0] == 'n' else filters
-        filters = [ ( f[0], f[1].strip('. ,') ) for f in filters if f ]
-        config['escape_filters'] = filters
-    except : pass
-    try    : config['usetagplugins'] = parsecsv( config['usetagplugins'] )
-    except : pass
-    try    : config['plugin_packages'] = parsecsv( config['plugin_packages'] )
-    except : pass
-    return config
-
 
 def _findttls():
     """Search for template plugins, and return a list of tuples,
@@ -197,18 +68,20 @@ def _findttls():
              for pkgname, ep in entrypoints.items() ]
 
 
-def _loadttls( ttllocs, ttlconfig, context={} ):
+def _loadttls( ttlfiles, ttlconfig, context={} ):
     """Only when the plugins are compile and loaded, it is available for rest
     of the system.
     """
     from tayra.compiler import Compiler
-    [ Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig ).execttl( context=context )
-      for ttlloc in ttllocs ]
+    [ Compiler(
+        ttlfile=ttlfile, ttlconfig=ttlconfig ).compile( context=context )
+      for ttlfile in ttlfiles ]
 
 
 def initplugins( ttlconfig, force=False ):
     """Collect and organize Tayra template plugins, and plugins implementing
-    language interfaces, like, ITayraTag, ITayraFilterBlock, ITayraEscapeFilter,
+    language interfaces, like, ITayraTags, ITayraFilterBlock, 
+    ITayraEscapeFilter,
 
     Plugins are loaded and organised in the following format,
     `ttlplugins`,
@@ -230,24 +103,24 @@ def initplugins( ttlconfig, force=False ):
     if (force == True) or ttlconfig.get( 'tagplugins', None ) == None :
         # Load and classify plugins
         gsm = getGlobalSiteManager()
-        usetagplugins = ttlconfig['usetagplugins'] + [u'']
+        usetagplugins = ttlconfig['usetagplugins'] + ['']
 
         # import plugin packages defined in `ttlconfig`
         packages = ttlconfig['plugin_packages']
-        if isinstance( packages, basestring ):
+        if isinstance( packages, str ):
             packages = [ x.strip(' \t') for x in packages.split(',') ]
         [ __import__(pkg) for pkg in filter(None, packages) ]
 
         # Gather plugins template tag handlers, filter-blocks
         for x in gsm.registeredUtilities() :
-            if x.provided == ITayraTag :            # Tag handlers
+            if x.provided == ITayraTags :           # Tag handlers
                 try    : namespace, tagname = x.name.rsplit('.', 1)
-                except : namespace, tagname = u'', x.name
+                except : namespace, tagname = '', x.name
                 if namespace in usetagplugins :
                     tagplugins[tagname] = x.component
-            elif x.provided == ITayraFilterBlock :    # Filter blocks
+            elif x.provided == ITayraFilterBlock :  # Filter blocks
                 fbplugins[x.name] = x.component
-            elif x.provided == ITayraEscapeFilter :   # Escape Filters
+            elif x.provided == ITayraEscapeFilter : # Escape Filters
                 escfilters[x.name] = x.component
             else :
                 continue
@@ -261,7 +134,7 @@ def initplugins( ttlconfig, force=False ):
         ttlconfig['escfilters'] = escfilters
 
         # Load ttl files implementing template plugins
-        [ _loadttls( ttllocs, ttlconfig ) for pkg, ttllocs in _findttls() ]
+        [ _loadttls( ttlfiles, ttlconfig ) for pkg, ttlfiles in _findttls() ]
 
         # Setup ttlplugin lookup table
         for x in gsm.registeredUtilities() :
@@ -301,116 +174,14 @@ class BaseTTLPlugin( object ):
     def __call__( self, *args, **kwargs ):
         return self.__class__( *args, **kwargs )
 
-
-#---- APIs for executing Tayra Template Language
-
-class Renderer( object ):
-    """Render a template into HTML.
-
-    ``ttlloc``,
-        Location of Tayra template file, either as relative directory or as
-        asset specification.
-    ``ttltext``,
-        Tayra template text. It is assumed in unicode format. 
-    ``ttlconfig``,
-        Configuration parameter will find its way into every object defined by
-        the templating engine.
+def package() :
+    """Entry point that returns a dictionary of key,value details about the
+    package.
     """
-    def __init__( self, ttlloc=None, ttltext=None, ttlconfig={} ):
-        self.ttlconfig = dict( defaultconfig.items() )
-        self.ttlconfig.update( ttlconfig )
-        self.ttlconfig.setdefault( 'devmod', DEVMOD )
-        # Initialize plugins
-        self.ttlconfig = initplugins(
-                self.ttlconfig, force=self.ttlconfig['devmod'] )
-        self.ttlloc, self.ttltext = ttlloc, ttltext
-        self.ttlparser = TTLParser( ttlconfig=self.ttlconfig )
+    return {}
 
-    def __call__( self, entryfn='body', context={} ):
-        """Compile, execute and return html text corresponding to this template
-        document.
+import tayra.compiler
+import tayra.tags
+import tayra.filterblocks
+import tayra.escfilters
 
-        key-word arguments,
-        ``entryfn``,
-            name of entry function to be called.
-        ``context``,
-            dictionary of key,value pairs to be used as context for generating
-            html document.
-
-        Arguments to body() function can be passed via context variables,
-        ``_bodyargs`` (a list of positional arguments) and ``_bodykwargs`` a
-        dictionary of key-word arguments.
-
-        dictionary object ``context`` will also be available as _ttlcontext
-        variable.
-        """
-        from tayra.compiler import Compiler
-        self.compiler = Compiler( ttltext=self.ttltext,
-                                  ttlloc=self.ttlloc,
-                                  ttlconfig=self.ttlconfig,
-                                  ttlparser=self.ttlparser
-                                )
-        context['_ttlcontext'] = context
-        module = self.compiler.execttl( context=context )
-        # Fetch parent-most module
-        entry = getattr( module.self, entryfn )
-        args = context.get( '_bodyargs', [] )
-        kwargs = context.get( '_bodykwargs', {} )
-        html = entry( *args, **kwargs ) if callable( entry ) else u''
-        return html
-
-def ttl_cmdline( ttlloc, **kwargs ):
-    from   tayra.compiler       import Compiler
-
-    ttlconfig = deepcopy( dict( defaultconfig.items() ))
-    # directories, module_directory, devmod
-    ttlconfig.update( kwargs )
-
-    # Parse command line arguments and configuration
-    args = eval( ttlconfig.pop( 'args', '[]' ))
-    context = ttlconfig.pop( 'context', {} )
-    context = eval(context) if isinstance(context, basestring) else context
-    context.update( _bodyargs=args ) if args else None
-    debuglevel = ttlconfig.pop( 'debuglevel', 0 )
-    show = ttlconfig.pop( 'show', False )
-    dump = ttlconfig.pop( 'dump', False )
-
-    # Initialize plugins
-    ttlconfig.setdefault('devmod', DEVMOD)
-    ttlconfig = initplugins( ttlconfig, force=ttlconfig['devmod'] )
-
-    # Setup parser
-    ttlparser = TTLParser( ttlconfig=ttlconfig, debug=debuglevel )
-    comp = Compiler( ttlloc=ttlloc, ttlconfig=ttlconfig, ttlparser=ttlparser )
-    pyfile = comp.ttlfile+'.py'
-    htmlfile = basename( comp.ttlfile ).rsplit('.', 1)[0] + '.html'
-    htmlfile = join( dirname(comp.ttlfile), htmlfile )
-
-    if debuglevel :
-        print "AST tree ..."
-        tu = comp.toast()
-    elif show :
-        print "AST tree ..."
-        tu = comp.toast()
-        tu.show()
-    elif dump :
-        tu = comp.toast()
-        rctext =  tu.dump()
-        if rctext != codecs.open( comp.ttlfile, encoding=comp.encoding ).read() :
-            print "Mismatch ..."
-        else : print "Success ..."
-    else :
-        print "Generating py / html file ... "
-        pytext = comp.topy( ttlhash=comp.ttllookup.ttlhash ) # pytext in unicode
-        # Intermediate file should always be encoded in 'utf-8'
-        enc = comp.encoding.stripr('-sig') # -sig is used to interpret BOM
-        codecs.open( pyfile, mode='w', encoding=enc ).write(pytext)
-
-        r = Renderer( ttlloc=ttlloc, ttlconfig=ttlconfig )
-        html = r( context=context )
-        codecs.open( htmlfile, mode='w', encoding=enc ).write( html )
-
-        # This is for measuring performance
-        st = dt.now()
-        [ r( context=context ) for i in range(2) ]
-        print (dt.now() - st) / 2

@@ -49,11 +49,8 @@ syn include @Python         syntax/python.vim
 "syn region  blockTTL        start="^\z([ \t]*\)" end="^\z1" contains=prolog
 
 " Prolog
-syn match   prologKeywords  contained "!!!\|@import\| as \|@body\|@inherit\|@implement\|@use\|@charset"
-syn match   funcKeywords    contained "@function\|@interface\|@dec"
-syn match   controlKeywords contained "@if\|@elif\|@else\|@for\|@while"
-syn match   prologDoctype   "^!!!.*;[ \t]*" contains=prologKeywords
-syn region  prolog          start="^@[!ibuc]" end=";[ \t]*$" contains=prologKeywords,ttlString
+syn match   prologKeywords  contained "@doctype\|@import\| as \|@body\|@inherit\|@implement\|@use"
+syn region  prolog          start="^@[!idbuc]" end="[ \t]*$" contains=prologKeywords,ttlString
 
 "Filterblock
 syn match   filterKeywords  contained ":fb-[^ \t]*\|:fbend"
@@ -76,11 +73,13 @@ syn region  ttlTag          contained start=+^[ ]*<[!%]\?[^/]+   end=+>+ contain
 syn region  ttlTagline      start=+^[ ]*<[!%]\?[^/]+  end=+[^\r\n]\{-}$+ contains=ttlTag,pythonExprs
 
 " Function block
+syn match   funcKeywords    contained "@function\|@interface\|@dec"
 syn region  decLine         start=+^[ ]*@dec+  end=+)[ \t]*$+ contains=funcKeywords,@Python
 syn region  funcLine        start=+^[ ]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
 syn region  ifaceLine       start=+^@interface+ end=+:[ ]*$+ contains=funcKeywords,@Python
 
 " Control Block
+syn match   controlKeywords contained "@if\|@elif\|@else\|@for\|@while"
 syn region  ifLine          start=+^[ ]*@if+    end=+:[ \t]*$+ contains=controlKeywords,@Python
 syn region  elifLine        start=+^[ ]*@elif+  end=+:[ \t]*$+ contains=controlKeywords,@Python
 syn region  elseLine        start=+^[ ]*@else+  end=+:[ \t]*$+ contains=controlKeywords,@Python
@@ -115,7 +114,6 @@ TTLHiLink funcKeywords      Function
 TTLHiLink controlKeywords   Operator
 TTLHiLink filterKeywords    Operator
 TTLHiLink prolog            NonText
-TTLHiLink prologDoctype     NonText
 TTLHiLink ttlString         String
 TTLHiLink ttlValue          String
 TTLHiLink ttlTagName        ModeMsg

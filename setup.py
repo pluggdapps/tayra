@@ -18,7 +18,7 @@ version = re.compile(
             r".*__version__[ ]*=[ ]*'(.*?)'",
             re.S 
           ).match( 
-            open( join( here, 'pluggdapps', '__init__.py' )).read()).group(1)
+            open( join( here, 'tayra', '__init__.py' )).read()).group(1)
 
 description='An integrated web templating environment'
 
@@ -52,9 +52,13 @@ setup(
         'tayra.plugins' : [
             'ITTLPlugin = tayra.plugins:TestPlugins',
         ],
+        'pluggdapps' : [
+            'package=pluggdapps:package',
+        ]
     },
     install_requires=[                      # setuptools
         'ply>=3.4',
+        'pluggdapps>=0.2dev',
         'MarkupSafe>=0.9.2',
     ],
     extras_require={},                      # setuptools

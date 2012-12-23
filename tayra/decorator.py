@@ -5,7 +5,7 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 import re
-from   tayra.utils       import hitch
+import pluggdapps.utils as h
 
 __all__ = [ 'useragent' ]
 
@@ -51,10 +51,10 @@ def useragent( agents=[], namespace=None, _ttlcontext={} ):
         agents, namespace = args
         namespace = namespace or func.func_name
         d = uacallable.setdefault( namespace, {} )
-        agents = [ agents ] if isinstance( agents, basestring ) else agents
+        agents = [ agents ] if isinstance( agents, str ) else agents
         if agents :
             d.update(dict([ (x, func) for x in agents ]))
         else :
             d.update( default=func )
-        return hitch( dofunc_onuseragent, _ttlcontext, namespace )
+        return h.hitch( dofunc_onuseragent, _ttlcontext, namespace )
     return decorator

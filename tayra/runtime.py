@@ -4,9 +4,6 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-from   zope.component           import getGlobalSiteManager
-from   tayra                    import queryTTLPlugin
-
 # Note :
 # Special variables that the context should not mess with,
 #       _m, _ttlhash, _ttlfile
@@ -14,7 +11,14 @@ from   tayra                    import queryTTLPlugin
 #       _Interface_<interfacename><num>
 #       _Interface_<interfacename><num>_obj
 
-gsm = getGlobalSiteManager()
+import re
+
+import pluggdapps.utils     as h
+from   pluggdapps.plugin    import pluginname
+
+from   tayra.lexer      import TTLLexer
+from   tayra.interfaces import ITayraTags, ITayraEscapeFilter, \
+                               ITayraFilterBlock
 
 class Attributes( dict ):
     def __init__( self, *args, **kwargs ):
@@ -24,7 +28,7 @@ class Attributes( dict ):
 
     def __str__( self ):
         attrslist = self.attrslist + map(lambda x: '%s="%s"'% x, self.items())
-        s = u' '.join(filter( None, [ self.attrstext, attrslist ]))
+        s = ' '.join(filter( None, [ self.attrstext, attrslist ]))
         return s
 
     def __repr__( self ):
@@ -35,33 +39,32 @@ class StackMachine( object ) :
 
     Attributes = Attributes
 
-    def __init__( self, ifile, compiler, ttlconfig={} ):
-        self.compiler, self.ttlconfig  = compiler, ttlconfig
-        self.escfilters = ttlconfig.get( 'escfilters', {} )
-        self.tagplugins = ttlconfig.get( 'tagplugins', {} )
-        self.ttlplugins = ttlconfig.get( 'ttlplugins', {} )
-        self.def_escfilters = ttlconfig['escape_filters']
+    def __init__( self, ifile, compiler ):
+        self.compiler = compiler
         self.encoding = compiler.encoding
-
+        self.tagplugins = [ compiler.query_plugin( ITayraTags, name )
+                                for name in compiler['usetagplugins'] ]
+        self.escfilters = [ compiler.query_plugin( ITayraEscapeFilter, name )
+                                for name in compiler['escape_filters'] ]
+        self.escfilters = { x.codename : x for x in self.escfilters }
+        self.filterblocks = compiler.query_plugins( ITayraFilterBlock )
+        self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
         self.bufstack = [ [] ]
         self.ifile = ifile
-        self.htmlindent = u''
+        self.htmlindent = ''
 
     #---- Stack machine instructions
 
-    def setencoding( self, encoding ):
-        self.encoding = encoding
+    def indent( self ) :
+        return self.append( self.htmlindent )
 
-    def upindent( self, up=u'' ) :
+    def upindent( self, up='' ) :
         self.htmlindent += up
         return self.htmlindent
 
-    def downindent( self, down=u'' ) :
+    def downindent( self, down='' ) :
         self.htmlindent = self.htmlindent[:-len(down)]
         return self.htmlindent
-
-    def indent( self ) :
-        return self.append( self.htmlindent )
 
     def append( self, value ) :
         self.bufstack[-1].append( value )
@@ -82,28 +85,53 @@ class StackMachine( object ) :
         return self.bufstack.pop(-1)
 
     def popbuftext( self ) :
-        buf = self.popbuf()
-        return u''.join( buf )
+        x = ''.join( self.popbuf() )
+        return x
 
-    def handletag( self, contents, tag, indent=False, nl=u'' ):
-        """Entry point to handle tags"""
-        tagplugin = self.tagplugins.get( tag[0], self.tagplugins['_default'] )
-        self.append(
-            tagplugin.handle( self, tag, contents, indent=indent, newline=nl )
-        )
+    regex_style = re.compile( r'\{.*\}' )
+    regex_attrs = re.compile( TTLLexer.attrname+'='+TTLLexer.attrvalue )
 
-    def evalexprs( self, val, filters ) :
-        text = val if isinstance(val, unicode) else str(val).decode(self.encoding)
-        for filt, params in self.def_escfilters :   # default filters
-            fn = self.escfilters.get( filt, None )
-            text = fn.do( self, text, params ) if fn else text
-        for filt, params in filters :               # evaluate filters
-            fn = self.escfilters.get( filt, None )
-            text = fn.do( self, text, params ) if fn else text
+    def handletag( self, contents, tagbegin, indent=False, nl='' ):
+        tagbegin = tagbegin.replace('\n', ' ')[1:-1]    # remove < and >
+        try    : tagname, tagbegin = tagbegin.split(' ', 1)
+        except : tagname, tagbegin = tagbegin, ''
+        # Parse style content {...}
+        tagbegin1, style = '', ''
+        s = 0
+        for m in self.regex_style.finditer( tagbegin ) :
+            style = ';' + m.group()[1:-1].strip(' \t\r\n')
+            start, end = m.regs[0]
+            tagbegin1 += tagbegin[s:start]
+            s = end
+        tagbegin1 += tagbegin[s:].strip(' \t\r\n')
+        styles = list( filter( None, style.split(';') ))
+        # Parse attributes
+        tagbegin2, attributes, s = '', [], 0
+        for m in self.regex_attrs.finditer( tagbegin1 ):
+            attributes.append( m.group() )
+            start, end = m.regs[0]
+            tagbegin2 += tagbegin1[s:start]
+            s = end
+        tagbegin2 += tagbegin1[s:].strip(' \t\r\n')
+        # Parse tokens
+        tokens = list( filter( None, tagbegin2.split(' ') ))
+        
+        for plugin in self.tagplugins :
+            html = plugin.handle( self, tagname, tokens, styles, attributes,
+                                  contents )
+            if html == None : continue
+            self.append( html )
+            break
+        else :
+            raise Exception("Unable to handle tag %r" % tagname)
+
+    def evalexprs( self, text, filters ) :
+        for f in h.parsecsv( filters ) :
+            text = self.escfilters[f].filter( text )
         return text
 
-    def importas( self, ttlloc, modname, childglobals ):
-        compiler = self.compiler( ttlloc=ttlloc )
+    def importas( self, ttlfile, childglobals ):
+        compiler = self.compiler( ttlfile=ttlfile )
         parent_context = childglobals['_ttlcontext']
         module = compiler.execttl( context=parent_context )
         return module
@@ -125,13 +153,14 @@ class StackMachine( object ) :
     def register( self, obj, interface, pluginname ):
         gsm.registerUtility( obj, interface, pluginname )
 
+    # TODO : Can this method be replaced by pluggdapps.utils.lib.hitch ??
     def hitch( self, obj, cls, interfacefunc, *args, **kwargs ) :
         def fnhitched( self, *a, **kw ) :
             kwargs.update( kw )
             return interfacefunc( self, *(args+a), **kwargs )
         return fnhitched.__get__( obj, cls )
 
-    def use( self, interface, pluginname=u'' ):
+    def use( self, interface, pluginname='' ):
         return queryTTLPlugin( self.ttlplugins, interface, pluginname )
 
 

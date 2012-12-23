@@ -4,13 +4,12 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-from   StringIO     import StringIO
+from   io   import   StringIO
 
-prolog = """\
-from   StringIO             import StringIO
-from   zope.interface       import implements
-from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import * """
+import_header = """\
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
+from   tayra                import BaseTTLPlugin"""
 
 footer = """\
 _ttlhash = %r
@@ -26,28 +25,28 @@ class %s( BaseTTLPlugin ):
 class InstrGen( object ):
     machname = '_m'
 
-    def __init__( self, compiler, ttlconfig={} ):
-        self.compiler, self.ttlconfig = compiler, ttlconfig
-        self.devmod = self.ttlconfig['devmod']
-        self.uglyhtml = self.ttlconfig['uglyhtml']
+    def __init__( self, compiler ):
+        self.compiler = compiler
+        self.uglyhtml = compiler['uglyhtml']
         self.outfd = StringIO()
-        self.pyindent = u''
+        self.pyindent = ''
         self.optimaltext = []
         self.pytext = None
 
-        # prolog for python translated template
-        self.encoding = compiler.encoding
-
     def __call__( self ):
-        return InstrGen( self.compiler, ttlconfig=self.ttlconfig )
+        return InstrGen( self.compiler )
+
+    #---- API
+
+    def initialize( self ):
+        self.outfd.write( import_header )
+        self.cr()
 
     def cr( self, count=1 ):
+        """Generate a new-line (along with current indentation level) in
+        python generated text."""
         self.outfd.write( '\n'*count )
         self.outfd.write( self.pyindent )
-
-    def outline( self, line, count=1 ):
-        self.cr( count=count )
-        self.outfd.write( line )
 
     def codeindent( self, up=None, down=None, indent=True ):
         self.flushtext()
@@ -61,31 +60,27 @@ class InstrGen( object ):
     def codetext( self ):
         return self.pytext
 
-    #---- Generate Instructions
-
-    def initialize( self ):
-        self.outfd.write( prolog )
-        self.cr()
+    #---- Instruction set
 
     def indent( self ):
         if self.uglyhtml == False :
             self.flushtext()
             self.outline( '_m.indent()' )
 
-    def upindent( self, up=u'' ):
+    def upindent( self, up='' ):
         if self.uglyhtml == False :
             self.flushtext()
             self.outline( '_m.upindent( up=%r )' % up )
 
-    def downindent( self, down=u'' ):
+    def downindent( self, down='' ):
         if self.uglyhtml == False :
             self.flushtext()
             self.outline( '_m.downindent( down=%r )' % down )
 
     def comment( self, comment, force=False ):
-        if self.devmod or force :
+        if self.compiler['debug'] or force :
             self.flushtext()
-            self.outline( '# ' + u' '.join(comment.rstrip('\r\n').splitlines()) )
+            self.outline( '# ' + ' '.join(comment.rstrip('\r\n').splitlines()) )
 
     def flushtext( self ):
         if self.optimaltext :
@@ -94,7 +89,7 @@ class InstrGen( object ):
 
     def puttext( self, text, force=False ):
         self.optimaltext.append( text )
-        force and self.flushtext()
+        self.flushtext() if force else None
 
     def putstatement( self, stmt ):
         self.flushtext()
@@ -103,11 +98,13 @@ class InstrGen( object ):
     def putblock( self, codeblock, indent=True ):
         [ self.putstatement(line) for line in codeblock.splitlines() ]
 
-    def evalexprs( self, code, filters ):
-        code = code.strip()
+    def evalexprs( self, s ):
+        try    : code, filts = s.split('|', 1)
+        except : code, filts = s, ''
+        code, filts = code.strip(), filts.strip()
         if code :
             self.flushtext()
-            self.outline('_m.append( _m.evalexprs(%s, %s) )' % (code, filters))
+            self.outline('_m.append( _m.evalexprs(%s, %s) )' % (code, filts))
 
     def pushbuf( self ):
         self.flushtext()
@@ -127,17 +124,18 @@ class InstrGen( object ):
         else :
             self.outline( 'return _m.popbuf()' )
 
-    def handletag( self, indent=False, newline=u'' ):
+    def handletag( self, indent=False, newline='' ):
         self.flushtext()
         # first arg is `content` and second arg is `tag`
         self.outline(
-            '_m.handletag( _m.popbuf(), _m.popbuf(), indent=%s, nl=%r )'%(
-                indent, newline
-            )
+          '_m.handletag( _m.popbuftext(), _m.popbuftext(), indent=%s, nl=%r)'\
+                  % (indent, newline)
         )
 
-    def putimport_ttl( self, ttlloc, modname ):
-        line = '%s = _m.importas( %r, %r, globals() )' % (modname, ttlloc, modname)
+    #---- Instructions to handle directives.
+
+    def putimport_ttl( self, ttlfile ):
+        line = '%s = _m.importas( %r, globals() )' % ( modname, ttlfile )
         self.outline( line )
 
     def putimport( self, modnames ):
@@ -160,7 +158,7 @@ class InstrGen( object ):
             # hitch methods with interface class
             methodlines = [ '  %s = %s' % ( method, method )
                             for method in interfaces_.get(interfacename, []) ]
-            self.putblock( u'\n'.join( [codeblock] + methodlines ) )
+            self.putblock( '\n'.join( [codeblock] + methodlines ) )
             # register the interface providing object
             line = '_m.register( %s(), %s, %r )' % (infcls, interfacename, pluginname)
             self.putstatement(line)
@@ -180,3 +178,9 @@ class InstrGen( object ):
 
     def finish( self ):
         self.pytext = self.outfd.getvalue()
+
+    #-- Local methods
+
+    def outline( self, line, count=1 ):
+        self.cr( count=count )
+        self.outfd.write( line )

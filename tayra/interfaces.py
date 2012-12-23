@@ -4,177 +4,134 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-from zope.interface import Interface
+from pluggdapps.plugin import Interface
 
-class ITayraPlugin( Interface ):
-    """The design of tayra template language is heavily based on plugins. The
-    lexer and parser are just a glue logic over a very sophisticated plugin
-    framework which does most of the language level heavy lifting. The plugin
-    architecture is based on Zope Component Architecture (ZCA) with interfaces
-    specifying how plugins need to be implemented and consumed. ITayraPlugin
-    acts as the base class for all of tayra's interface specifications, which
-    are,
-        > ITayraTag
-        > ITayraEscapeFilter
-        > ITayraFilterBlock
-    ''Note that these interface specs. have nothing to do with template plugins
-    that can be created using TTL (Tayra Template Language).''
+"""The design of tayra template language is heavily based on plugins. The
+lexer and parser are just a glue logic over a very sophisticated plugin
+framework which does most of the language level heavy lifting. The plugin
+system pluggdapps component architecture, with interfaces specifying how 
+plugins need to be implemented. This specification acts as the base class
+for all of tayra's interface specifications, which are :class:`ITayraTags`,
+:class:`ITayraEscapeFilter`, :class:`ITayraFilterBlock`.
+
+Note that these interface specs. have nothing to do with template plugins
+that can be created using TTL (Tayra Template Language).
+"""
+
+class ITayraTags( Interface ):
+    """Interface specification to translate tayra tags to HTML tags."""
+
+    def handle( mach, tagname, tokens, styles, attributes, content ):
+        """Called during runtime, translates tayra tag into HTML tags.
+        Return html string.
+
+        ``mach``,
+            Stachmachine
+
+        ``tagname``,
+            Name of the tag.
+
+        ``tokens``,
+            List of tokens inside tag specification.
+
+        ``styles``,
+            List of CSS style parameters applicable on the tag.
+
+        ``attributes``
+            List of HTML attributes.
+
+        ``content``,
+            Decendants of this tag in plain string.
+        """
+
+
+class ITayraEscapeFilter( Interface ):
+    """Interface specification for escape filtering expression substitution.
     """
 
-class ITayraTag( ITayraPlugin ):
-    """Tayra templating is a HTML templating tool (it can also be used for any
-    xml compatible markups). Assuming that you are familiar with HTML, we will
-    explain how tags are generated while translating a .ttl file into .html
-    format.
+    codename = ''
+    """Code name for the plugin implementing this interface. Typically a short
+    name that can be specified in the expression substitution syntax."""
 
-    Defines the plugin that handles tag generattion. This will will be used
-    by the AST node, TagLine and TagBlock during every pass, i.e headpass1,
-    headpass2, generate, tailpass.
-
-    Use the `node` object for all contextual operations. There is a default
-    class `TagPlugin` implementing this interface from which other tag-plugins
-    can choose to derive from.
-    """
-
-    def headpass1( node, igen ):
-        """Will be invoked during headpass1(). It is the reponsibility of the
-        implementing class to decide how to take this pass further into the
-        sub-tree. To discontinue with the headpass1() on node's children,
-        return `False` other wise return `True`.
-
-        ``node``,
-            points to the AST non-terminal node instance which can be
-            either TagLine() or TagBlock().
-        ``igen``,
-            InstrGen() object, using will the plugin will have the full power
-            of generating the intermediate python code.
-        """
-
-    def headpass2( node, igen ):
-        """Will be invoked during headpass2(). It is the reponsibility of the
-        implementing class to decide how to take this pass further into the
-        sub-tree. To discontinue with the headpass1() on node's children,
-        return `False` other wise return `True`.
-
-        ``node``,
-            points to the AST non-terminal node instance which can be
-            either TagLine() or TagBlock().
-        ``igen``,
-            InstrGen() object, using will the plugin will have the full power
-            of generating the intermediate python code.
-        """
-
-    def generate( node, igen, *args, **kwargs ):
-        """Will be invoked during headpass2(). It is the reponsibility of the
-        implementing class to decide how to take this pass further into the
-        sub-tree.
-
-        ``node``,
-            points to the AST non-terminal node instance which can be
-            either TagLine() or TagBlock().
-        ``igen``,
-            InstrGen() object, using will the plugin will have the full power
-            of generating the intermediate python code.
-        """
-
-    def tailpass( node, igen ):
-        """Will be invoked during headpass1(). It is the reponsibility of the
-        implementing class to decide how to take this pass further into the
-        sub-tree. To discontinue with the headpass1() on node's children,
-        return `False` other wise return `True`.
-
-        ``node``,
-            points to the AST non-terminal node instance which can be
-            either TagLine() or TagBlock().
-        ``igen``,
-            InstrGen() object, using will the plugin will have the full power
-            of generating the intermediate python code.
-        """
-
-    def handle( node ):
-        """Called during runtime,
-        return a dictionary of tag->handler, where the handler is expected
-        to have the following signature
-            handler( mach, tagname, specifiers, style, attrs tagfinish )
-        """
-
-class ITayraEscapeFilter( ITayraPlugin ):
-    """Interface specification for escape filters to pipe out of expression
-    substitution via a variable number of filter logic.
-    """
-
-    def do( self, mach, text, filterns=None ):
+    def filter( mach, text ):
         """Apply the filter logic to the text string and return processed
         text.
 
         ``mach``,
-            is stach-machine instance.
+            is stack-machine instance.
+
         ``text``
-            text to be filtered.
-        ``filterns``
-            namespace used to invoke this filter implemetation.
+            text, result of expression substitution, to be filtered.
         """
 
-class ITayraFilterBlock( ITayraPlugin ):
+
+class ITayraFilterBlock( Interface ):
     """Interface specification for filter blocks to handle blocks of template
     code that does not follow indentation rules, can potentially have a
-    separate syntax to themself. They take part in multi-pass compilation.
+    separate syntax to themself and they can take part in multi-pass 
+    compilation.
     """
 
-    def __call__( parser, filteropen, filtertext, filterclose ):
-        """Will be called when a new filter block matches with the interface
-        implementer. More specifically, the plugin will be called when a
-        matching Non-terminal filter-block node is being instantiated.
+    def headpass1( igen, filteropen, filtertext, filterclose ):
+        """Will be called during the `headpass` phase 1, traversing AST. Can
+        optionally return a value which will then be passed to headpass2.
 
-        ``parser``
-            parser object from PLY, parser.ttlparser points to TTLParser
-            instance and, ttlparser.ttlconfig will provide the configuration
-            dictionary provided by the application code.
+        ``igen``,
+            object to generate instructions.
+
         ``filteropen``
-            will be the syntax including the preceeding whitespace that starts
-            the filter block, [ \t]*:fb-name
+            First line opening the filter-block without any whitespace prefix,
+            and without any trailing newlines.
+
         ``filtertext``
-            filter text including indentations and newlines that happen to
-            come after the `filteropen`
+            Rest of the filterblock text except the closing line.
+
         ``filterclose``
-            will be the syntax to end a filter block including the trailing
-            newlines
+            Will be the syntax to end a filter block without trailing
+            newlines.
         """
 
-    def headpass1( igen ):
-        """Will be called during the `headpass` phase 1, traversing AST.
+    def headpass2( igen, result ):
+        """Will be called during the `headpass` phase 2, traversing AST. Can
+        optionally return a value which will then be passed to generate.
 
         ``igen``,
             object to generate instructions.
+
+        ``result``,
+            Result from :meth:`headpass1`.
         """
 
-    def headpass2( igen ):
-        """Will be called during the `headpass` phase 2, traversing AST.
+    def generate( igen, result, *args, **kwargs ):
+        """Will be called during the `generate` phase, traversing AST. Can
+        optionally return a value which will then be passed to tailpass.
 
         ``igen``,
             object to generate instructions.
+
+        ``result``,
+            Result from :meth:`headpass2`.
         """
 
-    def generate( igen, *args, **kwargs ):
-        """Will be called during the `generate` phase, traversing AST.
+    def tailpass( igen, result ):
+        """Will be called during the `tailpass` phase, traversing AST. Can
+        optionally return a value which will then be passed to tailpass.
 
         ``igen``,
             object to generate instructions.
+
+        ``result``,
+            Result from :meth:`headpass2`.
         """
 
-    def tailpass( igen ):
-        """Will be called during the `tailpass` phase, traversing AST.
 
-        ``igen``,
-            object to generate instructions.
-        """
-
-class ITTLPlugins( ITayraPlugin ):
+class ITTLPlugins( Interface ):
     """
     Template-plugins will have to be automatically loaded during tayra-module
-    initialization. This can happen only when there is a mechanism that provides a
-    list of plugin implementers (as .ttl files) as part of package entry-point.
-    Something like,
+    initialization. This can happen only when there is a mechanism that
+    provides a list of plugin implementers (as .ttl files) as part of package
+    entry-point.  Something like,
+
     {{{ Code ini
       [tayra.plugins]
       ITTLPlugin = bootstrap.implement:TTLPlugins

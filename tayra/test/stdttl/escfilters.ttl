@@ -4,13 +4,13 @@ file 'LICENSE', which is part of this source code package.
 Copyright (c) 2011 R Pratap Chakravarthy
 -->
 
-@charset utf-8 ;
-@import re ;
+@doctype charset='utf-8'
+@import re
 
-@@ html = '<div title="hello"> div block </div>'
-@@ url  = 'http://pluggdapps.com/hello world'
-@@ text = '  hello world \t'
-@@ unitext = 'ما هي الشفرة الموحدة "يونِكود" ؟ in Arabicc'
+@@html = '<div title="hello"> div block </div>'
+@@url  = 'http://pluggdapps.com/hello world'
+@@text = '  hello world \t'
+@@unitext = 'ما هي الشفرة الموحدة "يونِكود" ؟ in Arabicc'
 
 <html>
   <head>
@@ -21,4 +21,3 @@ Copyright (c) 2011 R Pratap Chakravarthy
     ${ url | u }
     ${ text | t }
     ${ unitext }
-    ${ unitext | uni.latin_1 }

@@ -1,4 +1,5 @@
-@function render( a ) :
+@def render( a ) :
   <div> ${a}
+    ${a}
   
-${ render( {} ) }
+${ render('hello') }

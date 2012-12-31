@@ -1,18 +1,19 @@
-!!! xhtml+rdfa 1.0 ;
-!!! xhtml 1.1 mobile ;
-!!! xhtml 1.1 basic ;
-!!! xhtml 1.1 ;
-!!! xhtml 1.0 frameset ;
-!!! xhtml 1.0 strict ;
-!!! xhtml 1.0 transitional ;
-!!! html4.01 frameset ;
-!!! html4.01 strict ;
-!!! html4.01 transitional ;
+@doctype xhtml+rdfa1.0 
+@doctype xhtml1.1mobile
+@doctype xhtml1.1basic
+@doctype xhtml1.1
+@doctype xhtml1.0frameset
+@doctype xhtml1.0strict
+@doctype xhtml1.0transitional
+@doctype html4.01frameset
+@doctype html4.01strict
+@doctype html4.01transitional
 
-@body z=10 ;
+@body z=10
 
-<html#std1.testcase.sample { color: red; font-size : ${z*2}px } title="hello world">
-  <head/>
+<html #std1 .testcase.sample 
+      { color: red; font-size : ${z*2}px } title="hello world">
+  <head>
   <body>
     <abbr "World Health Organization"> WHO
-    <button#id_ reset disabled makefriend "button value"/>
+    <button #id_ reset disabled makefriend "button value">

@@ -1,5 +1,5 @@
-!!! html;
-@implement tayra.interfaces:ITestInterface as testinterface ;
+@doctype html
+@implement tayra.interfaces:ITayraTestInterface as XYZTestInterface
 
-@interface ITestInterface.render( *args, **kwargs ):
+@interface ITayraTestInterface.render( *args, **kwargs ):
   <div> interface successfully invoked

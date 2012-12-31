@@ -4,45 +4,43 @@ file 'LICENSE', which is part of this source code package.
 Copyright (c) 2011 R Pratap Chakravarthy
 -->
 
-@charset utf-8 ;
-@import re ;
+@doctype charset="utf-8"
+@import re
 
-:fb-pycode global
-  a = 'empty'
-  def insideroot_butglobal():
-    return '<div> insideroot_butglobal </div>'
-:fbend
-:fb-pycode
-  b = '<div> insideroot_insidebody </div>'
-:fbend
-${ a } ${ insideroot_butglobal() }
-${ b }
+:py:
+a = 'empty'
+def insideroot_butglobal():
+  return '<div> insideroot_butglobal </div>'
+:py:
+
+<global>
+  ${ a } ${ insideroot_butglobal() }
+  ${ b }
 
 <html>
   @@b = 'hello'   
   @@c = '10px'
-  <head#headid.cls1.${a.strip()} "title" {color:red;} lang="en" data="hello">
+  <head #headid .cls1.${a.strip()} "title" {color:red;} lang="en" data="hello">
   <body {margin : ${c}} >
-    <h1 { color : red; border : 1px solid gray; }> I am the space station ${ "These "} seven cameras
-    have a zoom range 
-    <p first second!> of any 12x or more,  ${20}  
-    and some of the wide-angle view 
-    <div%> of good. They also have a
+    :py:
+    b = '<div> insidebody </div>'
+    :py:
+    <h1 { color : red; border : 1px solid gray; }> 
+      I am the space station ${ "These "} seven cameras have a zoom range 
+    <p first second> of any 12x or more, ${20} and some of the wide-angle view 
+    <div> of good. They also have a
       lot of image stabilization (either optical or mechanical), which is 
       important for people who are with a powerful zoom lens. Some other        
-    ${ helloworld() }
-    <p#${b}> Sign my guestbook
+    <p #${b}> Sign my guestbook
+      <abbr>
+        ${ helloworld() }
     ${ insideroot_butglobal() }
 
-@function helloworld( x=10, y=20, a='wer', b='ehl' ) :
+@def helloworld( x=10, y=20, a='wer', b='ehl' ) :
   <div>
-    :fb-pycode global
-      a = 'empty'
-      def insidediv_butglobal():
-        return '<div> insidediv_butglobal </div>'
-    :fbend
-    :fb-pycode
-      a = '<div> insidediv_insidebody </div>'
-    :fbend
+    :py:
+    a = '<div> inside function </div>'
+    :py:
+
     ${ a }
-    ${ insidediv_butglobal() }
+    ${ insideroot_butglobal() }

@@ -1,5 +1,9 @@
-@import tayra:test/stdttl/funcblock.ttl as f ;
-@import os, sys;
+@import tayra:test/stdttl/funcblock.ttl as f
+@import os, sys
 
-@function body_leftpane() :
+@def body_leftpane() :
   ${ f.func3() }
+  ${ f.func4() }
+  ${ f.func5() }
+
+${body_leftpane()}

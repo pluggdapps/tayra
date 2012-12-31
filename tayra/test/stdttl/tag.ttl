@@ -1,16 +1,15 @@
 @@world = 'jasper'
 
-<form#idname
+<form #idname
 formname "${}http://
-google.com" > ${ "hello " + str(10) + \
-  ' world' }
+google.com" > ${ "hello " + str(10) + ' world' }
     <input>
 
     <!-- Comment
     -->
-      <input>
-         <!-- Comment
-         -->
+    <input>
+       <!-- Comment
+       -->
    
     <input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>
       

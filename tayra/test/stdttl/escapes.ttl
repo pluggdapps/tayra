@@ -1,7 +1,5 @@
-!!! html;
-\!!! escaping doctypes ;
-\@charset escaping directives;
-\@body any directive;
+@doctype html
+\@body any directive
 
 <html>
   <head>
@@ -10,12 +8,12 @@
     <div>
       Escaping newlines \
       across textblocks, all of this belongs to body content.
-      @function willbecomeglobal( *args ):
+      @def willbecomeglobal( *args ):
         <b> Ghost
-        @function nestedfunc():
+        @def nestedfunc():
           <em> Rider
         ${ nestedfunc() }
-      \@function escapedfunction():
+      \@def escapedfunction():
         @\@pass
       \${ this expresion is also escaped } and displayed as text
       \@if so is this if block :

@@ -1,6 +1,4 @@
-!!! html;
-
-@charset 'utf-8' ;
+@doctype html charset='utf-8'
 
 <html>
   <head>

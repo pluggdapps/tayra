@@ -1,0 +1,9 @@
+@doctype html
+@from tayra.interfaces import ITayraTestInterface 
+
+@@obj = tayra.query_plugin( ITayraTestInterface, 'XYZTestInterface' )
+
+<html>
+  <head>
+  <body>
+    ${ obj.render() }

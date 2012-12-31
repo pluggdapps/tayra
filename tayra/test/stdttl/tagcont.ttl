@@ -5,12 +5,11 @@ Copyright (c) 2011 R Pratap Chakravarthy
 -->
 
 ## body definition
-@body x=10, y=10, a="cls2 ", b="cls3";
+@body x=10, y=10, a="cls2 ", b="cls3"
     
 ## Doctype prolog
-!!! xml ;
-   
-!!! html5 ;
+@doctype xml
+@doctype html5
 
 ## Statement
 @@m = 10
@@ -19,15 +18,13 @@ Copyright (c) 2011 R Pratap Chakravarthy
 <html>
   @@b = 'hello'   
   ${x+y}
-  <head#headid.cls1.${a.strip(
-  )} "title" {color:red} lang="en"
+  <head #headid .cls1.${a.strip()} "title" {color:red} lang="en"
    data="hello">
-    <title#titleid .cls1 "title 
+    <title #titleid .cls1 "title 
       string"> hello ${a} @ ! # "helo" 'world "ok
   <body>
-    <h1 { color : red;
-border : 1px solid gray;
-    }/> I am the space station ${ "These "} seven cameras
+    <h1 { color : red; border : 1px solid gray;
+    }> I am the space station ${ "These "} seven cameras
     <!-- comment1
    comment -->
     have a zoom range 
@@ -45,4 +42,4 @@ border : 1px solid gray;
   full control while shooting. In general, these cameras are all seem 
     very similar.
   
-    <p#${b}> Sign my guestbook
+    <p #${b}> Sign my guestbook

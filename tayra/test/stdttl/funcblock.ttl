@@ -1,64 +1,60 @@
-@function func1() : 
+@def func1() : 
   @@pass
     
-@function func2( a=':' ) :
+@def func2( a=':' ) :
     
   @@pass
   
-@function func3() : 
+@def func3() : 
   Google will join its biggest mobile rival, Apple, on the space trip as well.
   Apple's iPhone 4 will join a crew running an app, called "SpaceLab for iOS."
-@function func4() :
+@def func4() :
   The program, designed by Odyssey Space Research, will allow crew members to
   conduct several experiments with the phones' cameras, gyroscopes and other
-@function func5(z=10):
+@def func5(z=10):
 
-  <html#std1.testcase.sample { color: red; font-size : ${z*2}px } title="hello world">
-    <head/>
+  <html #std1 .testcase.sample { color: red; font-size : ${z*2}px }
+        title="hello world">
+    <head>
     <body>
       <abbr "World Health Organization"> WHO
-      @function nestedfunc() :
-        <b!> this is nested function
-        @function nestednestedfunc() :
-          <em!> this is nested nested function
+      @def nestedfunc() :
+        <b> this is nested function
+        @def nestednestedfunc() :
+          <em> this is nested nested function
         ${ nestednestedfunc() }
-      <button#id_ reset disabled makefriend "button value"/>
+      <button #id_ reset disabled makefriend "button value">
       ${ nestedfunc() }
-      ${ func3() }
 
-@function func6 () :
+@def func6 () :
    
-  <div> ${ "hello {}" + str([
-    str(10) ]) + \
-    ' world' }
-    <a#${'idname  \
-      '}.${'cls'
-      'name'} "${"http://"
-              'google.com'}" { ${'color : ' }
-                               ${ "red;" } } ${"title"}="${"sun is "
-                                                    " shining"} brightly">
-@function func7() :
+  <div> ${ "hello " + str([ str(10) ]) + ' world' }
+    <a #${'idname  \ '} .${'cls' 'name'} 
+       "${"http://" 'google.com'}" { ${'color : ' }
+                               ${ "red;" } } 
+                               ${"title"}="${"sun is " " shining"} brightly">
+@def func7() :
 
   <div {} >
 
-    <a#${'idname'}.${'cls'}
+    <a #${'idname'} .${'cls'}
    
       "http://pluggdapps.com"
       { ${'color : ' } ${ "red;"  } ' style with line
-        break' } /> hello {world} /> 
-@function func8( a=10, b=12.2, c="string" ) :
+        break' } > hello {world} /> 
+@def func8( a=10, b=12.2, c="string" ) :
   <html>
     @@b = 'hello'   
-    ${x+y}
-    <head#headid.cls1.${s.strip(
-    )} "title" {color:red} lang="en"
+    ${a+2}
+    <head #headid .cls1.${c.strip(
+        )} "title" {color:red} lang="en"
      data="hello">
-      <title#titleid .cls1 "title 
-        string"> hello ${s} @ ! # "helo" 'world "ok
+      <title #titleid .cls1 "title 
+        string"> hello ${c} @ ! # "helo" 'world "ok
     <body>
       <h1 { color : red;
   border : 1px solid gray;
-      }/> I am the space station ${ "These "} seven cameras
+      }> I am the space station ${ "These "} seven cameras
       <!-- comment1
      comment -->
       have a zoom range 
@@ -76,14 +72,20 @@
     full control while shooting. In general, these cameras are all seem 
       very similar.
     
-      <p#${b}> Sign my guestbook
-@function func10():
+      <p #${b}> Sign my guestbook
+@def func10():
   @@world = 10
   
-  <form#idname
-  formname "${}http://
-  google.com" > ${ "hello " + str(10) + 
-    ' world' }
+  <form #idname formname "${}http://
+  google.com" > ${ "hello " + str(10) + ' world' }
       <input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>
 
+${ func1() }
+${ func2() }
+${ func3() }
+${ func4() }
 ${ func5() }
+${ func6() }
+${ func7() }
+${ func8() }
+${ func10() }

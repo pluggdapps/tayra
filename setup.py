@@ -49,17 +49,13 @@ setup(
         'console_scripts' : [
            'tayra = tayra.tyr:main',
         ],
-        'tayra.plugins' : [
-            'ITTLPlugin = tayra.plugins:TestPlugins',
-        ],
         'pluggdapps' : [
-            'package=pluggdapps:package',
+            'package=tayra:package',
         ]
     },
     install_requires=[                      # setuptools
         'ply>=3.4',
         'pluggdapps>=0.2dev',
-        'MarkupSafe>=0.9.2',
     ],
     extras_require={},                      # setuptools
     setup_requires={},                      # setuptools

@@ -4,17 +4,17 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-import re, markupsafe, urllib 
+import re, urllib.parse, html
 
 from   pluggdapps.plugin    import Plugin, implements
 from   tayra.interfaces     import ITayraEscapeFilter
 
 class UrlEscapeFilter( Plugin ):
-    """Assume text as url and quote using urllib.quote()"""
+    """Assume text as url and quote using urllib.parse.quote()"""
     implements( ITayraEscapeFilter )
     codename = 'u'
     def filter( self, mach, text ):
-        return urllib.quote( text )
+        return urllib.parse.quote( text )
 
 
 class XmlEscapeFilter( Plugin ):
@@ -33,11 +33,11 @@ class XmlEscapeFilter( Plugin ):
 
 
 class HtmlEscape( Plugin ):
-    """Assume text as HTML and apply markupsafe.escape()"""
+    """Assume text as HTML and apply html.escape( quote=True )"""
     implements( ITayraEscapeFilter )
     codename = 'h'
     def filter( self, mach, text ):
-        return markupsafe.escape( text )
+        return html.escape( text, quote=True )
 
 
 class Trim( Plugin ):

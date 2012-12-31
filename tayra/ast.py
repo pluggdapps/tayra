@@ -19,8 +19,10 @@ To walk throug the AST,
 # Todo   : None
 
 import sys, re
+import pluggdapps.utils as h
 
-from   tayra.utils  import directive_tokens
+from   tayra.utils      import directive_tokens
+from   tayra.interfaces import ITayraFilterBlock
 
 # ------------------- AST Nodes (Terminal and Non-Terminal) -------------------
 
@@ -229,40 +231,35 @@ class NonTerminal( Node ):      # Non-terminal
             if value : break
         return value
 
-    def gencontrolblock( self, igen, line, *args, **kwargs ):
+    def gencontrolblock( self, igen, parts, *args, **kwargs ):
         """Generate control blocks,
             if-elif-else, for and while loops.
         """
+        line, INDENT, script, DEDENT = parts
         igen.comment( line )
         igen.putstatement( line )
-        if self.script :
-            upindent,downindent = self.INDENT.dump(None),self.DEDENT.dump(None)
-            igen.codeindent( up=upindent )
-            if self.dirtyblocks :
-                self.dirtyblocks.generate( igen, *args, **kwargs )
-            self.script.generate( igen, *args, **kwargs )
-            igen.codeindent( down=downindent )
+        if script :
+            igen.codeindent( up=INDENT.terminal )
+            script.generate( igen, *args, **kwargs )
+            igen.codeindent( down=DEDENT.terminal )
         else :
             igen.putstatement('pass')
         return None
 
-    def genfunction( self, igen, dline, fline, *args, **kwargs ):
+    def genfunction( self, igen, dline, funsign, script, *args, **kwargs ):
         """Generate function block for 
-            @function and @interface.
+            @def and @interface.
         """
         igen.cr()
-        igen.comment( ('%s (with) %s' % (fline, dline)) if dline else fline )
         # function signature
         igen.putstatement( dline ) if dline else None
-        igen.putstatement( fline )
+        igen.putstatement( funsign )
         igen.codeindent( up='  ' )
         # function body
-        if self.script :
+        if script :
             igen.pushbuf()
             kwargs['localfunc'] = True
-            if self.dirtyblocks :
-                self.dirtyblocks.generate( igen, *args, **kwargs )
-            self.script.generate( igen, *args, **kwargs )
+            script.generate( igen, *args, **kwargs )
             kwargs.pop( 'localfunc' )
         else :
             igen.putstatement('pass')
@@ -270,6 +267,7 @@ class NonTerminal( Node ):      # Non-terminal
         igen.flushtext()
         igen.popreturn( astext=True )
         igen.codeindent( down='  ' )
+        igen.cr()
         return None
 
     def flatten( self, attrnode, attrs ):
@@ -296,30 +294,49 @@ class NonTerminal( Node ):      # Non-terminal
 class Template( NonTerminal ):
     """class to handle `template` grammar."""
 
-    def __init__( self, parser, prolog, script ):
-        super().__init__( parser, prolog, script )
-        self.prolog, self.script = prolog, script
+    def __init__( self, parser, script ):
+        from tayra.parser import TTLParser
+        super().__init__( parser, script )
+        self.script = script
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
-        self.bodysignature = ''   # Will bubbleup during `headpass`
+        self.prologs, self.scripts = [], []
+        if script :
+            nonterms = script.flatten( 'script', 'nonterm' )[:]
+            while nonterms :
+                nonterm = nonterms.pop( 0 )
+                if isinstance( nonterm, TTLParser.prolognodes ) :
+                    self.prologs.append( nonterm )
+                    continue
+                self.scripts.append( nonterm )
+                self.scripts.extend( nonterms )
+                break
+
+        self.bodysignature = ''     # Will bubbleup during `headpass`
         self.implements = []        # [ (module, interface, pluginname), ...]
         self.interfaces = []        # [ (interface, methodname), ... ]
         self.htmlprologs = []       # [ html, html, ... ]
+        self.importttls = []        # [ (ttlfile, modname), ... ]
 
     def children( self ):
         return self._nonterms
 
+    def headpass1( self, igen ):
+        [ x.headpass1( igen ) for x in self.prologs ]
+        [ x.headpass1( igen ) for x in self.scripts ]
+
     def headpass2( self, igen ):
         igen.initialize()
-        super().headpass2( igen )
+        [ x.headpass2( igen ) for x in self.prologs ]
+        [ x.headpass2( igen ) for x in self.scripts ]
 
     def generate( self, igen, *args, **kwargs ):
         self.ttlhash = kwargs.pop( 'ttlhash', '' )
         self.ttlfile = self.parser.ttlparser.ttlfile
 
         # Prolog
-        self.prolog.generate( igen, *args, **kwargs )
+        [ x.generate( igen, *args, **kwargs ) for x in self.prologs ]
 
         # Generate the body function
         igen.cr()
@@ -331,13 +348,12 @@ class Template( NonTerminal ):
         igen.codeindent( up='  ' )
         igen.pushbuf()
         [ igen.puttext( html, force=True ) for html in self.htmlprologs ] 
-        if self.script :
+        if self.scripts :
             # Body function's body
-            self.script.generate( igen, *args, **kwargs )
+            [ x.generate( igen, *args, **kwargs ) for x in self.scripts ]
+            igen.flushtext()
         else :
-            self.putstatement( 'pass' )
-        # finish body function
-        igen.flushtext()
+            igen.flushtext()
         igen.popreturn( astext=True )
         igen.codeindent( down='  ' )
 
@@ -348,6 +364,7 @@ class Template( NonTerminal ):
         igen.comment( "---- Interface functions", force=True )
         if self.implements and self.interfaces :
             igen.implement_interface( self.implements, self.interfaces )
+        igen.cr()
         igen.comment( "---- Footer", force=True )
         igen.footer( self.ttlhash, self.ttlfile )
         igen.finish()
@@ -519,14 +536,14 @@ class ImportAs( NonTerminal ):
         return self._terms
 
     def headpass2( self, igen ):
-        parts = filter( None, 
-                        self.DIRECTIVE.dump(None).strip(' \t\r\n').split(' ') )
-        if parts[1].endswith('.ttl') and parts[2] == 'as' :
-            ttlfile, modname = parts[1], parts[3]
+        line = self.DIRECTIVE.dump(None)[1:]
+        parts = list( filter( None, [ x for x in line.split(' ') ] ))
+        if parts[1].endswith('.ttl') :
+            ttlfile = h.abspath_from_asset_spec( parts[1] )
+            assert parts[2] == 'as'
+            self.bubbleupaccum( 'importttls', (ttlfile, parts[3]) )
         else :
-            ttlfile = parts[1]
-        igen.putimport( ttlfile )
-        super().headpass2( igen )
+            igen.putstatement( line )
 
     def generate( self, igen, *args, **kwargs ):
         pass
@@ -554,8 +571,8 @@ class Inherit( NonTerminal ):
         return self._terms
 
     def headpass2( self, igen ):
-        line = filter( None,
-                       self.DIRECTIVE.dump(None).strip(' \t\r\n').split(' ') )
+        parts = self.DIRECTIVE.dump(None).strip(' \t\r\n').split(' ')
+        parts = list( filter( None, parts ))
         igen.putinherit( parts[1] )
         super().headpass2( self, igen )
 
@@ -573,7 +590,9 @@ class Inherit( NonTerminal ):
 
 
 class Implement( NonTerminal ):
-    """class to handle `implement` grammar."""
+    """class to handle `implement` grammar.
+        @implement <Interface-class> as <pluginname> 
+    """
 
     def __init__( self, parser, directive, newlines ) :
         super().__init__( parser, directive, newlines )
@@ -587,9 +606,11 @@ class Implement( NonTerminal ):
     def headpass1( self, igen ):
         parts = [ x.strip() for x in 
                   self.DIRECTIVE.dump(None).strip(' \t\r\n').split(' ') ]
+        parts = list( filter( None, parts ))
         assert parts[2] == 'as'
         module, interfacename = parts[1].split(':', 1)
-        self.bubbleupaccum( 'implements', (module, interfacename, parts[3]) )
+        self.bubbleupaccum(
+                'implements', (module, interfacename.strip(), parts[3]) )
         super().headpass1( igen )
 
     def generate( self, igen, *args, **kwargs ):
@@ -669,19 +690,6 @@ class Script( NonTerminal ):
     def children( self ):
         return self._nonterms
 
-    def headpass1( self, igen ):
-        [ x.headpass1( igen ) for x in self.flatten( 'script', 'nonterm' ) ]
-
-    def headpass2( self, igen ):
-        [ x.headpass2( igen ) for x in self.flatten( 'script', 'nonterm' ) ]
-
-    def generate( self, igen, *args, **kwargs ):
-        [ x.generate( igen, *args, **kwargs ) 
-                    for x in self.flatten( 'script', 'nonterm' ) ]
-
-    def tailpass( self, igen ):
-        [ x.tailpass( igen ) for x in self.flatten( 'script', 'nonterm' ) ]
-
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
         if showcoord:
@@ -717,10 +725,12 @@ class CommentLine( NonTerminal ):
 class CommentBlock( NonTerminal ):
     """class to handle `commentblock` grammar."""
 
-    def __init__( self, parser, commentopen, commenttext, commentclose, nl ) :
+    def __init__( self, parser, commentopen, commenttext, commentclose, nl,
+                  prolog ) :
         super().__init__( parser, commentopen, commenttext, commentclose, nl )
         self.COMMENTOPEN, self.COMMENTTEXT, self.COMMENTCLOSE, self.NEWLINES=\
                 commentopen, commenttext, commentclose, nl
+        self.prolog = prolog
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
@@ -728,12 +738,12 @@ class CommentBlock( NonTerminal ):
         return self._terms
 
     def headpass1( self, igen, *args, **kwargs ):
-        if isinstance( self.parent, Prolog ):
+        if self.prolog == True :
             self.bubbleupaccum( 'htmlprologs', self.dump(None) )
 
     def generate( self, igen, *args, **kwargs ):
-        if isinstance( self.parent, Prolog ):
-            pass
+        if self.prolog == False :
+            super().generate( igen, *args, **kwargs )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -790,13 +800,25 @@ class TagLine( NonTerminal ):
         s = 0
         for m in re.finditer( TTLLexer.exprsubst, tagbegin ) :
             expr = m.group()
-            start, end = m.regs
+            start, end = m.regs[0]
             igen.puttext( tagbegin[s:start] )
             igen.evalexprs( expr[2:-1] )
             s = end
         igen.puttext( tagbegin[s:] ) if tagbegin[s:] else None
+
+        # Text
         igen.pushbuf()
-        self.TEXT.generate( igen, *args, **kwargs ) if self.TEXT else None
+        text = self.TEXT.dump(None) if self.TEXT else ''
+        if text :
+            s = 0
+            for m in re.finditer( TTLLexer.exprsubst, text ) :
+                expr = m.group()
+                start, end = m.regs[0]
+                igen.puttext( text[s:start] )
+                igen.evalexprs( expr[2:-1] )
+                s = end
+            igen.puttext( text[s:] ) if text[s:] else None
+
         self.NEWLINES.generate( igen, *args, **kwargs )
         if not isinstance( self.parent, TagBlock ):
             igen.handletag()
@@ -822,8 +844,8 @@ class TagBlock( NonTerminal ):
         self.setparent( self, self.children() )
 
     def children( self ):
-        return filter( None, 
-                       (self.tagline, self.INDENT, self.script, self.DEDENT) )
+        x = self.tagline, self.INDENT, self.script, self.DEDENT
+        return list( filter( None, x ))
 
     def generate( self, igen, *args, **kwargs ):
         super().generate( igen, *args, **kwargs )
@@ -852,14 +874,14 @@ class TextBlock( NonTerminal ):
     def children( self ):
         x = ( self.tb, self.TEXT, self.NEWLINES, self.INDENT, self.script,
               self.DEDENT )
-        return filter( None, x )
+        return list( filter( None, x ))
 
     def generate_TEXT( self, text, igen ):
         from  tayra.lexer import TTLLexer
         s = 0
         for m in re.finditer( TTLLexer.exprsubst, text ) :
             expr = m.group()
-            start, end = m.regs
+            start, end = m.regs[0]
             igen.puttext( text[s:start] )
             igen.evalexprs( expr[2:-1] )
             s = end
@@ -869,11 +891,12 @@ class TextBlock( NonTerminal ):
         # Textblock
         self.tb.generate( igen, *args, **kwargs ) if self.tb else None
         # TEXT
-        text = self.TEXT.dump(None).strip(' \t')
-        self.generate_TEXT( text, igen ) if text else None
+        if self.TEXT :
+            text = self.TEXT.dump(None).strip(' \t')
+            self.generate_TEXT( text, igen ) if text else None
         # NEWLINE
-        self.NEWLINES.generate( igen, *args, **kwargs ) \
-                                        if self.NEWLINES else None
+        if self.NEWLINES :
+            self.NEWLINES.generate( igen, *args, **kwargs )
         # Nested script.
         cs = filter( None, (self.INDENT,self.script,self.DEDENT) )
         [ c.generate( igen, *args, **kwargs ) for c in cs ]
@@ -888,53 +911,37 @@ class TextBlock( NonTerminal ):
 class InterfaceBlock( NonTerminal ):
     """class to handle `interfaceblock` grammar."""
 
-    def __init__( self,parser,interface,dirtyblocks,indent,script,dedent ) :
-        NonTerminal.__init__(
-            self, parser, interface, dirtyblocks, indent, script, dedent )
-        self._terms = self.INTERFACE, self.INDENT, self.DEDENT = \
-                interface, indent, dedent
-        self._nonterms = self.dirtyblocks,self.script = dirtyblocks,script
-        self._terms = filter( None, self._terms )
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, interface, nl, indent, script, dedent ) :
+        super().__init__( parser, interface, nl, indent, script, dedent )
+        self.INTERFACE, self.NEWLINES, self.INDENT,self.script,self.DEDENT =\
+                interface, nl, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.INTERFACE, self.dirtyblocks, self.INDENT, self.script,
+        x = ( self.INTERFACE, self.NEWLINES, self.INDENT, self.script,
               self.DEDENT )
-        return filter(None, x)
-
-    def _parseline( self, line ):
-        interface, signature = line.strip().split('(', 1)
-        signature = '(' + signature
-        interfacename, methodname = interface.rsplit('.', 1)
-        funcline = 'def ' + methodname + signature
-        return interfacename, methodname, funcline
+        return list( filter( None, x ))
 
     def headpass1( self, igen ):
-        line = ' '.join( self.INTERFACE.dump(None)[10:].splitlines() )
-        self.interfacename, self.methodname, self.funcline = \
-                self._parseline( line )
-        self.bubbleupaccum( 
-                'interfaces', (self.interfacename, self.methodname) )
-        NonTerminal.headpass1( self, igen )
+        # Parse interface signature, for interface-name, method-name and
+        # function-signature.
+        interface, signature = self.INTERFACE.dump(None).strip().split('(', 1)
+        interfacename, methodname = interface[10:].rsplit('.', 1)
+        self.funcline = 'def ' + methodname + '(' + signature
+        # Bubble up
+        self.bubbleupaccum('interfaces', (interfacename.strip(), methodname))
+        super().headpass1( igen )
 
     def generate( self, igen, *args, **kwargs ):
         self.args, self.kwargs = args, kwargs
 
     def tailpass( self, igen ):
-        self.genfunction( 
-                igen, None, self.funcline, *self.args, **self.kwargs )
+        self.genfunction(
+            igen, None, self.funcline, self.script, 
+            *self.args, **self.kwargs )
         # Do tail pass after the deferred generation.
-        NonTerminal.tailpass( self, igen )
-
-    def dump( self, context ) :
-        text = self.INTERFACE.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
+        super().tailpass( igen )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -945,64 +952,50 @@ class InterfaceBlock( NonTerminal ):
         buf.write('\n')
         [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
+
 class FunctionBlock( NonTerminal ):
     """class to handle `functionblock` grammar."""
 
-    def __init__( self, parser, decorator, function, dirtyblocks, indent,
-                  script, dedent ):
-        NonTerminal.__init__( self, parser, decorator, function, indent,
-                              script, dedent )
-        self._terms = \
-                self.DECORATOR, self.FUNCTION, self.INDENT, self.DEDENT = \
-                    decorator, function, indent, dedent
-        self._nonterms = self.dirtyblocks, self.script = dirtyblocks, script
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, decorator, nl1, function, nl2, indent, 
+                        script, dedent ):
+        super().__init__( parser, decorator, nl1, function, nl2, indent,
+                          script, dedent )
+        (self.DECORATOR, self.NEWLINES1, self.FUNCTION, self.NEWLINES2,
+                self.INDENT, self.script, self.DEDENT) = \
+                        decorator, nl1, function, nl2, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.DECORATOR, self.FUNCTION, self.dirtyblocks, self.INDENT,
-              self.script, self.DEDENT )
-        return filter( None, x )
+        x = ( self.DECORATOR, self.NEWLINES1, self.FUNCTION, self.NEWLINES2,
+              self.INDENT, self.script, self.DEDENT )
+        return list( filter( None, x ))
 
-    re_dec = re.compile( '@dec[ \t]+([^(]+)\(([^)]*)\)' )
     def headpass1( self, igen ):
         # Function signature
-        fline = self.FUNCTION.dump(None)
-        self.fline = \
-                ' '.join( fline.replace( '@function', 'def' ).splitlines() )
-        self.dline = ''
         if self.DECORATOR :
-            f = self.re_dec.findall( self.DECORATOR.dump(None) )
-            fnname, argstr = f[0] if f and f[0] else (None, None)
-            self.dline = ('@%s('%fnname) + ( argstr + ', ' if argstr else '' )
-            self.dline += '_ttlcontext=_ttlcontext )'
-        NonTerminal.headpass1( self, igen )
+            self.dline = ' '.join( self.DECORATOR.dump(None).splitlines() )
+            self.dline = '@'+self.dline[4:].strip()+self.NEWLINES1.dump(None)
+        else :
+            self.dline = None
+        self.fline = self.FUNCTION.dump(None).strip()[1:]
+        super().headpass1( igen )
 
     def generate( self, igen, *args, **kwargs ):
         self.localfunc = kwargs.get( 'localfunc', False )
         self.args, self.kwargs = args, kwargs
         if self.localfunc :
             # Function block, script will be generated via genfunction.
-            self.genfunction( igen, self.dline, self.fline,
-                              *self.args, **self.kwargs )
+            self.genfunction(
+                    igen, self.dline, self.fline, self.script, args, kwargs )
 
     def tailpass( self, igen ):
         if self.localfunc == False :
             # Function block, script will be generated via genfunction
-            self.genfunction( igen, self.dline, self.fline,
+            self.genfunction( igen, self.dline, self.fline, self.script,
                               *self.args, **self.kwargs )
         # Do tail pass after the deferred generation.
-        NonTerminal.tailpass( self, igen )
-
-    def dump( self, context ) :
-        text = self.DECORATOR.dump(context)
-        text += self.FUNCTION.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
+        super().tailpass( igen )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1019,19 +1012,18 @@ class FilterBlock( NonTerminal ):
 
     def __init__(self, parser, filteropen, nl1, filtertext, filterclose, nl2):
         super().__init__(parser,filteropen,nl1,filtertext,filterclose,nl2 )
-        self.FILTEROPEN, self.filtertext, self.FILTERCLOSE = \
+        self.FILTEROPEN, self.FILTERTEXT, self.FILTERCLOSE = \
                 filteropen, filtertext, filterclose
         self.NEWLINES1, self.NEWLINES2 = nl1, nl2
-        name = filteropen[1:].split(':', 1)[0]
-        self.plugin = parser.ttlparser.compiler.query_plugin( 
-                        ITayraFilterBlock, name )
+        name = 'tayrafilterblock' + filteropen.dump(None)[1:].split(':', 1)[0]
+        self.plugin = parser.compiler.query_plugin( ITayraFilterBlock, name )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.FILTEROPEN, self.NEWLINES1, self.filtertext,
+        x = ( self.FILTEROPEN, self.NEWLINES1, self.FILTERTEXT,
               self.FILTERCLOSE, self.NEWLINES2 )
-        return filter( None, x )
+        return list( filter( None, x ))
 
     def headpass1( self, igen ):
         self.passresult = self.plugin.headpass1( igen,
@@ -1039,11 +1031,11 @@ class FilterBlock( NonTerminal ):
                                        self.FILTERTEXT.dump(None),
                                        self.FILTERCLOSE.dump(None) )
 
-    def headpass1( self, igen ):
+    def headpass2( self, igen ):
         self.passresult = self.plugin.headpass2( igen, self.passresult )
 
     def generate( self, igen, *args, **kwargs ):
-        self.passresult = self.plugin.headpass2(
+        self.passresult = self.plugin.generate(
                                 igen, self.passresult, *args, **kwargs )
 
     def tailpass( self, igen ):
@@ -1065,11 +1057,9 @@ class IfelfiBlock( NonTerminal ):
     """class to handle `ifelfiblock` grammar."""
 
     def __init__( self, parser, ifelfiblock, ifblock, elifblock, elseblock ) :
-        NonTerminal.__init__(self, parser, ifelfiblock, ifblock, elifblock, elseblock)
-        self._nonterms = \
-            self.ifelfiblock, self.ifblock, self.elifblock, self.elseblock = \
+        super().__init__( parser, ifelfiblock, ifblock, elifblock, elseblock )
+        self.ifelfiblock, self.ifblock, self.elifblock, self.elseblock = \
                 ifelfiblock, ifblock, elifblock, elseblock
-        self._nonterms = filter( None, self._nonterms )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
@@ -1083,40 +1073,28 @@ class IfelfiBlock( NonTerminal ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
-        [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+        [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
 class IfBlock( NonTerminal ):
     """class to handle `ifblock` grammar."""
 
-    def __init__(self, parser, ifterm, dirtyblocks, indent, script, dedent):
-        NonTerminal.__init__(
-            self, parser, ifterm, dirtyblocks, indent, script, dedent )
-        self._terms = self.IF, self.INDENT, self.DEDENT = ifterm, indent, dedent
-        self._nonterms = self.dirtyblocks,self.script = dirtyblocks,script
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, iff, newlines, indent, script, dedent ):
+        super().__init__( parser, iff, newlines, indent, script, dedent )
+        self.IF, self.NEWLINES, self.INDENT, self.script, self.DEDENT = \
+                iff, newlines, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.IF, self.dirtyblocks, self.INDENT, self.script,
-              self.DEDENT )
-        return filter(None, x)
+        x = ( self.IF, self.NEWLINES, self.INDENT, self.script, self.DEDENT )
+        return list( filter( None, x ))
 
     def generate( self, igen, *args, **kwargs ):
-        line = self.IF.dump(None)
-        line = ' '.join( line.replace( '@if', 'if' ).splitlines() )
-        # if block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        line = 'if' + self.IF.dump(None)[3:]
+        parts = line, self.INDENT, self.script, self.DEDENT
+        self.gencontrolblock( igen, parts, *args, **kwargs )
         return None
-
-    def dump( self, context ) :
-        text = self.IF.dump(context)
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1125,42 +1103,28 @@ class IfBlock( NonTerminal ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
-        [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+        [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
 class ElifBlock( NonTerminal ):
     """class to handle `elifblock` grammar."""
 
-    def __init__( 
-            self, parser, elifterm, dirtyblocks, indent, script, dedent ) :
-        NonTerminal.__init__(
-            self, parser, elifterm, dirtyblocks, indent, script, dedent )
-        self._terms = self.ELIF, self.INDENT, self.DEDENT = \
-                    elifterm, indent, dedent
-        self._nonterms = self.dirtyblocks, self.script = dirtyblocks, script
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, elif_, newlines, indent, script, dedent ) :
+        super().__init__( parser, elif_, newlines, indent, script, dedent )
+        self.ELIF, self.NEWLINES, self.INDENT, self.script, self.DEDENT = \
+                elif_, newlines, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.ELIF, self.dirtyblocks, self.INDENT, self.script,
-              self.DEDENT )
-        return filter(None, x)
+        x = self.ELIF, self.NEWLINES, self.INDENT, self.script, self.DEDENT
+        return list( filter( None, x ))
 
     def generate( self, igen, *args, **kwargs ):
-        line = self.ELIF.dump(None)
-        line = ' '.join( line.replace( '@elif', 'elif' ).splitlines() )
-        # elif block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        line = 'elif' + self.ELIF.dump(None)[5:]
+        parts = line, self.INDENT, self.script, self.DEDENT
+        self.gencontrolblock( igen, parts, *args, **kwargs )
         return None
-
-    def dump( self, context ) :
-        text = self.ELIF.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1169,41 +1133,28 @@ class ElifBlock( NonTerminal ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
-        [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+        [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
 class ElseBlock( NonTerminal ):
     """class to handle `elseblock` grammar."""
 
-    def __init__(self, parser, elseterm, dirtyblocks, indent, script, dedent):
-        NonTerminal.__init__(
-            self, parser, dirtyblocks, elseterm, indent, script, dedent )
-        self._terms = self.ELSE, self.INDENT, self.DEDENT = \
-                elseterm, indent, dedent
-        self._nonterms = self.dirtyblocks,self.script = dirtyblocks,script
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, else_, newlines, indent, script, dedent ):
+        super().__init__( parser, else_, newlines, indent, script, dedent )
+        self.ELSE, self.NEWLINES, self.INDENT, self.script, self.DEDENT = \
+                else_, newlines, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.ELSE, self.dirtyblocks, self.INDENT, self.script,
-              self.DEDENT )
-        return filter(None, x)
+        x = self.ELSE, self.NEWLINES, self.INDENT, self.script, self.DEDENT
+        return list( filter( None, x ))
 
     def generate( self, igen, *args, **kwargs ):
-        line = self.ELSE.dump(None)
-        line = ' '.join( line.replace( '@else', 'else' ).splitlines() )
-        # else block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        line = 'else' + self.ELSE.dump(None)[5:]
+        parts = line, self.INDENT, self.script, self.DEDENT
+        self.gencontrolblock( igen, parts, *args, **kwargs )
         return None
-
-    def dump( self, context ) :
-        text = self.ELSE.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1212,41 +1163,29 @@ class ElseBlock( NonTerminal ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
-        [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+        [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
 class ForBlock( NonTerminal ):
     """class to handle `elseblock` grammar."""
 
-    def __init__(self, parser, forterm, dirtyblocks, indent, script, dedent):
-        NonTerminal.__init__(
-            self, parser, forterm, dirtyblocks, indent, script, dedent )
-        self._terms = self.FOR, self.INDENT, self.DEDENT = \
-                forterm, indent, dedent
-        self._nonterms = self.dirtyblocks,self.script = dirtyblocks,script
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, for_, newlines, indent, script, dedent ):
+        super().__init__( parser, for_, newlines, indent, script, dedent )
+        self.FOR, self.NEWLINES, self.INDENT, self.script, self.DEDENT = \
+                for_, newlines, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.FOR, self.dirtyblocks, self.INDENT, self.script,
-              self.DEDENT )
-        return filter(None, x)
+        x = self.FOR, self.NEWLINES, self.INDENT, self.script, self.DEDENT
+        return list( filter( None, x ))
 
     def generate( self, igen, *args, **kwargs ):
-        line = self.FOR.dump(None)
-        line = ' '.join( line.replace( '@for', 'for' ).splitlines() )
-        # for block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        line = 'for' + self.FOR.dump(None)[4:]
+        self.NEWLINES.generate( igen, *args, **kwargs )
+        parts = line, self.INDENT, self.script, self.DEDENT
+        self.gencontrolblock( igen, parts, *args, **kwargs )
         return None
-
-    def dump( self, context ) :
-        text = self.FOR.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1255,41 +1194,29 @@ class ForBlock( NonTerminal ):
         if showcoord:
             buf.write( ' (at %s)' % self.coord )
         buf.write('\n')
-        [ x.show(buf, offset+2, attrnames, showcoord) for x in self.children() ]
+        [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
 class WhileBlock( NonTerminal ):
     """class to handle `whileblock` grammar."""
 
-    def __init__( self, parser, whileterm, dirtyblocks, indent, script, dedent):
-        NonTerminal.__init__(
-            self, parser, whileterm, dirtyblocks, indent, script, dedent )
-        self._terms = self.WHILE, self.INDENT, self.DEDENT = \
-                whileterm, indent, dedent
-        self._nonterms = self.dirtyblocks,self.script = dirtyblocks,script
-        self._nonterms = filter( None, self._nonterms )
+    def __init__( self, parser, while_, newlines, indent, script, dedent ):
+        super().__init__( parser, while_, newlines, indent, script, dedent )
+        self.WHILE, self.NEWLINES, self.INDENT, self.script, self.DEDENT = \
+                while_, newlines, indent, script, dedent
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = ( self.WHILE, self.dirtyblocks, self.INDENT, self.script,
-              self.DEDENT )
-        return filter(None, x)
+        x = self.WHILE, self.NEWLINES, self.INDENT, self.script, self.DEDENT
+        return list( filter( None, x ))
 
     def generate( self, igen, *args, **kwargs ):
-        line = self.WHILE.dump(None)
-        line = ' '.join( line.replace( '@while', 'while' ).splitlines() )
-        # while block
-        self.gencontrolblock( igen, line, '', *args, **kwargs )
+        line = 'while' + self.WHILE.dump(None)[6:]
+        self.NEWLINES.generate( igen, *args, **kwargs )
+        parts = line, self.INDENT, self.script, self.DEDENT
+        self.gencontrolblock( igen, parts, *args, **kwargs )
         return None
-
-    def dump( self, context ) :
-        text = self.WHILE.dump(context)
-        text += self.dirtyblocks and self.dirtyblocks.dump(context) or ''
-        context.htmlindent += self.INDENT.dump(context)
-        text += self.script.dump(context)
-        context.htmlindent = context.htmlindent[:-len(self.DEDENT.terminal)]
-        return text
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1321,7 +1248,7 @@ class TEXT( Terminal ): pass
 
 class DOCTYPE( Terminal ) : pass
 class BODY( Terminal ) : pass
-class IMPORTAS( Terminal ) : pass
+class IMPORT( Terminal ) : pass
 class IMPLEMENT( Terminal ) : pass
 class INHERIT( Terminal ) : pass
 class USE( Terminal ) : pass
@@ -1343,6 +1270,7 @@ class ELSE( Terminal ) : pass
 class FOR( Terminal ) : pass
 class WHILE( Terminal ) : pass
 
+class DECORATOR( Terminal ) : pass
 class FUNCTION( Terminal ) : pass
 class INTERFACE( Terminal ) : pass
 

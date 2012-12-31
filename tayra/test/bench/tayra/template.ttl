@@ -2,7 +2,7 @@
 @import header.ttl as header;
 @import footer.ttl as footer;
 
-@function greeting( name ) :
+@def greeting( name ) :
   <p> hello ${name}!
       
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">

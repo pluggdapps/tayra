@@ -8,10 +8,13 @@
 
 from   argparse            import ArgumentParser
 from   os.path             import isfile, join, dirname, basename
-import time
+import time, os
+
+import pluggdapps
 from   pluggdapps.platform import Pluggdapps
 from   pluggdapps.plugin   import ISettings
 
+import tayra
 from   tayra.utils         import Context
 
 def options() :
@@ -39,9 +42,9 @@ def options() :
             action='store_true',
             help='Show AST parse tree' )
     argparser.add_argument(
-            '-t', dest='generate',
+            '-t', dest='test',
             action='store_true', 
-            help='Generate python executable' )
+            help='Execute test cases.' )
     argparser.add_argument( 
             '-x', dest='execute',
             action='store_true', 
@@ -85,21 +88,22 @@ def translatefile( pa, options ):
     htmlfile = join( dirname(compiler.ttlfile), 
                      basename(compiler.ttlfile).rsplit('.', 1)[0] + '.html' )
 
-    print( "Generating py / html file ... " )
-    (pytext, code) = compiler.compile()
     # Intermediate file should always be encoded in 'utf-8'
     enc = compiler.encoding[:-4] if compiler.encoding.endswith('-sig') else \
             compiler.encoding # -sig is used to interpret BOM
-    open( pyfile, mode='w', encoding=enc ).write( pytext )
+
+    print( "Generating py / html file ... " )
+    pytext, code = compiler.compile()
 
     # Generate
-    html = compiler.generate( context, code )
+    module = compiler.load( code, context=context )
+    html = compiler.generatehtml( module, context )
     open( htmlfile, mode='w', encoding=enc ).write( html )
 
     # This is for measuring performance
-    st = time.time()
-    [ compiler.generate( context, code ) for i in range(2) ]
-    print( (time.time() - st) / 2 )
+    # st = time.time()
+    # [ compiler.generate( context, code ) for i in range(2) ]
+    # print( (time.time() - st) / 2 )
 
 #---- Lexer operations.
 def fetchtoken( ttllex, stats ) :
@@ -142,6 +146,17 @@ if __name__ == '__main__' :
     
     if options.version :
         print( tayra.__version__ )
+
+    elif options.test :
+        print( "Executing TTL tests" )
+        stdttl = join( dirname(__file__), 'test', 'stdttl' )
+        ttlfiles = os.listdir( stdttl )
+        for ttlfile in ttlfiles :
+            if ttlfile.endswith( '.ttl' ) :
+                ttlfile = join( stdttl, ttlfile )
+                print( ttlfile )
+                options.ttlfile = ttlfile
+                translatefile( pa, options )
 
     elif options.ttllex and options.ttlfile : 
         print( "Lexing file %r ..." % options.ttlfile )

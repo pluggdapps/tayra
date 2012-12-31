@@ -49,11 +49,11 @@ syn include @Python         syntax/python.vim
 "syn region  blockTTL        start="^\z([ \t]*\)" end="^\z1" contains=prolog
 
 " Prolog
-syn match   prologKeywords  contained "@doctype\|@import\| as \|@body\|@inherit\|@implement\|@use"
-syn region  prolog          start="^@[!idbuc]" end="[ \t]*$" contains=prologKeywords,ttlString
+syn match   prologKeywords  contained "@doctype\|@import\| as \|@body\|@inherit\|@implement\|@from"
+syn region  prolog          start="^@[!dibf]" end="[ \t]*$" contains=prologKeywords,ttlString
 
 "Filterblock
-syn match   filterKeywords  contained ":fb-[^ \t]*\|:fbend"
+syn match   filterKeywords  contained ":[a-zA-Z0-9_-]\+:"
 
 " Textline
 syn match   textLine        "^[^<:@!].*$" contains=pythonExprs
@@ -73,9 +73,9 @@ syn region  ttlTag          contained start=+^[ ]*<[!%]\?[^/]+   end=+>+ contain
 syn region  ttlTagline      start=+^[ ]*<[!%]\?[^/]+  end=+[^\r\n]\{-}$+ contains=ttlTag,pythonExprs
 
 " Function block
-syn match   funcKeywords    contained "@function\|@interface\|@dec"
+syn match   funcKeywords    contained "@def\|@interface\|@dec"
 syn region  decLine         start=+^[ ]*@dec+  end=+)[ \t]*$+ contains=funcKeywords,@Python
-syn region  funcLine        start=+^[ ]*@function+  end=+:[ \t]*$+ contains=funcKeywords,@Python
+syn region  funcLine        start=+^[ ]*@def+  end=+:[ \t]*$+ contains=funcKeywords,@Python
 syn region  ifaceLine       start=+^@interface+ end=+:[ ]*$+ contains=funcKeywords,@Python
 
 " Control Block
@@ -105,7 +105,7 @@ unlet b:current_syntax
 syn region  jsstyle             start=+[ ]*<[!%]\?script+ keepend end=+^$+ contains=ttlTag,@htmlJavaScript,pythonExprs
 
 "Embedded python
-syn region  pythonBlock     start=+^[ \t]*:fb-pycode+ keepend end=+^[ \t]*:fbend+ contains=filterKeywords,@Python
+syn region  pythonBlock     start=+^[ \t]*:py:+ keepend end=+^[ \t]*:py:+ contains=filterKeywords,@Python
 ,
 TTLHiLink ttlSpecialChar    Special
 TTLHiLink comment           Comment

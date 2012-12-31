@@ -5,6 +5,7 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 import re
+from   xml.etree    import ElementTree
 
 def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
     """Convert eazytext content either supplied as a file (containing the text)
@@ -40,5 +41,4 @@ def directive_tokens( s ):
 class Context( object ):
     def __init__( self, htmlindent='' ):
         self.htmlindent = htmlindent
-
 

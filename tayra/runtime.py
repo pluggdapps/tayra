@@ -11,7 +11,7 @@
 #       _Interface_<interfacename><num>
 #       _Interface_<interfacename><num>_obj
 
-import re
+import re, imp
 
 import pluggdapps.utils     as h
 from   pluggdapps.plugin    import pluginname
@@ -44,8 +44,7 @@ class StackMachine( object ) :
         self.encoding = compiler.encoding
         self.tagplugins = [ compiler.query_plugin( ITayraTags, name )
                                 for name in compiler['usetagplugins'] ]
-        self.escfilters = [ compiler.query_plugin( ITayraEscapeFilter, name )
-                                for name in compiler['escape_filters'] ]
+        self.escfilters = compiler.query_plugins( ITayraEscapeFilter )
         self.escfilters = { x.codename : x for x in self.escfilters }
         self.filterblocks = compiler.query_plugins( ITayraFilterBlock )
         self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
@@ -90,32 +89,18 @@ class StackMachine( object ) :
 
     regex_style = re.compile( r'\{.*\}' )
     regex_attrs = re.compile( TTLLexer.attrname+'='+TTLLexer.attrvalue )
+    regex_str   = re.compile( TTLLexer.attrvalue )
 
     def handletag( self, contents, tagbegin, indent=False, nl='' ):
         tagbegin = tagbegin.replace('\n', ' ')[1:-1]    # remove < and >
         try    : tagname, tagbegin = tagbegin.split(' ', 1)
         except : tagname, tagbegin = tagbegin, ''
-        # Parse style content {...}
-        tagbegin1, style = '', ''
-        s = 0
-        for m in self.regex_style.finditer( tagbegin ) :
-            style = ';' + m.group()[1:-1].strip(' \t\r\n')
-            start, end = m.regs[0]
-            tagbegin1 += tagbegin[s:start]
-            s = end
-        tagbegin1 += tagbegin[s:].strip(' \t\r\n')
-        styles = list( filter( None, style.split(';') ))
-        # Parse attributes
-        tagbegin2, attributes, s = '', [], 0
-        for m in self.regex_attrs.finditer( tagbegin1 ):
-            attributes.append( m.group() )
-            start, end = m.regs[0]
-            tagbegin2 += tagbegin1[s:start]
-            s = end
-        tagbegin2 += tagbegin1[s:].strip(' \t\r\n')
-        # Parse tokens
-        tokens = list( filter( None, tagbegin2.split(' ') ))
         
+        styles, remtag = self.handletag_style( tagbegin )
+        attributes, remtag = self.handletag_attributes( remtag )
+        tokens, remtag = self.handletag_strings( remtag )
+        tokens.extend( self.handletag_tokens( remtag ))
+
         for plugin in self.tagplugins :
             html = plugin.handle( self, tagname, tokens, styles, attributes,
                                   contents )
@@ -125,16 +110,15 @@ class StackMachine( object ) :
         else :
             raise Exception("Unable to handle tag %r" % tagname)
 
-    def evalexprs( self, text, filters ) :
+    def evalexprs( self, text, filters, globals_, locals_ ) :
+        out = str( eval( text, globals_, locals_ ))
         for f in h.parsecsv( filters ) :
-            text = self.escfilters[f].filter( text )
-        return text
+            out = self.escfilters[f].filter( self, out )
+        return out
 
-    def importas( self, ttlfile, childglobals ):
-        compiler = self.compiler( ttlfile=ttlfile )
-        parent_context = childglobals['_ttlcontext']
-        module = compiler.execttl( context=parent_context )
-        return module
+    def importttl( self, name, pyfile ):
+        return imp.load_module( name, open(pyfile), pyfile,
+                                (".py", "r", imp.PY_SOURCE) )
 
     def inherit( self, ttlloc, childglobals ):
         compiler = self.compiler( ttlloc=ttlloc )
@@ -150,9 +134,6 @@ class StackMachine( object ) :
         childglobals['local'].parent = module
         return module
 
-    def register( self, obj, interface, pluginname ):
-        gsm.registerUtility( obj, interface, pluginname )
-
     # TODO : Can this method be replaced by pluggdapps.utils.lib.hitch ??
     def hitch( self, obj, cls, interfacefunc, *args, **kwargs ) :
         def fnhitched( self, *a, **kw ) :
@@ -162,6 +143,44 @@ class StackMachine( object ) :
 
     def use( self, interface, pluginname='' ):
         return queryTTLPlugin( self.ttlplugins, interface, pluginname )
+
+    #---- Local methods.
+
+    def handletag_strings( self, tagbegin ): # Parse string tokens.
+        remtag, tokens, s = '', [], 0
+        for m in self.regex_str.finditer( tagbegin ) :
+            tokens.append( m.group() )
+            start, end = m.regs[0]
+            remtag += tagbegin[s:start]
+            s = end
+        remtag += tagbegin[s:].strip(' \t\r\n')
+        return tokens, remtag
+
+    def handletag_style( self, tagbegin ): # Parse style content {...}
+        remtag, style = '', ''
+        s = 0
+        for m in self.regex_style.finditer( tagbegin ) :
+            style = ';' + m.group()[1:-1].strip(' \t\r\n')
+            start, end = m.regs[0]
+            remtag += tagbegin[s:start]
+            s = end
+        remtag += tagbegin[s:].strip(' \t\r\n')
+        styles = list( filter( None, style.split(';') ))
+        return styles, remtag
+
+    def handletag_attributes( self, tagbegin ): # Parse attributes
+        remtag, attributes, s = '', [], 0
+        for m in self.regex_attrs.finditer( tagbegin ):
+            attributes.append( m.group() )
+            start, end = m.regs[0]
+            remtag += tagbegin[s:start]
+            s = end
+        remtag += tagbegin[s:].strip(' \t\r\n')
+        return attributes, remtag
+
+    def handletag_tokens( self, tagbegin ): # Parse tokens
+        tokens = list( filter( None, tagbegin.split(' ') ))
+        return tokens
 
 
 class Namespace( object ):

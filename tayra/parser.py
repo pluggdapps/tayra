@@ -13,6 +13,10 @@ from   tayra.ast        import *
 
 class TTLParser( object ):
 
+    prolognodes = (DocType, Body, ImportAs, Inherit, Implement, Use,
+                   CommentBlock, CommentLine)
+    """AST nodes that constitute prolog"""
+
     def __init__( self, compiler ) :
         self.compiler = compiler
 
@@ -40,6 +44,9 @@ class TTLParser( object ):
         kwargs.update( tabmodule=yacctab )
         self.parser = ply.yacc.yacc( module=self, **kwargs )
         self.parser.ttlparser = self     # For AST nodes to access `this`
+        self.parser.compiler = self.compiler
+
+        self.prolog = True
 
     def parse( self, text, ttlfile=None, debuglevel=0 ):
         """Parse tayra templage language and creates an AST tree. For every
@@ -74,6 +81,10 @@ class TTLParser( object ):
             print( p[i], end='' )
         print(' ')
 
+    def prolog_window( self, node ):
+        if self.prolog == True and not isinstance(node, self.prolognodes) :
+            self.prolog = False
+
     # ---------- Precedence and associativity of operators --------------------
 
     precedence = (
@@ -93,40 +104,58 @@ class TTLParser( object ):
         return rc
  
     def p_template_1( self, p ) :
-        """template : prolog"""
-        p[0] = Template( p.parser, p[1], None )
+        """template : script"""
+        p[0] = Template( p.parser, p[1] )
 
     def p_template_2( self, p ) :
-        """template : script"""
-        p[0] = Template( p.parser, None, p[1] )
+        """template : """
+        p[0] = Template( p.parser, None )
 
-    def p_template_3( self, p ) :
-        """template : prolog script"""
-        p[0] = Template( p.parser, p[1], p[2] )
+    def p_script_1( self, p ) :
+        """script : doctype
+                  | body
+                  | importas
+                  | inherit
+                  | implement
+                  | use
+                  | statement
+                  | tagline
+                  | commentline
+                  | tagblock
+                  | commentblock
+                  | textblock
+                  | filterblock
+                  | functionblock
+                  | interfaceblock
+                  | ifelfiblock
+                  | forblock
+                  | whileblock"""
+        self.prolog_window( p[1] )
+        p[0] = Script( p.parser, None, p[1] )
+
+    def p_script_2( self, p ) :
+        """script : script doctype
+                  | script body
+                  | script importas
+                  | script inherit
+                  | script implement
+                  | script use
+                  | script statement
+                  | script tagline
+                  | script commentline
+                  | script tagblock
+                  | script commentblock
+                  | script textblock
+                  | script filterblock
+                  | script functionblock
+                  | script interfaceblock
+                  | script ifelfiblock
+                  | script forblock
+                  | script whileblock"""
+        self.prolog_window( p[1] )
+        p[0] = Script( p.parser, p[1], p[2] )
 
     #-- Prolog
-
-    def p_prolog_1( self, p ) :
-        """prolog   : doctype
-                    | body
-                    | importas
-                    | inherit
-                    | implement
-                    | use
-                    | commentline
-                    | commentblock"""
-        p[0] = Prolog( p.parser, None, p[1] )
-
-    def p_prolog_2( self, p ) :
-        """prolog   : prolog doctype
-                    | prolog body
-                    | prolog importas
-                    | prolog inherit
-                    | prolog implement
-                    | prolog use
-                    | prolog commentline
-                    | prolog commentblock"""
-        p[0] = Prolog( p.parser, p[1], p[2] )
 
     def p_docytpe( self, p ) :
         """doctype  : DOCTYPE NEWLINES"""
@@ -139,8 +168,8 @@ class TTLParser( object ):
         p[0] = Body( p.parser, *self._buildterms( p, terms ))
 
     def p_importas( self, p ) :
-        """importas : IMPORTAS NEWLINES"""
-        terms = [ (IMPORTAS, 1), (NEWLINES, 2) ]
+        """importas : IMPORT NEWLINES"""
+        terms = [ (IMPORT, 1), (NEWLINES, 2) ]
         p[0] = ImportAs( p.parser, *self._buildterms( p, terms ))
 
     def p_inherit( self, p ) :
@@ -171,38 +200,9 @@ class TTLParser( object ):
                       (NEWLINES,4) ]
         else :
             terms = [ (COMMENTOPEN,1), None, (COMMENTCLOSE,2), (NEWLINES,3) ]
-        p[0] = CommentBlock( p.parser, *self._buildterms( p, terms ))
+        p[0] = CommentBlock( p.parser, *self._buildterms( p, terms ), 
+                             prolog=self.prolog )
 
-    #-- Script
-
-    def p_script_1( self, p ) :
-        """script   : statement
-                    | tagline
-                    | commentline
-                    | tagblock
-                    | textblock
-                    | commentblock
-                    | filterblock
-                    | functionblock
-                    | interfaceblock
-                    | ifelfiblock
-                    | forblock
-                    | whileblock"""
-        p[0] = Script( p.parser, None, p[1] )
-
-    def p_script_2( self, p ) :
-        """script   : script statement
-                    | script tagline
-                    | script tagblock
-                    | script textblock
-                    | script commentblock
-                    | script filterblock
-                    | script functionblock
-                    | script interfaceblock
-                    | script ifelfiblock
-                    | script forblock
-                    | script whileblock"""
-        p[0] = Script( p.parser, p[1], p[2] )
 
     #---- Script lines
 
@@ -255,8 +255,9 @@ class TTLParser( object ):
 
     def p_filterblock_1( self, p ) :
         """filterblock : FILTEROPEN NEWLINES filtertext FILTERCLOSE NEWLINES"""
-        terms = [ (FILTEROPEN,1), (NEWLINES, 2), p[3], (FILTERCLOSE,4),
-                  (NEWLINES,5) ]
+        terms = [ (FILTEROPEN,1), (NEWLINES, 2), (FILTERTEXT, 3),
+                  (FILTERCLOSE,4), (NEWLINES,5) ]
+        assert p[1].startswith( p[4].strip(' \t') )
         p[0] = FilterBlock( p.parser, *self._buildterms( p, terms ) )
 
     def p_filterblock_2( self, p ) :
@@ -266,17 +267,32 @@ class TTLParser( object ):
         p[0] = FilterBlock( p.parser, *self._buildterms( p, terms ) )
 
     def p_filtertext( self, p ):
-        """filtertext       : FILTERTEXT NEWLINES"""
-        p[0] = p[1] + p[2]
+        """filtertext       : FILTERTEXT NEWLINES
+                            | filtertext FILTERTEXT NEWLINES"""
+        p[0] = (p[1] + p[2] + p[3]) if len(p) == 4 else (p[1] + p[2])
 
     def p_functionblock_1( self, p ) :
-        """functionblock    : FUNCTION NEWLINES INDENT script DEDENT"""
-        terms = [ (FUNCTION,1), (NEWLINES, 2), (INDENT,3), p[4], (DEDENT,5) ]
+        """functionblock : DECORATOR NEWLINES FUNCTION NEWLINES INDENT script DEDENT"""
+        terms = [ (DECORATOR, 1), (NEWLINES, 2), (FUNCTION,3), (NEWLINES, 4),
+                  (INDENT,5), p[6], (DEDENT,7) ]
         p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_functionblock_2( self, p ) :
-        """functionblock    : FUNCTION NEWLINES INDENT DEDENT"""
-        terms = [ (FUNCTION,1), (NEWLINES, 2), (INDENT,3), None, (DEDENT,4) ]
+        """functionblock : DECORATOR NEWLINES FUNCTION NEWLINES INDENT DEDENT"""
+        terms = [ (DECORATOR,1), (NEWLINES, 2), (FUNCTION,3), (NEWLINES, 4),
+                  (INDENT,5), None, (DEDENT,6) ]
+        p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
+
+    def p_functionblock_3( self, p ) :
+        """functionblock : FUNCTION NEWLINES INDENT script DEDENT"""
+        terms = [ None, None, (FUNCTION,1), (NEWLINES, 2), (INDENT,3), 
+                  p[4], (DEDENT,5) ]
+        p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
+
+    def p_functionblock_4( self, p ) :
+        """functionblock : FUNCTION NEWLINES INDENT DEDENT"""
+        terms = [ None, None, (FUNCTION,1), (NEWLINES, 2), (INDENT,3),
+                  None, (DEDENT,4) ]
         p[0] = FunctionBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_interfaceblock_1( self, p ) :

@@ -30,6 +30,7 @@ def dofunc_onuseragent( context, namespace, *args, **kwargs ):
     y = uacallable.get( namespace, None )
     func = y.get( x, y.get('default', None) ) if y else None
     return func( *args, **kwargs ) if func else None
+
 def useragent( agents=[], namespace=None, _ttlcontext={} ):
     """Decorator to wrap different functions by same name into dictionary of
     callable, based on user agents. When a call is made to the function
@@ -49,7 +50,7 @@ def useragent( agents=[], namespace=None, _ttlcontext={} ):
     args = [ agents, namespace ]
     def decorator( func ):
         agents, namespace = args
-        namespace = namespace or func.func_name
+        namespace = namespace or func.__name__
         d = uacallable.setdefault( namespace, {} )
         agents = [ agents ] if isinstance( agents, str ) else agents
         if agents :

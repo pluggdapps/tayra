@@ -151,3 +151,6 @@ which,
   make upload           # To build the egg and upload it into pypi
 
 The .egg package will be availabe under dist/ directory
+
+If you enable ['beautify_html'] option, you will have to install
+beautifulsoup4.

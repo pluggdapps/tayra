@@ -71,7 +71,7 @@ class TTLLexer( object ) :
         'INDENT', 'DEDENT', 'NEWLINES', 'TEXT',
 
         # Single line
-        'DOCTYPE', 'BODY', 'IMPORTAS', 'INHERIT', 'IMPLEMENT', 'USE',
+        'DOCTYPE', 'BODY', 'IMPORT', 'INHERIT', 'IMPLEMENT', 'USE',
         'COMMENTLINE', 'STATEMENT', 'TAGBEGIN',
 
         # Comment block
@@ -81,7 +81,7 @@ class TTLLexer( object ) :
         'FILTEROPEN', 'FILTERTEXT', 'FILTERCLOSE',
 
         # Program blocks
-        'INTERFACE', 'FUNCTION', 'IF', 'ELIF', 'ELSE', 'FOR',
+        'INTERFACE', 'DECORATOR', 'FUNCTION', 'IF', 'ELIF', 'ELSE', 'FOR',
         'WHILE',
     )
     
@@ -94,15 +94,15 @@ class TTLLexer( object ) :
 
     tab2space = 2
     nl        = r'(\n|\r\n|\r)[ \t\r\n]*'
-    escseq    = r'(\\[<])|(\\$)'
-    symbol    = r'[a-zA-Z0-9_]+'
+    escseq    = r'(\\.)|(\\$)'
+    symbol    = r'[a-zA-Z0-9_.]+'
     attrtoken = r'[a-zA-Z0-9\-_"\']+'
     attrname  = r'[a-zA-Z0-9\-_]+'
     attrvalue = r'("[^"\\]*(?:\\.[^"\\]*)*")'+r'|'+r"('[^'\\]*(?:\\.[^'\\]*)*')"
     finish    = r'OVER!!!!@\#END-OF-TEXT\#@!!!!OVER'
     prgsuffx  = r'(?=:[ \t]*$):[ \t]*$'
     text      = r'[^\r\n]+'
-    exprsubst = r'\$\{[^}]*\}'
+    exprsubst = r'(?<!\\)\$\{[^}]*\}'
 
     # Single line statements
     statement   = r'@@[^\r\n]+$'
@@ -113,7 +113,7 @@ class TTLLexer( object ) :
     # Directive patterns
     doctype   = r'@doctype[^\r\n]*$'
     body      = r'@body[^\r\n]*$'
-    importas  = r'@importas[^\r\n]*$'
+    importas  = r'(@import|@from)[^\r\n]*$'
     inherit   = r'@inherit[^\r\n]*$'
     implement = r'@implement[^\r\n]*$'
     use       = r'@use[^\r\n]*$'
@@ -131,8 +131,9 @@ class TTLLexer( object ) :
     # Program blocks
     dechar      = r'([^\(\\]|\r|\n|\r\n)'
     interface   = r'^@interface(.|\n|\r\n|\r)*?' + prgsuffx # Matches newlines
-    #decorator  = r'@dec[ \t]+%s\(%s*(?:\\.%s*)*\)[ \t]*'%(dechar,dechar,symbol)
-    function    = r'@function(.|\n|\r\n|\r)*?' + prgsuffx # Matches newlines
+    decorator   = r'@dec[ \t]+%s\(%s*(?:\\.%s*)*\)[ \t]*'%(
+                            symbol,dechar,dechar)
+    function    = r'@def(.|\n|\r\n|\r)*?' + prgsuffx # Matches newlines
     if_         = r'@if.*?' + prgsuffx      # Matches newlines
     elif_       = r'@elif.*?' + prgsuffx    # Matches newlines
     else_       = r'@else.*?' + prgsuffx    # Matches newlines
@@ -171,29 +172,29 @@ class TTLLexer( object ) :
                 raise Exception("Expect text to end with newline ")
         # Parse indentation
         parts = t.value.splitlines()
-        parts[-1] = self.replacetab( parts[-1] )
-        self._addtokens( self._tokenize( 'NEWLINES', t.value ))
-        if ( parts[-1] and parts[-1].strip() == '' and 
-             t.value[-1] not in ['\r', '\n'] ) :
-            # There is some indent
-            if parts[-1] > self.indent :
-                diff = len(parts[-1]) - len(self.indent)
-                self._addtokens( self._tokenize('INDENT', ' '*diff) )
-                self.indentstack.append( ('DEDENT', ' '*diff) )
-                self.indent = parts[-1]
+        if parts :
+            parts[-1] = self.replacetab( parts[-1] )
+            self._addtokens( self._tokenize( 'NEWLINES', t.value ))
+            if ( parts[-1] and parts[-1].strip() == '' and 
+                 t.value[-1] not in ['\r', '\n'] ) :
+                # There is some indent
+                if parts[-1] > self.indent :
+                    diff = len(parts[-1]) - len(self.indent)
+                    self._addtokens( self._tokenize('INDENT', ' '*diff) )
+                    self.indentstack.append( ('DEDENT', ' '*diff) )
+                    self.indent = parts[-1]
 
-            elif parts[-1] < self.indent :
-                while parts[-1] < self.indent :
-                    if self.indentstack :
-                        tokname, val = self.indentstack.pop(-1)
-                        self._addtokens( self._tokenize(tokname, val) )
-                        self.indent = self.indent[ :-len(val) ]
-                    else :
-                        self._error( 'Indentation error', t )
-        else :
-            # There is no indent
-            self._unwind_indentstack()
-
+                elif parts[-1] < self.indent :
+                    while parts[-1] < self.indent :
+                        if self.indentstack :
+                            tokname, val = self.indentstack.pop(-1)
+                            self._addtokens( self._tokenize(tokname, val) )
+                            self.indent = self.indent[ :-len(val) ]
+                        else :
+                            self._error( 'Indentation error', t )
+            else :
+                # There is no indent
+                self._unwind_indentstack()
         return self.poptoken()
 
     @TOKEN( statement )
@@ -213,7 +214,7 @@ class TTLLexer( object ) :
         return t
 
     @TOKEN( importas )
-    def t_IMPORTAS( self, t ):
+    def t_IMPORT( self, t ):
         return t
 
     @TOKEN( inherit )
@@ -236,18 +237,17 @@ class TTLLexer( object ) :
     @TOKEN( fbopen )
     def t_FILTEROPEN( self, t ) :
         t.lexer.push_state( 'filter' )
-        self.filterblock = t.value
-        return None
+        return t
 
     @TOKEN( interface )
     def t_INTERFACE( self, t ) :
         self._incrlineno(t)
         return t
 
-    #@TOKEN( decorator )
-    #def t_DECORATOR( self, t ) :
-    #    self._incrlineno(t)
-    #    return t
+    @TOKEN( decorator )
+    def t_DECORATOR( self, t ) :
+        self._incrlineno(t)
+        return t
 
     @TOKEN( function )
     def t_FUNCTION( self, t ) :
@@ -300,23 +300,17 @@ class TTLLexer( object ) :
 
     @TOKEN( fbclose )
     def t_filter_FILTERCLOSE( self, t ):
-        if self.filterblock.startswith( t.value.strip() ) :
-            tok = self._tokenize( 'FILTERBLOCK', self.filterblock )
-            self.filterblock = None
-            return tok
-        else :
-            raise Exception("Filter block not properly closed %s" % t.value)
+        self.lexer.pop_state()
+        return t
 
     @TOKEN( nl )
     def t_filter_NEWLINES( self, t ):
         self._incrlineno(t)
-        self.filterblock += t.value
         return t
 
     @TOKEN( fbtext )
     def t_filter_FILTERTEXT( self, t ):
-        self.filterblock += t.value
-        return None
+        return t
 
     def t_error( self, t ):
         msg = 'Illegal character %s' % repr(t.value[0])

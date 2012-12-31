@@ -4,11 +4,13 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-import imp, os, codecs
+import imp, os, codecs, re
 from   os.path              import isfile, isdir, basename, join, dirname
 from   hashlib              import sha1
+from   xml.etree            import ElementTree
+from   bs4                  import BeautifulSoup
 
-from   pluggdapps.plugin    import Plugin, implements
+from   pluggdapps.plugin    import Plugin, implements, ISettings
 import pluggdapps.utils     as h
 from   pluggdapps.web.webinterfaces import IHTTPRenderer
 
@@ -17,7 +19,7 @@ _defaultsettings.__doc__ = (
     "Configuration settings for tayra template engine." )
 
 _defaultsettings['debug']  = {
-    'default'  : False,
+    'default'  : True,
     'types'    : (bool,),
     'help'     : "Compile in debug mode."
 }
@@ -108,10 +110,10 @@ _defaultsettings['usetagplugins']           = {
                 "plugins that are registered under the requested namespace "
                 "will be used to generate the html."
 }
-_defaultsettings['uglyhtml']                = {
+_defaultsettings['beautify_html']                = {
     'default' : True,
     'types'   : (bool,),
-    'help'    : "Boolean, to freely generate the output html file without "
+    'help'    : "Boolean, if True will generate human readable html output. "
                 "bothering about indentation."
 }
 _defaultsettings['plugin_packages']         = {
@@ -191,8 +193,6 @@ class TTLCompiler( Plugin ):
 
         self.ttlparser = TTLParser( self )
         self.igen = InstrGen( self )
-        # Stack machine
-        self.mach = StackMachine( self.ttlfile, self )
         #----
 
         self.ttlloc = TemplateLookup( self, file, text )
@@ -201,6 +201,9 @@ class TTLCompiler( Plugin ):
         self.ttltext = self.ttlloc.ttltext
         self.pyfile = self.ttlloc.pyfile
         self.modulename = basename( self.ttlfile ).split('.', 1)[0]
+
+        # Stack machine
+        self.mach = StackMachine( self.ttlfile, self )
 
         self.pytext = ''
         if self.ttlfile and isfile( self.ttlfile ) :
@@ -213,8 +216,8 @@ class TTLCompiler( Plugin ):
     def toast( self, ttltext=None ):
         """Convert the template script text into abstract-syntax-tree."""
         ttltext = ttltext or self.ttltext
-        ast = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
-        return ast
+        self.ast = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
+        return self.ast
 
     def topy( self, ast, *args, **kwargs ):
         """Generate the intermediate python text."""
@@ -223,7 +226,10 @@ class TTLCompiler( Plugin ):
         ast.headpass2( self.igen )                   # Head pass, phase 2
         ast.generate( self.igen, *args, **kwargs )   # Generation
         ast.tailpass( self.igen )                    # Tail pass
-        return self.igen.codetext()
+        pytext = self.igen.codetext()
+        if self.pyfile :
+            open( self.pyfile, 'w', encoding='utf-8' ).write( pytext )
+        return pytext
 
     def compile( self, file=None, text=None, args=[], kwargs={} ):
         """Translate TTL file into intermediate python code. Returns 
@@ -234,7 +240,7 @@ class TTLCompiler( Plugin ):
             AST.generate() pass.
         """
         self._init( file=file, text=text ) if (file or text) else None
-        self.pytext = self.topy( self.toast(), *args, **kwargs )
+        self.pytext = self.pytext or self.topy( self.toast(), *args, **kwargs )
         code = self._memcache.get( self.ttlloc.ttlhash, None )
         if not code :
             code = compile( self.pytext, self.ttlfile, 'exec' )
@@ -242,28 +248,52 @@ class TTLCompiler( Plugin ):
             self._memcache.setdefault( self.ttlloc.ttlhash, code )
         return (self.pytext, code)
 
-    def generate( self, context, code ):
-        """Execute compiled template code (in python) under module's 
-        ``context`` to generate the final HTML text.
-        """
+    def load( self, code, context={} ):
+        """Load this ttl file."""
         from tayra.runtime  import Namespace
 
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
-        module.__dict__.update({
+        ctxt = {
             self.igen.machname : self.mach,
-            'self'   : Namespace( None, module ),
-            'local'  : module,
-            'parent' : None,
-            'next'   : None,
-        })
+            'tayra'   : self,
+            'self'    : Namespace( None, module ),
+            'local'   : module,
+            'parent'  : None,
+            'next'    : None,
+        }
+        for ttlfile, modname in getattr( self.ast, 'importttls', [] ) :
+            compiler = self()
+            pytext, ttlcode = compiler.compile( file=ttlfile )
+            ctxt[ modname ] = compiler.load( ttlcode, context={} )
+        module.__dict__.update( ctxt )
         module.__dict__.update( context )
         # Execute the code in module's context
-        exec( code, module.__dict__, module.__dict__ )
-        entry = getattr( module.self, self['entry_function'] )
-        args = context.get( '_bodyargs', [] )
-        kwargs = context.get( '_bodykwargs', {} )
-        return entry( *args, **kwargs ) if callable( entry ) else ''
+        try :
+            exec( code, module.__dict__, module.__dict__ )
+        except :
+            print( h.print_exc() )
+        return module
+
+    def generatehtml( self, module, context ):
+        """Call entry-point on loaded module ``module`` using ``context`` to
+        generate the HTML text.
+        """
+        try :
+            entry = getattr( module.self, self['entry_function'] )
+            args = context.get( '_bodyargs', [] )
+            kwargs = context.get( '_bodykwargs', {} )
+            html = entry( *args, **kwargs ) if callable( entry ) else ''
+            try :
+                if self['beautify_html'] :
+                    html = BeautifulSoup( html ).prettify()
+            except :
+                pass
+            return html
+        except :
+            print( h.print_exc() )
+            return ''
+
 
     #---- IHTTPRenderer interface methods
 
@@ -279,7 +309,7 @@ class TTLCompiler( Plugin ):
             Tayra template text string.
         """
         pytext, code = self.compile( file=file, text=text )
-        return self.generate( c, code )
+        return self.generatehtml( self.load( code, context=c ), c )
 
     #---- ISettings interface methods
 
@@ -302,7 +332,7 @@ class TTLCompiler( Plugin ):
         sett['escape_filters'] = h.parsecsvlines( sett['escape_filters'] )
         sett['usetagplugins'] = h.parsecsvlines( sett['usetagplugins'] )
         sett['plugin_packages'] = h.parsecsvlines( sett['plugin_packages'] )
-        sett['uglyhtml'] = h.asbool( sett['uglyhtml'] )
+        sett['beautify_html'] = h.asbool( sett['beautify_html'] )
         sett['memcache'] = h.asbool( sett['memcache'] )
         sett['text_as_hashkey'] = h.asbool( sett['text_as_hashkey'] )
         return sett
@@ -329,11 +359,17 @@ class TemplateLookup( object ) :
         self.compiler = compiler
 
         if ttlfile :
+            ttlfile = h.abspath_from_asset_spec( ttlfile )
             moddir = compiler['module_directory']
             self.encoding = self.charset( ttlfile=ttlfile,
                                           encoding=compiler['encoding'] )
-            self.pyfile = join( moddir, ttlfile.lstrip( os.sep )+'.py' ) \
-                                if moddir else None
+            if compiler['debug'] == True :
+                self.pyfile = ttlfile + '.py'
+            elif moddir :
+                self.pyfile = join( moddir, ttlfile.lstrip( os.sep )+'.py' )
+            else :
+                self.pyfile = None
+
             self.ttlfile = h.locatefile( ttlfile, compiler['directories'] )
             self.ttltext = open( self.ttlfile, encoding=self.encoding ).read()
 
@@ -374,8 +410,8 @@ class TemplateLookup( object ) :
             if line.startswith( b'<' ) :
                 break
         if parseline :
-            m = re.search( r'charset="([^"]+")', parseline[8:] )
-            encoding = m.groups()[0] if m else encoding
+            m = re.search( b'charset="([^"]+")', parseline[8:] )
+            encoding = m.groups()[0].decode('utf-8') if m else encoding
         return encoding
 
 

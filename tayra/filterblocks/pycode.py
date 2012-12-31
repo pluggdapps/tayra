@@ -9,14 +9,14 @@ import re
 from   pluggdapps.plugin    import Plugin, implements
 from   tayra.interfaces     import ITayraFilterBlock
 
-class PyCode( Plugin ):
+class TayraFilterBlockPy( Plugin ):
     """Handle python code blocks.
 
     Follows indentation rules as defined by python language. To maintain
     consistency, it is better to indent the entire python code block by 2
     spaces. Each line will be interpreted as a python statement and substituted
     as is while compiling them into an intermediate .py text. If ``pycode``
-    filter block is defined inside ``@function`` or ``@interface`` definition,
+    filter block is defined inside ``@def`` or ``@interface`` definition,
     then the filter block will inherit the same local scope and context as
     applicable to the function/interface definition. **Otherwise, it will be
     considered as local to the implicitly defined body() function and will not
@@ -38,21 +38,24 @@ class PyCode( Plugin ):
 
     def headpass1( self, igen, filteropen, filtertext, filterclose ):
         pylines = filtertext.splitlines()
-        self.tokens = list( filter( filteropen[4:].strip().split(' ') ))
         # Align indentation
         striplen = ( len(pylines[0]) - len(pylines[0].lstrip(' \t')) ) \
                             if pylines else 0
-        if tokens and (tokens[0] == 'global') :
-            [ igen.putstatement( l[striplen:] ) for l in pylines ]
-            self.pylines = []
-        else :
-            self.pylines = [ line[striplen:] for line in pylines ]
+        self.pylines = [ line[striplen:] for line in pylines ]
+        return None
 
-    def headpass2( self, igen ):
-        pass
+    def headpass2( self, igen, result ):
+        return result
 
-    def generate( self, igen, *args, **kwargs ):        # Inline
-        [ igen.putstatement( line ) for line in self.pylines ]
+    def generate( self, igen, result, *args, **kwargs ):   # Inline
+        self.localfunc = kwargs.get( 'localfunc', False )
+        self.args, self.kwargs = args, kwargs
+        if self.localfunc :
+            [ igen.putstatement( line ) for line in self.pylines ]
+        return result
 
-    def tailpass( self, igen ):
+    def tailpass( self, igen, result ):
+        if self.localfunc == False :
+            [ igen.putstatement( line ) for line in self.pylines ]
         self.pylines = []
+        return result

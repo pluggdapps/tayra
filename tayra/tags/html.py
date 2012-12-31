@@ -178,7 +178,7 @@ class TayraHTML5( TayraTags ):
                 attrs += ' frametarget="%s"' % tok.split(':', 1)[1]
             elif tok.startswith( 'form:' ) :
                 attrs += ' form="%s"' % tok.split(':', 1)[1]
-            else :
+            elif (tok[0], tok[-1]) == ('"', '"') :
                 attr = self.button2attr.get( tok, '' )
                 attrs += attr or (' formaction=%s' % tok)
         attrs = attrs.strip()
@@ -336,7 +336,7 @@ class TayraHTML5( TayraTags ):
         """<head> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``manifest`` attribute and
-          translated to //manifest=<string>//
+          translated to ``manifest=<string>``.
         """
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
         attrs += (' manifest=%s' % remtoks[0]) if remtoks else ''
@@ -352,7 +352,7 @@ class TayraHTML5( TayraTags ):
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
         attrs += (' manifest=%s' % remtoks[0]) if remtoks else ''
         attrs = attrs.strip()
-        return '<html %s>%s</manifest>' % (attrs, content)
+        return '<html %s>%s</html>' % (attrs, content)
 
     iframe2attr = {
         'seamless' : ' seamless="seamless"',

@@ -158,7 +158,7 @@ class ITTLPlugins( Interface ):
 
 #---- This interface will be used for testing
 
-class ITestInterface( Interface ):
+class ITayraTestInterface( Interface ):
 
     def render( *args, **kwargs ):
         """Return renderable html-text"""

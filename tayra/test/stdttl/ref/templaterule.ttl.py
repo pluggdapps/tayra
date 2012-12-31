@@ -1,14 +1,17 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
+def body( *args, **kwargs ) :  
+  _m.pushbuf()
+  return _m.popbuftext()
 
 # ---- Global Functions
 # ---- Interface functions
-# ---- Footer
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/templaterule.ttl'
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '././test/stdttl/templaterule.ttl' 

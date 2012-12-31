@@ -1,41 +1,37 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
+from tayra.interfaces import ITayraTestInterface 
 
-from  tayra.interfaces import ITestInterface
-iface = _m.use( ITestInterface, _m.evalexprs(plugin, '') )
-
-def body(  ) :  
+def body( *args, **kwargs ) :  
   _m.pushbuf()
   _m.extend( ['<!DOCTYPE html>\n'] )
-  # <html>
+  obj = tayra.query_plugin( ITayraTestInterface, 'XYZTestInterface' )
   _m.pushbuf()
-  _m.extend( [u'html', u'<html  >', u'</html>'] )
+  _m.extend( ['<html>'] )
   _m.pushbuf()
-  _m.extend( [u'\n'] )
-  # <head>
+  _m.extend( ['\n  '] )
   _m.pushbuf()
-  _m.extend( [u'head', u'<head  >', u'</head>'] )
+  _m.extend( ['<head>'] )
   _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  # <body>
+  _m.extend( ['\n  '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.pushbuf()
-  _m.extend( [u'body', u'<body  >', u'</body>'] )
+  _m.extend( ['<body>'] )
   _m.pushbuf()
-  _m.extend( [u'\n'] )
-  # ${ iface.render() }
-  _m.append( _m.evalexprs(iface.render(), '') )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['\n    ', ''] )
+  _m.append(_m.evalexprs( 'obj.render()', '', globals(), locals()) )
+  _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
 # ---- Global Functions
 # ---- Interface functions
-# ---- Footer
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/useinterface.ttl'
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '././test/stdttl/useinterface.ttl' 

@@ -1,61 +1,43 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
-def body(  ) :  
-  _m.pushbuf()
-  # <div> ${ "hello {}" + str([   str(10) ]) +    ' world' }
-  _m.pushbuf()
-  _m.extend( [u'div', u'<div  > ', u'</div>'] )
-  _m.pushbuf()
-  _m.append( _m.evalexprs("hello {}" + str([  str(10) ]) +   ' world', '') )
-  _m.extend( [u'\n'] )
-  # <a#${'idname'}.${'cls'     'name'} "${"http://"             'google.com'}" { ${'color : ' }                              ${ "red;" } } ${"title"}="${"sun is "                                                     " shining"} brightly"/>
-  _m.pushbuf()
-  _m.extend( [u'a', u'<a'] )
-  _m.pushbuf()
-  _m.extend( [u'#'] )
-  _m.append( _m.evalexprs('idname', '') )
-  _m.extend( [u'.'] )
-  _m.append( _m.evalexprs('cls'    'name', '') )
-  _m.extend( [u' '] )
-  _m.pushbuf()
-  _m.extend( [u'"'] )
-  _m.append( _m.evalexprs("http://"            'google.com', '') )
-  _m.extend( [u'"'] )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u' '] )
-  _m.append( _m.evalexprs('color : ', '') )
-  _m.extend( [u'\n                             '] )
-  _m.append( _m.evalexprs("red;", '') )
-  _m.extend( [u' '] )
-  _m.append( _m.popbuftext() )
+def body( *args, **kwargs ) :  
   _m.pushbuf()
   _m.pushbuf()
-  _m.append( _m.evalexprs("title", '') )
-  _m.extend( [u'='] )
+  _m.extend( ['<div>'] )
   _m.pushbuf()
-  _m.extend( [u'"'] )
-  _m.append( _m.evalexprs("sun is "                                                    " shining", '') )
-  _m.extend( [u' ', u'brightly', u'"'] )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'/>', ''] )
+  _m.extend( [' '] )
+  _m.append(_m.evalexprs( '"hello עברית" + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
+  _m.extend( ['\n  '] )
   _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['<a #'] )
+  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.extend( [' .'] )
+  _m.append(_m.evalexprs( "'cls' 'name'", '', globals(), locals()) )
+  _m.extend( [' \n     "'] )
+  _m.append(_m.evalexprs( '"http://" \'google.com\'', '', globals(), locals()) )
+  _m.extend( ['" \n     { '] )
+  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.extend( [' '] )
+  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.extend( [' }\n     '] )
+  _m.append(_m.evalexprs( '"title"', '', globals(), locals()) )
+  _m.extend( ['="'] )
+  _m.append(_m.evalexprs( '"sun is " " shining"', '', globals(), locals()) )
+  _m.extend( [' brightly">'] )
+  _m.pushbuf()
+  _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
 # ---- Global Functions
 # ---- Interface functions
-# ---- Footer
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/exprs.ttl'
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '././test/stdttl/exprs.ttl' 

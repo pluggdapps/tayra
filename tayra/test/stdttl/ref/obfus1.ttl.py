@@ -1,47 +1,32 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
-def body(  ) :  
+def body( *args, **kwargs ) :  
   _m.pushbuf()
   world = 'world'
   _m.pushbuf()
-  _m.extend( [u'div', u'<div'] )
+  _m.extend( ["<div #id {' title= hello "] )
+  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+  _m.extend( ['}>'] )
   _m.pushbuf()
-  _m.append( _m.Attributes( _attrstext=u'id="id"  ' ))
-  _m.append( _m.popbuf() )
+  _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.pushbuf()
-  _m.extend( [u"' title= hello "] )
-  _m.append( _m.evalexprs(world, []) )
-  _m.append( _m.popbuftext() )
+  _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
+  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+  _m.extend( ['}>'] )
   _m.pushbuf()
-  _m.extend( [u''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</div>'] )
-  _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl=u'' )
-  _m.extend( [u'\n'] )
-  _m.pushbuf()
-  _m.extend( [u'input', u'<input '] )
-  _m.pushbuf()
-  
-  _m.append( _m.popbuf() )
-  _m.pushbuf()
-  _m.extend( [u"' title= hello "] )
-  _m.append( _m.evalexprs(world, []) )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</input>'] )
-  _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl=u'' )
-  _m.extend( [u'\n'] )
+  _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
+# ---- Global Functions
+# ---- Interface functions
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/obfus1.ttl'
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '././test/stdttl/obfus1.ttl' 

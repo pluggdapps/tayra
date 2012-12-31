@@ -1,33 +1,28 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
-def body( id, cls, style='color: red;' ) :  
+def body( id="hello", cls="world", style='color: red;', *args, **kwargs ) :  
   _m.pushbuf()
   _m.pushbuf()
-  _m.extend( [u'div', u'<div'] )
+  _m.extend( ['<div #'] )
+  _m.append(_m.evalexprs( 'id', '', globals(), locals()) )
+  _m.extend( [' .'] )
+  _m.append(_m.evalexprs( 'cls', '', globals(), locals()) )
+  _m.extend( [' {'] )
+  _m.append(_m.evalexprs( 'style', '', globals(), locals()) )
+  _m.extend( ['} >'] )
   _m.pushbuf()
-  _m.extend( [u'#'] )
-  _m.append( _m.evalexprs(id, []) )
-  _m.extend( [u'.'] )
-  _m.append( _m.evalexprs(cls, []) )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u''] )
-  _m.append( _m.evalexprs(style, []) )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</div>'] )
-  _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl=u'' )
-  _m.extend( [u'\n'] )
+  _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
+# ---- Global Functions
+# ---- Interface functions
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/body.ttl'
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '././test/stdttl/body.ttl' 

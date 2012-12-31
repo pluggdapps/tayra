@@ -1,364 +1,253 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
-def body(  ) :  
+def body( *args, **kwargs ) :  
   _m.pushbuf()
-  # ${ func5() }
-  _m.append( _m.evalexprs(func5(), '') )
-  _m.extend( [u'\n'] )
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( 'func1()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func2()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func3()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func4()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func5()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func6()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func7()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func8()', '', globals(), locals()) )
+  _m.extend( ['\n', ''] )
+  _m.append(_m.evalexprs( 'func10()', '', globals(), locals()) )
+  _m.extend( ['\n'] )
   return _m.popbuftext()
 
 # ---- Global Functions
 
-# def func1() : 
-def func1() :   
+def func1() :  
   _m.pushbuf()
   pass
   return _m.popbuftext()
 
-# def func2( a=':' ) :
+
 def func2( a=':' ) :  
   _m.pushbuf()
   pass
   return _m.popbuftext()
 
-# def func3() : 
-def func3() :   
+
+def func3() :  
   _m.pushbuf()
-  # Google will join its biggest mobile rival, Apple, on the space trip as well.
-  _m.extend( [u'Google will join its biggest mobile rival, Apple, on the space trip as well.', u'\n'] )
-  # Apple's iPhone 4 will join a crew running an app, called "SpaceLab for iOS."
-  _m.extend( [u'Apple\'s iPhone 4 will join a crew running an app, called "SpaceLab for iOS."', u'\n'] )
+  _m.extend( ['Google will join its biggest mobile rival, Apple, on the space trip as well.', '\n  ', 'Apple\'s iPhone 4 will join a crew running an app, called "SpaceLab for iOS."', '\n'] )
   return _m.popbuftext()
 
-# def func4() :
+
 def func4() :  
   _m.pushbuf()
-  # The program, designed by Odyssey Space Research, will allow crew members to
-  _m.extend( [u'The program, designed by Odyssey Space Research, will allow crew members to', u'\n'] )
-  # conduct several experiments with the phones' cameras, gyroscopes and other
-  _m.extend( [u"conduct several experiments with the phones' cameras, gyroscopes and other", u'\n'] )
+  _m.extend( ['The program, designed by Odyssey Space Research, will allow crew members to', '\n  ', "conduct several experiments with the phones' cameras, gyroscopes and other", '\n'] )
   return _m.popbuftext()
 
-# def func5(z=10): 
-def func5(z=10):   
+
+def func5(z=10):  
   _m.pushbuf()
-  # <html#std1.testcase.sample { color: red; font-size : ${z*2}px } title="hello world">
   _m.pushbuf()
-  _m.extend( [u'html', u'<html'] )
+  _m.extend( ['<html #std1 .testcase.sample { color: red; font-size : '] )
+  _m.append(_m.evalexprs( 'z*2', '', globals(), locals()) )
+  _m.extend( ['px }\n        title="hello world">'] )
   _m.pushbuf()
-  _m.append( _m.Attributes( _attrstext=u' id="std1" class="testcase sample" ' ))
-  _m.append( _m.popbuf() )
+  _m.extend( ['\n    '] )
   _m.pushbuf()
-  _m.extend( [u' color: red; font-size : '] )
-  _m.append( _m.evalexprs(z*2, '') )
-  _m.extend( [u'px '] )
-  _m.append( _m.popbuftext() )
+  _m.extend( ['<head>'] )
   _m.pushbuf()
-  _m.extend( [u'title="hello world"'] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</html>'] )
+  _m.extend( ['\n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.pushbuf()
-  _m.extend( [u'\n'] )
-  # <head/>
+  _m.extend( ['<body>'] )
   _m.pushbuf()
-  _m.extend( [u'head', u'<head  />', ''] )
+  _m.extend( ['\n      '] )
   _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  # <body>
+  _m.extend( ['<abbr "World Health Organization">'] )
   _m.pushbuf()
-  _m.extend( [u'body', u'<body  >', u'</body>'] )
-  _m.pushbuf()
-  _m.extend( [u'\n'] )
-  # <abbr "World Health Organization"> WHO
-  _m.pushbuf()
-  _m.extend( [u'abbr', u'<abbr  title="World Health Organization"> ', u'</abbr>'] )
-  _m.pushbuf()
-  _m.extend( [u'WHO'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
+  _m.extend( [' WHO', '\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   
-  _m.extend( [u'\n'] )
-  # def nestedfunc() :
   def nestedfunc() :    
     _m.pushbuf()
-    # <b> this is nested function
     _m.pushbuf()
-    _m.extend( [u'b', u'<b  > ', u'</b>'] )
+    _m.extend( ['<b>'] )
     _m.pushbuf()
-    _m.extend( [u'this is nested function'] )
-    _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
+    _m.extend( [' this is nested function', '\n        '] )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     
-    _m.extend( [u'\n'] )
-    # def nestednestedfunc() :
     def nestednestedfunc() :      
       _m.pushbuf()
-      # <em> this is nested nested function
       _m.pushbuf()
-      _m.extend( [u'em', u'<em  > ', u'</em>'] )
+      _m.extend( ['<em>'] )
       _m.pushbuf()
-      _m.extend( [u'this is nested nested function'] )
-      _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-      _m.extend( [u'\n'] )
+      _m.extend( [' this is nested nested function', '\n        '] )
+      _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
       return _m.popbuftext()    
-    # ${ nestednestedfunc() }
-    _m.append( _m.evalexprs(nestednestedfunc(), '') )
-    _m.extend( [u'\n'] )
+    
+    _m.extend( [''] )
+    _m.append(_m.evalexprs( 'nestednestedfunc()', '', globals(), locals()) )
+    _m.extend( ['\n      '] )
     return _m.popbuftext()  
-  # <button#id_ reset disabled makefriend "button value"/>
+  
   _m.pushbuf()
-  _m.extend( [u'button', u'<button  id="id_"   formaction="button value"  type="reset"/>', ''] )
+  _m.extend( ['<button #id_ reset disabled makefriend "button value">'] )
   _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  # ${ nestedfunc() }
-  _m.append( _m.evalexprs(nestedfunc(), '') )
-  _m.extend( [u'\n'] )
-  # ${ func3() }
-  _m.append( _m.evalexprs(func3(), '') )
-  _m.extend( [u'\n\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( 'nestedfunc()', '', globals(), locals()) )
+  _m.extend( ['\n\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
-# def func6 () :
+
 def func6 () :  
   _m.pushbuf()
-  # <div> ${ "hello {}" + str([     str(10) ]) +     ' world' }
   _m.pushbuf()
-  _m.extend( [u'div', u'<div  > ', u'</div>'] )
-  _m.pushbuf()
-  _m.append( _m.evalexprs("hello {}" + str([    str(10) ]) +     ' world', '') )
-  _m.extend( [u'\n'] )
-  # <a#${'idname  \       '}.${'cls'       'name'} "${"http://"               'google.com'}" { ${'color : ' }                                ${ "red;" } } ${"title"}="${"sun is "                                                     " shining"} brightly">
-  _m.pushbuf()
-  _m.extend( [u'a', u'<a'] )
-  _m.pushbuf()
-  _m.extend( [u'#'] )
-  _m.append( _m.evalexprs('idname  \
-      ', '') )
-  _m.extend( [u'.'] )
-  _m.append( _m.evalexprs('cls'      'name', '') )
-  _m.extend( [u' '] )
-  _m.pushbuf()
-  _m.extend( [u'"'] )
-  _m.append( _m.evalexprs("http://"              'google.com', '') )
-  _m.extend( [u'"'] )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u' '] )
-  _m.append( _m.evalexprs('color : ', '') )
-  _m.extend( [u'\n                               '] )
-  _m.append( _m.evalexprs("red;", '') )
-  _m.extend( [u' '] )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.pushbuf()
-  _m.append( _m.evalexprs("title", '') )
-  _m.extend( [u'='] )
-  _m.pushbuf()
-  _m.extend( [u'"'] )
-  _m.append( _m.evalexprs("sun is "                                                    " shining", '') )
-  _m.extend( [u' ', u'brightly', u'"'] )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</a>'] )
-  _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  return _m.popbuftext()
-
-# def func7() : 
-def func7() :   
-  _m.pushbuf()
-  # <div {} >
-  _m.pushbuf()
-  _m.extend( [u'div', u'<div '] )
+  _m.extend( ['<div>'] )
   _m.pushbuf()
   _m.extend( [' '] )
-  _m.append( _m.popbuftext() )
+  _m.append(_m.evalexprs( '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
+  _m.extend( ['\n    '] )
   _m.pushbuf()
-  _m.append( _m.popbuftext() )
+  _m.extend( ['<a #'] )
+  _m.append(_m.evalexprs( "'idname  \\ '", '', globals(), locals()) )
+  _m.extend( [' .'] )
+  _m.append(_m.evalexprs( "'cls' 'name'", '', globals(), locals()) )
+  _m.extend( [' \n       "'] )
+  _m.append(_m.evalexprs( '"http://" \'google.com\'', '', globals(), locals()) )
+  _m.extend( ['" { '] )
+  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.extend( ['\n                               '] )
+  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.extend( [' } \n                               '] )
+  _m.append(_m.evalexprs( '"title"', '', globals(), locals()) )
+  _m.extend( ['="'] )
+  _m.append(_m.evalexprs( '"sun is " " shining"', '', globals(), locals()) )
+  _m.extend( [' brightly">'] )
   _m.pushbuf()
-  _m.extend( [''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</div>'] )
-  _m.pushbuf()
-  _m.extend( [u'\n\n'] )
-  # <a#${'idname'}.${'cls'}           "http://pluggdapps.com"       { ${'color : ' } ${ "red;"  } ' style with line         break' } /> hello {world} /> 
-  _m.pushbuf()
-  _m.extend( [u'a', u'<a'] )
-  _m.pushbuf()
-  _m.extend( [u'#'] )
-  _m.append( _m.evalexprs('idname', '') )
-  _m.extend( [u'.'] )
-  _m.append( _m.evalexprs('cls', '') )
-  _m.extend( [u'\n', u'   ', u'\n', u'      '] )
-  _m.pushbuf()
-  _m.extend( [u'"', u'http', u':', u'/', u'/', u'pluggdapps.com', u'"'] )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u' '] )
-  _m.append( _m.evalexprs('color : ', '') )
-  _m.extend( [u' '] )
-  _m.append( _m.evalexprs("red;", '') )
-  _m.extend( [u" ' style with line\n        break' "] )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'/> ', ''] )
-  _m.pushbuf()
-  _m.extend( [u'hello ', u'{', u'world} /> '] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
-# def func8( a=10, b=12.2, c="string" ) :
+
+def func7() :  
+  _m.pushbuf()
+  _m.pushbuf()
+  _m.extend( ['<div {} >'] )
+  _m.pushbuf()
+  _m.extend( ['\n\n    '] )
+  _m.pushbuf()
+  _m.extend( ['<a #'] )
+  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.extend( [' .'] )
+  _m.append(_m.evalexprs( "'cls'", '', globals(), locals()) )
+  _m.extend( ['\n   \n      "http://pluggdapps.com"\n      { '] )
+  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.extend( [' '] )
+  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.extend( [" ' style with line\n        break' } >"] )
+  _m.pushbuf()
+  _m.extend( [' hello {world} /> ', '\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  return _m.popbuftext()
+
+
 def func8( a=10, b=12.2, c="string" ) :  
   _m.pushbuf()
-  # <html>
   _m.pushbuf()
-  _m.extend( [u'html', u'<html  >', u'</html>'] )
+  _m.extend( ['<html>'] )
   _m.pushbuf()
-  _m.extend( [u'\n'] )
+  _m.extend( ['\n    '] )
   b = 'hello'   
-  # ${x+y}
-  _m.append( _m.evalexprs(x+y, '') )
-  _m.extend( [u'\n'] )
-  # <head#headid.cls1.${s.strip(     )} "title" {color:red} lang="en"      data="hello">
-  _m.pushbuf()
-  _m.extend( [u'head', u'<head'] )
-  _m.pushbuf()
-  _m.extend( [u'#headid.cls1.'] )
-  _m.append( _m.evalexprs(s.strip(    ), '') )
-  _m.extend( [u' '] )
-  _m.pushbuf()
-  _m.extend( [u'"', u'title', u'"'] )
-  _m.append( _m.popbuftext() )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [u'style="color:red"'] )
-  _m.append( _m.popbuf() )
-  _m.pushbuf()
-  _m.extend( [u'lang="en" data="hello"'] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</head>'] )
-  _m.pushbuf()
-  _m.extend( [u'\n'] )
-  # <title#titleid .cls1 "title          string"> hello ${s} @ ! # "helo" 'world "ok
-  _m.pushbuf()
-  _m.extend( [u'title', u'<title  id="titleid"   "title \n        string"> ', u'</title>'] )
-  _m.pushbuf()
-  _m.extend( [u'hello '] )
-  _m.append( _m.evalexprs(s, '') )
-  _m.extend( [u' @ ! # "helo" \'world "ok'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  # <body>
-  _m.pushbuf()
-  _m.extend( [u'body', u'<body  >', u'</body>'] )
-  _m.pushbuf()
-  _m.extend( [u'\n'] )
-  # <h1 { color : red;   border : 1px solid gray;       }/> I am the space station ${ "These "} seven cameras       <!-- comment1      comment -->
-  _m.pushbuf()
-  _m.extend( [u'h1', u'<h1   style=" color : red;\n  border : 1px solid gray;\n      "/> ', ''] )
-  _m.pushbuf()
-  _m.extend( [u'I am the space station '] )
-  _m.append( _m.evalexprs("These ", '') )
-  _m.extend( [u' seven cameras'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n', u'      <!--', u' comment1\n     comment ', u'-->', u'\n'] )
-  # have a zoom range 
-  _m.extend( [u'have a zoom range ', u'\n'] )
-  # <p first       second> of any 12x or more,       <!-- comment1          comment -->
-  _m.pushbuf()
-  _m.extend( [u'p', u'<p  > ', u'</p>'] )
-  _m.pushbuf()
-  _m.extend( [u'of any 12x or more,'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n', u'      <!--', u' comment1\n         comment ', u'-->', u'\n'] )
-  # and some of the wide-angle view 
-  _m.extend( [u'and some of the wide-angle view ', u'\n'] )
-  # <div> of good. They also have a
-  _m.pushbuf()
-  _m.extend( [u'div', u'<div  > ', u'</div>'] )
-  _m.pushbuf()
-  _m.extend( [u'of good. They also have a', u'\n'] )
-  # lot of image stabilization (either optical or mechanical), which is 
-  _m.extend( [u'lot of image stabilization (either optical or mechanical), which is ', u'\n'] )
-  # important for people who are with a powerful zoom lens. Some other
-  _m.extend( [u'important for people who are with a powerful zoom lens. Some other', u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  # important features thatThese cameras contain electronic viewfinder,         <!-- comment1 comment -->   
-  _m.extend( [u'important features thatThese cameras contain electronic viewfinder,', u'\n', u'        <!--', u' comment1 comment ', u'-->', u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  # full control while shooting. In general, these cameras are all seem 
-  _m.extend( [u'full control while shooting. In general, these cameras are all seem ', u'\n'] )
-  # very similar.     
-  _m.extend( [u'very similar.', u'\n'] )
-  # <p#${b}> Sign my guestbook
-  _m.pushbuf()
-  _m.extend( [u'p', u'<p'] )
-  _m.pushbuf()
-  _m.extend( [u'#'] )
-  _m.append( _m.evalexprs(b, '') )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
   _m.extend( [''] )
-  _m.append( _m.popbuftext() )
+  _m.append(_m.evalexprs( 'a+2', '', globals(), locals()) )
+  _m.extend( ['\n    '] )
   _m.pushbuf()
-  _m.extend( [''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'> ', u'</p>'] )
+  _m.extend( ['<head #headid .cls1.'] )
+  _m.append(_m.evalexprs( 'c.strip(\n        )', '', globals(), locals()) )
+  _m.extend( [' "title" {color:red} lang="en"\n     data="hello">'] )
   _m.pushbuf()
-  _m.extend( [u'Sign my guestbook'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['\n      '] )
+  _m.pushbuf()
+  _m.extend( ['<title #titleid .cls1 "title \n        string">'] )
+  _m.pushbuf()
+  _m.extend( [' hello '] )
+  _m.append(_m.evalexprs( 'c', '', globals(), locals()) )
+  _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.pushbuf()
+  _m.extend( ['<body>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      '] )
+  _m.pushbuf()
+  _m.extend( ['<h1 { color : red;\n  border : 1px solid gray;\n      }>'] )
+  _m.pushbuf()
+  _m.extend( [' I am the space station '] )
+  _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
+  _m.extend( [' seven cameras', '\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['<!--', ' comment1\n     comment ', '-->', '\n      ', 'have a zoom range', '\n      '] )
+  _m.pushbuf()
+  _m.extend( ['<p first\n      second>'] )
+  _m.pushbuf()
+  _m.extend( [' of any 12x or more,', '\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['<!--', ' comment1\n         comment ', '-->', '\n      ', 'and some of the wide-angle view', '\n      '] )
+  _m.pushbuf()
+  _m.extend( ['<div>'] )
+  _m.pushbuf()
+  _m.extend( [' of good. They also have a', '\n        ', 'lot of image stabilization (either optical or mechanical), which is', '\n        ', 'important for people who are with a powerful zoom lens. Some other', '\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['important features thatThese cameras contain electronic viewfinder,', '\n        ', '<!--', ' comment1 comment ', '-->', '\n  \n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['full control while shooting. In general, these cameras are all seem', '\n      ', 'very similar.', '\n    \n      '] )
+  _m.pushbuf()
+  _m.extend( ['<p #'] )
+  _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
+  _m.extend( ['>'] )
+  _m.pushbuf()
+  _m.extend( [' Sign my guestbook', '\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
-# def func10():
+
 def func10():  
   _m.pushbuf()
   world = 10
-  # <form#idname   formname "${}http://   google.com" > ${ "hello " + str(10) +      ' world' }
   _m.pushbuf()
-  _m.extend( [u'form', u'<form  id="idname"   action="${}http://\n  google.com" > ', u'</form>'] )
+  _m.extend( ['<form #idname formname "', 'http://\n  google.com" >'] )
   _m.pushbuf()
-  _m.append( _m.evalexprs("hello " + str(10) +     ' world', '') )
-  _m.extend( [u'\n'] )
-  # <input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>
+  _m.extend( [' '] )
+  _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
+  _m.extend( ['\n      '] )
   _m.pushbuf()
-  _m.extend( [u'input', u'<input '] )
+  _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
+  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+  _m.extend( ['}>'] )
   _m.pushbuf()
-  _m.append( _m.Attributes( _attrstext=' ' ))
-  _m.append( _m.popbuf() )
-  _m.pushbuf()
-  _m.extend( [u"' title= hello "] )
-  _m.append( _m.evalexprs(world, '') )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</input>'] )
-  _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['\n\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
-# ---- Interface functions
-# ---- Footer
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl'
+# ---- Interface functions
+
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl' 

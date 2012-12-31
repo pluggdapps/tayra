@@ -1,54 +1,43 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
-def body(  ) :  
+def body( *args, **kwargs ) :  
   _m.pushbuf()
   world = 'jasper'
-  # <form#idname formname "${}http:// google.com" > ${ "hello " + str(10) +   ' world' }
   _m.pushbuf()
-  _m.extend( [u'form', u'<form  id="idname"   action="${}http://\ngoogle.com" > ', u'</form>'] )
+  _m.extend( ['<form #idname\nformname "', 'http://\ngoogle.com" >'] )
   _m.pushbuf()
-  _m.append( _m.evalexprs("hello " + str(10) +   ' world', '') )
-  _m.extend( [u'\n'] )
-  # <input>   <!-- Comment  -->
+  _m.extend( [' '] )
+  _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
+  _m.extend( ['\n    '] )
   _m.pushbuf()
-  _m.extend( [u'input', u'<input  >', u'</input>'] )
+  _m.extend( ['<input>'] )
   _m.pushbuf()
-  _m.extend( [u'\n\n', u' <!--', u' Comment\n ', u'-->', u'\n'] )
-  # <input>          <!-- Comment          -->    
+  _m.extend( ['\n\n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['<!--', ' Comment\n    ', '-->', '\n    '] )
   _m.pushbuf()
-  _m.extend( [u'input', u'<input  >', u'</input>'] )
+  _m.extend( ['<input>'] )
   _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n', u'         <!--', u' Comment\n         ', u'-->', u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
-  # <input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello ${world}}>       
+  _m.extend( ['\n       ', '<!--', ' Comment\n       ', '-->', '\n   \n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.pushbuf()
-  _m.extend( [u'input', u'<input '] )
+  _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
+  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+  _m.extend( ['}>'] )
   _m.pushbuf()
-  _m.append( _m.Attributes( _attrstext=' ' ))
-  _m.append( _m.popbuf() )
-  _m.pushbuf()
-  _m.extend( [u"' title= hello "] )
-  _m.append( _m.evalexprs(world, '') )
-  _m.append( _m.popbuftext() )
-  _m.pushbuf()
-  _m.extend( [''] )
-  _m.append( _m.popbuf() )
-  _m.extend( [u'>', u'</input>'] )
-  _m.pushbuf()
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=True, nl='\n' )
+  _m.extend( ['\n      \n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
 # ---- Global Functions
 # ---- Interface functions
-# ---- Footer
 
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/tag.ttl'
+# ---- Footer
+_ttlhash = ''
+_ttlfile = '././test/stdttl/tag.ttl' 

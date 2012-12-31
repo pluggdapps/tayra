@@ -1,37 +1,31 @@
-
-from   StringIO             import StringIO
-from   zope.interface       import implements
+import imp
+from   io                   import StringIO
+from   pluggdapps.plugin    import Plugin, implements
 from   tayra                import BaseTTLPlugin
+from   tayra.decorator      import *
 
 
-
-def body(  ) :  
+def body( *args, **kwargs ) :  
   _m.pushbuf()
   _m.extend( ['<!DOCTYPE html>\n'] )
   return _m.popbuftext()
 
 # ---- Global Functions
 
-# def render( *args, **kwargs ):
 def render( *args, **kwargs ):  
   _m.pushbuf()
-  # <div> interface successfully invoked
   _m.pushbuf()
-  _m.extend( [u'div', u'<div  > ', u'</div>'] )
+  _m.extend( ['<div>'] )
   _m.pushbuf()
-  _m.extend( [u'interface successfully invoked'] )
-  _m.handletag( _m.popbuf(), _m.popbuf(), indent=False, nl='' )
-  _m.extend( [u'\n'] )
+  _m.extend( [' interface successfully invoked', '\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
+
 # ---- Interface functions
+from  tayra.interfaces import ITayraTestInterface
+class XYZTestInterface( BaseTTLPlugin ):
+  implements(ITayraTestInterface) 
 
-from  tayra.interfaces import ITestInterface
-class Interface_1( BaseTTLPlugin ):
-  implements(ITestInterface)
-  itype = 'ttlplugin'
-  render = render
-_m.register( Interface_1(), ITestInterface, u'testinterface' )
 # ---- Footer
-
-_ttlhash = None
-_ttlfile = '/home/pratap/mybzr/pratap/dev/tayra/tayra/test/stdttl/implementer.ttl'
+_ttlhash = ''
+_ttlfile = '././test/stdttl/implementer.ttl' 

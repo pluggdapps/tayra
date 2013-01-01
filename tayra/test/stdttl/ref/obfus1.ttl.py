@@ -29,4 +29,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/obfus1.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/obfus1.ttl' 

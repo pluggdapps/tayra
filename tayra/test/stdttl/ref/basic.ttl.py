@@ -48,4 +48,4 @@ class XYZPlugin( BaseTTLPlugin ):
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/basic.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/basic.ttl' 

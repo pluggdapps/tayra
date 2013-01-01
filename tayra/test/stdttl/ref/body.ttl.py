@@ -25,4 +25,4 @@ def body( id="hello", cls="world", style='color: red;', *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/body.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/body.ttl' 

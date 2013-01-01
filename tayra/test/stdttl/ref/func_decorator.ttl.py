@@ -60,4 +60,4 @@ def func( a ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/func_decorator.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/func_decorator.ttl' 

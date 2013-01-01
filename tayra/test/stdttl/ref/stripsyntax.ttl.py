@@ -85,4 +85,4 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/stripsyntax.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/stripsyntax.ttl' 

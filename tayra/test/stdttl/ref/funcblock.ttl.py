@@ -250,4 +250,4 @@ def func10():
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/funcblock.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl' 

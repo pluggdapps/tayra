@@ -28,4 +28,4 @@ class XYZTestInterface( BaseTTLPlugin ):
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/implementer.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/implementer.ttl' 

@@ -50,4 +50,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/escfilters.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/escfilters.ttl' 

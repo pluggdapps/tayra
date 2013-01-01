@@ -14,4 +14,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/empty.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/empty.ttl' 

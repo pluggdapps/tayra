@@ -106,4 +106,4 @@ def helloworld( x=10, y=20, a='wer', b='ehl' ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/fb_pycode.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/fb_pycode.ttl' 

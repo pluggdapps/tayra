@@ -31,4 +31,4 @@ def render( a ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/exprs1.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/exprs1.ttl' 

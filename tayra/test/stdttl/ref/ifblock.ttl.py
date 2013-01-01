@@ -207,4 +207,4 @@ def func( a, x, y, z, s ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/ifblock.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/ifblock.ttl' 

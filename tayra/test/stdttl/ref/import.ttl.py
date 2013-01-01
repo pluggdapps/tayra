@@ -30,4 +30,4 @@ def body_leftpane() :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/import.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/import.ttl' 

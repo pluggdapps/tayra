@@ -221,4 +221,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/whileblock.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/whileblock.ttl' 

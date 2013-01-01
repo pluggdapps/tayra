@@ -62,4 +62,4 @@ def willbecomeglobal( *args ):
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/escapes.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/escapes.ttl' 

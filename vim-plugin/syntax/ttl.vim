@@ -49,7 +49,7 @@ syn include @Python         syntax/python.vim
 "syn region  blockTTL        start="^\z([ \t]*\)" end="^\z1" contains=prolog
 
 " Prolog
-syn match   prologKeywords  contained "@doctype\|@import\| as \|@body\|@inherit\|@implement\|@from"
+syn match   prologKeywords  contained "@doctype\|@import\| as \|@body\|@inherit\|@implement\|@from\|import"
 syn region  prolog          start="^@[!dibf]" end="[ \t]*$" contains=prologKeywords,ttlString
 
 "Filterblock

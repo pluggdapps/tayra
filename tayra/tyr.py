@@ -17,93 +17,39 @@ from   pluggdapps.plugin   import ISettings
 import tayra
 from   tayra.utils         import Context
 
-def options() :
+def mainoptions() :
     # Setup main script arguments
     description = "Pluggdapps command line script"
     argparser = ArgumentParser( description=description )
     argparser.add_argument( 
-            '-o', '--outfile', dest='ofile',
-            default=None,
-            help='Outfile to dump the result' )
-    argparser.add_argument( 
-            '-l', dest='ttllex',
-            action='store_true',
+            '-l', dest='ttllex', action='store_true',
             help='Do lexical analysis of input file.' )
-    argparser.add_argument( 
-            '-p', dest='ttlyacc',
-            action='store_true',
-            help='Parse the file, check the dump and show the tree.' )
     argparser.add_argument(
-            '-d', dest='dump',
-            action='store_true',
+            '-d', dest='dump', action='store_true',
             help='Dump translation' )
     argparser.add_argument(
-            '-s', dest='show',
-            action='store_true',
+            '-s', dest='show', action='store_true',
             help='Show AST parse tree' )
     argparser.add_argument(
-            '-t', dest='test',
-            action='store_true', 
+            '-t', dest='test', action='store_true', 
             help='Execute test cases.' )
-    argparser.add_argument( 
-            '-x', dest='execute',
-            action='store_true', 
-            help='Executable and generate html' )
     argparser.add_argument(
-            '-a', dest='args',
-            default='[]',
+            '-a', dest='args', default='[]',
             help='Argument to template' )
     argparser.add_argument(
-            '-c', dest='context',
-            default='{}',
+            '-c', dest='context', default='{}',
             help='Context to template' )
     argparser.add_argument(
-            '-g', dest='debug',
-            default='0',
+            '-g', dest='debug', default='0',
             help='Debug level for PLY argparser' )
     argparser.add_argument(
-            '--version', dest='version',
-            action='store_true',
+            '--version', dest='version', action='store_true',
             help='Version information of the package' )
     argparser.add_argument( 
             'ttlfile',
             help='Output html file to store translated result' )
 
     return argparser
-
-def translatefile( pa, options ):
-    args = eval( options.args )
-    context = eval( options.context )
-    context.update( _bodyargs=args )
-
-    # Initialize plugins
-    setts = {
-        'lex_debug' : int(options.debug),
-        'yacc_debug' : int(options.debug),
-    }
-    # Setup parser
-    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
-    compiler._init( file=options.ttlfile )
-    pyfile = compiler.ttlfile+'.py'
-    htmlfile = join( dirname(compiler.ttlfile), 
-                     basename(compiler.ttlfile).rsplit('.', 1)[0] + '.html' )
-
-    # Intermediate file should always be encoded in 'utf-8'
-    enc = compiler.encoding[:-4] if compiler.encoding.endswith('-sig') else \
-            compiler.encoding # -sig is used to interpret BOM
-
-    print( "Generating py / html file ... " )
-    pytext, code = compiler.compile()
-
-    # Generate
-    module = compiler.load( code, context=context )
-    html = compiler.generatehtml( module, context )
-    open( htmlfile, mode='w', encoding=enc ).write( html )
-
-    # This is for measuring performance
-    # st = time.time()
-    # [ compiler.generate( context, code ) for i in range(2) ]
-    # print( (time.time() - st) / 2 )
 
 #---- Lexer operations.
 def fetchtoken( ttllex, stats ) :
@@ -117,7 +63,7 @@ def fetchtoken( ttllex, stats ) :
 def lexical( pa, options ):
     from tayra.lexer import TTLLexer
     stats = {}
-    setts = { 'parse_optimize' : False }
+    setts = { 'optimize' : 0 }
     compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
     ttllex = TTLLexer( compiler )
     ttllex.build( ttlfile=options.ttlfile )
@@ -129,7 +75,7 @@ def lexical( pa, options ):
 #---- Parser operations.
 def yaccer( pa, options, debuglevel=0 ):
     from tayra.parser import TTLParser
-    setts = { 'parse_optimize' : False }
+    setts = { 'optimize' : 0 }
     compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
     ttlparser = TTLParser( compiler )
     text   = open( options.ttlfile, encoding='utf-8-sig' ).read()
@@ -140,30 +86,25 @@ def yaccer( pa, options, debuglevel=0 ):
     return ast
 
 if __name__ == '__main__' :
-    argparser = options()
+    argparser = mainoptions()
     options = argparser.parse_args()
     pa = Pluggdapps.boot( None )
     
+    # Initialize plugins
+    setts = {
+        'lex_debug'  : int( options.debug ),
+        'yacc_debug' : int( options.debug ),
+        'debug'      : True,
+    }
+
+    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
     if options.version :
         print( tayra.__version__ )
 
     elif options.test :
-        print( "Executing TTL tests" )
-        stdttl = join( dirname(__file__), 'test', 'stdttl' )
-        stdrefttl = join( dirname(__file__), 'test', 'stdttl', 'ref' )
-        ttlfiles = os.listdir( stdttl )
-        for ttlfile in ttlfiles :
-            if ttlfile.endswith( '.ttl' ) :
-                ttlfile = join( stdttl, ttlfile )
-                print( ttlfile )
-                options.ttlfile = ttlfile
-                translatefile( pa, options )
-                pyfile = ttlfile + '.py'
-                htmlfile = ttlfile.rsplit('.', 1)[0] + '.html'
-                os.system( 'diff %s %s' % ( 
-                    pyfile, join( stdrefttl, basename(pyfile) )  ))
-                os.system( 'diff %s %s' % ( 
-                    htmlfile, join( stdrefttl, basename(htmlfile) )  ))
+        from tayra.test.teststd import test_stdttl
+        print( "Executing TTL tests ..." )
+        test_stdttl( compiler, options )
 
     elif options.ttllex and options.ttlfile : 
         print( "Lexing file %r ..." % options.ttlfile )
@@ -186,5 +127,5 @@ if __name__ == '__main__' :
         ast.show()
 
     elif options.ttlfile and isfile( options.ttlfile ) :
-        translatefile( pa, options )
+        tayra.translatefile( options.ttlfile, compiler, options )
 

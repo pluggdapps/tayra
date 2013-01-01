@@ -4,11 +4,9 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-import imp, os, codecs, re
-from   os.path              import isfile, isdir, basename, join, dirname
+import imp, os, re
+from   os.path              import isfile, basename, join
 from   hashlib              import sha1
-from   xml.etree            import ElementTree
-from   bs4                  import BeautifulSoup
 
 from   pluggdapps.plugin    import Plugin, implements, ISettings
 import pluggdapps.utils     as h
@@ -16,24 +14,25 @@ from   pluggdapps.web.webinterfaces import IHTTPRenderer
 
 _defaultsettings = h.ConfigDict()
 _defaultsettings.__doc__ = (
-    "Configuration settings for tayra template engine." )
+    "Configuration settings for tayra compiler." )
 
 _defaultsettings['debug']  = {
-    'default'  : True,
+    'default'  : False,
     'types'    : (bool,),
     'help'     : "Compile in debug mode."
 }
-_defaultsettings['parse_optimize']    = {
-    'default' : True,
-    'types'   : (bool,),
-    'help'    : "PLY-Lexer-Yacc option. "
-                "Set to False when you're modifying the lexer/parser. "
-                "Otherwise, changes in the lexer/parser won't be used, "
-                "if some lextab.py file exists. When releasing with a stable "
-                "version, set to True to save the re-generation of the "
-                "lexer/parser table on each run. Also note that, using "
-                "python's optimization feature can break this option, refer, "
-                "    http://www.dabeaz.com/ply/ply.html#ply_nn38 "
+#---- PLY options.
+_defaultsettings['optimize']    = {
+    'default' : 1,
+    'types'   : int,
+    'help'    : "PLY Lexer/Yaccer option. "
+                "For improved performance, it may be desirable to use Python's "
+                "optimized mode (e.g., running Python with the -O option). "
+                "However, doing so causes Python to ignore documentation "
+                "strings. This presents special problems for lexer and parser. "
+                "To handle this case, you can set this parameter to ``1``. For "
+                "more information refer, "
+                " http://www.dabeaz.com/ply/ply.html#ply_nn15."
 }
 _defaultsettings['lextab']    = {
     'default' : 'lextyrtab',
@@ -68,17 +67,19 @@ _defaultsettings['yacc_outputdir'] = {
     'help'    : "To change the directory in which the PLY YACC's parsetab.py "
                 "file (and other output files) are written."
 }
+
+#----
+_defaultsettings['encoding']             = {
+    'default' : 'utf-8-sig',
+    'types'   : (str,),
+    'help'    : "Encoding to use while reading the template script file."
+}
 _defaultsettings['strict_undefined']    = {
     'default' : False,
     'types'   : (bool,),
     'help'    : "Boolean to raise exception for undefined context variables. "
                 "If set to false, undefined variables will be silently "
                 "digested as 'None' string. "
-}
-_defaultsettings['encoding']             = {
-    'default' : 'utf-8-sig',
-    'types'   : (str,),
-    'help'    : "Encoding to use while reading the template script file."
 }
 _defaultsettings['directories']             = {
     'default' : '.',
@@ -93,7 +94,7 @@ _defaultsettings['module_directory']        = {
                 "intermediate python file."
 }
 _defaultsettings['escape_filters']          = {
-    'default' : '',
+    'default' : 'CommonEscapeFilters',
     'types'   : ('csv', list),
     'help'    : "Comma separated list of default escape filters to be applied "
                 "during expression substitution."
@@ -103,8 +104,8 @@ _defaultsettings['input_encoding']          = {
     'types'   : (str,),
     'help'    : "Default input encoding for .ttl file."
 }
-_defaultsettings['usetagplugins']           = {
-    'default' : ['TayraHTML5Forms', 'TayraHTML5', 'TayraTags'],
+_defaultsettings['use_tag_plugins']           = {
+    'default' : 'TayraHTML5Forms, TayraHTML5, TayraTags',
     'types'   : ('csv', list),
     'help'    : "Comma separated list of tag plugin namespaces to use. Only "
                 "plugins that are registered under the requested namespace "
@@ -116,25 +117,11 @@ _defaultsettings['beautify_html']                = {
     'help'    : "Boolean, if True will generate human readable html output. "
                 "bothering about indentation."
 }
-_defaultsettings['plugin_packages']         = {
-    'default' : '',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of plugin packages that needs to be "
-                "imported, before compiling template files."
-}
 _defaultsettings['memcache']                = {
     'default' : True,
     'types'   : (bool,),
     'help'    : "Cache the compiled python code in-memory to avoid "
                 "re-compiling .ttl to .py file."
-}
-_defaultsettings['text_as_hashkey']         = {
-    'default' : False,
-    'types'   : (bool,),
-    'help'    : "To be used with 'memcache' option, where the cache tag "
-                "will be computed using .ttl file's text content. This "
-                "will have a small performance penalty instead of using "
-                "template's filename as key."
 }
 _defaultsettings['entry_function']  = {
     'default'  : 'body',
@@ -285,6 +272,7 @@ class TTLCompiler( Plugin ):
             kwargs = context.get( '_bodykwargs', {} )
             html = entry( *args, **kwargs ) if callable( entry ) else ''
             try :
+                from bs4 import BeautifulSoup
                 if self['beautify_html'] :
                     html = BeautifulSoup( html ).prettify()
             except :
@@ -324,17 +312,15 @@ class TTLCompiler( Plugin ):
         """:meth:`pluggdapps.plugin.ISettings.normalize_settings` interface 
         method."""
         sett['debug'] = h.asbool( sett['debug'] )
-        sett['parse_optimize'] = h.asbool( sett['parse_optimize'] )
+        sett['optimize'] = h.asint( sett['optimize'] )
         sett['lex_debug'] = h.asint( sett['lex_debug'] )
         sett['yacc_debug'] = h.asint( sett['yacc_debug'] )
         sett['strict_undefined'] = h.asbool( sett['strict_undefined'] )
         sett['directories'] = h.parsecsvlines( sett['directories'] )
         sett['escape_filters'] = h.parsecsvlines( sett['escape_filters'] )
-        sett['usetagplugins'] = h.parsecsvlines( sett['usetagplugins'] )
-        sett['plugin_packages'] = h.parsecsvlines( sett['plugin_packages'] )
+        sett['use_tag_plugins'] = h.parsecsvlines( sett['use_tag_plugins'] )
         sett['beautify_html'] = h.asbool( sett['beautify_html'] )
         sett['memcache'] = h.asbool( sett['memcache'] )
-        sett['text_as_hashkey'] = h.asbool( sett['text_as_hashkey'] )
         return sett
 
 class TemplateLookup( object ) :
@@ -385,8 +371,7 @@ class TemplateLookup( object ) :
         else :
             raise Exception( 'Invalid ttl source !!' )
 
-        self.ttlhash = sha1(self.ttltext.encode('utf-8')).hexdigest() \
-                            if compiler['text_as_hashkey'] else self.ttlfile
+        self.ttlhash = sha1( self.ttltext.encode('utf-8') ).hexdigest()
 
     def charset( self, ttlfile=None, parselines=None, encoding=None ):
         """Charset must come as parameter specifier for @doctype directive

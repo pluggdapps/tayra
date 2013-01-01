@@ -10,8 +10,8 @@ import_header = """\
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *"""
+import pluggdapps.utils     as h
+from   tayra                import BaseTTLPlugin"""
 
 footer = """\
 _ttlhash = %r
@@ -134,8 +134,7 @@ class InstrGen( object ):
             codeblock = interfaceClass % ( mod, ifname, pluginname, ifname )
             # hitch methods with interface class
             methods = interfaces_.get( ifname, [] )
-            # methodlines = [ '  %s = %s' % (meth, meth) for meth in methods ]
-            methodlines = []
+            methodlines = [ '  %s = %s' % (meth, meth) for meth in methods ]
             self.putblock( '\n'.join( [codeblock] + methodlines ) )
 
     def useinterface( self, module, interfacename, pluginname, name ):

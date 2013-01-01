@@ -51,6 +51,7 @@ setup(
         ],
         'pluggdapps' : [
             'package=tayra:package',
+            'loadttls=tayra:loadttls',
         ]
     },
     install_requires=[                      # setuptools

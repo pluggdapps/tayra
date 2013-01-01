@@ -9,40 +9,38 @@ import re, urllib.parse, html
 from   pluggdapps.plugin    import Plugin, implements
 from   tayra.interfaces     import ITayraEscapeFilter
 
-class UrlEscapeFilter( Plugin ):
-    """Assume text as url and quote using urllib.parse.quote()"""
+class CommonEscapeFilters( Plugin ):
     implements( ITayraEscapeFilter )
-    codename = 'u'
-    def filter( self, mach, text ):
-        return urllib.parse.quote( text )
 
-
-class XmlEscapeFilter( Plugin ):
-    """Assume text as XML, and apply escape encoding."""
-    implements( ITayraEscapeFilter )
-    codename = 'x'
-    escapes = {
+    xmlescapes = {
         '&' : '&amp;',
         '>' : '&gt;', 
         '<' : '&lt;', 
         '"' : '&#34;',
         "'" : '&#39;',
     }
-    def filter( self, mach, text ):
-        return re.sub( r'([&<"\'>])', lambda m: self.escapes[m.group()], text )
+    def filter( self, mach, name, text ):
+        handler = getattr( self, name, self.default )
+        return handler( mach, text )
 
+    def u( self, mach, text ):
+        """Assume text as url and quote using urllib.parse.quote()"""
+        return urllib.parse.quote( text )
 
-class HtmlEscape( Plugin ):
-    """Assume text as HTML and apply html.escape( quote=True )"""
-    implements( ITayraEscapeFilter )
-    codename = 'h'
-    def filter( self, mach, text ):
+    def x( self, mach, text ):
+        """Assume text as XML, and apply escape encoding."""
+        return re.sub( r'([&<"\'>])', 
+                       lambda m: self.xmlescapes[m.group()], text )
+
+    def h( self, mach, text ):
+        """Assume text as HTML and apply html.escape( quote=True )"""
         return html.escape( text, quote=True )
 
-
-class Trim( Plugin ):
-    """Strip whitespaces before and after text using strip()"""
-    implements( ITayraEscapeFilter )
-    codename = 't'
-    def filter( self, mach, text ):
+    def t( self, mach, text ):
+        """Strip whitespaces before and after text using strip()"""
         return text.strip()
+
+    def default( self, mach, text ):
+        """Default handler. Return ``None`` so that runtime will try other
+        plugins implementing the filter."""
+        return None

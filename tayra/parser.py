@@ -21,13 +21,15 @@ class TTLParser( object ):
         self.compiler = compiler
 
     def _initialize( self, ttlfile=None ) :
-        optimize = self.compiler['parse_optimize']
+        optimize = self.compiler['optimize']
         lex_debug = self.compiler['lex_debug']
-        yacc_debug = self.compiler['yacc_debug']
         lextab = self.compiler['lextab']
+        yacc_debug = self.compiler['yacc_debug']
         yacctab = self.compiler['yacctab']
-        outputdir = self.compiler['yacc_outputdir']
+        yacc_outputdir = self.compiler['yacc_outputdir']
+
         self.ttlfile = ttlfile
+
         # Build Lexer
         self.ttllex = TTLLexer( self.compiler )
         kwargs = { 'ttlfile' : ttlfile }
@@ -37,10 +39,11 @@ class TTLParser( object ):
         self.ttllex.build( **kwargs )
         self.tokens = self.ttllex.tokens    # Important for YACCer
         self.ttllex.reset_lineno()
+
         # Build Yaccer
         kwargs = {'optimize' : optimize} if optimize else {}
         kwargs.update( debug=yacc_debug )
-        kwargs.update( outputdir=outputdir ) if outputdir else None
+        kwargs.update( outputdir=yacc_outputdir ) if yacc_outputdir else None
         kwargs.update( tabmodule=yacctab )
         self.parser = ply.yacc.yacc( module=self, **kwargs )
         self.parser.ttlparser = self     # For AST nodes to access `this`

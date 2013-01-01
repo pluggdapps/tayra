@@ -1,5 +1,5 @@
 @doctype html
 @implement tayra.interfaces:ITayraTestInterface as XYZTestInterface
 
-@interface ITayraTestInterface.render( *args, **kwargs ):
-  <div> interface successfully invoked
+@interface ITayraTestInterface.render( self, *args, **kwargs ):
+  <div> interface successfully invoked, okay

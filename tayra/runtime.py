@@ -43,9 +43,10 @@ class StackMachine( object ) :
         self.compiler = compiler
         self.encoding = compiler.encoding
         self.tagplugins = [ compiler.query_plugin( ITayraTags, name )
-                                for name in compiler['usetagplugins'] ]
-        self.escfilters = compiler.query_plugins( ITayraEscapeFilter )
-        self.escfilters = { x.codename : x for x in self.escfilters }
+                                for name in compiler['use_tag_plugins'] ]
+        self.escfilters = [
+            compiler.query_plugin( ITayraEscapeFilter, name ) 
+            for name in compiler['escape_filters'] ]
         self.filterblocks = compiler.query_plugins( ITayraFilterBlock )
         self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
         self.bufstack = [ [] ]
@@ -113,7 +114,11 @@ class StackMachine( object ) :
     def evalexprs( self, text, filters, globals_, locals_ ) :
         out = str( eval( text, globals_, locals_ ))
         for f in h.parsecsv( filters ) :
-            out = self.escfilters[f].filter( self, out )
+            for p in self.escfilters :
+                out1 = p.filter( self, f, out )
+                if out1 != None : 
+                    out = out1
+                    break
         return out
 
     def importttl( self, name, pyfile ):

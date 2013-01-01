@@ -9,8 +9,8 @@ from pluggdapps.plugin import Interface
 """The design of tayra template language is heavily based on plugins. The
 lexer and parser are just a glue logic over a very sophisticated plugin
 framework which does most of the language level heavy lifting. The plugin
-system pluggdapps component architecture, with interfaces specifying how 
-plugins need to be implemented. This specification acts as the base class
+system is based on pluggdapps component architecture, and specifies interfaces
+to be implemented plugins. This specification acts as the base class
 for all of tayra's interface specifications, which are :class:`ITayraTags`,
 :class:`ITayraEscapeFilter`, :class:`ITayraFilterBlock`.
 
@@ -44,21 +44,18 @@ class ITayraTags( Interface ):
             Decendants of this tag in plain string.
         """
 
-
 class ITayraEscapeFilter( Interface ):
     """Interface specification for escape filtering expression substitution.
     """
-
-    codename = ''
-    """Code name for the plugin implementing this interface. Typically a short
-    name that can be specified in the expression substitution syntax."""
-
-    def filter( mach, text ):
+    def filter( mach, name, text ):
         """Apply the filter logic to the text string and return processed
         text.
 
         ``mach``,
             is stack-machine instance.
+
+        ``name``,
+            name of the filter.
 
         ``text``
             text, result of expression substitution, to be filtered.

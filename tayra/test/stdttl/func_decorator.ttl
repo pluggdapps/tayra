@@ -1,3 +1,5 @@
+@from  tayra.decorators import * 
+
 @dec useragent( 'ff5' )
 @def func( a ) :
   <div> hey firefox 5 ${a}

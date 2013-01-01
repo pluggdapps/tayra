@@ -150,6 +150,7 @@ if __name__ == '__main__' :
     elif options.test :
         print( "Executing TTL tests" )
         stdttl = join( dirname(__file__), 'test', 'stdttl' )
+        stdrefttl = join( dirname(__file__), 'test', 'stdttl', 'ref' )
         ttlfiles = os.listdir( stdttl )
         for ttlfile in ttlfiles :
             if ttlfile.endswith( '.ttl' ) :
@@ -157,6 +158,12 @@ if __name__ == '__main__' :
                 print( ttlfile )
                 options.ttlfile = ttlfile
                 translatefile( pa, options )
+                pyfile = ttlfile + '.py'
+                htmlfile = ttlfile.rsplit('.', 1)[0] + '.html'
+                os.system( 'diff %s %s' % ( 
+                    pyfile, join( stdrefttl, basename(pyfile) )  ))
+                os.system( 'diff %s %s' % ( 
+                    htmlfile, join( stdrefttl, basename(htmlfile) )  ))
 
     elif options.ttllex and options.ttlfile : 
         print( "Lexing file %r ..." % options.ttlfile )

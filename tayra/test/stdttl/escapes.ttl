@@ -16,7 +16,7 @@
         ${ nestedfunc() }
       \@def escapedfunction():
         @\@pass
-      \${ this expresion is also escaped } and displayed as text
+      \\${ this expresion is also escaped } and displayed as text
       \@if so is this if block :
       \@elif block :
       \@else block :

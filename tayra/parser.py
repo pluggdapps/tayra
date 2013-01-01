@@ -217,9 +217,17 @@ class TTLParser( object ):
         p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
 
     def p_tagline_2( self, p ) :
-        """tagline      : TAGBEGIN TEXT NEWLINES"""
+        """tagline      : TAGBEGIN text NEWLINES"""
         terms = [ (TAGBEGIN, 1), (TEXT, 2), (NEWLINES, 3) ]
         p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
+
+    def p_text( self, p ):
+        """text         : TEXT
+                        | text TEXT"""
+        if len(p) == 2 :
+            p[0] = p[1]
+        else :
+            p[0] = p[1] + p[2]
 
     #---- Script blocks
 
@@ -234,12 +242,12 @@ class TTLParser( object ):
         p[0] = TagBlock( p.parser, *self._buildterms( p, terms ) )
 
     def p_textblock_1( self, p ) :
-        """textblock    : TEXT NEWLINES"""
+        """textblock    : text NEWLINES"""
         terms = [ None, (TEXT, 1), (NEWLINES, 2), None, None, None ]
         p[0] = TextBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_textblock_2( self, p ):
-        """textblock    : textblock TEXT NEWLINES"""
+        """textblock    : textblock text NEWLINES"""
         terms = [ p[1], (TEXT, 2), (NEWLINES, 3), None, None, None ]
         p[0] = TextBlock( p.parser, *self._buildterms(p, terms) )
 

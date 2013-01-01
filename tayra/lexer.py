@@ -101,7 +101,7 @@ class TTLLexer( object ) :
     attrvalue = r'("[^"\\]*(?:\\.[^"\\]*)*")'+r'|'+r"('[^'\\]*(?:\\.[^'\\]*)*')"
     finish    = r'OVER!!!!@\#END-OF-TEXT\#@!!!!OVER'
     prgsuffx  = r'(?=:[ \t]*$):[ \t]*$'
-    text      = r'[^\r\n]+'
+    text      = r'[^\r\n\\]+'
     exprsubst = r'(?<!\\)\$\{[^}]*\}'
 
     # Single line statements

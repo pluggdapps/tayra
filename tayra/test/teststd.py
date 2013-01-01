@@ -47,8 +47,8 @@ def test_stdttl( compiler, options ) :
             htmlfile = join( STDTTLDIR, f.split('.', 1)[0]+'.html' )
             refpyfile = join( STDTTLREFDIR, f+'.py' )
             refhtmlfile = join( STDTTLREFDIR, f.split('.', 1)[0]+'.html' )
-            #assert open( pyfile ).read() == open( refpyfile ).read()
-            #assert open( htmlfile ).read() == open( refhtmlfile ).read()
+            assert open( pyfile ).read() == open( refpyfile ).read()
+            assert open( htmlfile ).read() == open( refhtmlfile ).read()
 
 def mainoptions() :
     argparser = ArgumentParser( description="Test standard ttl files" )

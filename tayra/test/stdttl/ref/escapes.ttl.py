@@ -1,8 +1,8 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
 
 def body( *args, **kwargs ) :  
@@ -25,7 +25,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
-  _m.extend( ['\n      ', 'Escaping newlines \\', '\n      ', 'across textblocks, all of this belongs to body content.', '\n      ', '@def escapedfunction():', '\n        ', '@\\@pass', '\n      ', '\\${ this expresion is also escaped } and displayed as text', '\n      ', '@if so is this if block :', '\n      ', '@elif block :', '\n      ', '@else block :', '\n      ', '@for block :', '\n      ', '@while block :', '\n      ', 'all of them are interpreted as text.', '\n    '] )
+  _m.extend( ['\n      ', 'Escaping newlines       across textblocks, all of this belongs to body content.', '\n      ', '@def escapedfunction():', '\n        ', '@@pass', '\n      ', '\\${ this expresion is also escaped } and displayed as text', '\n      ', '@if so is this if block :', '\n      ', '@elif block :', '\n      ', '@else block :', '\n      ', '@for block :', '\n      ', '@while block :', '\n      ', 'all of them are interpreted as text.', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.extend( [''] )
   _m.append(_m.evalexprs( 'willbecomeglobal()', '', globals(), locals()) )

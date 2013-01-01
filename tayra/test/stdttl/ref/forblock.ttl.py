@@ -1,8 +1,8 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
 
 def body( *args, **kwargs ) :  
@@ -171,7 +171,9 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<form #idname\n  formname "', 'http://\n  google.com" >'] )
     _m.pushbuf()
-    _m.extend( [' ${ "hello " + str(10) + \\', '\n    ', "' world' }", '\n      '] )
+    _m.extend( [' '] )
+    _m.append(_m.evalexprs( '"hello " + str(10) +     \' world\'', '', globals(), locals()) )
+    _m.extend( ['\n      '] )
     _m.pushbuf()
     _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
     _m.append(_m.evalexprs( 'world', '', globals(), locals()) )

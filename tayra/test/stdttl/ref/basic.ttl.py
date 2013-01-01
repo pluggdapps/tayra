@@ -1,8 +1,8 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
 
 def body( *args, **kwargs ) :  
@@ -45,6 +45,8 @@ def render(
 from  tayra.interfaces import ITayraTestInterface
 class XYZPlugin( BaseTTLPlugin ):
   implements(ITayraTestInterface) 
+
+  render = render
 
 # ---- Footer
 _ttlhash = ''

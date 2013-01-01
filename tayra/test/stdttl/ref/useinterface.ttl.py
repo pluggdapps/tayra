@@ -1,8 +1,8 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
 from tayra.interfaces import ITayraTestInterface 
 
@@ -34,4 +34,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '././test/stdttl/useinterface.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/useinterface.ttl' 

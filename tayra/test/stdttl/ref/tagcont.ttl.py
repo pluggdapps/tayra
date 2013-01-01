@@ -1,8 +1,8 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
 
 def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :  

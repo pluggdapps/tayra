@@ -1,9 +1,10 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
+from  tayra.decorators import * 
 
 def body( *args, **kwargs ) :  
   _m.pushbuf()

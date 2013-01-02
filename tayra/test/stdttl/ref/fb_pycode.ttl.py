@@ -84,7 +84,7 @@ a = 'empty'
 def insideroot_butglobal():
   return '<div> insideroot_butglobal </div>'
 b = '<div> insidebody </div>'
-    
+
 
 def helloworld( x=10, y=20, a='wer', b='ehl' ) :  
   _m.pushbuf()
@@ -93,7 +93,7 @@ def helloworld( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   _m.extend( ['\n    '] )
   a = '<div> inside function </div>'
-      
+  
   _m.extend( [''] )
   _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
   _m.extend( ['\n    ', ''] )

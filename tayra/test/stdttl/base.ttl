@@ -1,0 +1,152 @@
+@import tayra:test/stdttl/element.ttl as blocks
+
+:py:
+favicon = 'static/paicon16x16.png'
+title = 'base-page'
+:py:
+
+<html>
+  <head .pluggdsite>
+    <link image/ico "${favicon}" rel="icon">
+    ${this.hd_title()}
+    ${this.hd_meta()}
+    ${this.hd_links()}
+    ${this.hd_styles()}
+    ${this.hd_script()}
+  <body .pluggdsite>
+    ${this.bd_header()}
+    ${this.bd_body()}
+    ${this.bd_footer()}
+
+
+##---- Head DOM
+
+@def hd_title() :
+  <title> ${title}
+
+@def hd_meta() :
+  @@pass
+
+@def hd_links() :
+  :py:
+  fnt_amaranth = 'static/fonts/amaranth/Amaranth-webfont.woff'
+  fnt_opensans = 'static/fonts/open_sans/OpenSans-Regular-webfont.woff'
+  :py:
+  <style text/css>
+    @font-face {
+      font-family: 'Amaranth';
+      font-style: normal;
+      font-weight: normal;
+      src: local('Amaranth'), url('${fnt_amaranth}') format('woff');
+    }
+    @font-face {
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: normal;
+      src: local('Open Sans'), url('${fnt_opensans}') format('woff');
+    }
+
+  @@defaultcss = 'static/default.css'
+  <link text/css "${defaultcss}" rel="stylesheet" charset="utf-8">
+    
+@def hd_styles() :
+  @@pass
+
+@def hd_script() :
+  @@jqueryfile = 'static/jquery-1.5.1.min.js'
+  @@jqlibfile = 'static/jqlib.js'
+  <script text/javascript "${jqueryfile}">
+  <script text/javascript "${jqlibfile}">
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26824958-1']);
+    _gaq.push(['_setDomainName', 'pluggdapps.com']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ?
+                  'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+
+
+##---- Body DOM
+
+@def bd_header() :
+  @@pass
+
+@def bd_body() :
+  <div #right>
+    ${ this.body_rightpane() }
+  <div #left>
+    ${ this.body_leftpane() }
+  <div #center>
+    ${ this.body_centerpane() }
+
+@def body_leftpane() :
+  <div .ralign.leftpane>
+    <ul>
+      <li>
+        <a "/index"> home
+      <li>
+        <a "/overview"> bootstrap
+      <li>
+        <a "/ispecroot"> Interface Specification Request
+      <li>
+        <a "/config"> Configuration
+      <li>
+        <a "/psite_getstarted"> Get Started
+
+@def body_centerpane() :
+  @@pass
+
+@def body_rightpane() :
+  <nav {font-size : x-large}>
+    <a .fntbold "/googlegroup"> Join
+  <br/>
+  <div .builton>
+    <b> built-on 
+    <ul>
+      <li>
+        <a "http://whatwg.org"> HTML5
+      <li>
+        <a "http://python.org"> python
+      <li>
+        <a "https://developer.mozilla.org/en/JavaScript_Language_Resources"> JavaScript
+      <li>
+        <a "http://erlang.org"> Erlang
+
+  <div .builtwith>
+    <b> built-with 
+    <ul>
+      <li>
+        <a "http://pylonsproject.com"> Pyramid
+      <li>
+        <a "http://eazytext.pluggdapps.com"> EazyText
+      <li>
+        <a "http://tayra.pluggdapps.com"> Tayra
+      <li>
+        <a "http://couchdb.org"> CouchDB
+      <li>
+        <a "http://couchpy.pluggdapps.com"> CouchPy
+      <li>
+        <a "http://jquery.com/"> jQuery
+
+  <div .builtfor>
+    <b> built-for 
+    <ul>
+      <li>
+        <a "http://pluggdapps.com"> pluggdapps.com
+
+@def bd_footer() :
+  <table #footer>
+    <tr>
+      <td .copyright>
+        An SKR Farms Initiative.
+        <br/>
+        Website content copyright © by SKR Farms. All rights reserved.
+        Pluggdapps and its documentation are licensed under "GPL Version-3".
+      <td .papowered>
+        ${ blocks.papowered( 100, 10 ) }

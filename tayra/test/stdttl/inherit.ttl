@@ -1,0 +1,188 @@
+<!-- 
+This file is subject to the terms and conditions defined in
+file 'LICENSE', which is part of this source code package.
+      Copyright (c) 2011 SKR Farms (P) LTD.
+-->
+
+@inherit tayra:test/stdttl/base.ttl
+
+${ parent.body() }
+
+@def hd_styles() :
+  ${ parent.hd_styles() }
+  <style text/css>
+    div.features {
+      margin : 0px 5px;
+    }
+    div.features p.title {
+      font-family : Amaranth, arial;
+      font-size : large;
+    }
+    div.features input[type="text"] {
+      margin : 10px 0px 0px 0px;
+      background-color : #444;
+      border : 1px solid gray;
+      width : 40%;
+      color : white;
+    }
+    div.features fieldset {
+      padding : 0px 3px 5px 3px;
+      margin : 0px 5px;
+      width : 45%;
+      border : 1px solid gray;
+    }
+    div.features fieldset legend {
+      font-weight : bold;
+      font-family : Amaranth, arial;
+    }
+    div.features fieldset div.keywords {
+      text-align : center;
+    }
+    div.search {
+      height : 5em;
+    }
+    div.features ul {
+      list-style : none; 
+      padding : 0px;
+      margin : 0px;
+    }
+    div.features ul li {
+      border-left : 1px solid crimson;
+      margin : 5px 0px;
+      background-color : #444;
+      padding : 3px;
+      padding-left : 5px;
+      font-weight : bold;
+      border-top : 1px solid #444;
+    }
+    div.features ul li:hover {
+      background-color : #999;
+      border-top : 1px solid #DDD;
+      color : black;
+      text-shadow : 0px 1px 1px #FFF, 0px 1px 1px black;
+      -moz-text-shadow : 0px 1px 1px #FFF, 0px 1px 1px black;
+      -webkit-text-shadow : 0px 1px 1px #FFF, 0px 1px 1px black;
+    }
+
+@def hd_script() :
+  ${ parent.hd_script() }
+  <script text/javascript>
+    var speed = 200;
+    $(document).ready( function() {
+      // Search
+      $('input.search').keydown( function(e) {
+        var patt = new RegExp( $('input.search').val(), "i" );
+        $('div.features li').each( function(index, n) {
+          patt.test( $(n).text() ) ? $(n).fadeIn(speed) : $(n).fadeOut(speed);
+        })
+      });
+      // Showall
+      $('.showall').click( function(e) {
+        $('div.features li').each( function(index, n) { $(n).fadeIn(speed); } )
+      });
+      // Direct search
+      $('.dsrch').click( function(e) {
+        var patt = new RegExp( $(this).text(), "i" );
+        console.log( $(this).text() );
+        $('div.features li').each( function(index, n) {
+          patt.test( $(n).text() ) ? $(n).fadeIn(speed) : $(n).fadeOut(speed);
+        })
+      });
+    });
+
+@def body_centerpane() :
+  ${ parent.body_centerpane() }
+  <div .features>
+    <p .title> Pluggdapps in a nutshell, that it is today and that it will be
+      tomorrow.
+    <div .search>
+      <inptext .search placeholder="Search features ...">
+      <a .showall.fntxsmall.pointer> show-all
+      <fieldset .floatr>
+        <legend> Common search terms
+        <div .keywords>
+          <span .dsrch.pointer.ralign>plugin
+          <span .dsrch.pointer.ralign>template
+          <span .dsrch.pointer.ralign>web|html
+          <span .dsrch.pointer.ralign>couch
+          <span .dsrch.pointer.ralign>tayra
+          <span .dsrch.pointer.ralign>program
+    <ul>
+      <li>Build applications on web-technologies. Build it on pluggdapps.
+      <li>Linus took unix to all programmers, and apt-get took Linux to all people.
+        In pluggdapps, deploy a website by installing a package.
+      <li>Not just websites, whether it is an application or web-application, libraries
+        or plugins or just couple of template files, deploy them by installing an egg
+        package.
+      <li>MVC (Model-View-Controller) is great. Plugin architecture is great. Do them
+        both in pluggdapps and get the best of both worlds.
+      <li>Should client and server run on different machines ? Not with pluggdapps.
+      <li>Pluggdapps run on python and javascript and web-browser and uses erlang for
+        database, hence, it can run on any device supporting them. Why not ?
+      <li>Library is a tool. Great libraries are stateless and re-entrant. For
+        pluggdapps, even applications are stateless and re-entrant.
+      <li>A framework is just a library, with callback APIs. A plugin is just a library,
+        with callback APIs. Hence, plugins are great way to design frameworks.
+      <li>To access a library, import them. To access plugins, query for them.
+      <li>Pluggdapps is not first to do it right, it merely tracks the footsteps of
+        its masters - Python, Zope, Pyramid, ...
+      <li>Interface will specify attributes, methods, method-signature and its function.
+        A callback API is nothing but an interface, hence, plugins are nothing but
+        a bunch of code implementing an interface. That pretty much sums up the
+        plugin architecture.
+      <li>Install applications and access them on the url.
+      <li>Configure and customize application along with modules, interfaces and plugins
+        used by the application. Configure them in .ini file, configure them via web.
+      <li>Applications are mounted on the url in three ways - domain, subdomain and
+        script. While the default is script, choose the one that fits, and
+        applications can be agnostic to how they are mounted.
+      <li>Url-rewriting. Requests are automatically routed to the mounted
+        application.
+      <li>Cross application access. For apps to access each other in the same run-time.
+      <li>Scaffolding. From first key-stroke to first application page in less than
+        30 seconds.
+      <li>Authenticate users and authorize them with permissions. Off-the-shelf plugins
+        available for challenging credentials and interfacing with backend store.
+      <li>Your browser has got the best documentation engine ever and wiki makes it
+        accessible. Use EazyText to create content for your apps.
+      <li>EazyText wiki markup. Generate HTML documents with out compromising on its
+        readability.
+      <li>With EazyText highlight your text as bold, italic, underline, subscript,
+        superscript and more.
+      <li>EazyText can hyperlink documents and images.
+      <li>Text in EazyText looks natural for reading. All the same it can generate
+        lists, tables, definitions, blockquotes and paragraphs.
+      <li>EazyText macros, create new functions and use them in your documents.
+      <li>EazyText extensions, extend the wiki engine.
+      <li>Become an expert in EazyText and create interactive documents.
+      <li>And EazyText is moving towards HTML5.
+      <li>With CSS and javascript, your browser can be way more than just a document
+        renderer. Use tayra templates to design your front end.
+      <li>HTML is verbose. Make it consise with Tayra.
+      <li>CSS Selector. That which pulls HTML, Javascript and CSS together.
+      <li>Tayra templating language. Bunch of syntax wrapped around a bunch of
+        specification. Adapt the language to your needs.
+      <li>Intendations are only natural to html. Why not enforce them ?
+      <li>Tayra templates. Define templates as function.
+      <li>Tayra templates. Organise template functions as modules. Import them in other
+        templates.
+      <li>Tayra templates. Templates are modules. Templates are objects. Use template
+        inheritance to design layouts.
+      <li>Tayra templates. Specify template interface. Implement template plugins. Use
+        them else-where.
+      <li>If you like decorators in python, you will like it in Tayra templates.
+      <li>NoSQL is cool. CouchDB is radical. Program your database with CouchPy.
+      <li>Don't you feel stored procedure in SQL as an after-thought ? After programming
+        (views,...) in CouchDB, there is a high chance you might.
+      <li>CouchDB on HTTP is nothing but CRUD on ReST.
+      <li>CouchPy for CouchDB. Model. Transact. Replicate. Program. Query. Eventually
+        consistent with MVCC.
+      <li>
+        <em>Programmers believe that the value of their system lies in
+          the whole, in the building: posterity discovers it in the bricks with which
+          they built and which are often used again for better building.
+      <li>
+        Be it internet apps, be it desktop apps, build them on pluggdapps, whether your
+        applications live or whither, your plugins will go on to build better apps.
+      <li>Start by contributing plugins, grow as you design apps and become a network
+        geek.

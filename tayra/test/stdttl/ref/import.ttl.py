@@ -6,7 +6,10 @@ from   tayra                import BaseTTLPlugin
 
 __compiler = _compiler()
 ttlcode = __compiler.compilettl( file='/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl' )
-f = __compiler.load( ttlcode, context=globals() )
+_context = globals()['_context']
+_context['_compiler'] = __compiler
+_context['this'] = this
+f = __compiler.load( ttlcode, context=_context )
 
 import os, sys
 

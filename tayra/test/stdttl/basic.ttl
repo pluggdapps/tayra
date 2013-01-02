@@ -1,13 +1,6 @@
-@implement tayra.interfaces:ITayraTestInterface as XYZPlugin
-
-@interface ITayraTestInterface.render(
-              this, id='', cssasset='bootstrap:static/paview_metanav.css' ):
-
-  <div #${id} .metanav-pa>
-    how are your world
-    @if cssasset :
-      @@pass
-
 <html>
   <head>
   <body> hello world
+    <div #${'idname'} .metanav-pa :some-name>
+      how are your world
+

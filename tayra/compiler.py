@@ -163,6 +163,15 @@ class TTLCompiler( Plugin ):
     mach = None
     """:class:`StackMachine` object."""
 
+    def __init__( self ):
+        from tayra.parser   import TTLParser
+        from tayra.codegen  import InstrGen
+        from tayra.runtime  import StackMachine
+        
+        self.ttlparser = TTLParser( self )
+        self.igen = InstrGen( self )
+        self.mach = StackMachine( self ) # Stack machine
+
     def __call__( self, **kwargs ):
         """Clone a plugin with the same settings as this one."""
         settings = {}
@@ -172,16 +181,6 @@ class TTLCompiler( Plugin ):
         return self.query_plugin( ISettings, 'ttlcompiler', **kwargs )
 
     def _init( self, file=None, text=None ):
-
-        #---- Move this to __init__
-        from tayra.parser   import TTLParser
-        from tayra.codegen  import InstrGen
-        from tayra.runtime  import StackMachine
-
-        self.ttlparser = TTLParser( self )
-        self.igen = InstrGen( self )
-        #----
-
         self.ttlloc = TemplateLookup( self, file, text )
         self.encoding = self.ttlloc.encoding
         self.ttlfile = self.ttlloc.ttlfile
@@ -189,15 +188,14 @@ class TTLCompiler( Plugin ):
         self.pyfile = self.ttlloc.pyfile
         self.modulename = basename( self.ttlfile ).split('.', 1)[0]
 
-        # Stack machine
-        self.mach = StackMachine( self.ttlfile, self )
+        self.mach._init( self.ttlfile )
 
         self.pytext = ''
         if self.ttlfile and isfile( self.ttlfile ) :
             if self.pyfile and isfile( self.pyfile ) :
                 m1 = os.stat( self.ttlfile ).st_mtime
                 m2 = os.stat( self.pyfile ).st_mtime
-                if m1 == m2 :
+                if m1 <= m2 :
                     self.pytext = open( self.pyfile ).read()
 
     def toast( self, ttltext=None ):
@@ -218,7 +216,7 @@ class TTLCompiler( Plugin ):
             open( self.pyfile, 'w', encoding='utf-8' ).write( pytext )
         return pytext
 
-    def compile( self, file=None, text=None, args=[], kwargs={} ):
+    def compilettl( self, file=None, text=None, args=[], kwargs={} ):
         """Translate TTL file into intermediate python code. Returns 
         compiled python intemediate file.
         
@@ -227,13 +225,13 @@ class TTLCompiler( Plugin ):
             AST.generate() pass.
         """
         self._init( file=file, text=text ) if (file or text) else None
-        self.pytext = self.pytext or self.topy( self.toast(), *args, **kwargs )
         code = self._memcache.get( self.ttlloc.ttlhash, None )
         if not code :
+            self.pytext = self.pytext or self.topy(self.toast(),*args,**kwargs)
             code = compile( self.pytext, self.ttlfile, 'exec' )
         if self['memcache'] :
             self._memcache.setdefault( self.ttlloc.ttlhash, code )
-        return (self.pytext, code)
+        return code
 
     def load( self, code, context={} ):
         """Load this ttl file."""
@@ -243,23 +241,16 @@ class TTLCompiler( Plugin ):
         module = imp.new_module( self.modulename )
         ctxt = {
             self.igen.machname : self.mach,
-            'tayra'   : self,
+            '_compiler'   : self,
             'self'    : Namespace( None, module ),
             'local'   : module,
             'parent'  : None,
             'next'    : None,
         }
-        for ttlfile, modname in getattr( self.ast, 'importttls', [] ) :
-            compiler = self()
-            pytext, ttlcode = compiler.compile( file=ttlfile )
-            ctxt[ modname ] = compiler.load( ttlcode, context={} )
         module.__dict__.update( ctxt )
         module.__dict__.update( context )
         # Execute the code in module's context
-        try :
-            exec( code, module.__dict__, module.__dict__ )
-        except :
-            print( h.print_exc() )
+        exec( code, module.__dict__, module.__dict__ )
         return module
 
     def generatehtml( self, module, context ):
@@ -296,7 +287,7 @@ class TTLCompiler( Plugin ):
         ``ttext``,
             Tayra template text string.
         """
-        pytext, code = self.compile( file=file, text=text )
+        code = self.compilettl( file=file, text=text )
         return self.generatehtml( self.load( code, context=c ), c )
 
     #---- ISettings interface methods
@@ -371,7 +362,7 @@ class TemplateLookup( object ) :
         else :
             raise Exception( 'Invalid ttl source !!' )
 
-        self.ttlhash = sha1( self.ttltext.encode('utf-8') ).hexdigest()
+            return self._ttlhash
 
     def charset( self, ttlfile=None, parselines=None, encoding=None ):
         """Charset must come as parameter specifier for @doctype directive
@@ -398,6 +389,12 @@ class TemplateLookup( object ) :
             m = re.search( b'charset="([^"]+")', parseline[8:] )
             encoding = m.groups()[0].decode('utf-8') if m else encoding
         return encoding
+
+    def _get_ttlhash( self ):
+        x = sha1( self.ttltext.encode('utf-8') ).hexdigest()
+        return x
+
+    ttlhash = property( _get_ttlhash )
 
 
 def supermost( module ):

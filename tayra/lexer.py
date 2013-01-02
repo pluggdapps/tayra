@@ -98,7 +98,8 @@ class TTLLexer( object ) :
     symbol    = r'[a-zA-Z0-9_.]+'
     attrtoken = r'[a-zA-Z0-9\-_"\']+'
     attrname  = r'[a-zA-Z0-9\-_]+'
-    attrvalue = r'("[^"\\]*(?:\\.[^"\\]*)*")'+r'|'+r"('[^'\\]*(?:\\.[^'\\]*)*')"
+    attrvalue = \
+        r'(?:"[^"\\]*(?:\\.[^"\\]*)*")'+r'|'+r"(?:'[^'\\]*(?:\\.[^'\\]*)*')"
     finish    = r'OVER!!!!@\#END-OF-TEXT\#@!!!!OVER'
     prgsuffx  = r'(?=:[ \t]*$):[ \t]*$'
     text      = r'[^\r\n\\]+'

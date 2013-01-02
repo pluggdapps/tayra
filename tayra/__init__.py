@@ -19,8 +19,9 @@ template_plugins = [
 
 def loadttls( pa, ttlfiles, compiler_setts={} ):
     for ttlfile in ttlfiles :
-        compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler' )
-        pytext, code = compiler.compile( file=ttlfile )
+        compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler',
+                                    settings=compiler_setts )
+        code = compiler.compilettl( file=ttlfile )
         compiler.load( code, context={} )
         print( "Loaded template plugin %r ..." % ttlfile )
 
@@ -28,7 +29,7 @@ def package( pa ) :
     """Entry point that returns a dictionary of key,value details about the
     package.
     """
-    loadttls( pa, template_plugins )
+    loadttls( pa, template_plugins, { 'debug' : True } )
     return {}
 
 def translatefile( ttlfile, compiler, options ):
@@ -50,7 +51,7 @@ def translatefile( ttlfile, compiler, options ):
     # Intermediate file should always be encoded in 'utf-8'
     enc = compiler.encoding[:-4] if compiler.encoding.endswith('-sig') else \
             compiler.encoding # -sig is used to interpret BOM
-    pytext, code = compiler.compile()
+    code = compiler.compilettl()
 
     # Generate
     module = compiler.load( code, context=context )

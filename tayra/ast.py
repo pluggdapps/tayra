@@ -20,6 +20,7 @@ To walk throug the AST,
 
 import sys, re
 import pluggdapps.utils as h
+from   os.path          import dirname
 
 from   tayra.utils      import directive_tokens
 from   tayra.interfaces import ITayraFilterBlock
@@ -538,10 +539,16 @@ class ImportAs( NonTerminal ):
     def headpass2( self, igen ):
         line = self.DIRECTIVE.dump(None)[1:]
         parts = list( filter( None, [ x for x in line.split(' ') ] ))
+        if self.parser.compiler.ttlfile :
+            relativeto = dirname( self.parser.compiler.ttlfile )
+        else :
+            relativeto = None
         if parts[1].endswith('.ttl') :
-            ttlfile = h.abspath_from_asset_spec( parts[1] )
+            ttlfile = h.abspath_from_asset_spec( 
+                                parts[1], relativeto=relativeto )
             assert parts[2] == 'as'
-            self.bubbleupaccum( 'importttls', (ttlfile, parts[3]) )
+            # self.bubbleupaccum( 'importttls', (ttlfile, parts[3]) )
+            igen.importttl( parts[3], ttlfile )
         else :
             igen.putstatement( line )
 
@@ -626,6 +633,7 @@ class Implement( NonTerminal ):
         [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
+#TODO : Remove this AST @use directive is removed.
 class Use( NonTerminal ):
     """class to handle `use` grammar."""
 

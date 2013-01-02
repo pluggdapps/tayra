@@ -30,28 +30,39 @@
 
 from cgi import escape
 import os
-from StringIO import StringIO
+from io import StringIO
 import sys
 import timeit
 
-__all__ = ['tayra', 'mako', 'mako_inheritance', 'cheetah', 'django', 'myghty', 'genshi', 'kid']
+import pluggdapps
+import tayra
 
-def tayra( dirname, verbose=False ):
-    from tayra     import Renderer
-    ttlconfig = {
-        'devmod' : False,
+__all__ = [
+    'tayratemplate', 'mako', 'mako_inheritance', 'myghty',
+    'genshi', 'kid'] # 'cheetah', 'django'
+
+class O( object ) : pass
+
+def tayratemplate( dirname, verbose=False ):
+    from pluggdapps.platform import Pluggdapps
+    from pluggdapps.plugin   import ISettings
+    pa = Pluggdapps.boot( None )
+    settings = {
         'directories' : [dirname],
+        'debug' : True,
+        'beautify_html' : False,
     }
-    context = dict( title='Just a test', user='joe',
-                    list_items=['Number %d' % num for num in range(1, 15)]
-                  )
-    r = Renderer( ttlloc='template.ttl', ttlconfig=ttlconfig )
-    r( context=context )
-    def render():
-        return r( context=context )
+    options = O()
+    compiler = pa.query_plugin(pa, ISettings, 'ttlcompiler', settings=settings)
+    options.context = dict( 
+            title='Just a test', user='joe',
+            list_items=['Number %d' % num for num in range(1, 15)]
+    )
+    def render() :
+        tayra.translatefile( './tayra/template.ttl', compiler, options )
 
     if verbose:
-        print render()
+        print( render() )
     return render
 
 def genshi(dirname, verbose=False):
@@ -64,7 +75,7 @@ def genshi(dirname, verbose=False):
         return template.generate(**data).render('xhtml')
 
     if verbose:
-        print render()
+        print( render() )
     return render
 
 def myghty(dirname, verbose=False):
@@ -77,18 +88,20 @@ def myghty(dirname, verbose=False):
         interpreter.execute("template.myt", request_args=data, out_buffer=buffer)
         return buffer.getvalue()
     if verbose:
-        print render()
+        print( render() )
     return render
 
 def mako(dirname, verbose=False):
     from mako.template import Template
     from mako.lookup import TemplateLookup
-    lookup = TemplateLookup(directories=[dirname], filesystem_checks=False, disable_unicode=True)
+    lookup = TemplateLookup(directories=[dirname], filesystem_checks=False)
     template = lookup.get_template('template.html')
     def render():
-        return template.render(title="Just a test", user="joe", list_items=[u'Number %d' % num for num in range(1,15)])
+        return template.render( 
+                    title="Just a test", user="joe", 
+                    list_items=[('Number %d' % num) for num in range(1,15)] )
     if verbose:
-        print template.code, render()
+        print( template.code, render() )
     return render
 mako_inheritance = mako
 
@@ -98,13 +111,13 @@ def cheetah(dirname, verbose=False):
     template = Template(file=filename)
     def render():
         template.__dict__.update({'title': 'Just a test', 'user': 'joe',
-                                  'list_items': [u'Number %d' % num for num in range(1, 15)]})
+                                  'list_items': ['Number %d' % num for num in range(1, 15)]})
         return template.respond()
 
     if verbose:
-        print dir(template)
-        print template.generatedModuleCode()
-        print render()
+        print( dir(template) )
+        print( template.generatedModuleCode() )
+        print( render() )
     return render
 
 def django(dirname, verbose=False):
@@ -121,7 +134,7 @@ def django(dirname, verbose=False):
         return tmpl.render(template.Context(data))
 
     if verbose:
-        print render()
+        print( render() )
     return render
 
 def kid(dirname, verbose=False):
@@ -135,29 +148,29 @@ def kid(dirname, verbose=False):
         return template.serialize(output='xhtml')
 
     if verbose:
-        print render()
+        print( render() )
     return render
 
 
-def run(engines, number=2000, verbose=False):
+def run(engines, number=1000, verbose=False):
     basepath = os.path.abspath(os.path.dirname(__file__))
     for engine in engines:
         dirname = os.path.join(basepath, engine)
         if verbose:
-            print '%s:' % engine.capitalize()
-            print '--------------------------------------------------------'
+            print( '%s:' % engine.capitalize() )
+            print( '--------------------------------------------------------')
         else:
-            print '%s:' % engine.capitalize(),
+            print( '%s:' % engine.capitalize(), end='' )
         t = timeit.Timer(setup='from __main__ import %s; render = %s(r"%s", %s)'
                                        % (engine, engine, dirname, verbose),
                                  stmt='render()')
  
         time = t.timeit(number=number) / number
         if verbose:
-            print '--------------------------------------------------------'
-        print '%.2f ms' % (1000 * time)
+            print( '--------------------------------------------------------')
+        print( '%.2f ms' % (1000 * time) )
         if verbose:
-            print '--------------------------------------------------------'
+            print( '--------------------------------------------------------')
 
 
 if __name__ == '__main__':

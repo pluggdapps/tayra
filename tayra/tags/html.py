@@ -11,9 +11,7 @@ class TayraHTML5( TayraTags ):
     def handle( self, mach, tagname, tokens, styles, attributes, content ):
         fn = getattr(self, 'tag_'+tagname, None)
         if fn :
-            l = len(content) - len(content.rstrip())
-            content, nl = (content[:-l], content[-l:]) if l else (content, '')
-            html = fn(mach, tagname, tokens, styles, attributes, content) + nl
+            html = fn(mach, tagname, tokens, styles, attributes, content)
         else :
             html = None
         return html
@@ -30,8 +28,9 @@ class TayraHTML5( TayraTags ):
             <a href="http://pluggdapps.com"> pluggdapps-link </a>
         """
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' href=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
+        for tok in remtoks :
+            if (tok[0], tok[-1]) == ('"', '"') :
+                attrs += ' href=%s' % tok
         return '<a %s>%s</a>' % (attrs, content)
 
     def tag_abbr( self, mach, tagname, tokens, styles, attributes, content ):

@@ -47,6 +47,7 @@ def test_stdttl( compiler, options ) :
             htmlfile = join( STDTTLDIR, f.split('.', 1)[0]+'.html' )
             refpyfile = join( STDTTLREFDIR, f+'.py' )
             refhtmlfile = join( STDTTLREFDIR, f.split('.', 1)[0]+'.html' )
+            # os.system( 'diff %s %s' % (htmlfile, refhtmlfile) )
             assert open( pyfile ).read() == open( refpyfile ).read()
             assert open( htmlfile ).read() == open( refhtmlfile ).read()
 

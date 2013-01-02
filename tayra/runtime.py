@@ -39,7 +39,7 @@ class StackMachine( object ) :
 
     Attributes = Attributes
 
-    def __init__( self, ifile, compiler ):
+    def __init__( self, compiler ):
         self.compiler = compiler
         self.encoding = compiler.encoding
         self.tagplugins = [ compiler.query_plugin( ITayraTags, name )
@@ -49,6 +49,8 @@ class StackMachine( object ) :
             for name in compiler['escape_filters'] ]
         self.filterblocks = compiler.query_plugins( ITayraFilterBlock )
         self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
+
+    def _init( self, ifile ):
         self.bufstack = [ [] ]
         self.ifile = ifile
         self.htmlindent = ''
@@ -88,19 +90,23 @@ class StackMachine( object ) :
         x = ''.join( self.popbuf() )
         return x
 
-    regex_style = re.compile( r'\{.*\}' )
-    regex_attrs = re.compile( TTLLexer.attrname+'='+TTLLexer.attrvalue )
-    regex_str   = re.compile( TTLLexer.attrvalue )
+    regex_tag = re.compile( 
+        r'(\{[^\}]*\})|(%s=%s)|(%s)|([^ \t\r\n]+)' % (
+            TTLLexer.attrname, TTLLexer.attrvalue, TTLLexer.attrvalue ))
 
     def handletag( self, contents, tagbegin, indent=False, nl='' ):
         tagbegin = tagbegin.replace('\n', ' ')[1:-1]    # remove < and >
         try    : tagname, tagbegin = tagbegin.split(' ', 1)
         except : tagname, tagbegin = tagbegin, ''
         
-        styles, remtag = self.handletag_style( tagbegin )
-        attributes, remtag = self.handletag_attributes( remtag )
-        tokens, remtag = self.handletag_strings( remtag )
-        tokens.extend( self.handletag_tokens( remtag ))
+        styles, attributes, tokens = [], [], []
+        for m in self.regex_tag.finditer( tagbegin ) :
+            if not m : continue
+            parts = m.groups()
+            parts[0] and styles.append( parts[0][1:-1].strip() )
+            parts[1] and attributes.append( parts[1] )
+            tokens.extend( parts[2:] )
+        tokens = list( filter( None, tokens ))
 
         for plugin in self.tagplugins :
             html = plugin.handle( self, tagname, tokens, styles, attributes,
@@ -113,6 +119,8 @@ class StackMachine( object ) :
 
     def evalexprs( self, text, filters, globals_, locals_ ) :
         out = str( eval( text, globals_, locals_ ))
+        if not filters : return out
+
         for f in h.parsecsv( filters ) :
             for p in self.escfilters :
                 out1 = p.filter( self, f, out )
@@ -121,9 +129,9 @@ class StackMachine( object ) :
                     break
         return out
 
-    def importttl( self, name, pyfile ):
-        return imp.load_module( name, open(pyfile), pyfile,
-                                (".py", "r", imp.PY_SOURCE) )
+    # def importttl( self, name, pyfile ):
+    #     return imp.load_module( name, open(pyfile), pyfile,
+    #                             (".py", "r", imp.PY_SOURCE) )
 
     def inherit( self, ttlloc, childglobals ):
         compiler = self.compiler( ttlloc=ttlloc )

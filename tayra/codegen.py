@@ -121,6 +121,13 @@ class InstrGen( object ):
 
     #---- Instructions to handle directives.
 
+    importtext = ("__compiler = _compiler()\n"
+                  "ttlcode = __compiler.compilettl( file=%r )\n"
+                  "%s = __compiler.load( ttlcode, context=globals() )\n\n")
+    def importttl( self, modname, ttlfile ):
+        lines = self.importtext % (ttlfile, modname)
+        self.putblock( lines )
+
     def putinherit( self, ttlloc ):
         self.outline( '_m.inherit( %r, globals() )' % ttlloc, )
 

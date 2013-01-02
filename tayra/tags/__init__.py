@@ -33,30 +33,31 @@ class TayraTags( Plugin ):
       'defer'        : ' defer="defer"',
     }
 
+    token_shortcuts = {
+        '#' : lambda tok : \
+                    ' id="%s"' % tok[1:],
+        '.' : lambda tok : \
+                    ' class="%s"' % ' '.join( filter( None, tok.split('.') )),
+        ':' : lambda tok : \
+                    ' name="%s"' % tok[1:],
+    }
+
     def parse_tokens( self, tokens ):
-        tagid, tagclasses, tagattrs, remtoks = '', [], [], []
+        tagattrs, remtoks = '', []
         for tok in tokens :
-            if tok[0] == '#' :
-                tagid = tok[1:]
-                continue
-            if tok[0] == '.' :
-                tagclasses += list( filter( None, tok.split('.') ))
-                continue
-            if tok in self.token2attr :
-                tagattrs.append( self.token2attr.get( tok, '' ))
-                continue
-            remtoks.append( tok )
-        return tagid, tagclasses, tagattrs, remtoks
+            attr = self.token_shortcuts.get( tok[0], lambda tok : tok )( tok )
+            attr = self.token2attr.get( attr, attr )
+            if tok == attr :
+                remtoks.append( tok )
+            else :
+                tagattrs += attr
+        return tagattrs, remtoks
 
     def parse_specs( self, tokens, styles, attributes ):
-        tagid, tagclasses, tagattrs, remtoks = self.parse_tokens( tokens )
-        attrs = ''
-        attrs += 'id="%s"' % tagid if tagid else ''
-        attrs += (' class="%s"' % ' '.join( tagclasses )) if tagclasses else ''
-        attrs += (' ' + ' '.join( tagattrs )) if tagattrs else ''
-        attrs += (' style="%s"' % ';'.join( styles )) if styles else ''
-        attrs += (' ' + ' '.join( attributes )) if attributes else ''
-        return attrs, remtoks
+        tagattrs, remtoks = self.parse_tokens( tokens )
+        tagattrs += (' style="%s"' % ';'.join( styles )) if styles else ''
+        tagattrs += (' ' + ' '.join( attributes )) if attributes else ''
+        return tagattrs, remtoks
 
     def handle( self, mach, tagname, tokens, styles, attributes, content ):
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )

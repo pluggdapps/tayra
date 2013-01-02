@@ -134,16 +134,17 @@ class StackMachine( object ) :
     #                             (".py", "r", imp.PY_SOURCE) )
 
     def inherit( self, ttlloc, childglobals ):
-        compiler = self.compiler( ttlloc=ttlloc )
+        compiler = self.compiler()
+        code = compiler.compilettl( file=ttlloc )
         # inherit module
-        parent_context = childglobals['_ttlcontext']
+        parent_context = childglobals['_context']
         parent_context.update({
-            'self'   : childglobals['self'],
-            'parent' : None,
-            'next'   : childglobals['local'],
+            'this'      : childglobals['this'],
+            'parent'    : None,
+            'next'      : childglobals['local'],
         })
-        module = compiler.execttl( context=parent_context )
-        childglobals['self']._linkparent( Namespace( None, module ))
+        module = compiler.load( code, context=parent_context )
+        childglobals['this']._linkparent( Namespace( None, module ))
         childglobals['local'].parent = module
         return module
 

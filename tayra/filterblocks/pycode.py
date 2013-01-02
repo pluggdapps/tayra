@@ -4,7 +4,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-import re
+import re, os
 
 from   pluggdapps.plugin    import Plugin, implements
 from   tayra.interfaces     import ITayraFilterBlock
@@ -27,9 +27,9 @@ class TayraFilterBlockPy( Plugin ):
     ... code-block : html 
 
         <div>
-          :fb-pycode global
-            print "hello world"
-          :fbend
+          :py:
+          print "hello world"
+          :py:
     """
     implements( ITayraFilterBlock )
 
@@ -37,11 +37,13 @@ class TayraFilterBlockPy( Plugin ):
         self.pylines = []
 
     def headpass1( self, igen, filteropen, filtertext, filterclose ):
-        pylines = filtertext.splitlines()
+        indent = len(filteropen.split(os.linesep)[-1])
         # Align indentation
-        striplen = ( len(pylines[0]) - len(pylines[0].lstrip(' \t')) ) \
-                            if pylines else 0
-        self.pylines = [ line[striplen:] for line in pylines ]
+        pylines = filtertext.splitlines()
+        if pylines :
+            self.pylines = [ pylines[0] ] + [ l[indent:] for l in pylines[1:] ]
+        else :
+            self.pylines = []
         return None
 
     def headpass2( self, igen, result ):

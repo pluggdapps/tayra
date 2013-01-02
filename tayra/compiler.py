@@ -189,6 +189,7 @@ class TTLCompiler( Plugin ):
         self.modulename = basename( self.ttlfile ).split('.', 1)[0]
 
         self.mach._init( self.ttlfile )
+        self.igen._init()
 
         self.pytext = ''
         if self.ttlfile and isfile( self.ttlfile ) :
@@ -242,13 +243,14 @@ class TTLCompiler( Plugin ):
         ctxt = {
             self.igen.machname : self.mach,
             '_compiler'   : self,
-            'self'    : Namespace( None, module ),
-            'local'   : module,
-            'parent'  : None,
-            'next'    : None,
+            'this'        : Namespace( None, module ),
+            'local'       : module,
+            'parent'      : None,
+            'next'        : None,
         }
+        ctxt.update( context )
+        ctxt['_context'] = ctxt
         module.__dict__.update( ctxt )
-        module.__dict__.update( context )
         # Execute the code in module's context
         exec( code, module.__dict__, module.__dict__ )
         return module
@@ -258,7 +260,7 @@ class TTLCompiler( Plugin ):
         generate the HTML text.
         """
         try :
-            entry = getattr( module.self, self['entry_function'] )
+            entry = getattr( module.this, self['entry_function'] )
             args = context.get( '_bodyargs', [] )
             kwargs = context.get( '_bodykwargs', {} )
             html = entry( *args, **kwargs ) if callable( entry ) else ''

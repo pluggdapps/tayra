@@ -28,6 +28,9 @@ class InstrGen( object ):
 
     def __init__( self, compiler ):
         self.compiler = compiler
+        self._init()
+
+    def _init( self ):
         self.outfd = StringIO()
         self.pyindent = ''
         self.optimaltext = []
@@ -123,7 +126,10 @@ class InstrGen( object ):
 
     importtext = ("__compiler = _compiler()\n"
                   "ttlcode = __compiler.compilettl( file=%r )\n"
-                  "%s = __compiler.load( ttlcode, context=globals() )\n\n")
+                  "_context = globals()['_context']\n"
+                  "_context['_compiler'] = __compiler\n"
+                  "_context['this'] = this\n"
+                  "%s = __compiler.load( ttlcode, context=_context )\n\n")
     def importttl( self, modname, ttlfile ):
         lines = self.importtext % (ttlfile, modname)
         self.putblock( lines )

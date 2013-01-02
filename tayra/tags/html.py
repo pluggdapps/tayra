@@ -454,8 +454,11 @@ class TayraHTML5( TayraTags ):
             to ``href=<string>``.
         """
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for t in remtoks :
-            attrs += (' href=%s'%t) if (t,t) == ('"','"') else (' type="%s"'%t)
+        for tok in remtoks :
+            if (tok[0], tok[-1]) == ('"', '"') :
+                attrs += ' href=%s' % tok
+            else :
+                attrs += ' type="%s"' % tok
         attrs = attrs.strip()
         return '<link %s>%s</link>' % (attrs, content)
 

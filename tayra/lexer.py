@@ -125,9 +125,9 @@ class TTLLexer( object ) :
     cmtclose  = r'-->[ \t]*$'
 
     # Macro blocks
-    fbopen    = r':(%s):[^\r\n]*' % attrname
+    fbopen    = r':(%s):[^\r\n]*$' % attrname
     fbtext    = r'[^\r\n]+'
-    fbclose   = r':(%s):[ \t]*' % attrname
+    fbclose   = r':(%s):[ \t]*$' % attrname
 
     # Program blocks
     dechar      = r'([^\(\\]|\r|\n|\r\n)'

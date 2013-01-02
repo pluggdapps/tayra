@@ -566,11 +566,13 @@ class ImportAs( NonTerminal ):
 
 
 class Inherit( NonTerminal ):
-    """class to handle `inherit` grammar."""
+    """class to handle `inherit` grammar.
+        @inherit <base-ttl-file> 
+    """
 
-    def __init__( self, parser, directive, newlines ) :
-        super().__init__( parser, directive, newlines )
-        self.DIRECTIVE, self.NEWLINES = directive, newlines
+    def __init__( self, parser, inherit, newlines ) :
+        super().__init__( parser, inherit, newlines )
+        self.INHERIT, self.NEWLINES = inherit, newlines
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
@@ -578,10 +580,10 @@ class Inherit( NonTerminal ):
         return self._terms
 
     def headpass2( self, igen ):
-        parts = self.DIRECTIVE.dump(None).strip(' \t\r\n').split(' ')
+        parts = self.INHERIT.dump(None).strip(' \t\r\n').split(' ')
         parts = list( filter( None, parts ))
         igen.putinherit( parts[1] )
-        super().headpass2( self, igen )
+        super().headpass2( igen )
 
     def generate( self, igen, *args, **kwargs ):
         pass
@@ -1034,10 +1036,11 @@ class FilterBlock( NonTerminal ):
         return list( filter( None, x ))
 
     def headpass1( self, igen ):
-        self.passresult = self.plugin.headpass1( igen,
-                                       self.FILTEROPEN.dump(None),
-                                       self.FILTERTEXT.dump(None),
-                                       self.FILTERCLOSE.dump(None) )
+        filteropen = self.FILTEROPEN.dump(None) + self.NEWLINES1.dump(None)
+        filtertext = self.FILTERTEXT.dump(None)
+        filterclose = self.FILTERCLOSE.dump(None) + self.NEWLINES2.dump(None)
+        self.passresult = self.plugin.headpass1(
+                                igen, filteropen, filtertext, filterclose )
 
     def headpass2( self, igen ):
         self.passresult = self.plugin.headpass2( igen, self.passresult )

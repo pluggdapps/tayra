@@ -42,9 +42,9 @@ cleanall : clean
 clean :
 	rm -rf build;
 	rm -rf dist;
-	rm -rf tayra.egg-info;
 	rm -rf tayra.egg-info/;
 	rm -rf `find ./ -name parsetyrtab.py`;
+	rm -rf `find ./ -name lextyrtab.py`;
 	rm -rf `find ./ -name "*.pyc"`;
 	rm -rf `find ./ -name "yacctab.py"`;
 	rm -rf `find ./ -name "lextab.py"`;
@@ -54,5 +54,3 @@ clean :
 	rm -f tayra/test/tagsttl/*.html;
 	rm -f tayra/test/bench/tayra/*.html;
 	rm -f tayra/test/bench/tayra/*.ttl.py;
-	rm -f tayra/test/tagsttl/*.html;
-	rm -f tayra/test/tagsttl/*.ttl.py;

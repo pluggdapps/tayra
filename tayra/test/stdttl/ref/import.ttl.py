@@ -4,6 +4,10 @@ from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
+__compiler = _compiler()
+ttlcode = __compiler.compilettl( file='/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl' )
+f = __compiler.load( ttlcode, context=globals() )
+
 import os, sys
 
 def body( *args, **kwargs ) :  

@@ -19,34 +19,20 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<body>'] )
   _m.pushbuf()
-  _m.extend( [' hello world', '\n'] )
+  _m.extend( [' hello world', '\n    '] )
+  _m.pushbuf()
+  _m.extend( ['<div #'] )
+  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.extend( [' .metanav-pa :some-name>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      ', 'how are your world', '\n\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
 # ---- Global Functions
-
-def render(
-              this, id='', cssasset='bootstrap:static/paview_metanav.css' ):  
-  _m.pushbuf()
-  _m.pushbuf()
-  _m.extend( ['<div #'] )
-  _m.append(_m.evalexprs( 'id', '', globals(), locals()) )
-  _m.extend( [' .metanav-pa>'] )
-  _m.pushbuf()
-  _m.extend( ['\n    ', 'how are your world', '\n    '] )
-  # if cssasset :
-  if cssasset :    
-    pass  
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  return _m.popbuftext()
-
 # ---- Interface functions
-from  tayra.interfaces import ITayraTestInterface
-class XYZPlugin( BaseTTLPlugin ):
-  implements(ITayraTestInterface) 
-
-  render = render
 
 # ---- Footer
 _ttlhash = ''

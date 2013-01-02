@@ -9,7 +9,7 @@ from tayra.interfaces import ITayraTestInterface
 def body( *args, **kwargs ) :  
   _m.pushbuf()
   _m.extend( ['<!DOCTYPE html>\n'] )
-  obj = tayra.query_plugin( ITayraTestInterface, 'XYZTestInterface' )
+  obj = _compiler.query_plugin( ITayraTestInterface, 'XYZTestInterface' )
   _m.pushbuf()
   _m.extend( ['<html>'] )
   _m.pushbuf()

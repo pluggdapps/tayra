@@ -11,63 +11,47 @@ class TayraHTML5( TayraTags ):
     def handle( self, mach, tagname, tokens, styles, attributes, content ):
         fn = getattr(self, 'tag_'+tagname, None)
         if fn :
-            html = fn(mach, tagname, tokens, styles, attributes, content)
+            attrs, remtoks = self.parse_specs( tokens, styles, attributes )
+            html = fn( mach, tagname, remtoks, attrs, content )
         else :
             html = None
         return html
 
-    def tag_a( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_a( self, mach, tagname, tokens, attributes, content ):
         """<a> tag handler. Supported tokens,
 
           * a quoted string token is interpreted as ``href`` attribute and 
             translated to ``href="string"``
-
-        ... code-block :: html
-            <a "http://pluggdapps.com"> pluggdapps-link
-            <!-- translates to -->
-            <a href="http://pluggdapps.com"> pluggdapps-link </a>
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' href=%s' % tok
-        return '<a %s>%s</a>' % (attrs, content)
+                attributes += ' href=%s' % tok
+        return '<a %s>%s</a>' % (attributes, content)
 
-    def tag_abbr( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_abbr( self, mach, tagname, tokens, attributes, content ):
         """<abbr> tag handler. Supported tokens,
 
           * a quoted string token is interpreted as ``title`` attribute and 
             translates to ``title=<string>``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' title=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<abbr %s>%s</abbr>' % (attrs, content)
+        attributes += (' title=%s' % tokens[0]) if tokens else ''
+        return '<abbr %s>%s</abbr>' % (attributes, content)
 
-    def tag_area( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_area( self, mach, tagname, tokens, attributes, content ):
         """<area> tag handler. Supported tokens,
 
           * If token is of the form ''<shape>:<coords>'' it translates to
             ``shape="<shape>" coords="<coords>"`` attributes.
           * a quoted string token is interpreted as ``href`` attribute and 
             translated to ``href="string"``.
-
-        ... code-block :: html
-
-            <area circle:100,100,10 "http://pluggdapps.com">
-            <!-- translates to -->
-            <area shape="circle" coords="100,100,10" 
-                  href="http://pluggdapps.com">
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             try    :
                 shape, coords = tok.split(':', 1)
-                attrs += ' shape="%s" coords="%s"' % (shape, coords)
+                attributes += ' shape="%s" coords="%s"' % (shape, coords)
             except :
-                attrs += ' href=%s' % tok
-        attrs = attrs.strip()
-        return '<area %s>%s</area>' % (attrs, content)
+                attributes += ' href=%s' % tok
+        return '<area %s>%s</area>' % (attributes, content)
 
     audio2attr = {
         'autoplay'  : ' autoplay="autoplay"',
@@ -77,7 +61,7 @@ class TayraHTML5( TayraTags ):
         'metadata'  : ' preload="metadata"',
         'none'      : ' preload="none"',
     }
-    def tag_audio( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_audio( self, mach, tagname, tokens, attributes, content ):
         """<audio> tag handler. Support tokens,
 
           * ``autoplay`` token translates to ``autoplay="autoplay"``
@@ -88,44 +72,29 @@ class TayraHTML5( TayraTags ):
           * ``none`` token translates to ``preload="none"``
           * a quoted string is interpreted as ``src`` attribute and translates
             to ``src=<string>``
-    
-        ... code-block :: html
-
-            <audio autoplay loop 
-                   "http://pluggdapps.com/rocknroll/howtonameit.mp3">
-            <!-- translates to -->
-            <audio autoplay="autoplay" loop="loop" 
-                   src="http://pluggdapps.com/rocknroll/howtonameit.mp3">
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for t in remtoks :
+        for t in tokens :
             attr = self.audio2attr.get( t, None )
-            attrs += attr if attr else (' src=%s' % t)
-        attrs = attrs.strip()
-        return '<audio %s>%s</audio>' % (attrs, content)
+            attributes += attr if attr else (' src=%s' % t)
+        return '<audio %s>%s</audio>' % (attributes, content)
 
-    def tag_base( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_base( self, mach, tagname, tokens, attributes, content ):
         """<base> tag handler. Supported tokens,
 
           * If a token is present it is interpreted as ``target`` attribute 
             and translates to ``target="<token>"``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' target="%s"' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<base %s>%s</base>' % (attrs, content)
+        attributes += (' target="%s"' % tokens[0]) if tokens else ''
+        return '<base %s>%s</base>' % (attributes, content)
 
 
-    def tag_blockquote( self, mach, tagname, tokens, styles, attributes, 
-                        content ):
+    def tag_blockquote( self, mach, tagname, tokens, attributes, content ):
         """<blockquote> tag handler. Supported tokens,
           * a quoted string is interpreted as ``cite`` attribute and 
             translates to ``cite=<string>``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' cite=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<blockquote %s>%s</blockquote>' % (attrs, content)
+        attributes += (' cite=%s' % tokens[0]) if tokens else ''
+        return '<blockquote %s>%s</blockquote>' % (attributes, content)
 
 
     button2attr = {
@@ -145,7 +114,7 @@ class TayraHTML5( TayraTags ):
         '_parent'           : ' target="_parent"',
         '_top'              : ' target="_top"',
     }
-    def tag_button( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_button( self, mach, tagname, tokens, attributes, content ):
         """<button> tag handler. Supported tokens,
           * ``button`` token translates to ``type="button"``.
           * ``reset`` token translates to ``type="reset"``.
@@ -171,60 +140,54 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``formaction`` attribute and 
             translates to ``formaction=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if tok.startswith( 'frame:' ) :
-                attrs += ' frametarget="%s"' % tok.split(':', 1)[1]
+                attributes += ' frametarget="%s"' % tok.split(':', 1)[1]
             elif tok.startswith( 'form:' ) :
-                attrs += ' form="%s"' % tok.split(':', 1)[1]
+                attributes += ' form="%s"' % tok.split(':', 1)[1]
             elif (tok[0], tok[-1]) == ('"', '"') :
                 attr = self.button2attr.get( tok, '' )
-                attrs += attr or (' formaction=%s' % tok)
-        attrs = attrs.strip()
-        return '<button %s>%s</button>' % (attrs, content)
+                attributes += attr or (' formaction=%s' % tok)
+        return '<button %s>%s</button>' % (attributes, content)
 
-    def tag_canvas( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_canvas( self, mach, tagname, tokens, attributes, content ):
         """<canvas> tag handler. Supported tokens,
 
           * If a specifier token is of the form ``<width>,<height>`` it 
             translates to ``width="<width>" height="<height>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' width="%s" height="%s"' % remtoks[0].split(',', 1) ) \
-                    if remtoks else ''
-        attrs = attrs.strip()
-        return '<canvas %s>%s</canvas>' % (attrs, content)
+        try :
+            attributes += (
+                (' width="%s" height="%s"' % tokens[0].split(',', 1) )
+                        if tokens else '' )
+        except : pass
+        return '<canvas %s>%s</canvas>' % (attributes, content)
 
-    def tag_col( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_col( self, mach, tagname, tokens, attributes, content ):
         """<col> tag handler. Supported tokens,
 
           * If a token is present, it will be interpreted as ``span``
             attribute and translates to ``span="<span>"``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' span="%s"' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<col %s>%s</col>' % (attrs, content)
+        attributes += (' span="%s"' % tokens[0]) if tokens else ''
+        return '<col %s>%s</col>' % (attributes, content)
 
 
-    def tag_colgroup( self, mach, tagname, tokens, styles, attributes, 
-                      content ):
+    def tag_colgroup( self, mach, tagname, tokens, attributes, content ):
         """<colgroup> tag handler. Supported tokens,
 
           * If a specifier token is present, it will be interpreted as ``span``
             attribute and translates to ``span="<span>"``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' span="%s"' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<colgroup %s>%s</colgroup>' % (attrs, content)
+        attributes += (' span="%s"' % tokens[0]) if tokens else ''
+        return '<colgroup %s>%s</colgroup>' % (attributes, content)
 
     command2attr = {
         'checkbox' : ' type="checkbox"',
         'command' : ' type="command"',
         'radio' : ' type="radio"',
     }
-    def tag_command(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_command( self, mach, tagname, tokens, attributes, content ):
         """<command> tag handler. Supported tokens,
 
           * ``checkbox`` token translates to ``type="checkbox"``
@@ -233,14 +196,12 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``icon`` attribute and translated
             to ``icon=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for t in remtoks :
+        for t in tokens :
             attr = self.command2attr.get( t, None )
-            attrs += attr or (' icon=%s' % t)
-        attrs = attrs.strip()
-        return '<command %s>%s</command>' % (attrs, content)
+            attributes += attr or (' icon=%s' % t)
+        return '<command %s>%s</command>' % (attributes, content)
 
-    def tag_del(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_del( self, mach, tagname, tokens, attributes, content ):
         """<del> tag handler. Supported tokens,
 
         * If a non quoted token is present, it will interpreted as ``datetime``
@@ -249,26 +210,22 @@ class TayraHTML5( TayraTags ):
         * a quoted string is interpreted as ``cite`` attribute and translated
           to ``cite=<string>``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' cite=%s' % tok
+                attributes += ' cite=%s' % tok
             else :
-                attrs += ' datetime="%s"' % tok
-        attrs = attrs.strip()
-        return '<del %s>%s</del>' % (attrs, content)
+                attributes += ' datetime="%s"' % tok
+        return '<del %s>%s</del>' % (attributes, content)
 
-    def tag_detail( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_detail( self, mach, tagname, tokens, attributes, content ):
         """<details> tag handler. Supported tokens,
 
           * ``open`` token translates to ``open="open"``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' open="%s"' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<detail %s>%s</detail>' % (attrs, content)
+        attributes += (' open="%s"' % tokens[0]) if tokens else ''
+        return '<detail %s>%s</detail>' % (attributes, content)
 
-    def tag_embed( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_embed( self, mach, tagname, tokens, attributes, content ):
         """<embed> tag handler. Supported tokens,
 
           * If token of the form ``<width>,<height>`` it translates to 
@@ -277,25 +234,26 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``src`` attribute and translated
             to ``src=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' src=%s' % tok
+                attributes += ' src=%s' % tok
             else :
-                attrs += ' width="%s" height="%s"' % tok.split(',', 1)
-        attrs = attrs.strip()
-        return '<embed %s>%s</embed>' % (attrs, content)
+                try :
+                    attributes += ' width="%s" height="%s"' % tok.split(',', 1)
+                except : pass
+        return '<embed %s>%s</embed>' % (attributes, content)
 
-    def tag_fieldset(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_fieldset( self, mach, tagname, tokens, attributes, content ):
         """<fieldset> tag handler. Supported tokens,
 
           * If a token is of the form ``f:<formname>``, it translates to
             ``form="<formname>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' form="%s"' % remtoks[0].split(':', 1)[1]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<fieldset %s>%s</fieldset>' % (attrs, content)
+        try :
+            attributes += (
+                (' form="%s"' % tokens[0].split(':', 1)[1]) if tokens else '' )
+        except : pass
+        return '<fieldset %s>%s</fieldset>' % (attributes, content)
 
     form2attr = {
         'on'                : ' autocomplete="on"',
@@ -308,7 +266,7 @@ class TayraHTML5( TayraTags ):
         'post'              : ' method="post"',
         'novalidate'        : ' novalidate="novalidate"',
     }
-    def tag_form( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_form( self, mach, tagname, tokens, attributes, content ):
         """<form> tag handler. Supported tokens,
 
         * ``on`` token translates to ``autocomplete="on"``.
@@ -324,39 +282,33 @@ class TayraHTML5( TayraTags ):
         * a quoted string is interpreted as ``action`` attribute and translated
           to //action=<string>//
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             attr = self.form2attr.get( tok, None )
-            attrs += attr if attr else (' action=%s' % tok)
-        attrs = attrs.strip()
-        return '<form %s>%s</form>' % (attrs, content)
+            attributes += attr if attr else (' action=%s' % tok)
+        return '<form %s>%s</form>' % (attributes, content)
 
-    def tag_head( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_head( self, mach, tagname, tokens, attributes, content ):
         """<head> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``manifest`` attribute and
           translated to ``manifest=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' manifest=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<head %s>%s</head>' % (attrs, content)
+        attributes += (' manifest=%s' % tokens[0]) if tokens else ''
+        return '<head %s>%s</head>' % (attributes, content)
 
-    def tag_html( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_html( self, mach, tagname, tokens, attributes, content ):
         """<html> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``manifest`` attribute and
           translated to ``manifest=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' manifest=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<html %s>%s</html>' % (attrs, content)
+        attributes += (' manifest=%s' % tokens[0]) if tokens else ''
+        return '<html %s>%s</html>' % (attributes, content)
 
     iframe2attr = {
         'seamless' : ' seamless="seamless"',
     }
-    def tag_iframe( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_iframe( self, mach, tagname, tokens, attributes, content ):
         """<frame> tag handler. Supported tokens,
 
           * ``seamless`` token translated to ``seamless="seamless"``.
@@ -368,24 +320,25 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``src`` attribute and
             translated to ``src=<string>``
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
         sandbox = []
-        for t in remtoks :
+        for t in tokens :
             if t.startswith( 'allow-' ) :
                 sandbox.append(t)
             elif (t[0], t[1]) == ('"', '"') :
-                attrs += ' src=%s' % t
+                attributes += ' src=%s' % t
             else :
                 attr = self.iframe2attr.get( t, '' )
-                attrs += attr or ' width="%s" height="%s"' % t.split(',', 1)
-        attrs += ' sandbox="%s"' % ' '.join(sandbox) if sandbox else ''
-        attrs = attrs.strip()
-        return '<iframe %s>%s</iframe>' % (attrs, content)
+                try :
+                    attributes += ( attr or 
+                                    ' width="%s" height="%s"'%t.split(',', 1) )
+                except : pass
+        attributes += ' sandbox="%s"' % ' '.join(sandbox) if sandbox else ''
+        return '<iframe %s>%s</iframe>' % (attributes, content)
 
     img2attr = {
         'ismap' : ' ismap="ismap"',
     }
-    def tag_img( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_img( self, mach, tagname, tokens, attributes, content ):
         """<img> tag handler. Supported tokens,
 
           * ``ismap`` token translates to ``ismap="ismap"``
@@ -394,17 +347,19 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``src`` attribute and translated
             to //src=<string>//
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' src=%s' % tok
+                attributes += ' src=%s' % tok
             else :
                 attr = self.img2attr.get( tok, None )
-                attrs += attr or ' width="%s" height="%s"' % tok.split(',', 1)
-        attrs = attrs.strip()
-        return '<img %s>%s</img>' % (attrs, content)
+                try :
+                    attributes += ( 
+                        attr or
+                        (' width="%s" height="%s"' % tok.split(',', 1)) )
+                except : pass
+        return '<img %s>%s</img>' % (attributes, content)
 
-    def tag_ins( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_ins( self, mach, tagname, tokens, attributes, content ):
         """<ins> tag handler. Supported tokens,
 
           * If a token is present it will interpreted as ``datetime`` 
@@ -412,70 +367,62 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``cite`` attribute and translated
             to ``cite=<string>``.
         """
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' cite=%s' % tok
+                attributes += ' cite=%s' % tok
             else :
-                attrs += ' datetime="%s"' % tok
-        attrs = attrs.strip()
-        return '<ins %s>%s</ins>' % (attrs, content)
+                attributes += ' datetime="%s"' % tok
+        return '<ins %s>%s</ins>' % (attributes, content)
 
-    def tag_label( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_label( self, mach, tagname, tokens, attributes, content ):
         """<label> tag handler. Supported tokens,
 
         * If a token looks like ``f:<formname>``, it will be translated to
           ``form="<formname>"``
         * Otherwise the token will be translated to //for="<token>"//
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if tok.startswith( 'f:' ) :
-                attrs += ' form="%s' % tok
+                attributes += ' form="%s' % tok
             else :
-                attrs += ' for="%s"' % tok
-        attrs = attrs.strip()
-        return '<label %s>%s</label>' % (attrs, content)
+                attributes += ' for="%s"' % tok
+        return '<label %s>%s</label>' % (attributes, content)
 
-    def tag_li( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_li( self, mach, tagname, tokens, attributes, content ):
         """<li> tag handler. Supported tokens,
 
           * If a token is present it will be translated to ``value="<token>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' value="%s"' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<li %s>%s</li>' % (attrs, content)
+        attributes += (' value="%s"' % tokens[0]) if tokens else ''
+        return '<li %s>%s</li>' % (attributes, content)
 
-    def tag_link( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_link( self, mach, tagname, tokens, attributes, content ):
         """<link> tag handler. Supported tokens,
 
           * If a token is present it will be translated to ``type="<token>"``.
           * a quoted string is interpreted as ``cite`` attribute and translated
             to ``href=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' href=%s' % tok
+                attributes += ' href=%s' % tok
             else :
-                attrs += ' type="%s"' % tok
-        attrs = attrs.strip()
-        return '<link %s>%s</link>' % (attrs, content)
+                attributes += ' type="%s"' % tok
+        return '<link %s>%s</link>' % (attributes, content)
 
-    def tag_menu( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_menu( self, mach, tagname, tokens, attributes, content ):
         """<menu> tag handler. Supported tokens,
 
           * If a token is present it will be translated to ``type="<token>"``.
           * a quoted string is interpreted as ``label`` attribute and translated
             to ``label=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for t in remtoks :
-            attrs += (' label=%s'%t) if (t,t) == ('"','"') else (' type="%s"'%t)
-        attrs = attrs.strip()
-        return '<menu %s>%s</menu>' % (attrs, content)
+        for t in tokens :
+            attributes += (' label=%s'%t) \
+                                if (t,t) == ('"','"') else (' type="%s"'%t)
+        return '<menu %s>%s</menu>' % (attributes, content)
 
-    def tag_meta( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_meta( self, mach, tagname, tokens, attributes, content ):
         """<meta> tag handler. Supported tokens,
 
         * If a token is present it will be translated to 
@@ -483,14 +430,12 @@ class TayraHTML5( TayraTags ):
         * a quoted string is interpreted as ``content`` attribute and translated
           to ``content=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for t in remtoks :
-            attrs += (' content=%s'%t) if (t,t) == ('"','"') \
+        for t in tokens :
+            attributes += (' content=%s'%t) if (t,t) == ('"','"') \
                             else (' http-equiv="%s"'%t)
-        attrs = attrs.strip()
-        return '<meta %s>%s</meta>' % (attrs, content)
+        return '<meta %s>%s</meta>' % (attributes, content)
 
-    def tag_meter( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_meter( self, mach, tagname, tokens, attributes, content ):
         """<meter> tag hanlder. Supported tokens,
 
         * If a token starts with ``f:<formname>`` it will be translated to
@@ -502,22 +447,20 @@ class TayraHTML5( TayraTags ):
         * Otherwise the token will be interpreted as //value// attribute and
           translated as ``value="<value>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if tok.startswith('f:') :
-                attrs += ' form="%s' % tok
+                attributes += ' form="%s' % tok
                 continue
             parts = tok.split('<')
             if len(parts) == 2 :
-                attrs += ' low="%s" high="%s"' % tuple( parts )
+                attributes += ' low="%s" high="%s"' % tuple( parts )
             elif len(parts) == 3 :
-                attrs += ' low="%s" optimum="%s" high="%s"' % tuple( parts )
+                attributes += ' low="%s" optimum="%s" high="%s"' % tuple(parts)
             else :
-                attrs += ' value="%s"' % tok
-        attrs = attrs.strip()
-        return '<meter %s>%s</meter>' % (attrs, content)
+                attributes += ' value="%s"' % tok
+        return '<meter %s>%s</meter>' % (attributes, content)
 
-    def tag_object( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_object( self, mach, tagname, tokens, attributes, content ):
         """<object> tag handler. Supported tokens,
 
           * If a token starts with ``form:`` it will be translated to 
@@ -527,16 +470,16 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``data`` attribute and
             translated as ``data=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' data=%s' % tok
+                attributes += ' data=%s' % tok
             elif tok.startswith( 'form:' ) :
-                attrs += ' form="%s"' % tok
+                attributes += ' form="%s"' % tok
             else :
-                attrs += ' width="%s" height="%s"' % tok.split(',', 1)
-        attrs = attrs.strip()
-        return '<object %s>%s</object>' % (attrs, content)
+                try : 
+                    attributes += ' width="%s" height="%s"' % tok.split(',', 1)
+                except : pass
+        return '<object %s>%s</object>' % (attributes, content)
 
     ol2attr = {
         'reversed' : ' reversed="reversed"',
@@ -546,7 +489,7 @@ class TayraHTML5( TayraTags ):
         'l' : ' type="l"',
         'i' : ' type="i"',
     }
-    def tag_ol( self, mach, tagname, tokens, styles, attributes, content ):
+    def tag_ol( self, mach, tagname, tokens, attributes, content ):
         """<ol> tag handler. Supported tokens,
 
           * ``reversed`` token translates to ``reversed="reversed"``.
@@ -558,86 +501,81 @@ class TayraHTML5( TayraTags ):
           * If a token is of the form ``<type>,<start>``, it will be 
             translated to ``type="<type>" start="<start>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             attr = self.ol2attr.get( tok, None )
-            attrs += attr or ' type="%s" start="%s"' % tok.split(',', 1)
-        attrs = attrs.strip()
-        return '<ol %s>%s</ol>' % (attrs, content)
+            try :
+                attributes += ( attr or 
+                                ' type="%s" start="%s"' % tok.split(',', 1) )
+            except : pass
+        return '<ol %s>%s</ol>' % (attributes, content)
 
-    def tag_optgroup(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_optgroup( self, mach, tagname, tokens, attributes, content ):
         """<optgroup> tag handler. Supported tokens,
 
           * a quoted string is interpreted as ``label`` attribute and translated
             to ``label=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' label=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<optgroup %s>%s</optgroup>' % (attrs, content)
+        attributes += (' label=%s' % tokens[0]) if tokens else ''
+        return '<optgroup %s>%s</optgroup>' % (attributes, content)
 
-    def tag_option(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_option( self, mach, tagname, tokens, attributes, content ):
         """<option> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``value`` attribute and translated
           as ``value=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' value=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<option %s>%s</option>' % (attrs, content)
+        attributes += (' value=%s' % tokens[0]) if tokens else ''
+        return '<option %s>%s</option>' % (attributes, content)
 
-    def tag_output(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_output( self, mach, tagname, tokens, attributes, content ):
         """<output> tag handler. Supported tokens,
 
           * If a token is of the form ``<form>:<name>`` it will be translated
             to ``form="<form>" for="<name>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' form="%s" for="%s"' % remtoks[0].split(':', 1)) \
-                        if remtoks else ''
-        attrs = attrs.strip()
-        return '<output %s>%s</output>' % (attrs, content)
+        try :
+            attributes += (
+                (' form="%s" for="%s"' % tokens[0].split(':', 1)) 
+                if tokens else '' )
+        except : pass
+        return '<output %s>%s</output>' % (attributes, content)
 
-    def tag_param(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_param( self, mach, tagname, tokens, attributes, content ):
         """<param> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``value`` attribute and translated
           as ``value=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' value=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<param %s>%s</param>' % (attrs, content)
+        attributes += (' value=%s' % tokens[0]) if tokens else ''
+        return '<param %s>%s</param>' % (attributes, content)
 
-    def tag_progress(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_progress( self, mach, tagname, tokens, attributes, content ):
         """<progress> tag handler. Supported tokens,
 
           * If token is of the form ``<max>,<value>`` it will be translated to
             ``max="<max>" value="<value>"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' max="%s" value="%s"' % remtoks[0].split(',', 1)) \
-                        if remtoks else ''
-        attrs = attrs.strip()
-        return '<progress %s>%s</progress>' % (attrs, content)
+        try :
+            attributes += (
+                (' max="%s" value="%s"' % tokens[0].split(',', 1)) \
+                if tokens else '' )
+        except : pass
+        return '<progress %s>%s</progress>' % (attributes, content)
 
-    def tag_q(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_q( self, mach, tagname, tokens, attributes, content ):
         """<q> tag handler. Supported tokens,
 
           * a quoted string is interpreted as ``value`` attribute and 
             translated to ``cite=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' cite=%s' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<q %s>%s</q>' % (attrs, content)
+        attributes += (' cite=%s' % tokens[0]) if tokens else ''
+        return '<q %s>%s</q>' % (attributes, content)
 
     script2attr = {
         'async' : ' async="async"',
         'defer' : ' defer="defer"',
     }
-    def tag_script(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_script(self, mach, tagname, tokens, attributes, content):
         """<script> tag handler. Supported tokens,
 
           * ``async`` token translates to ``async="async"``.
@@ -647,17 +585,15 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``src`` attribute and 
             as ``src=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' src=%s' % tok
+                attributes += ' src=%s' % tok
             else :
                 attr = self.script2attr.get( tok, None )
-                attrs += attr or ' type="%s"' % tok
-        attrs = attrs.strip()
-        return '<script %s>%s</script>' % (attrs, content)
+                attributes += attr or ' type="%s"' % tok
+        return '<script %s>%s</script>' % (attributes, content)
 
-    def tag_source(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_source(self, mach, tagname, tokens, attributes, content):
         """<source> tag handler. Supported tokens,
 
           * If a token is present it will be interpreted as ``type`` 
@@ -665,41 +601,36 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``src`` attribute and 
             as ``src=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[1]) == ('"', '"') :
-                attrs += ' src=%s' % tok
+                attributes += ' src=%s' % tok
             else :
-                attrs += ' type="%s"' % tok
-        attrs = attrs.strip()
-        return '<source %s>%s</source>' % (attrs, content)
+                attributes += ' type="%s"' % tok
+        return '<source %s>%s</source>' % (attributes, content)
 
     style2attr = {
         'text/css' : ' type="text/css"',
         'scoped'   : ' scoped="scoped"',
     }
-    def tag_style(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_style(self, mach, tagname, tokens, attributes, content):
         """<style> tag handler. Supported tokens,
 
         * ``text/css`` token translates to ``type="text/css"``.
         * ``scoped`` token translates to ``scoped="scoped"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += ' '+''.join([ self.style2attr.get( t, '' ) for t in remtoks ])
-        attrs = attrs.strip()
-        return '<style %s>%s</style>' % (attrs, content)
+        attributes += (' ' + 
+                       ''.join([ self.style2attr.get(t, '') for t in tokens ]))
+        return '<style %s>%s</style>' % (attributes, content)
 
-    def tag_table(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_table(self, mach, tagname, tokens, attributes, content):
         """<table> tag handler. Supported tokens,
 
           * ``1`` token translates to ``border="1"``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs += (' border="%s"' % remtoks[0]) if remtoks else ''
-        attrs = attrs.strip()
-        return '<table %s>%s</table>' % (attrs, content)
+        attributes += (' border="%s"' % tokens[0]) if tokens else ''
+        return '<table %s>%s</table>' % (attributes, content)
 
-    def tag_time(self, mach, tagname, tokens, styles, attributes, content):
+    def tag_time( self, mach, tagname, tokens, attributes, content ):
         """<time> tag handler. Supported tokens,
 
           * If a token is present it will be interpreted as ``pubdate``
@@ -707,11 +638,9 @@ class TayraHTML5( TayraTags ):
           * a quoted string is interpreted as ``datetime`` attribute and 
             translated as ``datetime=<string>``.
         """
-        attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        for tok in remtoks :
+        for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
-                attrs += ' datetime=%s' % tok
+                attributes += ' datetime=%s' % tok
             else :
-                attrs += ' pubdate="%s"' % tok
-        attrs = attrs.strip()
-        return '<abbr %s>%s</abbr>' % (attrs, content)
+                attributes += ' pubdate="%s"' % tok
+        return '<abbr %s>%s</abbr>' % (attributes, content)

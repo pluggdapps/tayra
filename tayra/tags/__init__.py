@@ -8,9 +8,10 @@ from   pluggdapps.plugin        import Plugin, implements
 from   tayra.interfaces         import ITayraTags
 
 class TayraTags( Plugin ):
+    """Plugin handles basic html tags."""
     implements( ITayraTags )
 
-    token2attr = {
+    general_toks = {
       # global attributes
       'edit'         : ' contenteditable="true"',
       'noedit'       : ' contenteditable="false"',
@@ -46,7 +47,7 @@ class TayraTags( Plugin ):
         tagattrs, remtoks = '', []
         for tok in tokens :
             attr = self.token_shortcuts.get( tok[0], lambda tok : tok )( tok )
-            attr = self.token2attr.get( attr, attr )
+            attr = self.general_toks.get( attr, attr )
             if tok == attr :
                 remtoks.append( tok )
             else :
@@ -61,7 +62,6 @@ class TayraTags( Plugin ):
 
     def handle( self, mach, tagname, tokens, styles, attributes, content ):
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
-        attrs = attrs.strip()
         l = len(content) - len(content.rstrip())
         content, nl = (content[:-l], content[-l:]) if l else (content, '')
         return ('<%s %s>%s</%s>' % (tagname, attrs, content, tagname)) + nl

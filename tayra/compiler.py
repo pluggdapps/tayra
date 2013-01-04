@@ -4,6 +4,12 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""
+Tayra Compiler implemented as plugin implemententing :class:`IHTTPRenderer`
+interface to operate with pluggdapps web-framework and other methods to
+integrate with other packages.
+"""
+
 import imp, os, re
 from   os.path              import isfile, basename, join
 from   hashlib              import sha1
@@ -173,7 +179,9 @@ class TTLCompiler( Plugin ):
         self.mach = StackMachine( self ) # Stack machine
 
     def __call__( self, **kwargs ):
-        """Clone a plugin with the same settings as this one."""
+        """Clone a plugin with the same settings as this one. settings can
+        also be overriden by passing ``settings`` key-word argument as a
+        dictionary."""
         settings = {}
         settings.update({ k : self[k] for k in self })
         settings.update( kwargs.pop( 'settings', {} ))
@@ -181,6 +189,8 @@ class TTLCompiler( Plugin ):
         return self.query_plugin( ISettings, 'ttlcompiler', **kwargs )
 
     def _init( self, file=None, text=None ):
+        """Reinitialize the compiler object to compile a different template
+        script."""
         self.ttlloc = TemplateLookup( self, file, text )
         self.encoding = self.ttlloc.encoding
         self.ttlfile = self.ttlloc.ttlfile
@@ -200,13 +210,17 @@ class TTLCompiler( Plugin ):
                     self.pytext = open( self.pyfile ).read()
 
     def toast( self, ttltext=None ):
-        """Convert the template script text into abstract-syntax-tree."""
+        """Convert template text into abstract-syntax-tree. Return the root
+        node :class:`Node`."""
         ttltext = ttltext or self.ttltext
         self.ast = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
         return self.ast
 
     def topy( self, ast, *args, **kwargs ):
-        """Generate the intermediate python text."""
+        """Generate intermediate python text from ``ast`` obtained from
+        :meth:`toast` method. If configuration settings allow for persisting
+        the generated python text, then this method will save the intermediate
+        python text in file :attr:`pyfile`."""
         ast.validate()
         ast.headpass1( self.igen )                   # Head pass, phase 1
         ast.headpass2( self.igen )                   # Head pass, phase 2
@@ -218,8 +232,10 @@ class TTLCompiler( Plugin ):
         return pytext
 
     def compilettl( self, file=None, text=None, args=[], kwargs={} ):
-        """Translate TTL file into intermediate python code. Returns 
-        compiled python intemediate file.
+        """Translate a template script text or template script file into 
+        intermediate python text. Compile the python text and return the code
+        object. If ``memcache`` configuration is enable, compile code is
+        cached in memory using a hash value generated from template text.
         
         ``args``, ``kwargs,
             position arguments and keyword arguments to use during
@@ -235,8 +251,11 @@ class TTLCompiler( Plugin ):
         return code
 
     def load( self, code, context={} ):
-        """Load this ttl file."""
-        from tayra.runtime  import Namespace
+        """Using an optional ``context``, a dictionary of key-value pairs, and
+        the code object obtained from :meth:`compilettl` method, create a new
+        module instance populating it with ``context`` and some standard
+        references."""
+        from tayra.runtime import Namespace
 
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
@@ -256,8 +275,8 @@ class TTLCompiler( Plugin ):
         return module
 
     def generatehtml( self, module, context ):
-        """Call entry-point on loaded module ``module`` using ``context`` to
-        generate the HTML text.
+        """Using the ``module`` object obtained from :meth:`load` method, and
+        a context dictionary generate and return the final HTML text.
         """
         try :
             entry = getattr( module.this, self['entry_function'] )
@@ -317,6 +336,7 @@ class TTLCompiler( Plugin ):
         return sett
 
 class TemplateLookup( object ) :
+    """Lookup template file, template text, intermediate python file."""
 
     ttlfile = ''
     """Absolute file path pointing to .ttl template script file in."""
@@ -393,8 +413,7 @@ class TemplateLookup( object ) :
         return encoding
 
     def _get_ttlhash( self ):
-        x = sha1( self.ttltext.encode('utf-8') ).hexdigest()
-        return x
+        return sha1( self.ttltext.encode('utf-8') ).hexdigest()
 
     ttlhash = property( _get_ttlhash )
 

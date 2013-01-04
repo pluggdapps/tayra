@@ -1,4 +1,4 @@
-Tayra templating is a full-featured abstract markup language used to describe
+Tayra templating is a full-featured abstract markup language to describe
 web-documents. It is primarily inspired from
 [[ http://www.makotemplates.org/ | mako-templates ]] and
 [[ http://haml-lang.com/ | HAML ]] (especially the indentation based

@@ -4,6 +4,9 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Instruction generator for :class:`StackMachine`. Generates the intermediate
+python file."""
+
 from   io   import   StringIO
 
 import_header = """\
@@ -16,6 +19,15 @@ from   tayra                import BaseTTLPlugin"""
 footer = """\
 _ttlhash = %r
 _ttlfile = %r """
+
+importtext = """\
+__compiler = _compiler()
+ttlcode = __compiler.compilettl( file=%r )
+_context = globals()['_context']
+_context['_compiler'] = __compiler
+_context['this'] = this
+%s = __compiler.load( ttlcode, context=_context )\n
+"""
 
 interfaceClass = """\
 from  %s import %s
@@ -42,6 +54,7 @@ class InstrGen( object ):
     #---- API
 
     def initialize( self ):
+        """Initialize and begin generating the intermediate python file."""
         self.outfd.write( import_header )
         self.cr()
 
@@ -52,6 +65,8 @@ class InstrGen( object ):
         self.outfd.write( self.pyindent )
 
     def codeindent( self, up=None, down=None, indent=True ):
+        """Increase or decrease the python code-indentation for the
+        intermediate text."""
         self.flushtext()
         if up != None :
             self.pyindent += up
@@ -61,32 +76,43 @@ class InstrGen( object ):
             self.outfd.write( self.pyindent )
 
     def codetext( self ):
+        """Return the final text of python code."""
         return self.pytext
 
     #---- Instruction set
 
     def comment( self, comment, force=False ):
+        """Optionally create a comment line inside the python code. Happens
+        only when TTLCompiler['debug'] option is set true."""
         if self.compiler['debug'] or force :
             self.flushtext()
             self.outline( '# ' + ' '.join(comment.rstrip('\r\n').splitlines()) )
 
     def flushtext( self ):
+        """:meth:`puttext` method's text string are not immediately appended
+        to the stack buffer. They are accumulated and appended only when this
+        method is called."""
         if self.optimaltext :
             self.outline( '_m.extend( %s )' % self.optimaltext )
             self.optimaltext = []
 
     def puttext( self, text, force=False ):
+        """Append ``text`` into the stack machine."""
         self.optimaltext.append( text )
         self.flushtext() if force else None
 
     def putstatement( self, stmt ):
+        """Add a python statement in the intermediate code."""
         self.flushtext()
         self.outline( stmt.rstrip('\r\n') )
 
     def putblock( self, codeblock, indent=True ):
+        """Add a block of python statements in the intermediate code."""
         [ self.putstatement(line) for line in codeblock.splitlines() ]
 
     def evalexprs( self, s ):
+        """Evaluate a string as python expression and append the result into
+        the stack buffer."""
         try    : code, filts = s.split('|', 1)
         except : code, filts = s, ''
         code, filts = code.strip(), filts.strip()
@@ -97,10 +123,14 @@ class InstrGen( object ):
                         code, filts ))
 
     def pushbuf( self ):
+        """Create a new buffer in the stack. The newly created buffer will
+        start accumulated text string."""
         self.flushtext()
         self.outline( '_m.pushbuf()' )
 
     def popappend( self, astext=True ):
+        """Pop the last buffer in the stack and append the text into the
+        previous buffer in the stack."""
         self.flushtext()
         if astext == True :
             self.outline( '_m.append( _m.popbuftext() )' )
@@ -108,6 +138,7 @@ class InstrGen( object ):
             self.outline( '_m.append( _m.popbuf() )' )
 
     def popreturn( self, astext=True ):
+        """Pop the last buffer in the stack and return the text."""
         self.flushtext()
         if astext == True :
             self.outline( 'return _m.popbuftext()' )
@@ -115,6 +146,9 @@ class InstrGen( object ):
             self.outline( 'return _m.popbuf()' )
 
     def handletag( self, indent=False, newline='' ):
+        """Pop the last two buffers from the stack and supply them to
+        :class:`ITayraTags` plugins. The returned HTML text from the plugin is
+        only again pushed into the stack buffer."""
         self.flushtext()
         # first arg is `content` and second arg is `tag`
         self.outline(
@@ -124,20 +158,18 @@ class InstrGen( object ):
 
     #---- Instructions to handle directives.
 
-    importtext = ("__compiler = _compiler()\n"
-                  "ttlcode = __compiler.compilettl( file=%r )\n"
-                  "_context = globals()['_context']\n"
-                  "_context['_compiler'] = __compiler\n"
-                  "_context['this'] = this\n"
-                  "%s = __compiler.load( ttlcode, context=_context )\n\n")
     def importttl( self, modname, ttlfile ):
+        """Special method to handle @import directive."""
         lines = self.importtext % (ttlfile, modname)
         self.putblock( lines )
 
     def putinherit( self, ttlloc ):
+        """Special method to handle @inherit directive."""
         self.outline( '_m.inherit( %r, globals() )' % ttlloc, )
 
     def implement_interface( self, implements, interfaces ):
+        """Special method to handle @implement directive and @interface
+        functions implementations."""
         interfaces_ = {}
         [ interfaces_.setdefault( ifname, [] ).append( methodname )
           for ifname, methodname in interfaces ]
@@ -161,9 +193,12 @@ class InstrGen( object ):
         self.putstatement(line)
 
     def footer( self, ttlhash, ttlfile ):
+        """Add the footer python code."""
         self.outline( footer % (ttlhash, ttlfile) )
 
     def finish( self ):
+        """Call this when there is no more instruction to generate. Before
+        calling this :meth:`footer` method must have been called."""
         self.pytext = self.outfd.getvalue()
 
     #-- Local methods

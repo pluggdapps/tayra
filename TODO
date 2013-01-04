@@ -152,11 +152,29 @@ Administrative
 Release check-list 
 -----------------
 
+* Sphinx doc quick-start, one time activity.
+    sphinx-quickstart   # And follow the prompts.
+    sphinx-apidoc -f -d 2 -T -o  \
+                  sphinxdoc/source/ pluggdapps \
+                  $(APIDOC_EXCLUDE_PATH)"
+
+* Make sure that sphinxdoc/modules/ has all the modules that need to be
+  documented.
+
 * Change the release version in 
     ./CHANGELOG,
+    ./Makefile
     ./tayra/__init__.py
+    ./sphinxdoc/source/conf.gpy
+
 * Update setup.py and MANIFEST.in for release
-* Create a tag and push the tagged branch to code.google.com & bitbucket.com
+
+* Create a tag and push the tagged branch to 
+    code.google.com 
+    bitbucket.com
+    github.com
+
 * Upload the source into pypi.
         make upload
+
 * After making the release, taging the branch, increment the version number.

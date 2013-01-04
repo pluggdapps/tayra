@@ -4,19 +4,17 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-from pluggdapps.plugin import Interface
-
-"""The design of tayra template language is heavily based on plugins. The
+"""
+The design of tayra template language is heavily based on plugins. The
 lexer and parser are just a glue logic over a very sophisticated plugin
 framework which does most of the language level heavy lifting. The plugin
 system is based on pluggdapps component architecture, and specifies interfaces
-to be implemented plugins. This specification acts as the base class
-for all of tayra's interface specifications, which are :class:`ITayraTags`,
-:class:`ITayraEscapeFilter`, :class:`ITayraFilterBlock`.
-
-Note that these interface specs. have nothing to do with template plugins
-that can be created using TTL (Tayra Template Language).
+to be implemented as plugins.
 """
+
+from pluggdapps.plugin import Interface
+
+__all__ = [ 'ITayraTags', 'ITayraEscapeFilter', 'ITayraFilterBlock' ]
 
 class ITayraTags( Interface ):
     """Interface specification to translate tayra tags to HTML tags."""
@@ -120,37 +118,6 @@ class ITayraFilterBlock( Interface ):
         ``result``,
             Result from :meth:`headpass2`.
         """
-
-
-class ITTLPlugins( Interface ):
-    """
-    Template-plugins will have to be automatically loaded during tayra-module
-    initialization. This can happen only when there is a mechanism that
-    provides a list of plugin implementers (as .ttl files) as part of package
-    entry-point.  Something like,
-
-    {{{ Code ini
-      [tayra.plugins]
-      ITTLPlugin = bootstrap.implement:TTLPlugins
-    }}}
-    to be more specific, //ITTLPlugin// is the interface specification for this
-    entry point.
-    
-    :Gotcha ::
-        Plugin implementers please note that the TTL plugins should have any
-        code executing in the global context (for instance, using ``{b}fb-pycode
-        global``) that depends on other plugins, it is bound to fail or
-        trigger an error.
-    """
-
-    def implementers():
-        """Return a list of ttl file urls either as absolute path or as
-        asset-specifcation, //<packagename:file/path>//. These template files
-        are expected to implement template-interfaces, and hence they will be
-        compiled and executed to register their interfaces with ZCA's
-        global-site-manager.
-        """
-        return []
 
 
 #---- This interface will be used for testing

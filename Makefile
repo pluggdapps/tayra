@@ -23,6 +23,13 @@ bdist_egg : copy
 sdist : copy
 	python ./setup.py sdist
 
+sphinx-doc :
+	cp README.rst sphinxdoc/source/
+	cp CHANGELOG.rst sphinxdoc/source/
+	rm -rf sphinxdoc/build/html/
+	make -C sphinxdoc html
+	cd sphinxdoc/build/html; zip -r tayra.sphinxdoc.zip ./
+
 upload : copy
 	python ./setup.py sdist register -r http://www.python.org/pypi upload -r http://www.python.org/pypi --show-response 
 	

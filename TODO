@@ -1,3 +1,6 @@
+* in README.rst, gettingstarted.rst add github links along with bitbucket and
+  code.google
+
 * Implement tayra.decorator functions as plugins and populate the plugin
   instances in template context.
 

@@ -9,9 +9,17 @@ Welcome to tayra's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-
+   README
+   CHANGELOG
+   whytayra
+   gettingstarted
+   primer
+   tutorial
+   reference
+   extendingtayra
+   sandboxing
 
 Indices and tables
 ==================

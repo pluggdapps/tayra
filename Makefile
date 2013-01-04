@@ -26,6 +26,13 @@ sdist : copy
 sphinx-doc :
 	cp README.rst sphinxdoc/source/
 	cp CHANGELOG.rst sphinxdoc/source/
+	cp docs/extendingtayra.rst sphinxdoc/source
+	cp docs/gettingstarted.rst sphinxdoc/source
+	cp docs/primer.rst sphinxdoc/source
+	cp docs/reference.rst sphinxdoc/source
+	cp docs/sandboxing.rst sphinxdoc/source
+	cp docs/tutorial.rst sphinxdoc/source
+	cp docs/whytayra.rst sphinxdoc/source
 	rm -rf sphinxdoc/build/html/
 	make -C sphinxdoc html
 	cd sphinxdoc/build/html; zip -r tayra.sphinxdoc.zip ./

@@ -37,7 +37,7 @@ Module contents
 .. autoclass:: FilterBlock
 .. autoclass:: IfelfiBlock
 .. autoclass:: IfBlock
-.. autoclass:: ElfiBlock
+.. autoclass:: ElifBlock
 .. autoclass:: ElseBlock
 .. autoclass:: ForBlock
 .. autoclass:: WhileBlock
@@ -55,7 +55,7 @@ Module contents
 .. autoclass:: STATEMENT
 .. autoclass:: TAGBEGIN
 .. autoclass:: COMMENTOPEN
-.. autoclass:: COMMENTEXT
+.. autoclass:: COMMENTTEXT
 .. autoclass:: COMMENTCLOSE
 .. autoclass:: FILTEROPEN
 .. autoclass:: FILTERTEXT

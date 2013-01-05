@@ -1,6 +1,13 @@
 Release changes
 ===============
 
+0.3dev
+------
+
+- Migrating tayra to pluggdapps component architecture.
+- Migrating tayra to python 3.2
+- Updated test cases and benchmarks to this revision.
+
 0.2dev
 ------
 

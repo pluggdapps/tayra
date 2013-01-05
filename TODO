@@ -201,12 +201,12 @@ Release check-list
 
 * Update setup.py and MANIFEST.in for release
 
+* Upload the source into pypi.
+        make upload
+
 * Create a tag and push the tagged branch to 
     code.google.com 
     bitbucket.com
     github.com
-
-* Upload the source into pypi.
-        make upload
 
 * After making the release, taging the branch, increment the version number.

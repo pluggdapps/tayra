@@ -10,8 +10,8 @@ the old-timers, it can be considered as the evolutionary next step for some of
 them. And probably it is the only templating language that allows developers to build and distribute their templates as plugins, not to mention the fact that tayra's implementation itself is heavily based on plugins.
 
 You can learn more and hack into its guts at
-`google-code <http://code.google.com/p/tayra/>`_ or `github
-<https://github.com/prataprc/tayra>`_
+`google-code <http://code.google.com/p/tayra/>`_ or
+`github <https://github.com/prataprc/tayra>`_
 
 Some interesting features in tayra are,
 
@@ -112,7 +112,7 @@ Development
 
 It is always better to setup the development tree under a virtual environemnt.
 To begin with, first checkout the source tree from the latest repository tree
-and then use the ''make'' command to create a development environment.
+and then use the ``make`` command to create a development environment.
 
 .. code-block:: bash
 
@@ -120,6 +120,7 @@ and then use the ''make'' command to create a development environment.
   make develop
 
 which,
+
 - sets-up a virtual environment under ``tayra-env/`` directory.
 - Installs tayra under the virtual environment in development
   mode ``python ./setup.py develop``

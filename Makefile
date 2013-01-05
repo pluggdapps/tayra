@@ -41,7 +41,7 @@ sphinx-doc :
 	cd sphinxdoc/build/html; zip -r tayra.sphinxdoc.zip ./
 
 upload :
-	python ./setup.py sdist register -r http://www.python.org/pypi upload -r http://www.python.org/pypi --show-response 
+	python ./setup.py sdist register -r http://www.python.org/pypi upload -r http://www.python.org/pypi
 	
 pushcode: push-googlecode push-bitbucket push-github 
 

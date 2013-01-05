@@ -4,8 +4,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""
-Tayra Compiler implemented as plugin implemententing :class:`IHTTPRenderer`
+"""Tayra Compiler implemented as plugin implemententing :class:`IHTTPRenderer`
 interface to operate with pluggdapps web-framework and other methods to
 integrate with other packages.
 """
@@ -237,7 +236,7 @@ class TTLCompiler( Plugin ):
         object. If ``memcache`` configuration is enable, compile code is
         cached in memory using a hash value generated from template text.
         
-        ``args``, ``kwargs,
+        ``args`` and ``kwargs``,
             position arguments and keyword arguments to use during
             AST.generate() pass.
         """

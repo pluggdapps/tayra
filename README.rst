@@ -1,8 +1,8 @@
 What is Tayra template ?
 ========================
 
-Tayra templating is a full-featured abstract markup language used to describe
-web-documents. It is primarily inspired from
+Tayra template language is a full-featured abstract markup language used to 
+describe web-documents. It is primarily inspired from
 `mako-templates <http://www.makotemplates.org/>`_ and
 `HAML <http://haml-lang.com/>`_ (especially the indentation based
 markup definitions). Although it is young and relatively a new kid among
@@ -10,22 +10,25 @@ the old-timers, it can be considered as the evolutionary next step for some of
 them. And probably it is the only templating language that allows developers to build and distribute their templates as plugins, not to mention the fact that tayra's implementation itself is heavily based on plugins.
 
 You can learn more and hack into its guts at
-`google-code <http://code.google.com/p/tayra/>`_
+`google-code <http://code.google.com/p/tayra/>`_ or `github
+<https://github.com/prataprc/tayra>`_
 
 Some interesting features in tayra are,
 
-* concise and beautiful syntax.
-* pluggable tag handlers for custom tag elements.
-* full programmability available via,
-  ** expression substitution.
-  ** control-blocks like if-elif-else.
-  ** looping contructs like for / while.
-  ** python statements.
-* templates abstraction using function blocks, with its own local scope.
-* import other template files into the local namespace and access their
+- concise and beautiful syntax.
+- pluggable tag handlers for custom tag elements.
+- full programmability available via,
+
+  - expression substitution.
+  - control-blocks like if-elif-else.
+  - looping contructs like for / while.
+  - python statements.
+
+- template abstraction using function blocks, with its own local scope.
+- import other template scripts into the local namespace and access their
   functions
-* template inheritance for re-usable web-layouting.
-* and its unique ability to create template plugins, distribute them as
+- template inheritance for re-usable web-layouting.
+- and unique ability to create template plugins, distribute them as
   separate package.
 
 Installation
@@ -69,7 +72,7 @@ easy_install) or available via ``PYTHONPATH``.  **tayra/tyr.py** script under
 tayra-package can be used as command line tool. Either invoke it from its
 original path, or create a symbolic link to a bin/ directory.
 
-script-file:    <site-package>/tayra/tyr.py
+``script-file:    <site-package>/tayra/tyr.py``
 
 symbolic link to your binary path, like,
 
@@ -117,9 +120,9 @@ and then use the ''make'' command to create a development environment.
   make develop
 
 which,
-* sets-up a virtual environment under ``tayra-env/`` directory.
-* Installs tayra under the virtual environment in development mode
-``python ./setup.py develop``
+- sets-up a virtual environment under ``tayra-env/`` directory.
+- Installs tayra under the virtual environment in development
+  mode ``python ./setup.py develop``
 
 .. code-block:: bash
 
@@ -129,6 +132,6 @@ which,
   make test             # To test the package
   make upload           # To build the egg and upload it into pypi
 
-* The .egg package will be availabe under dist/ directory
-* If you enable ['beautify_html'] option, you will have to install
+- The .egg package will be availabe under dist/ directory
+- If you enable ['beautify_html'] option, you will have to install
   beautifulsoup4 package.

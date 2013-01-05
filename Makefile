@@ -17,34 +17,43 @@ bench-setup :
 benchmark :
 	cd tayra/test/bench/; bash -c "source tayra-env/bin/activate; ./basic.py"
 
-bdist_egg : copy
+bdist_egg :
 	python ./setup.py bdist_egg
 
-sdist : copy
+sdist :
 	python ./setup.py sdist
 
 sphinx-doc :
 	cp README.rst sphinxdoc/source/
 	cp CHANGELOG.rst sphinxdoc/source/
+	cp docs/directives.rst sphinxdoc/source
 	cp docs/extendingtayra.rst sphinxdoc/source
+	cp docs/filter_blocks.rst sphinxdoc/source
+	cp docs/functions.rst sphinxdoc/source
 	cp docs/gettingstarted.rst sphinxdoc/source
-	cp docs/primer.rst sphinxdoc/source
-	cp docs/reference.rst sphinxdoc/source
-	cp docs/sandboxing.rst sphinxdoc/source
+	cp docs/glossary.rst sphinxdoc/source
+	cp docs/template_layout.rst sphinxdoc/source
+	cp docs/template_libraries.rst sphinxdoc/source
+	cp docs/template_plugins.rst sphinxdoc/source
 	cp docs/tutorial.rst sphinxdoc/source
-	cp docs/whytayra.rst sphinxdoc/source
 	rm -rf sphinxdoc/build/html/
 	make -C sphinxdoc html
 	cd sphinxdoc/build/html; zip -r tayra.sphinxdoc.zip ./
 
-upload : copy
+upload :
 	python ./setup.py sdist register -r http://www.python.org/pypi upload -r http://www.python.org/pypi --show-response 
 	
-copy :
-	cp CHANGELOG docs/CHANGELOG
-	cp LICENSE docs/LICENSE
-	cp README docs/README
-	cp ROADMAP docs/ROADMAP
+pushcode: push-googlecode push-bitbucket push-github 
+
+push-googlecode:
+	hg push https://prataprc@code.google.com/p/tayra/
+
+push-bitbucket:
+	hg push https://prataprc@bitbucket.org/prataprc/tayra
+
+push-github:
+	hg bookmark -f -r default master
+	hg push git+ssh://git@github.com:prataprc/tayra.git
 
 vimplugin :
 	rm -rf ./vim-plugin/vim-tayra.tar.gz

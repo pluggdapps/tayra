@@ -1,303 +1,422 @@
-{{ Toc( float='right' ) }}
+Tutorial
+========
 
-It starts with your .ttl file, where ''ttl'' stands for tayra template language.
-Open your favorite editor and we will start writing our first template.
-Our first template is going to be a welcome message to this world.
+Those who are new to web-app development could be wondering why to template
+html ? If need be, why not use one of the many dynamic languages (given the
+fact that most of the web-apps are written using one of them) to directly
+generate the dynamic parts of a web document ?
 
-h3. HTML and indentation
+- Composing HTML via a programming language, like, python, php, ruby, can be
+  more cumbersome and could involve more coding. By the time the developer is
+  satisfied with the web page, it would have gone through dozens of trials.
+  A templating language is supposed to help developers focus on the look and
+  feel (sometimes function) of the document and less on programming it.
+- Expression substitution is probably the main feature which allows dynamic
+  content to be substituted inside a template.
+- Template re-use by abstracting them into function blocks.
+- Many popular templating language supports control blocks like, if-else,
+  and for/while loops.
 
-{{{ Code ttl
+What is there in Tayra ?
+------------------------
 
-<!-- file name : eg1.ttl -->
+The objective of tayra templating is to create concise, beautiful and highly
+re-usable HTML templates for web. Although it is in the beginning
+stage, we hope it has succeeded in solving many problems towards that end. To
+get you started, here is a non-exhaustive list of features and functions
+available from tayra.
 
-<html>
-  <head>
-  <body>
-    <p> hello world
-}}}
+``Pluggable tag handlers``,
+  Every HTML tag can define its own micro-syntax, and the corresponding HTML
+  translation are handled by tag-plugins.
+
+``concise``,
+  Inspired by HAML's syntax, tayra uses indentation, shortcuts and wiki
+  markups to generate HTML documents.
+
+``expression substitution``,
+  Substitute dynamic content anywhere in your document using python
+  expression. While substituting text, it can be escaped with one or more 
+  filters by suffixing the expression with a pipe operator and a filter-list.
+  Escape-filters are implemented as plugins thus allowing developers to define
+  their own substitution-filters.
+
+``python-statements``,
+  Throw python statements any where inside the template script. When defined
+  inside a template-function or interface-method, the statements are confined
+  to the scope of the function.
+
+``filter blocks``,
+  Intersperse template script with non-template text using filter-blocks.
+  Filter blocks are defined and processed by plugins implementing
+  ITayraFilterBlock interface. Since filter-blocks take part in multi-pass
+  compilation of template scripts it is possible to define filters that are
+  tightly integrate with the core language. For instance, to do view-related
+  computations, ``:py:`` filter-block can be used.
+
+``control blocks``,
+  Make use of control blocks like ``if-elif-else``, to conditionally select
+  portions of template and ``for/while`` loop to repeat blocks of template
+  script.
+
+``functions``,
+  Abstract re-usable blocks of templates into functions with its own local
+  scope and local-context. It is possible to define a library of template
+  functions and use them else where.
+
+``import templates``,
+  Like mentioned above developers can create a library of template functions
+  and use them in other template files by importing the library templates.
+
+``inheritance``,
+  There is a simple yet powerful idea of inheritance, whereby templates
+  can have a long chain of inheritance from the base layout. A template
+  module in the chain can refer to inheriting or inherited templates using the 
+  ``parent`` and ``next`` namespace, while ``this`` namespace
+  provides you the magic of overriding.
+
+``Template plugins``
+  Probably, Tayra is the only templating language that enable developers to 
+  build and distribute templates as plugins. And those who want to use 
+  template-plugins can simply query for them. Now, this one feature will 
+  ensure that developers can finally get a plugin architecture without 
+  compromising their MVC design pattern.
+
+``Template-module``,
+  A template script file is called template-module.
+
+General layout of template script
+---------------------------------
+
+A template script contains directives and tags, directives must come in the
+beginning of the document, following which are scripts. Template scripts are
+made up of, tags, statements, comments, textlines, functions and control
+blocks like `if-elif-else`, `for` and `while`.  
+
+Tag definitions are exactly similar to HTML syntax, but there is no need to
+specify the end tag ( </...> ) since they are all nested using indentation
+syntax.
+
+Expression-substitution can be applied pretty much anywhere in the document
+with few exceptions like, inside comments and control statements.
+
+Tag definitions can be abstracted into functions with its own local context.
+Tags that are not part of any function or interface-api will be grouped under
+the function name **body** which is defined implicitly. It is by making a call
+to body(), that the final html is generated and returned, the call is
+automatically done by tayra APIs.
+
+.. code-block:: html
+
+    <!-- file name : eg1.ttl -->
+
+    <html>
+      <head>
+      <body>
+        <a title="Go-to google" href="http://google.com"> google
 
 A note on tags and indentation. HTML tags are nested, hence child elements are
-enforced to use 2-space indentation relative to their parent, and there is no
-need to close HTML tags with closing-tag syntax, like </html> or </head>.
+forced to use indentation relative to their parent. And because indentation
+clearly defines parent and children, there is no need to close HTML tags with
+closing-tag syntax, like </html> or </head>.
 
 Let us now translate this to a html document,
 
-{{{ Code bash
+.. code-block:: bash
 
-# Assuming that tayra is available in your environment,
-$ tayra/tyr.py eg1.ttl
+    # Assuming that tayra is available in your environment,
+    $ tayra/tyr.py eg1.ttl
 
-}}}
-
-above command translates //eg1.ttl// into //eg1.html// along with an
-intermediate file //eg1.ttl.py//, it is by executing eg1.ttl.py under a
+above command translates ``eg1.ttl`` into ``eg1.html`` along with an
+intermediate file ``eg1.ttl.py``, it is by executing eg1.ttl.py under a
 template context we get the final .html output. Identical .ttl files will
 generate identical .ttl.py intermediate file, but the final .html output
-depends on template context. Now let us look at html output.
+depends on template context. Now let us look at the html output.
 
-{{{ Code html
-# { 'background-color' : '#FFF' }
+.. code-block:: html
 
-<!-- file name : eg1.html -->
+    <!-- file name : eg1.html -->
 
-<html>
-  <head></head>
-  <body>
-    <p> hello world</p>
-  </body>
-</html>
-}}}
+    <html>
+      <head></head>
+      <body>
+        <a title="Go-to google" href="http://google.com"> google </a>
+      </body>
+    </html>
 
-Now, we will add couple of attributes to paragraph tag that contains the
-//hello world// text.
+In the above snippet notice that .ttl is identical to .html except for closing
+tags. And any text indented from the opening-tag is treated its child elements.
+Now, we will add couple of attributes to <a> tag,
 
-{{{ Code ttl
+.. code-block:: html
 
-<!-- File name : eg1.ttl -->
+    <!-- File name : eg1.ttl -->
 
-<html>
-  <head>
-  <body>
-    <p#welcome.intro.highlight> hello world
-}}}
+    <html>
+      <head>
+      <body>
+        <a #welcome .intro.highlight title="Go-to google" 
+           href="http://google.com"> google
 
-# ''#welcome'' attributes the tag with id-name //welcome// and
-# ''.intro.highlight'' attributes the tag with class-names //intro// and
-  //highlight//. And our translated html looks like
+- ``#welcome`` attributes the tag with id-name ``welcome`` and
+- ``.intro.highlight`` attributes the tag with class-names ``intro``
+  and ``highlight``. And our translated html looks like
 
-{{{ Code html
-# { 'background-color' : '#FFF' }
+.. code-block:: html
 
-<!-- File name : eg1.ttl -->
+    <!-- File name : eg1.ttl -->
 
-<html>
-  <head></head>
-  <body>
-    <p id="welcome" class="intro highlight"> hello world</p>
-  </body>
-</html>
-}}}
+    <html>
+      <head></head>
+      <body>
+        <a id="welcome" class="intro highlight" title="Go-to google" 
+           href="http://google.com"> google </a>
+      </body>
+    </html>
 
-h3. Standard specifiers
+Shortcuts inside tag definitions
+--------------------------------
 
-Specifiers are tokens applied to tagnames. White-space separated atoms and
-strings immediately following the tagname are also considered as specifier
-tokens. While any number of specifier tokens can be defined by tag handlers
-responsible for translating a given tag element, there are few that are standard
-and common to all tag elements. They are,
-# ''id'', an atom prefixed by ''hash (#)''.
-# ''class'', an atom prefixed by ''dot (.)''.
-# ''name'', an atom prefixed by ''colon (:)''.
+Shotcuts are tokens for tag attributes. Like the example above some attributes
+are common to all tags, like ``id`` (tokens prefixed with **#**) and 
+``class`` (tokens separated by **.**), have common syntax for
+all tags. While other tokens can be specific to individual tags. Plugins
+implementing ITayraTag interface is responsible for translating shortcuts to
+corresponding tag-attributes. Following is a list of common shortcuts,
 
-As the name suggests the standard specifier tokens are translated to their
-respective tag attributes. For example the following snippet of template,
+- ``id``, an atom prefixed by **hash (#)**.
+- ``class``, an atom prefixed by **dot (.)**.
+- ``name``, an atom prefixed by **colon (:)**.
+- ``style``, any random text enclosed between open-brace and a closing-brace.
 
-{{{ Code ttl
+Here is an example,
 
-<!-- File name : eg2.ttl -->
+.. code-block:: html
 
-<p#welcome.intro.highlight> hello world
-<a:anchor-name "http://gnu.org"> gnu is not unix
-}}}
+    <!-- File name : eg2.ttl -->
+
+    <p #welcome .intro.highlight> hello world
+    <a :anchor-name "http://gnu.org" {color : red}> gnu is not unix
 
 gets translated to,
 
-{{{ Code ttl
-# { 'background-color' : '#FFF' }
+.. code-block:: html
 
-<!-- File name : eg2.ttl -->
+    <!-- File name : eg2.ttl -->
 
-<p id="welcome" class="intro highlight"> hello world </p>
-<a name="anchor-name" href="http://gnu.org"> gnu is not unix </a>
-}}}
+    <p id="welcome" class="intro highlight"> hello world </p>
+    <a name="anchor-name" href="http://gnu.org" style="color: red">
+         gnu is not unix </a>
 
+Other than shortcuts, regular html attribute syntax is also supported inside
+the tag.
 
-h3. Expression substitution
+Expression substitution and statements
+--------------------------------------
 
 While translating to HTML output, templates can insert dynamic content using
 expression substitution. Expressions to be substituted are enclosed within
-''${ ... }'', where, expressions within curly brackets are nothing but python
+**${ ... }**, where expressions within curly brackets are nothing but python
 expression. Any valid python expression is equally valid here. Note that the
-final value emitted by the expression will be converted to string and replace
-them as it is inside the output html.
+final value emitted by the expression will be converted to string and inserted
+in the output html. Other than expressions, a full python statement can be 
+used in the template by prefixing them with **@@**. Let us see an example for 
+this,
 
-{{{ Code ttl
+.. code-block:: html
 
-<!-- File name : eg3.ttl -->
+    <!-- File name : eg3.ttl -->
 
-@@ content = "hello world, %s times"
-@@ rawhtml = "HTML snippet, <pre> hello world </pre>"
-@@ html = "Install couchdb using command <pre> sudo apt-get install couchdb </pre>"
-<div>
-  ${ content % 5 }
-  ${ rawhtml | h }
-  ${ html | n }
-}}}
+    @@ content = "hello world, %s times"
+    @@ rawhtml = "HTML snippet, <pre> hello world </pre>"
+    @@ html = "Install couchdb <pre> sudo apt-get install couchdb </pre>"
+    <div>
+      ${ content % 5 }
+      ${ rawhtml | h }
+      ${ html | n }
 
-Above example defines 3 variables //content//, //rawhtml//, //html// and
-substitutes their value inside the //div// element.
-# In the first case, //content// is simple text content and does not require
+Above example defines 3 variables ``content``, ``rawhtml``, ``html`` and
+substitutes their value inside the **div** element. Note that assignments in
+python are statements so they are not allowed inside expression-substitution
+syntax.
+
+- In the first case, **content** is simple text content and does not require
   any escape filtering to be applied on the result. Output is calculated by
   evaluating the expression and final value is substituted after converting it
   to string.
-# Second case is expected to display an example HTML snippet, hence it must be
+
+- Second case is expected to display an example HTML snippet, hence it must be
   escaped to prevent user agents, like browser, from interpreting the HTML
-  snippet, instead of displaying them. Suffix parameter ''h'' following the pipe
+  snippet, instead of displaying them. Suffix parameter **h** following the pipe
   syntax will invoke HTML escaping on the value emitted by expression.
-# Third case demonstrates special highlighting for a shell command, as
-  pre-formated text, where, unlike the previous one must prevent all escape
-  filtering on the final value, which is accomplished by ''n'' suffix.
 
-{{{ Code html
-# { 'background-color' : '#FFF' }
+- Third case demonstrates special highlighting for a shell command, as
+  pre-formated text, where, unlike the previous example, we must prevent all 
+  escape filtering on the final value, which is accomplished by **n** suffix.
 
-<!-- File name : eg3.ttl -->
+The final HTML output will look like,
 
-<div >
-  hello world, 5 times
-  HTML snippet, &lt;pre&gt; hello world &lt;/pre&gt;
-  Install couchdb using command <pre> sudo apt-get install couchdb </pre>
-</div>
-}}}
+.. code-block:: html
+
+    <!-- File name : eg3.ttl -->
+
+    <div >
+      hello world, 5 times
+      HTML snippet, &lt;pre&gt; hello world &lt;/pre&gt;
+      Install couchdb using command <pre> sudo apt-get install couchdb </pre>
+    </div>
 
 Expression substitution is, more or less, allowed anywhere inside the template
 text.
 
-h3. Inline styles and attributes
+**Escape filtering**
 
-Like //id// and //class// attributes, //style// attribute is also often used
-attribute on html elements. Using style attribute, as opposed to CSS styling
-on a html element is called inline styling. Tayra defines a special syntax to
-do inline-styling, '' { ... } '', where text within curly braces are
-interpreted as style attributes.
+Like mentioned before final value emitted by the python expression will be
+converted to a string before substituted in the HTML output. But before
+substituting the string, it is possible to apply one or more filters on the
+output string. Some filters available along with tayra-package.
 
-{{{ Code ttl
-<!-- File name : eg4.ttl -->
+``u``,
+  If substituted string is a url, quote them using urllib.quote().
 
-<div { margin : ${marginsize}px; color : blue; } > hello world
-}}}
+``x``,
+  If substituted string is XML, apply XML escape encoding.
 
-simple gets translated to,
+``h``,
+  If substituted string is HTML, apply HTML escape encoding.
 
-{{{ Code ttl
-<!-- File name : eg4.ttl -->
+``t``,
+  Strip (trim) white-spaces before and after the substituted string using.
 
-<div style="margin : 10px; color : blue;"> hello world </div>
-}}}
+``n``,
+  If specified then the string will substituted as it is with out applying any
+  filter logic.
 
-where, //marginsize// evaluates to value 10.
+To including python code blocks inside the template script refer to `py
+filter block <./filter_blocks.html>`_
 
-h3. Directives
+Comments
+--------
+
+Comments can be of two forms,
+- Developer comments that are silently ignored in html output.
+- HTML comments that are preserved in html output.
+
+.. code-block:: html
+
+    <!-- File name : eg5.ttl -->
+
+    <!--
+    This file is subject to the terms and conditions defined in
+    file 'LICENSE', which is part of this source code package.
+          Copyright (c) .... ..................
+    -->
+
+    @def func( name ) :
+      ## This comment will be silently ignored.
+      <div {} >
+        <a #${'idname'} .${'cls'} "http://pluggdapps.com"> hello ${name}
+
+    ${ func( 'napster' ) }
+
+gets translated to,
+
+.. code-block:: html
+
+    <!-- File name : eg5.ttl -->
+
+    <!--
+    This file is subject to the terms and conditions defined in
+    file 'LICENSE', which is part of this source code package.
+          Copyright (c) .... ..................
+    -->
+
+    <div  >
+      <a id="idname" class="cls"  href="http://pluggdapps.com" > hello napster
+      </a>
+    </div>
+
+Directives
+----------
 
 Directives are meta commands that can be specified right at the top of the
 template file. There are several directive types defined by tayra,
-# ''Document type'' directive translates to <!DOCTYPE ... > HTML element.
-# ''Body directive'' defines positional and key-word arguments that can be passed
-  to the template file while evaluating them.
-# ''Import directive'' to import template libraries.
-# ''Inherit directive'' to define template inheritance and complex page
+
+- ``@doctype`` directive translates to <!DOCTYPE ... > HTML element. It can
+  also have other options and parameters provided as simple tokens or
+  attribute,value pair.
+- ``@body`` defines positional and key-word arguments that can be passed
+  to the template module while evaluating them. Note that any template text that
+  is not a directive and that is not under a function or method context is
+  considered as body of the template and accessible as ``local.body(...)``
+- ``@import`` directive to import template libraries.
+- ``@inherit`` directive to define template inheritance and complex page
   layouts.
-# ''Implement directive'' to define template plugins
-# ''use directive'' to query for template plugins and import them into template
-  namespace.
+- ``@implement`` directive to define template plugins.
 
-To know exact details on how to use each of these directive, check out the 
-[[ ./reference#Directives | directive-section ]] of
-reference page.
+Control blocks
+--------------
 
-h3. Comments
+Control blocks allow to selectively include parts of template text based on
+predicates. Other control blocks like `for` and `while` can be used to repeat
+a block of template text based on predicates. While a python statements can be
+included inside the template text prefixing them with **@@** token, control
+blocks are prefixed with **@**, and the block of template script under the
+control block must be indented to the right. Let us see an example now,
 
-Comments can be of two forms,
-# Developer comments that are silently ignored in html output.
-# HTML comments that are translated as it is in html output.
+.. code-block:: html
 
-{{{ Code ttl
+    @@ bodylocal = 3
 
-<!-- File name : eg5.ttl -->
+    @if bodylocal == 'pass' :
+      @@pass
+    @elif bodylocal == 2 :
+      The program, designed by Odyssey Space Research, will allow crew members
+      to conduct several experiments with the phones' cameras, gyroscopes and
+      other
+    @elif bodylocal == 3 :
+      <abbr "World Health Organization"> WHO
+      <button #id_ reset disabled makefriend "button value">
 
-<!--
-This file is subject to the terms and conditions defined in
-file 'LICENSE', which is part of this source code package.
-      Copyright (c) .... ..................
--->
+    <table>
+      @for i in range(100) :
+        <tr>
+          @@j = 0
+          @while j < 4 :
+            <td> sample text
+            @@j += 1
 
-@function func( name ) :
-  ## This comment will be silently ignored.
-  <div {} >
-    <a#${'idname'}.${'cls'} "http://pluggdapps.com"> hello ${name}
+First line defines a variable called **bodylocal**, which is local to template
+function body(). Subsequently, there is a conditional block which checks for
+the value of **bodylocal** and evalutes template block for matching predicate.
 
-${ func( 'name' ) }
-}}}
+Finally, a table of 100 rows and 4 columns is generated using an outer 
+variable **i** and an inner variable **j**, which gets updated on every
+iteration of the outer loop.
 
-Translated to,
+Configuration
+-------------
 
-{{{ Code html
-# { 'background-color' : '#FFF' }
+Tayra follows configurations and settings provided by pluggdapps component
+architecture. Tayra compiler is implemented as a pluggdapps plugin and hence
+can be configured like configuring any other plugin under pluggdapps platform.
 
-<!-- File name : eg5.ttl -->
+**A note on implementation philosopy**
 
-<!--
-This file is subject to the terms and conditions defined in
-file 'LICENSE', which is part of this source code package.
-      Copyright (c) .... ..................
--->
+- The templating engine itself is nothing but a specification of syntax
+  spun around a collection of plugin framework. And advanced users may find it
+  exiting that they can change and extend the behavior (to some extent even the
+  syntax) of the template language. Fact is, tayra cannot even parse simple html
+  tags by itself.
 
-<div  >
-  <a id="idname" class="cls"  href="http://pluggdapps.com" > hello name</a>
-</div>
-}}}
+- All programmable expressions, statements and other language-like concepts
+  are nothing but pure python, wrapped inside convenient syntax.
 
-h3. Statements and control blocks
+- TTL (Tayra Template Language) files are compiled into python text containing
+  stack-machine instructions, interpreted using a stack machine object.
 
-Statements are python statements and control blocks map to python if-elif-else
-blocks, for blocks and while blocks. A statement starts with ''@@'' and
-entirely contained in a single line, multi-line statement must be escaped for
-newlines and control blocks start with ''@'' and ends with a colon '':''.
-Following example will give an idea on statements and control blocks in tayra
-templates,
+- Almost every aspect of language functionalities (except the programmable
+  parts) are extensible via plugins.
 
-{{{ Code ttl
-
-@@ bodylocal = 3
-
-@if bodylocal == 'pass' :
-  @@pass
-@elif bodylocal == 2 :
-  The program, designed by Odyssey Space Research, will allow crew members to
-  conduct several experiments with the phones' cameras, gyroscopes and other
-@elif bodylocal == 3 :
-  <abbr "World Health Organization"> WHO
-  <button#id_ reset disabled makefriend "button value"/>
-
-<table>
-  @for i in range(100):
-    <tr>
-      @@j = 0
-      @while j < 4 :
-        <td> sample text
-        @@j += 1
-}}}
-
-First line defines a variable called //bodylocal//, which is local to template
-body(). Subsequently, there is a conditional block which checks for the value of
-//bodylocal// and evalutes template block for matching predicate.  Finally, a
-table of 100 rows and 4 columns is generated using an outer variable //i// and
-an inner variable //j//, which gets initialized for every iteration of the
-outer loop.
-
-h3. Advanced Templating
-
-''{s} To learn more on advanced templating you can check out the following sections
-in the reference document''
-
-# [[ ./reference#Functions | template functions ]]
-# [[ ./reference#Filter%20blocks | filter blocks ]]
-# [[ ./reference#Template%20plugins | template plugins ]]
-
------
-
-{{{ Nested 
-# { 'font-size' : 'small', 'color' : 'gray' }
-Document edited using Vim <br>
-/* vim: set filetype=etx : */
-}}}
+- But personally I would love to do tayra-templating just for the way the 
+  template code looks - concise and beautiful (thanks to HAML).

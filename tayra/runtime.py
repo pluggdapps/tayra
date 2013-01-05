@@ -18,7 +18,7 @@ Standard libraries and references made available in a template script.
 
 ``this``,
     Every template script can be viewed as an object instance which can be 
-    reference using ``this``. In case of template scripts making use of 
+    referenced using ``this``. In case of template scripts making use of 
     inheritance feature, ``this`` will always refer to the template script
     at the end of the inheritance chain.
 
@@ -37,11 +37,19 @@ Standard libraries and references made available in a template script.
     In case of inheriting scripts, ``next`` will refer to the deriving
     template script.
 
+All names ``this``, ``local``, ``parent``, ``next`` refer to the same type of
+object, template-module. Having a refence to template-module allows developers
+to access global variables and functions defined in the module.
+
+In case if a template script is part of an inheritance chain, then attributes
+references on the template-module will propogate towards the top of the chain
+until an attributed is found in one of the base module.
+
 ``_compiler``,
     Refers to :class:`TTLCompiler` plugin instance.
 
 ``_context``,
-    Refers to the context dictionar.
+    Refers to the context dictionary.
 
 ``_ttlhash``,
     Refers to the hash value generated using template text.
@@ -171,7 +179,10 @@ class StackMachine( object ) :
         out = str( eval( text, globals_, locals_ ))
         if not filters : return out
 
-        for f in h.parsecsv( filters ) :
+        filters = h.parsecsv( filters )
+        if 'n' in filters : return ou
+
+        for f in filters :
             for p in self.escfilters :
                 out1 = p.filter( self, f, out )
                 if out1 != None : 

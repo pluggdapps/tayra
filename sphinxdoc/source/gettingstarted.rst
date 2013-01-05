@@ -1,5 +1,5 @@
-Install tayra
--------------
+Getting started
+===============
 
 Installing via package management
 
@@ -12,8 +12,8 @@ Installing via package management
 
 **Source code**
 
-* Download the latest tar.gz from http://pypi.python.org/pypi/tayra
-* Check out hg repository from `google_code <http://code.google.com/p/tayra/>`_
+- Download the latest tar.gz from http://pypi.python.org/pypi/tayra
+- Check out hg repository from `google_code <http://code.google.com/p/tayra/>`_
   or `bit-bucket <https://bitbucket.org/prataprc/tayra>`_
 
 .. code-block:: bash
@@ -109,15 +109,14 @@ contains the `hello world` text.
     <html>
       <head>
       <body>
-        <p#welcome.intro.highlight> hello world
+        <p #welcome .intro.highlight> hello world
 
-`#welcome` attributes the tag with id-name `welcome` and
-`.intro.highlight` attributes the tag with class-names `intro` and
-`highlight`. And our translated html looks like
+- `#welcome` attributes the tag with id-name `welcome`,
+- `.intro.highlight` attributes the tag with class-names `intro` and
+  `highlight`. And our translated html looks like
 
 .. code-block:: html
 
-    # { 'background-color' : '#EEE' }
     <html>
       <head></head>
       <body>
@@ -125,6 +124,4 @@ contains the `hello world` text.
       </body>
     </html>
 
-That is all it takes to get you started. You will know everything about 
-tayra here.
-
+That is all it takes to get you started. Happy templating !

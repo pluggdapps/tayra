@@ -26,9 +26,7 @@ classifiers = [
 'Development Status :: 4 - Beta',
 'Environment :: Web Environment',
 'Intended Audience :: Developers',
-'Programming Language :: Python :: 2.6',
-'Programming Language :: Python :: 2.7',
-'Programming Language :: JavaScript',
+'Programming Language :: Python :: 3.2',
 'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
 ]
 
@@ -51,7 +49,6 @@ setup(
         ],
         'pluggdapps' : [
             'package=tayra:package',
-            'loadttls=tayra:loadttls',
         ]
     },
     install_requires=[                      # setuptools
@@ -79,5 +76,5 @@ setup(
     long_description=LONG_DESCRIPTION,
     platforms='',
     classifiers=classifiers,
-    keywords=[ 'template, web, html, css' ],
+    keywords=[ 'template, web, html, css, pluggdapps' ],
 )

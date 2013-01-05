@@ -12,14 +12,17 @@ Contents:
    :maxdepth: 1
 
    README
-   CHANGELOG
-   whytayra
    gettingstarted
-   primer
    tutorial
-   reference
+   directives
+   filter_blocks
+   functions
+   template_layout
+   template_libraries
+   template_plugins
    extendingtayra
-   sandboxing
+   glossary
+   CHANGELOG
 
 Indices and tables
 ==================

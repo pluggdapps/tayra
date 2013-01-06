@@ -354,6 +354,8 @@ class TTLLexer( object ) :
         return tok
 
     def _preprocess( self, text ) :
+        # Prune away empty lines in the beginning,
+        text = text.lstrip(' \t\r\n')
         return text
 
     def _addtokens( self, tok ) :

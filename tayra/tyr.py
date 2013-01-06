@@ -127,5 +127,6 @@ if __name__ == '__main__' :
         ast.show()
 
     elif options.ttlfile and isfile( options.ttlfile ) :
+        print( "Translating file %r ..." % options.ttlfile )
         tayra.translatefile( options.ttlfile, compiler, options )
 

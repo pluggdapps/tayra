@@ -290,7 +290,7 @@ class TTLCompiler( Plugin ):
                 pass
             return html
         except :
-            print( h.print_exc() )
+            self.pa.logdebug( h.print_exc() )
             return ''
 
 
@@ -308,7 +308,8 @@ class TTLCompiler( Plugin ):
             Tayra template text string.
         """
         code = self.compilettl( file=file, text=text )
-        return self.generatehtml( self.load( code, context=c ), c )
+        module = self.load( code, context=c )
+        return self.generatehtml( module, c )
 
     #---- ISettings interface methods
 

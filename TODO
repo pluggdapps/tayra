@@ -4,18 +4,13 @@
 * Implement tayra.decorator functions as plugins and populate the plugin
   instances in template context.
 
-* Template Plugin feature is yet to be completed.
-
 * Do not allow prolog directives after the template script has started. Add
   the condition check in parser.py
 
 * Generate compact HTML (ugly-html) pruning of all redundant whitespaces.
 
-* Bug fix. Fix charset() function in utils.py similar to the fix done in
-  tss.utils.py
-
 * This whole utf-8-sig business is very patchy. Review the code aand fix
-  it properly
+  it properly.
 
 * Bug fix. Parser should pass for empty ttl files. files containing just
   directives or tags.

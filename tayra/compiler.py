@@ -10,7 +10,7 @@ integrate with other packages.
 """
 
 import imp, os, re
-from   os.path              import isfile, basename, join
+from   os.path              import isfile, basename, join, isdir, dirname
 from   hashlib              import sha1
 
 from   pluggdapps.plugin    import Plugin, implements, ISettings
@@ -92,8 +92,8 @@ _defaultsettings['directories']             = {
     'help'    : "Comma separated list of directory path to look for a "
                 "template file. Default will be current-directory."
 }
-_defaultsettings['module_directory']        = {
-    'default' : None,
+_defaultsettings['cache_directory']        = {
+    'default' : '',
     'types'   : (str,),
     'help'    : "Directory path telling the compiler where to persist (cache) "
                 "intermediate python file."
@@ -354,18 +354,24 @@ class TemplateLookup( object ) :
     ttlhash = ''
     """Hash value generated from template text."""
 
-    def __init__( self, compiler, ttlfile=None, ttltext=None ):
+    def __init__( self, compiler, ttlloc=None, ttltext=None ):
         self.compiler = compiler
 
-        if ttlfile :
-            ttlfile = h.abspath_from_asset_spec( ttlfile )
-            moddir = compiler['module_directory']
+        if ttlloc :
+            ttlfile = h.abspath_from_asset_spec( ttlloc )
+            cachedir = compiler['cache_directory']
             self.encoding = self.charset( ttlfile=ttlfile,
                                           encoding=compiler['encoding'] )
-            if compiler['debug'] == True :
+            if cachedir :
+                if isdir( cachedir ):
+                    self.pyfile = join( cachedir, ttlloc+'.py' )
+                    if not isfile( self.pyfile ):
+                        os.makedirs( dirname( self.pyfile ), exist_ok=True )
+                else :
+                    compiler.pa.loginfo(
+                            "Cache Directory %r does not exist" % cachedir )
+            elif compiler['debug'] == True :
                 self.pyfile = ttlfile + '.py'
-            elif moddir :
-                self.pyfile = join( moddir, ttlfile.lstrip( os.sep )+'.py' )
             else :
                 self.pyfile = None
 

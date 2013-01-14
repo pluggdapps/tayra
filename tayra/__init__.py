@@ -46,11 +46,11 @@ def loadttls( pa, ttlfiles, compiler_setts={} ):
     """
 
     for ttlfile in ttlfiles :
-        compiler = pa.query_plugin( pa, None, ISettings, 'ttlcompiler',
+        compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler',
                                     settings=compiler_setts )
         code = compiler.compilettl( file=ttlfile )
         compiler.load( code, context={} )
-        pa.loginfo( "Loaded template plugin %r ..." % ttlfile )
+        pa.logdebug( "Loaded template plugin %r ..." % ttlfile )
 
 def package( pa ) :
     """A pluggdapps package must implement this entry point. This function

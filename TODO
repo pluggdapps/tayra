@@ -1,3 +1,7 @@
+* There is an issue with `tayra` script file. It cannot be used from paenv
+  environment, still need to use tyr.py. Issue is related to importing tayra
+  module before importing pluggdapps module.
+
 * Create integration points to write JavaScript snippets inside the template.
   Integration points should be extensible to other languages like CoffeScript.
 

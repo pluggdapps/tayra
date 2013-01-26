@@ -15,7 +15,7 @@ from   hashlib              import sha1
 
 from   pluggdapps.plugin    import Plugin, implements, ISettings
 import pluggdapps.utils     as h
-from   pluggdapps.web.webinterfaces import IHTTPRenderer
+from   pluggdapps.web.interfaces import IHTTPRenderer
 
 _defaultsettings = h.ConfigDict()
 _defaultsettings.__doc__ = (
@@ -290,7 +290,7 @@ class TTLCompiler( Plugin ):
                 pass
             return html
         except :
-            self.pa.logdebug( h.print_exc() )
+            self.pa.logerror( h.print_exc() )
             return ''
 
 

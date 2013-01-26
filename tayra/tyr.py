@@ -85,7 +85,7 @@ def yaccer( pa, options, debuglevel=0 ):
     print( "Time taken to parse : ", time.time() - t1 )
     return ast
 
-if __name__ == '__main__' :
+def main() :
     argparser = mainoptions()
     options = argparser.parse_args()
     pa = Pluggdapps.boot( None )
@@ -130,3 +130,6 @@ if __name__ == '__main__' :
         print( "Translating file %r ..." % options.ttlfile )
         tayra.translatefile( options.ttlfile, compiler, options )
 
+
+if __name__ == '__main__' :
+    main()

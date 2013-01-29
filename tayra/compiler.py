@@ -368,8 +368,9 @@ class TemplateLookup( object ) :
                     if not isfile( self.pyfile ):
                         os.makedirs( dirname( self.pyfile ), exist_ok=True )
                 else :
-                    compiler.pa.loginfo(
-                            "Cache Directory %r does not exist" % cachedir )
+                    compiler.pa.logdebug(
+                            "Creating cache directory %r " % cachedir )
+                    os.makedirs( cachedir )
             elif compiler['debug'] == True :
                 self.pyfile = ttlfile + '.py'
             else :

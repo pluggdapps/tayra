@@ -112,7 +112,8 @@ class TayraHTML5Forms( TayraTags ):
         for m in regex.findall( ' '.join( tokens )) :
             for i in range(c) :
                 if not m[i] : continue
-                attrs += handlers[i]( m[i] )
+                try    : attrs += handlers[i]( m[i] )
+                except : pass
                 break
         return attrs
 

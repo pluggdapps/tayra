@@ -1,8 +1,8 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
-from   tayra.decorator      import *
 
 
 def body( *args, **kwargs ) :  
@@ -12,12 +12,12 @@ def body( *args, **kwargs ) :
 
 # ---- Global Functions
 
-def render( *args, **kwargs ):  
+def render( self, *args, **kwargs ):  
   _m.pushbuf()
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
-  _m.extend( [' interface successfully invoked', '\n'] )
+  _m.extend( [' interface successfully invoked, okay', '\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
@@ -25,6 +25,8 @@ def render( *args, **kwargs ):
 from  tayra.interfaces import ITayraTestInterface
 class XYZTestInterface( BaseTTLPlugin ):
   implements(ITayraTestInterface) 
+
+  render = render
 
 # ---- Footer
 _ttlhash = ''

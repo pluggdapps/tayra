@@ -60,7 +60,9 @@ def package( pa ) :
     the package.
     """
     loadttls( pa, template_plugins, { 'debug' : True } )
-    return {}
+    return {
+        'ttlplugins' : template_plugins,
+    }
 
 def translatefile( ttlfile, compiler, options ):
     """Using ``compiler``, an instance of TTLCompiler, and ``options``

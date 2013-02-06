@@ -148,6 +148,10 @@ class StackMachine( object ) :
         x = ''.join( self.popbuf() )
         return x
 
+    def popobject( self ):
+        lst = self.popbuf()
+        return lst[0] if lst else None
+
     regex_tag = re.compile( 
         r'(\{[^\}]*\})|(%s=%s)|(%s)|([^ \t\r\n]+)' % (
             TTLLexer.attrname, TTLLexer.attrvalue, TTLLexer.attrvalue ))
@@ -209,12 +213,11 @@ class StackMachine( object ) :
         childglobals['local'].parent = module
         return module
 
-    # TODO : Can this method be replaced by pluggdapps.utils.lib.hitch ??
-    # def hitch( self, obj, cls, interfacefunc, *args, **kwargs ) :
-    #     def fnhitched( self, *a, **kw ) :
-    #         kwargs.update( kw )
-    #         return interfacefunc( self, *(args+a), **kwargs )
-    #     return fnhitched.__get__( obj, cls )
+    def hitch( self, obj, cls, interfacefunc, *args, **kwargs ) :
+        def fnhitched( self, *a, **kw ) :
+            kwargs.update( kw )
+            return interfacefunc( self, *(args+a), **kwargs )
+        return fnhitched.__get__( obj, cls )
 
     def use( self, interface, pluginname='' ):
         return queryTTLPlugin( self.ttlplugins, interface, pluginname )

@@ -145,6 +145,17 @@ class InstrGen( object ):
         else :
             self.outline( 'return _m.popbuf()' )
 
+    def popobject( self, returnwith=None ):
+        """Some times a function might want to return something else other
+        than stacked buffers."""
+        self.flushtext()
+        if returnwith :
+            # Discard the newest buffer in the stack
+            self.outline( '_m.popbuf()' ) 
+            self.outline( 'return ' + returnwith )
+        else :
+            self.outline( 'return _m.popobject()' )
+
     def handletag( self, indent=False, newline='' ):
         """Pop the last two buffers from the stack and supply them to
         :class:`ITayraTags` plugins. The returned HTML text from the plugin is
@@ -179,7 +190,12 @@ class InstrGen( object ):
             codeblock = interfaceClass % ( mod, ifname, pluginname, ifname )
             # hitch methods with interface class
             methods = interfaces_.get( ifname, [] )
-            methodlines = [ '  %s = %s' % (meth, meth) for meth in methods ]
+            methodlines = []
+            for meth in methods :
+                if meth == 'default_settings' :
+                    methodlines.append( '  %s = classmethod(%s)'%(meth, meth) )
+                else :
+                    methodlines.append( '  %s = %s' % (meth, meth) )
             self.putblock( '\n'.join( [codeblock] + methodlines ) )
 
     def useinterface( self, module, interfacename, pluginname, name ):

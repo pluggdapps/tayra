@@ -290,7 +290,7 @@ class TTLCompiler( Plugin ):
                 pass
             return html
         except :
-            self.pa.logerror( h.print_exc() )
+            if self['debug'] : raise
             return ''
 
 

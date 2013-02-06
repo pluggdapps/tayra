@@ -775,7 +775,16 @@ class Statement( NonTerminal ):
         return self._terms
 
     def generate( self, igen, *args, **kwargs ):
-        igen.putstatement( self.STATEMENT.dump(None).lstrip('@ \t') )
+        line = self.STATEMENT.dump(None).lstrip('@ \t')
+        if line.startswith( 'return' ) :
+            try    : keyword, expression = line.split(' ')
+            except : keyword, expression = line, None
+            if expression :
+                igen.popobject( returnwith=expression )
+            else :
+                igen.popobject()
+        else :
+            igen.putstatement( line )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):

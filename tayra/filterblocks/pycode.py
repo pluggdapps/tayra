@@ -7,6 +7,7 @@
 import re, os
 
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraFilterBlock
 
 class TayraFilterBlockPy( Plugin ):
@@ -61,3 +62,17 @@ class TayraFilterBlockPy( Plugin ):
             [ igen.putstatement( line ) for line in self.pylines ]
         self.pylines = []
         return result
+
+    #---- ISettings interface methods
+
+    @classmethod
+    def default_settings( cls ):
+        return _default_settings
+
+    @classmethod
+    def normalize_settings( cls, sett ):
+        return sett
+
+_default_settings = h.ConfigDict()
+_default_settings.__doc__ = (
+    "Plugin to handle tayra template's python code blocks" )

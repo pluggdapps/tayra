@@ -4,8 +4,9 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-from   pluggdapps.plugin        import Plugin, implements
-from   tayra.interfaces         import ITayraTags
+from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
+from   tayra.interfaces     import ITayraTags
 
 class TayraTags( Plugin ):
     """Plugin handles basic html tags."""
@@ -66,6 +67,19 @@ class TayraTags( Plugin ):
         content, nl = (content[:-l], content[-l:]) if l else (content, '')
         return ('<%s %s>%s</%s>' % (tagname, attrs, content, tagname)) + nl
 
+    #---- ISettings interface methods
+
+    @classmethod
+    def default_settings( cls ):
+        return _default_settings
+
+    @classmethod
+    def normalize_settings( cls, sett ):
+        return sett
+
+_default_settings = h.ConfigDict()
+_default_settings.__doc__ = (
+    "Base plugin to handle tayra template's tag markups." )
 
 import tayra.tags.html
 import tayra.tags.forms

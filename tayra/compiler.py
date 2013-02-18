@@ -17,125 +17,10 @@ from   pluggdapps.plugin    import Plugin, implements, ISettings
 import pluggdapps.utils     as h
 from   pluggdapps.web.interfaces import IHTTPRenderer
 
-_defaultsettings = h.ConfigDict()
-_defaultsettings.__doc__ = (
-    "Configuration settings for tayra compiler." )
-
-_defaultsettings['debug']  = {
-    'default'  : False,
-    'types'    : (bool,),
-    'help'     : "Compile in debug mode."
-}
-#---- PLY options.
-_defaultsettings['optimize']    = {
-    'default' : 1,
-    'types'   : int,
-    'help'    : "PLY Lexer/Yaccer option. "
-                "For improved performance, it may be desirable to use Python's "
-                "optimized mode (e.g., running Python with the -O option). "
-                "However, doing so causes Python to ignore documentation "
-                "strings. This presents special problems for lexer and parser. "
-                "To handle this case, you can set this parameter to ``1``. For "
-                "more information refer, "
-                " http://www.dabeaz.com/ply/ply.html#ply_nn15."
-}
-_defaultsettings['lextab']    = {
-    'default' : 'lextyrtab',
-    'types'   : (str,),
-    'help'    : "PLY-Lexer option. "
-                "Points to the lex table that's used for optimized mode. Only "
-                "if you're modifying the lexer and want some tests to avoid "
-                "re-generating the table, make this point to a local lex table "
-                "file. "
-}
-_defaultsettings['lex_debug'] = {
-    'default' : 0,
-    'types'   : (int,),
-    'help'    : "PLY-Lex option. Run lexer in debug mode."
-}
-_defaultsettings['yacctab']    = {
-    'default' : 'parsetyrtab',
-    'types'   : (str,),
-    'help'    : "PLY-Yacc option. "
-                "Points to the yacc table that's used for optimized mode. Only "
-                "if you're modifying the parser, make this point to a local "
-                "yacc table file."
-}
-_defaultsettings['yacc_debug'] = {
-    'default' : 0,
-    'types'   : (int,),
-    'help'    : "PLY-Yacc option. Run yaccer in debug mode."
-}
-_defaultsettings['yacc_outputdir'] = {
-    'default' : '',
-    'types'   : (str,),
-    'help'    : "To change the directory in which the PLY YACC's parsetab.py "
-                "file (and other output files) are written."
-}
-
-#----
-_defaultsettings['encoding']             = {
-    'default' : 'utf-8-sig',
-    'types'   : (str,),
-    'help'    : "Encoding to use while reading the template script file."
-}
-_defaultsettings['strict_undefined']    = {
-    'default' : False,
-    'types'   : (bool,),
-    'help'    : "Boolean to raise exception for undefined context variables. "
-                "If set to false, undefined variables will be silently "
-                "digested as 'None' string. "
-}
-_defaultsettings['directories']             = {
-    'default' : '.',
-    'types'   : ('csv',list),
-    'help'    : "Comma separated list of directory path to look for a "
-                "template file. Default will be current-directory."
-}
-_defaultsettings['cache_directory']        = {
-    'default' : '',
-    'types'   : (str,),
-    'help'    : "Directory path telling the compiler where to persist (cache) "
-                "intermediate python file."
-}
-_defaultsettings['escape_filters']          = {
-    'default' : 'CommonEscapeFilters',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of default escape filters to be applied "
-                "during expression substitution."
-}
-_defaultsettings['input_encoding']          = {
-    'default' : 'utf-8-sig',
-    'types'   : (str,),
-    'help'    : "Default input encoding for .ttl file."
-}
-_defaultsettings['use_tag_plugins']           = {
-    'default' : 'TayraHTML5Forms, TayraHTML5, TayraTags',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of tag plugin namespaces to use. Only "
-                "plugins that are registered under the requested namespace "
-                "will be used to generate the html."
-}
-_defaultsettings['beautify_html']                = {
-    'default' : True,
-    'types'   : (bool,),
-    'help'    : "Boolean, if True will generate human readable html output. "
-                "bothering about indentation."
-}
-_defaultsettings['memcache']                = {
-    'default' : True,
-    'types'   : (bool,),
-    'help'    : "Cache the compiled python code in-memory to avoid "
-                "re-compiling .ttl to .py file."
-}
-_defaultsettings['entry_function']  = {
-    'default'  : 'body',
-    'types'    : (str,),
-    'help'     : "Python entry point into compiled template script."
-}
-
-
 class TTLCompiler( Plugin ):
+    """Tayra compiler. Implemented as a plugin to leverage on pluggdapps
+    configuration system."""
+
     implements( IHTTPRenderer )
 
     _memcache = {}
@@ -335,6 +220,119 @@ class TTLCompiler( Plugin ):
         sett['memcache'] = h.asbool( sett['memcache'] )
         return sett
 
+
+_defaultsettings = h.ConfigDict()
+_defaultsettings.__doc__ = TTLCompiler.__doc__
+
+#---- PLY options.
+_defaultsettings['optimize']    = {
+    'default' : 1,
+    'types'   : int,
+    'help'    : "PLY Lexer/Yaccer option. "
+                "For improved performance, it may be desirable to use Python's "
+                "optimized mode (e.g., running Python with the -O option). "
+                "However, doing so causes Python to ignore documentation "
+                "strings. This presents special problems for lexer and parser. "
+                "To handle this case, you can set this parameter to ``1``. For "
+                "more information refer, "
+                " http://www.dabeaz.com/ply/ply.html#ply_nn15."
+}
+_defaultsettings['lextab']    = {
+    'default' : 'lextyrtab',
+    'types'   : (str,),
+    'help'    : "PLY-Lexer option. "
+                "Points to the lex table that's used for optimized mode. Only "
+                "if you're modifying the lexer and want some tests to avoid "
+                "re-generating the table, make this point to a local lex table "
+                "file. "
+}
+_defaultsettings['lex_debug'] = {
+    'default' : 0,
+    'types'   : (int,),
+    'help'    : "PLY-Lex option. Run lexer in debug mode."
+}
+_defaultsettings['yacctab']    = {
+    'default' : 'parsetyrtab',
+    'types'   : (str,),
+    'help'    : "PLY-Yacc option. "
+                "Points to the yacc table that's used for optimized mode. Only "
+                "if you're modifying the parser, make this point to a local "
+                "yacc table file."
+}
+_defaultsettings['yacc_debug'] = {
+    'default' : 0,
+    'types'   : (int,),
+    'help'    : "PLY-Yacc option. Run yaccer in debug mode."
+}
+_defaultsettings['yacc_outputdir'] = {
+    'default' : '',
+    'types'   : (str,),
+    'help'    : "To change the directory in which the PLY YACC's parsetab.py "
+                "file (and other output files) are written."
+}
+
+#----
+_defaultsettings['encoding']             = {
+    'default' : 'utf-8-sig',
+    'types'   : (str,),
+    'help'    : "Encoding to use while reading the template script file."
+}
+_defaultsettings['strict_undefined']    = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "Boolean to raise exception for undefined context variables. "
+                "If set to false, undefined variables will be silently "
+                "digested as 'None' string. "
+}
+_defaultsettings['directories']             = {
+    'default' : '.',
+    'types'   : ('csv',list),
+    'help'    : "Comma separated list of directory path to look for a "
+                "template file. Default will be current-directory."
+}
+_defaultsettings['cache_directory']        = {
+    'default' : '',
+    'types'   : (str,),
+    'help'    : "Directory path telling the compiler where to persist (cache) "
+                "intermediate python file."
+}
+_defaultsettings['escape_filters']          = {
+    'default' : 'TayraEscFilterCommon',
+    'types'   : ('csv', list),
+    'help'    : "Comma separated list of default escape filters to be applied "
+                "during expression substitution."
+}
+_defaultsettings['input_encoding']          = {
+    'default' : 'utf-8-sig',
+    'types'   : (str,),
+    'help'    : "Default input encoding for .ttl file."
+}
+_defaultsettings['use_tag_plugins']           = {
+    'default' : 'TayraHTML5Forms, TayraHTML5, TayraTags',
+    'types'   : ('csv', list),
+    'help'    : "Comma separated list of tag plugins to use."
+}
+_defaultsettings['beautify_html']                = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "Boolean, if True will generate human readable html output. "
+                "Make sure that BeautifulSoup, bs4, is installed. Do not "
+                "enable this in production mode, might slow down the web page."
+}
+_defaultsettings['memcache']                = {
+    'default' : True,
+    'types'   : (bool,),
+    'help'    : "Cache the compiled python code in-memory to avoid "
+                "re-compiling .ttl to .py file."
+}
+_defaultsettings['entry_function']  = {
+    'default'  : 'body',
+    'types'    : (str,),
+    'help'     : "Entry point, function in python module, into compiled "
+                 "template script."
+}
+
+
 class TemplateLookup( object ) :
     """Lookup template file, template text, intermediate python file."""
 
@@ -378,6 +376,13 @@ class TemplateLookup( object ) :
 
             self.ttlfile = h.locatefile( ttlfile, compiler['directories'] )
             self.ttltext = open( self.ttlfile, encoding=self.encoding ).read()
+
+            # If reloading is available from the platform do so.
+            try :
+                if compiler['debug'] and isfile( ttlfile ) :
+                    compiler.pa._monitoredfiles.append(tttllfile)
+            except :
+                pass
 
         elif ttltext :
             parselines = ttltext.encode('utf-8').splitlines()

@@ -21,7 +21,9 @@ as plugins.
 """
     
 from   os.path            import dirname, join, basename
+
 from   pluggdapps.plugin  import Plugin, ISettings
+import pluggdapps.utils   as h
 
 __version__ = '0.3dev'
 
@@ -100,7 +102,25 @@ class BaseTTLPlugin( Plugin ):
 
         @implement <Interface.specfication> as <pluginname>
     """
-    pass
+    
+    #---- ISettings interface methods
+
+    @classmethod
+    def default_settings( cls ):
+        """:meth:`pluggdapps.plugin.ISettings.default_settings` interface 
+        method."""
+        ds = h.ConfigDict()
+        ds.__doc__ = (
+            "Base class for all Tayra template plugins. This class does not "
+            "provide any configurable parameters, instead refer to "
+            "corresponding TTL-Plugin configuration." )
+        return ds
+
+    @classmethod
+    def normalize_settings( cls, sett ):
+        """:meth:`pluggdapps.plugin.ISettings.normalize_settings` interface 
+        method."""
+        return sett
 
 import tayra.compiler       # Tayra compiler
 import tayra.decorators     # Implementation of  TTL function decorators 

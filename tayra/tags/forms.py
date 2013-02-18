@@ -6,7 +6,8 @@
 
 import re
 
-from   tayra.tags       import TayraTags
+import pluggdapps.utils     as h
+from   tayra.tags           import TayraTags
 
 class TayraHTML5Forms( TayraTags ):
     """Plugin to handle HTML input elements.
@@ -340,3 +341,17 @@ class TayraHTML5Forms( TayraTags ):
                 attrs += attr or (' size="%s"' % tok)
         attrs = attrs.strip()
         return '<select %s>%s</select>' % (attrs, content)
+
+    #---- ISettings interface methods
+
+    @classmethod
+    def default_settings( cls ):
+        return _default_settings
+
+    @classmethod
+    def normalize_settings( cls, sett ):
+        return sett
+
+_default_settings = h.ConfigDict()
+_default_settings.__doc__ = (
+    "Plugin to handle tayra template's html form tags." )

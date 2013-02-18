@@ -4,6 +4,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+import pluggdapps.utils     as h
 from  tayra.tags    import TayraTags
 
 class TayraHTML5( TayraTags ):
@@ -617,6 +618,8 @@ class TayraHTML5( TayraTags ):
 
         * ``text/css`` token translates to ``type="text/css"``.
         * ``scoped`` token translates to ``scoped="scoped"``.
+        * a quoted string is interpreted as ``src`` attribute and 
+          as ``src=<string>``.
         """
         attributes += (' ' + 
                        ''.join([ self.style2attr.get(t, '') for t in tokens ]))
@@ -644,3 +647,17 @@ class TayraHTML5( TayraTags ):
             else :
                 attributes += ' pubdate="%s"' % tok
         return '<abbr %s>%s</abbr>' % (attributes, content)
+
+    #---- ISettings interface methods
+
+    @classmethod
+    def default_settings( cls ):
+        return _default_settings
+
+    @classmethod
+    def normalize_settings( cls, sett ):
+        return sett
+
+_default_settings = h.ConfigDict()
+_default_settings.__doc__ = (
+    "Plugin to handle tayra template's standard html tags." )

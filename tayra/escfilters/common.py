@@ -7,9 +7,13 @@
 import re, urllib.parse, html
 
 from   pluggdapps.plugin    import Plugin, implements
+import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraEscapeFilter
 
-class CommonEscapeFilters( Plugin ):
+class TayraEscFilterCommon( Plugin ):
+    """Plugin supplies escape filtering like url-encode, xml-encode, 
+    html-encode, stripping whitespaces on expression substitution."""
+
     implements( ITayraEscapeFilter )
 
     xmlescapes = {
@@ -44,3 +48,16 @@ class CommonEscapeFilters( Plugin ):
         """Default handler. Return ``None`` so that runtime will try other
         plugins implementing the filter."""
         return None
+
+    #---- ISettings interface methods
+
+    @classmethod
+    def default_settings( cls ):
+        return _default_settings
+
+    @classmethod
+    def normalize_settings( cls, sett ):
+        return sett
+
+_default_settings = h.ConfigDict()
+_default_settings.__doc__ = TayraEscFilterCommon.__doc__

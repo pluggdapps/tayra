@@ -1,10 +1,16 @@
 ## Some sample comments 
 
-<html> <!-- Trying to inline a comment --> fair enough
-  <head> <!-- An inline comment spanning multiple
-    lines -->
+<html> 
+  <!-- Trying to inline a comment -->
+  fair enough
+  <head>
+    <!-- An inline comment spanning multiple
+      lines -->
   <body>
-    try inline <!-- comments inside text-lines -->
-    again <!-- spanning across multiple
+    try inline
+    <!-- comments inside text-lines -->
+    again
+    <!-- spanning across multiple
     lines
-      with indentation --> and finally finish it with text.
+      with indentation -->
+    and finally finish it with text.

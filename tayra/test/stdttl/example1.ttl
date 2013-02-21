@@ -3,4 +3,4 @@
 <html>
   <head>
   <body>
-    <p> hello world
+    <p> <span .black> hello <a "http://google.com"> world

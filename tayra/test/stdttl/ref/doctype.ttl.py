@@ -4,6 +4,44 @@ from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
+def __traceback_decorator__( frames ):
+    from copy    import deepcopy
+    from os.path import basename
+
+    def _map2ttl( frame ):
+        filename = frame.filename
+        lineno = frame.lineno
+        lines = open(filename).readlines()[:lineno]
+        lines.reverse()
+        rc = {}
+        for l in lines :
+            if l.strip().startswith('# lineno') :
+                _, ttl_lineno = l.split(':', 1)
+                ttl_lineno = int( ttl_lineno )
+                ttl_text = open( _ttlfile ).readlines()[ ttl_lineno-1 ]
+                return ttl_lineno, ttl_text
+        return None, None
+
+    newframes = []
+    for frame in frames :
+        newframes.append( frame )
+        frameadded = getattr( frame, '_ttlframeadded', False )
+
+        basen = basename( frame.filename )
+        if basen.endswith( '.ttl.py' )              and basen == (basename( _ttlfile ) + '.py')              and frameadded == False :
+            newframe = deepcopy( frame )
+            frame._ttlframeadded = True
+            try :
+                newframe.lineno, newframe.linetext = _map2ttl( newframe )
+                if newframe.lineno :
+                    newframe.filename = _ttlfile
+                    newframes.append( newframe )
+            except :
+                raise
+                continue
+    return newframes
+
+
 
 def body( z=10, *args, **kwargs ) :  
   _m.pushbuf()
@@ -17,26 +55,31 @@ def body( z=10, *args, **kwargs ) :
   _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">\n'] )
   _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">\n'] )
   _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n\n'] )
+  # lineno:14
   _m.pushbuf()
   _m.extend( ['<html #std1 .testcase.sample \n      { color: red; font-size : '] )
   _m.append(_m.evalexprs( 'z*2', '', globals(), locals()) )
   _m.extend( ['px } title="hello world">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
+  # lineno:16
   _m.pushbuf()
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:17
   _m.pushbuf()
   _m.extend( ['<body>'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
+  # lineno:18
   _m.pushbuf()
   _m.extend( ['<abbr "World Health Organization">'] )
   _m.pushbuf()
   _m.extend( [' WHO', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:19
   _m.pushbuf()
   _m.extend( ['<button #id_ reset disabled makefriend "button value">'] )
   _m.pushbuf()

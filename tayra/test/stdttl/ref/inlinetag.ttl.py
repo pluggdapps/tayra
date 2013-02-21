@@ -46,22 +46,51 @@ def __traceback_decorator__( frames ):
 def body( *args, **kwargs ) :  
   _m.pushbuf()
   # lineno:1
-  world = 'world'
+  _m.pushbuf()
+  _m.extend( ['<html>'] )
+  _m.pushbuf()
+  _m.extend( ['\n  '] )
   # lineno:2
   _m.pushbuf()
-  _m.extend( ["<div #id {' title= hello "] )
-  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
-  _m.extend( ['}>'] )
+  _m.extend( ['<head>'] )
   _m.pushbuf()
-  _m.extend( ['\n'] )
+  _m.extend( ['\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:3
   _m.pushbuf()
-  _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
-  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
-  _m.extend( ['}>'] )
+  _m.extend( ['<body>'] )
   _m.pushbuf()
-  _m.extend( ['\n'] )
+  _m.extend( [' ', '\n    '] )
+  # lineno:4
+  _m.pushbuf()
+  _m.extend( ['<p>'] )
+  _m.pushbuf()
+  _m.extend( [' '] )
+  _m.pushbuf()
+  _m.extend( ['<span>'] )
+  _m.pushbuf()
+  _m.extend( [' '] )
+  _m.pushbuf()
+  _m.extend( ['<a>'] )
+  _m.pushbuf()
+  _m.extend( [' hello world'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['\n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:5
+  _m.pushbuf()
+  _m.extend( ['<div #'] )
+  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.extend( [' .metanav-pa :some-name>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      '] )
+  # lineno:6
+  _m.extend( ['hello world how are you', '\n      '] )
+  # lineno:7
+  _m.extend( ['so this how it goes', '\n\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 
@@ -70,4 +99,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/obfus1.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/inlinetag.ttl' 

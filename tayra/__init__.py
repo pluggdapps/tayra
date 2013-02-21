@@ -77,19 +77,12 @@ def translatefile( ttlfile, compiler, options ):
     context = eval( context ) if isinstance( context, str ) else context
     context.update( _bodyargs=args )
 
-    # Setup parser
-    compiler._init( file=ttlfile )
+    # Generate
+    html = compiler.render( None, context, file=ttlfile )
+
+    # Most probably invoked via command line, save as html file.
     htmlfile = join( dirname(compiler.ttlfile), 
                      basename(compiler.ttlfile).rsplit('.', 1)[0] + '.html' )
-
-    # Intermediate file should always be encoded in 'utf-8'
-    enc = compiler.encoding[:-4] if compiler.encoding.endswith('-sig') else \
-            compiler.encoding # -sig is used to interpret BOM
-    code = compiler.compilettl()
-
-    # Generate
-    module = compiler.load( code, context=context )
-    html = compiler.generatehtml( module, context )
     open( htmlfile, mode='w', encoding='utf-8' ).write( html )
 
 

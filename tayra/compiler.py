@@ -9,7 +9,7 @@ interface to operate with pluggdapps web-framework and other methods to
 integrate with other packages.
 """
 
-import imp, os, re
+import imp, os, re, sys
 from   os.path              import isfile, basename, join, isdir, dirname
 from   hashlib              import sha1
 
@@ -111,7 +111,7 @@ class TTLCompiler( Plugin ):
         ast.generate( self.igen, *args, **kwargs )   # Generation
         ast.tailpass( self.igen )                    # Tail pass
         pytext = self.igen.codetext()
-        if self.pyfile :
+        if self.pyfile and isdir( dirname( self.pyfile )) :
             open( self.pyfile, 'w', encoding='utf-8' ).write( pytext )
         return pytext
 
@@ -128,8 +128,9 @@ class TTLCompiler( Plugin ):
         self._init( file=file, text=text ) if (file or text) else None
         code = self._memcache.get( self.ttlloc.ttlhash, None )
         if not code :
-            self.pytext = self.pytext or self.topy(self.toast(),*args,**kwargs)
-            code = compile( self.pytext, self.ttlfile, 'exec' )
+            if not self.pytext :
+                self.pytext = self.topy( self.toast(), *args, **kwargs )
+            code = compile( self.pytext, self.pyfile, 'exec' )
         if self['memcache'] :
             self._memcache.setdefault( self.ttlloc.ttlhash, code )
         return code
@@ -172,6 +173,7 @@ class TTLCompiler( Plugin ):
                 if self['beautify_html'] :
                     html = BeautifulSoup( html ).prettify()
             except :
+                raise
                 pass
             return html
         except :
@@ -194,7 +196,8 @@ class TTLCompiler( Plugin ):
         """
         code = self.compilettl( file=file, text=text )
         module = self.load( code, context=c )
-        return self.generatehtml( module, c )
+        html = self.generatehtml( module, c )
+        return html
 
     #---- ISettings interface methods
 
@@ -208,7 +211,7 @@ class TTLCompiler( Plugin ):
     def normalize_settings( cls, sett ):
         """:meth:`pluggdapps.plugin.ISettings.normalize_settings` interface 
         method."""
-        sett['debug'] = h.asbool( sett['debug'] )
+        sett['nocache'] = h.asbool( sett['nocache'] )
         sett['optimize'] = h.asint( sett['optimize'] )
         sett['lex_debug'] = h.asint( sett['lex_debug'] )
         sett['yacc_debug'] = h.asint( sett['yacc_debug'] )
@@ -296,6 +299,12 @@ _defaultsettings['cache_directory']        = {
     'help'    : "Directory path telling the compiler where to persist (cache) "
                 "intermediate python file."
 }
+_defaultsettings['nocache'] = {
+    'default' : False,
+    'types'   : (bool,),
+    'help'    : "If set to True, will not persist the intermediate python "
+                "file. intermediate python file."
+}
 _defaultsettings['escape_filters']          = {
     'default' : 'TayraEscFilterCommon',
     'types'   : ('csv', list),
@@ -316,8 +325,9 @@ _defaultsettings['beautify_html']                = {
     'default' : True,
     'types'   : (bool,),
     'help'    : "Boolean, if True will generate human readable html output. "
-                "Make sure that BeautifulSoup, bs4, is installed. Do not "
-                "enable this in production mode, might slow down the web page."
+                "Make sure that BeautifulSoup, beautifulsoup4, is "
+                "installed. Do not enable this in production mode, might "
+                "slow down the web page."
 }
 _defaultsettings['memcache']                = {
     'default' : True,
@@ -360,7 +370,10 @@ class TemplateLookup( object ) :
             cachedir = compiler['cache_directory']
             self.encoding = self.charset( ttlfile=ttlfile,
                                           encoding=compiler['encoding'] )
-            if cachedir :
+            if compiler['nocache'] :
+                self.pyfile = None
+
+            elif cachedir :
                 if isdir( cachedir ):
                     self.pyfile = join( cachedir, ttlloc+'.py' )
                     if not isfile( self.pyfile ):
@@ -369,10 +382,12 @@ class TemplateLookup( object ) :
                     compiler.pa.logdebug(
                             "Creating cache directory %r " % cachedir )
                     os.makedirs( cachedir )
+
             elif compiler['debug'] == True :
                 self.pyfile = ttlfile + '.py'
+
             else :
-                self.pyfile = None
+                self.pyfile = 'intermediate %r' % ttlfile
 
             self.ttlfile = h.locatefile( ttlfile, compiler['directories'] )
             self.ttltext = open( self.ttlfile, encoding=self.encoding ).read()

@@ -13,8 +13,6 @@ from   tayra.ast        import *
 
 class TTLParser( object ):
 
-    prolognodes = (DocType, Body, ImportAs, Inherit, Implement, Use,
-                   CommentBlock, CommentLine)
     """AST nodes that constitute prolog"""
 
     def __init__( self, compiler ) :
@@ -84,10 +82,6 @@ class TTLParser( object ):
             print( p[i], end='' )
         print(' ')
 
-    def prolog_window( self, node ):
-        if self.prolog == True and not isinstance(node, self.prolognodes) :
-            self.prolog = False
-
     # ---------- Precedence and associativity of operators --------------------
 
     precedence = (
@@ -100,8 +94,8 @@ class TTLParser( object ):
                 rc.append( None )
                 continue
             elif isinstance(t, tuple) :
-                cls, idx = t
-                rc.append( cls(p.parser, p[idx]) )
+                cls, (val, lineno) = t[0], p[ t[1] ]
+                rc.append( cls( p.parser, lineno, val ))
             else :
                 rc.append(t)
         return rc
@@ -133,7 +127,6 @@ class TTLParser( object ):
                   | ifelfiblock
                   | forblock
                   | whileblock"""
-        self.prolog_window( p[1] )
         p[0] = Script( p.parser, None, p[1] )
 
     def p_script_2( self, p ) :
@@ -155,7 +148,6 @@ class TTLParser( object ):
                   | script ifelfiblock
                   | script forblock
                   | script whileblock"""
-        self.prolog_window( p[1] )
         p[0] = Script( p.parser, p[1], p[2] )
 
     #-- Prolog
@@ -214,23 +206,37 @@ class TTLParser( object ):
         terms = [ (STATEMENT, 1), (NEWLINES, 2) ]
         p[0] = Statement( p.parser, *self._buildterms(p, terms) )
 
-    def p_tagline_1( self, p ) :
-        """tagline      : TAGBEGIN NEWLINES"""
-        terms = [ (TAGBEGIN, 1), None, (NEWLINES, 2) ]
+    def p_tagline( self, p ) :
+        """tagline      : tagspans NEWLINES"""
+        terms = [ p[1], (NEWLINES, 2) ]
         p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
 
-    def p_tagline_2( self, p ) :
-        """tagline      : TAGBEGIN text NEWLINES"""
-        terms = [ (TAGBEGIN, 1), (TEXT, 2), (NEWLINES, 3) ]
-        p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
+    def p_tagspans_1( self, p ):
+        """tagspans     : TAGBEGIN
+                        | TAGBEGIN text"""
+        if len(p) == 2 :
+            terms = [ None, (TAGBEGIN,1), None ]
+        else :
+            terms = [ None, (TAGBEGIN,1), p[2] ]
+        p[0] = TagSpans( p.parser, *self._buildterms(p, terms) )
+
+    def p_tagspans_2( self, p ):
+        """tagspans     : tagspans TAGBEGIN 
+                        | tagspans TAGBEGIN text"""
+        if len(p) == 3 :
+            terms = [ p[1], (TAGBEGIN,2), None ]
+        else :
+            terms = [ p[1], (TAGBEGIN,2), p[3] ]
+        p[0] = TagSpans( p.parser, *self._buildterms(p, terms) )
 
     def p_text( self, p ):
         """text         : TEXT
                         | text TEXT"""
         if len(p) == 2 :
-            p[0] = p[1]
-        else :
-            p[0] = p[1] + p[2]
+            terms = [ None, (TEXT,1) ]
+        elif len(p) == 3 :
+            terms = [ p[1], (TEXT,2) ]
+        p[0] = Text( p.parser, *self._buildterms(p, terms) )
 
     #---- Script blocks
 
@@ -246,12 +252,12 @@ class TTLParser( object ):
 
     def p_textblock_1( self, p ) :
         """textblock    : text NEWLINES"""
-        terms = [ None, (TEXT, 1), (NEWLINES, 2), None, None, None ]
+        terms = [ None, p[1], (NEWLINES, 2), None, None, None ]
         p[0] = TextBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_textblock_2( self, p ):
         """textblock    : textblock text NEWLINES"""
-        terms = [ p[1], (TEXT, 2), (NEWLINES, 3), None, None, None ]
+        terms = [ p[1], p[2], (NEWLINES, 3), None, None, None ]
         p[0] = TextBlock( p.parser, *self._buildterms(p, terms) )
 
     def p_textblock_3( self, p ) :
@@ -266,9 +272,9 @@ class TTLParser( object ):
 
     def p_filterblock_1( self, p ) :
         """filterblock : FILTEROPEN NEWLINES filtertext FILTERCLOSE NEWLINES"""
-        terms = [ (FILTEROPEN,1), (NEWLINES, 2), (FILTERTEXT, 3),
-                  (FILTERCLOSE,4), (NEWLINES,5) ]
-        assert p[1].startswith( p[4].strip(' \t') )
+        terms = [ (FILTEROPEN,1), (NEWLINES, 2), p[3], (FILTERCLOSE,4),
+                  (NEWLINES,5) ]
+        assert p[1][0].startswith( p[4][0].strip(' \t') )
         p[0] = FilterBlock( p.parser, *self._buildterms( p, terms ) )
 
     def p_filterblock_2( self, p ) :
@@ -280,7 +286,11 @@ class TTLParser( object ):
     def p_filtertext( self, p ):
         """filtertext       : FILTERTEXT NEWLINES
                             | filtertext FILTERTEXT NEWLINES"""
-        p[0] = (p[1] + p[2] + p[3]) if len(p) == 4 else (p[1] + p[2])
+        if len(p) == 4 :
+            p[1].append( FILTERTEXT( p.parser, p[2][1], p[2][0]+p[3][0] ))
+            p[0] = p[1]
+        else :
+            p[0] = [ FILTERTEXT( p.parser, p[1][1], p[1][0]+p[2][0] ) ]
 
     def p_functionblock_1( self, p ) :
         """functionblock : DECORATOR NEWLINES FUNCTION NEWLINES INDENT script DEDENT"""

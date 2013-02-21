@@ -68,7 +68,7 @@ syn match   ttlValue        contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1 contains=
                             \ pythonExprs
 syn match   ttlTagN         contained "<[!%]\?\s*[-a-zA-Z0-9_#]"hs=s+1 contains=ttlTagName,ttlTagSpecifier
 syn region  ttlStyle        contained start=+{+ keepend end=+}+ contains=pythonExprs,@htmlCss
-syn region  ttlTag          contained start=+^[ ]*<[!%]\?[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlStyle,
+syn region  ttlTag          contained start=+[ ]*<[!%]\?[^/]+   end=+>+ contains=ttlTagN,ttlString,ttlStyle,
                             \ ttlValue,ttlTagError,ttlEvent,ttlCssDefinition,pythonExprs
 syn region  ttlTagline      start=+^[ ]*<[!%]\?[^/]+  end=+[^\r\n]\{-}$+ contains=ttlTag,pythonExprs
 

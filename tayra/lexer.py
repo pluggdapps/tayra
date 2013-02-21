@@ -28,7 +28,7 @@ class TTLLexer( object ) :
     #---- API methods
 
     def build( self, **kwargs ) :
-        """ Builds the lexer from the specification. Must be called after the
+        """Builds the lexer from the specification. Must be called after the
         lexer object is created. This method exists separately, because the
         PLY manual warns against calling lex.lex inside __init__
         """
@@ -49,6 +49,8 @@ class TTLLexer( object ) :
         if tok == None and self.indentstack :
             self._unwind_indentstack()
             tok = self.poptoken()
+        if tok :
+            tok.value = (tok.value, tok.lineno)
         return tok 
 
     def reset_lineno( self ) :
@@ -102,7 +104,7 @@ class TTLLexer( object ) :
         r'(?:"[^"\\]*(?:\\.[^"\\]*)*")'+r'|'+r"(?:'[^'\\]*(?:\\.[^'\\]*)*')"
     finish    = r'OVER!!!!@\#END-OF-TEXT\#@!!!!OVER'
     prgsuffx  = r'(?=:[ \t]*$):[ \t]*$'
-    text      = r'[^\r\n\\]+'
+    text      = r'[^<\r\n\\]+'
     exprsubst = r'(?<!\\)\$\{[^}]*\}'
 
     # Single line statements
@@ -231,58 +233,58 @@ class TTLLexer( object ) :
         return t
 
     @TOKEN( cmtopen )                   # Open a comment block
-    def t_COMMENTOPEN( self, t ) :
+    def t_COMMENTOPEN( self, t ):
         t.lexer.push_state( 'comment' )
         return t
 
     @TOKEN( fbopen )
-    def t_FILTEROPEN( self, t ) :
+    def t_FILTEROPEN( self, t ):
         t.lexer.push_state( 'filter' )
         return t
 
     @TOKEN( interface )
-    def t_INTERFACE( self, t ) :
+    def t_INTERFACE( self, t ):
         self._incrlineno(t)
         return t
 
     @TOKEN( decorator )
-    def t_DECORATOR( self, t ) :
+    def t_DECORATOR( self, t ):
         self._incrlineno(t)
         return t
 
     @TOKEN( function )
-    def t_FUNCTION( self, t ) :
+    def t_FUNCTION( self, t ):
         self._incrlineno(t)
         return t
 
     @TOKEN( if_ )
-    def t_IF( self, t ) :
+    def t_IF( self, t ):
         return t
 
     @TOKEN( elif_ )
-    def t_ELIF( self, t ) :
+    def t_ELIF( self, t ):
         return t
 
     @TOKEN( else_ )
-    def t_ELSE( self, t ) :
+    def t_ELSE( self, t ):
         return t
 
     @TOKEN( for_ )
-    def t_FOR( self, t ) :
+    def t_FOR( self, t ):
         return t
 
     @TOKEN( while_ )
-    def t_WHILE( self, t ) :
+    def t_WHILE( self, t ):
         return t
 
     @TOKEN( newtag )
-    def t_TAGBEGIN( self, t ) :
+    def t_TAGBEGIN( self, t ):
         self._incrlineno(t)
         t.value = t.value.replace( r'\>', '>' )
         return t
 
     @TOKEN( text )
-    def t_TEXT( self, t ) :
+    def t_TEXT( self, t ):
         return t
 
     #---- Comment block tokens
@@ -341,7 +343,7 @@ class TTLLexer( object ) :
         return ( token.lineno, self._find_tok_column(token) )
 
     def _incrlineno( self, token ) :
-        newlines = len( token.value.split('\n') ) - 1
+        newlines = len( re.findall( r'\n|\r\n|\r', token.value ))
         if newlines > 0 :
             token.lexer.lineno += newlines
     

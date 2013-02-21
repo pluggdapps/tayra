@@ -104,6 +104,8 @@ def main() :
     elif options.test :
         from tayra.test.teststd import test_stdttl
         print( "Executing TTL tests ..." )
+        setts['beautify_html'] = True
+        compiler = pa.query_plugin(pa,ISettings,'ttlcompiler',settings=setts)
         test_stdttl( compiler, options )
 
     elif options.ttllex and options.ttlfile : 

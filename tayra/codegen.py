@@ -14,7 +14,50 @@ import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
-from   tayra                import BaseTTLPlugin"""
+from   tayra                import BaseTTLPlugin
+
+"""
+
+tb_supplement = """\
+def __traceback_decorator__( frames ):
+    from copy    import deepcopy
+    from os.path import basename
+
+    def _map2ttl( frame ):
+        filename = frame.filename
+        lineno = frame.lineno
+        lines = open(filename).readlines()[:lineno]
+        lines.reverse()
+        rc = {}
+        for l in lines :
+            if l.strip().startswith('# lineno') :
+                _, ttl_lineno = l.split(':', 1)
+                ttl_lineno = int( ttl_lineno )
+                ttl_text = open( _ttlfile ).readlines()[ ttl_lineno-1 ]
+                return ttl_lineno, ttl_text
+        return None, None
+
+    newframes = []
+    for frame in frames :
+        newframes.append( frame )
+        frameadded = getattr( frame, '_ttlframeadded', False )
+
+        basen = basename( frame.filename )
+        if basen.endswith( '.ttl.py' ) \
+             and basen == (basename( _ttlfile ) + '.py') \
+             and frameadded == False :
+            newframe = deepcopy( frame )
+            frame._ttlframeadded = True
+            try :
+                newframe.lineno, newframe.linetext = _map2ttl( newframe )
+                if newframe.lineno :
+                    newframe.filename = _ttlfile
+                    newframes.append( newframe )
+            except :
+                raise
+                continue
+    return newframes
+"""
 
 footer = """\
 _ttlhash = %r
@@ -34,6 +77,7 @@ from  %s import %s
 class %s( BaseTTLPlugin ):
   implements(%s) 
 """
+
 
 class InstrGen( object ):
     machname = '_m'
@@ -56,6 +100,8 @@ class InstrGen( object ):
     def initialize( self ):
         """Initialize and begin generating the intermediate python file."""
         self.outfd.write( import_header )
+        if self.compiler['debug'] :
+            self.outfd.write( tb_supplement )
         self.cr()
 
     def cr( self, count=1 ):
@@ -171,7 +217,7 @@ class InstrGen( object ):
 
     def importttl( self, modname, ttlfile ):
         """Special method to handle @import directive."""
-        lines = self.importtext % (ttlfile, modname)
+        lines = importtext % (ttlfile, modname)
         self.putblock( lines )
 
     def putinherit( self, ttlloc ):

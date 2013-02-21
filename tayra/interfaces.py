@@ -67,53 +67,58 @@ class ITayraFilterBlock( Interface ):
     compilation.
     """
 
-    def headpass1( igen, filteropen, filtertext, filterclose ):
+    def headpass1( igen, node ):
         """Will be called during the `headpass` phase 1, traversing AST. Can
         optionally return a value which will then be passed to headpass2.
 
         ``igen``,
             object to generate instructions.
 
-        ``filteropen``
-            First line opening the filter-block without any whitespace prefix,
-            and without any trailing newlines.
-
-        ``filtertext``
-            Rest of the filterblock text except the closing line.
-
-        ``filterclose``
-            Will be the syntax to end a filter block without trailing
-            newlines.
+        ``node``
+            Passes the :class:`FilterBlock` node instance. Refer to the class
+            documentation to learn more about the node defintion.
         """
 
-    def headpass2( igen, result ):
+    def headpass2( igen, node, result ):
         """Will be called during the `headpass` phase 2, traversing AST. Can
         optionally return a value which will then be passed to generate.
 
         ``igen``,
             object to generate instructions.
 
+        ``node``
+            Passes the :class:`FilterBlock` node instance. Refer to the class
+            documentation to learn more about the node defintion.
+
         ``result``,
             Result from :meth:`headpass1`.
         """
 
-    def generate( igen, result, *args, **kwargs ):
+    def generate( igen, node, result, *args, **kwargs ):
         """Will be called during the `generate` phase, traversing AST. Can
         optionally return a value which will then be passed to tailpass.
 
         ``igen``,
             object to generate instructions.
 
+        ``node``
+            Passes the :class:`FilterBlock` node instance. Refer to the class
+            documentation to learn more about the node defintion.
+
         ``result``,
             Result from :meth:`headpass2`.
         """
 
-    def tailpass( igen, result ):
+    def tailpass( igen, node, result ):
         """Will be called during the `tailpass` phase, traversing AST. Can
         optionally return a value which will then be passed to tailpass.
 
         ``igen``,
             object to generate instructions.
+
+        ``node``
+            Passes the :class:`FilterBlock` node instance. Refer to the class
+            documentation to learn more about the node defintion.
 
         ``result``,
             Result from :meth:`headpass2`.

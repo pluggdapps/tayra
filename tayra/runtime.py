@@ -89,6 +89,8 @@ from   tayra.lexer      import TTLLexer
 from   tayra.interfaces import ITayraTags, ITayraEscapeFilter, \
                                ITayraFilterBlock
 
+__traceback_hide__ = True
+
 class StackMachine( object ) :
     """Stack machine instruction interpretr.  Intructions are method calls on
     this object. Supported instructions are,

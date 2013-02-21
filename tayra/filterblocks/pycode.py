@@ -34,34 +34,36 @@ class TayraFilterBlockPy( Plugin ):
     """
     implements( ITayraFilterBlock )
 
-    def __init__( self, *args, **kwargs ):
-        self.pylines = []
-
-    def headpass1( self, igen, filteropen, filtertext, filterclose ):
-        indent = len(filteropen.split(os.linesep)[-1])
-        # Align indentation
-        pylines = filtertext.splitlines()
-        if pylines :
-            self.pylines = [ pylines[0] ] + [ l[indent:] for l in pylines[1:] ]
-        else :
-            self.pylines = []
+    def headpass1( self, igen, node ):
+        self.filteropen = node.FILTEROPEN.dump(None) + node.NEWLINES1.dump(None)
         return None
 
-    def headpass2( self, igen, result ):
+    def headpass2( self, igen, node, result ):
         return result
 
-    def generate( self, igen, result, *args, **kwargs ):   # Inline
+    def generate( self, igen, node, result, *args, **kwargs ):   # Inline
         self.localfunc = kwargs.get( 'localfunc', False )
         self.args, self.kwargs = args, kwargs
         if self.localfunc :
-            [ igen.putstatement( line ) for line in self.pylines ]
+            self.genlines( igen, node, *args, **kwargs )
         return result
 
-    def tailpass( self, igen, result ):
+    def tailpass( self, igen, node, result ):
         if self.localfunc == False :
-            [ igen.putstatement( line ) for line in self.pylines ]
-        self.pylines = []
+            self.genlines( igen, node, *self.args, **self.kwargs )
         return result
+
+    def genlines( self, igen, node, *args, **kwargs ):
+        indent = len( self.filteropen.rsplit(os.linesep, 1)[-1] )
+        prefix = ''
+        filtertext = node.filtertext[:]
+        while filtertext :
+            TERM = filtertext.pop(0)
+            term = TERM.dump(None)
+            igen.comment( "lineno:%s" % TERM.lineno )
+            igen.putstatement( prefix + term.rstrip(' \t') )
+            prefix = term.rsplit( os.linesep, 1 )[-1][indent:]
+        node.NEWLINES2.generate( igen, *args, **kwargs )
 
     #---- ISettings interface methods
 

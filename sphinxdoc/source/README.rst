@@ -1,38 +1,72 @@
 What is Tayra template ?
 ========================
 
-Tayra template language is a full-featured abstract markup language used to 
-describe web-documents. It is primarily inspired from
+Tayra is a full-featured abstract markup language to template web documents.
+It is primarily inspired from 
 `mako-templates <http://www.makotemplates.org/>`_ and
 `HAML <http://haml-lang.com/>`_ (especially the indentation based
 markup definitions). Although it is young and relatively a new kid among
 the old-timers, it can be considered as the evolutionary next step for some of
-them. And probably it is the only templating language that allows developers to build and distribute their templates as plugins, not to mention the fact that tayra's implementation itself is heavily based on plugins.
+them. And probably it is the only templating language that allows developers
+to build and distribute their templates as plugins, not to mention the fact
+that tayra's implementation itself is heavily based on plugins.
 
-You can learn more and hack into its guts at
-`google-code <http://code.google.com/p/tayra/>`_ or
-`github <https://github.com/prataprc/tayra>`_
+Example,
 
-Some interesting features in tayra are,
+.. code-block:: html
+
+  <div .pluggdappsfooter>
+    <div>
+      powered by pluggdapps, 
+      <span {font-style : italic}> ${counts['plugins']} plugins
+      implenting
+      <span {font-style : italic}> ${counts['interfaces']} interfaces
+
+  ...
+  ...
+
+  <ul ${kwargs.get('id', '')} .tbreadcrumbs>
+    @while navigate :
+      @@crumbsname, crumbsurl = navigate.pop(0)
+      <li .crumbs>
+        <a .crumbname "${crumbsurl or ''}"> ${crumbsname}
+        <ul .menu>
+          @for name, url in sorted( crumbsmenu[crumbsname] ) :
+            <li .item> <a "${url}"> ${name}
+
+      @if navigate :
+        <li .crumbsep> &raquo;
+
+Features
+--------
 
 - concise and beautiful syntax.
+- based on pluggdapps component architecture.
+- leverages on pluggdapps' configuration system.
 - pluggable tag handlers for custom tag elements.
+- compiles down to optimal python code and optionally memcached. Also possible
+  to persist the intermediate python code to avoid re-compilation in case of
+  server restart.
+- works with python 3.x.
+- has full unicode support.
 - full programmability available via,
-
-  - expression substitution.
+  - expression substitution with optional escape encoding.
   - control-blocks like if-elif-else.
   - looping contructs like for / while.
   - python statements.
-
 - template abstraction using function blocks, with its own local scope.
 - import other template scripts into the local namespace and access their
   functions
-- template inheritance for re-usable web-layouting.
+- template inheritance for re-usable web-layouts.
+- extensible filter blocks.
 - and unique ability to create template plugins, distribute them as
   separate package.
+- easy to debug. when used with pluggdapps' ``CatchAndDebug`` pugin, exception
+  tracebacks are tweaked to directly point to the correct line in the
+  template.
 
-Installation
-------------
+Getting it
+----------
 
 There are multiple ways to install tayra and the easiest way is by 
 easy_install.
@@ -42,19 +76,29 @@ easy_install.
   # -Z to do unzipped install. The reason for installing it
   #    in un-zipped form is to make use of the command line tool.
   # -U to upgrade install
-  easy_install -Z -U tayra
+  easy_install tayra
+
+  # If beautify_html configuration option is desired,
+  easy_install beautifulsoup4 
+
+  # To compile sphinx documentation
+  easy_install sphinx
 
 **Install from source code**,
 
-You can obtain the source code by, downloading the latest 
-`tar.gz <http://pypi.python.org/pypi/tayra>`_ or cloning from mercurial 
-repositories.
+Alternately, you can obtain the source code,
+- downloading the `tar.gz <http://pypi.python.org/pypi/tayra>`_
+- cloning from one of the many places mentioned below.
 
 .. code-block:: bash
 
   hg clone https://code.google.com/p/tayra/
   # or
   hg clone https://bitbucket.org/prataprc/tayra
+  # or 
+  git clone https://github.com/prataprc/tayra.git
+
+tayra uses mercurial as native repository.
 
 After untarring the source package, or cloning the source repository into
 your local machine, install source package by executing,
@@ -110,6 +154,11 @@ Using it as python library
 Development
 -----------
 
+Tayra template language is defined as a bunch of meta syntax that can be
+extended and customised using plugins. Developers can author plugins
+implementing one or more interfaces specified by the tayra-package. Tayra's
+plugin system is based on pluggdapps component architecture.
+
 It is always better to setup the development tree under a virtual environemnt.
 To begin with, first checkout the source tree from the latest repository tree
 and then use the ``make`` command to create a development environment.
@@ -136,3 +185,10 @@ which,
 - The .egg package will be availabe under dist/ directory
 - If you enable ['beautify_html'] option, you will have to install
   beautifulsoup4 package.
+
+License
+-------
+
+Tayra is distributed under `GPLv3 license <http://www.gnu.org/licenses/>`.
+
+**Requires : Linux, Python-3.x, Pluggdapps, PLY.**

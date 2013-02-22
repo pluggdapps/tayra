@@ -21,7 +21,10 @@ Contents:
    template_libraries
    template_plugins
    extendingtayra
-   glossary
+   primer
+   reference
+   sandboxing
+   whytayra
    CHANGELOG
 
 Indices and tables
@@ -30,4 +33,29 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+* :ref:`glossary`
 
+
+Module Listing
+--------------
+
+.. toctree::
+    :maxdepth: 2
+
+    modules/ast
+    modules/codegen
+    modules/compiler
+    modules/decorators
+    modules/decorators.useragent
+    modules/escfilters.common
+    modules/escfilters
+    modules/filterblocks.pycode
+    modules/filterblocks
+    modules/interfaces
+    modules/lexer
+    modules/parser
+    modules/runtime
+    modules/tags.forms
+    modules/tags.html
+    modules/tags
+    modules/tayra

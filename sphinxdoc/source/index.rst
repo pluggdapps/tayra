@@ -22,9 +22,6 @@ Contents:
    template_plugins
    extendingtayra
    primer
-   reference
-   sandboxing
-   whytayra
    CHANGELOG
 
 Indices and tables
@@ -46,10 +43,7 @@ Module Listing
     modules/codegen
     modules/compiler
     modules/decorators
-    modules/decorators.useragent
-    modules/escfilters.common
     modules/escfilters
-    modules/filterblocks.pycode
     modules/filterblocks
     modules/interfaces
     modules/lexer
@@ -59,3 +53,5 @@ Module Listing
     modules/tags.html
     modules/tags
     modules/tayra
+    modules/tyr
+    modules/utils

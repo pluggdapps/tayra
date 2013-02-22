@@ -4,6 +4,10 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Package contains plugins implementing :class:`ITayraTags` interface
+specification. Implementing plugins must always derive from :class:`TayraTags`
+class."""
+
 from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraTags

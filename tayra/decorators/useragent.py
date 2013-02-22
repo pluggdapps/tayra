@@ -4,33 +4,16 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""
+Decorator to detect user-agent information in http request and remap the
+functional calls to one of the many decorated functions corresponding to the
+user-agent.
+"""
+
 import re
 import pluggdapps.utils as h
 
 __all__ = [ 'useragent' ]
-
-re_ua = re.compile( r'(Firefox|Chrome)/(3|4|5|6|7|8)' )
-ualookup = {
-  ('Firefox', '3')  :  'ff3',
-  ('Firefox', '4')  :  'ff4',
-  ('Firefox', '5')  :  'ff5',
-  ('Firefox', '6')  :  'ff6',
-  ('Firefox', '7')  :  'ff7',
-  ('Chrome',  '8')  :  'ch8',
-}
-uacallable = {}
-
-def dofunc_onuseragent( context, namespace, *args, **kwargs ):
-    """This function replaces the original function decorated by ``useragent``
-    and gets called. It uses uacallable to map to right callable based on
-    requesting user-agent.
-    """
-    req = context.get('request', None)
-    x = re_ua.findall( req.headers.get('User-Agent', '') ) if req else None
-    x = ualookup.get( x and x[0] or None, 'default' )
-    y = uacallable.get( namespace, None )
-    func = y.get( x, y.get('default', None) ) if y else None
-    return func( *args, **kwargs ) if func else None
 
 def useragent( agents=[], namespace=None, _ttlcontext={} ):
     """Decorator to wrap different functions by same name into dictionary of
@@ -60,3 +43,27 @@ def useragent( agents=[], namespace=None, _ttlcontext={} ):
             d.update( default=func )
         return h.hitch( dofunc_onuseragent, _ttlcontext, namespace )
     return decorator
+
+re_ua = re.compile( r'(Firefox|Chrome)/(3|4|5|6|7|8)' )
+ualookup = {
+  ('Firefox', '3')  :  'ff3',
+  ('Firefox', '4')  :  'ff4',
+  ('Firefox', '5')  :  'ff5',
+  ('Firefox', '6')  :  'ff6',
+  ('Firefox', '7')  :  'ff7',
+  ('Chrome',  '8')  :  'ch8',
+}
+uacallable = {}
+
+def dofunc_onuseragent( context, namespace, *args, **kwargs ):
+    """This function replaces the original function decorated by ``useragent``
+    and gets called. It uses uacallable to map to right callable based on
+    requesting user-agent.
+    """
+    req = context.get('request', None)
+    x = re_ua.findall( req.headers.get('User-Agent', '') ) if req else None
+    x = ualookup.get( x and x[0] or None, 'default' )
+    y = uacallable.get( namespace, None )
+    func = y.get( x, y.get('default', None) ) if y else None
+    return func( *args, **kwargs ) if func else None
+

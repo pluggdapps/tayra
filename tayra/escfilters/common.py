@@ -4,6 +4,10 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Module implements a :class:`ITayraEscapeFilter` plugin providing a common 
+set of escape encoding for expression substitution.
+"""
+
 import re, urllib.parse, html
 
 from   pluggdapps.plugin    import Plugin, implements

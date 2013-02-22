@@ -784,6 +784,11 @@ class CommentBlock( NonTerminal ):
         [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 
+prolognodes = (
+  DocType, Body, ImportAs, Inherit, Implement, Use, CommentBlock, CommentLine
+)
+
+
 class Statement( NonTerminal ):
     """class to handle `statement` grammar."""
 
@@ -1374,7 +1379,6 @@ class BODY( Terminal ) : pass
 class IMPORT( Terminal ) : pass
 class IMPLEMENT( Terminal ) : pass
 class INHERIT( Terminal ) : pass
-class USE( Terminal ) : pass
 
 class COMMENTLINE( Terminal ) : pass
 class STATEMENT( Terminal ) : pass
@@ -1423,8 +1427,3 @@ class TAGCLOSE( Terminal ) :
         if self.pruneinner or self.pruneindent :
             self.terminal = re.sub( r'[!%]', '', tagclose )
         return self.pruneinner, self.pruneindent
-
-prolognodes = (
-  DocType, Body, ImportAs, Inherit, Implement, Use, CommentBlock, CommentLine
-)
-

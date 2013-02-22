@@ -10,3 +10,7 @@ Module contents
     :members:
     :show-inheritance:
 
+.. autoclass:: Namespace
+    :members:
+    :show-inheritance:
+

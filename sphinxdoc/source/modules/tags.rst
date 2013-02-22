@@ -1,27 +1,20 @@
-tags Package
+Tag handlers
 ============
 
-:mod:`tags` Package
--------------------
-
 .. automodule:: tayra.tags
+
+Module Contents
+---------------
+
+.. autoclass:: TayraTags
     :members:
-    :undoc-members:
     :show-inheritance:
 
-:mod:`forms` Module
--------------------
+Module Listing
+--------------
 
-.. automodule:: tayra.tags.forms
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+    :maxdepth: 2
 
-:mod:`html` Module
-------------------
-
-.. automodule:: tayra.tags.html
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+    tags.forms
+    tags.html

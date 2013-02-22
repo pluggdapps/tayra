@@ -1,19 +1,12 @@
-escfilters Package
+Escfilters Package
 ==================
 
-:mod:`escfilters` Package
--------------------------
-
 .. automodule:: tayra.escfilters
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
-:mod:`common` Module
---------------------
+Module Listing
+--------------
 
-.. automodule:: tayra.escfilters.common
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+    :maxdepth: 2
 
+    escfilters.common

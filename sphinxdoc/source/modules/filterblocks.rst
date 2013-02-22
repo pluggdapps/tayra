@@ -1,19 +1,12 @@
-filterblocks Package
+Filterblocks Package
 ====================
 
-:mod:`filterblocks` Package
----------------------------
-
 .. automodule:: tayra.filterblocks
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
-:mod:`pycode` Module
---------------------
+Module Listing
+--------------
 
-.. automodule:: tayra.filterblocks.pycode
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+    :maxdepth: 2
 
+    filterblocks.pycode

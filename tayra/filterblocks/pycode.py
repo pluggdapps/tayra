@@ -4,6 +4,10 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Module implements filter-block with syntax ``:py:``. Handled by the
+following plugin.
+"""
+
 import re, os
 
 from   pluggdapps.plugin    import Plugin, implements
@@ -25,12 +29,13 @@ class TayraFilterBlockPy( Plugin ):
     filter block accept a **global** token that can be passed while defining
     the block.  For example,
 
-    ... code-block : html 
+    .. code-block:: html 
 
         <div>
           :py:
           print "hello world"
           :py:
+
     """
     implements( ITayraFilterBlock )
 

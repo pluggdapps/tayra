@@ -1,19 +1,12 @@
-decorators Package
+Decorators Package
 ==================
 
-:mod:`decorators` Package
--------------------------
-
 .. automodule:: tayra.decorators
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
-:mod:`useragent` Module
------------------------
+Module Listing
+--------------
 
-.. automodule:: tayra.decorators.useragent
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+    :maxdepth: 2
 
+    decorators.useragent

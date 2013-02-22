@@ -4,4 +4,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Package directory contains plugins implementing :class:`ITayraEscapeFilter`
+interface specification."""
+
 import tayra.escfilters.common

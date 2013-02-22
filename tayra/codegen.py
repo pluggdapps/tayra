@@ -5,7 +5,8 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 """Instruction generator for :class:`StackMachine`. Generates the intermediate
-python file."""
+python file.
+"""
 
 from   io   import   StringIO
 

@@ -1,5 +1,5 @@
 :mod:`tayra.ast` -- Abstract syntax tree
-====================================================
+=========================================
 
 .. automodule:: tayra.ast
 
@@ -19,7 +19,6 @@ Module contents
     :show-inheritance:
 
 .. autoclass:: Template
-.. autoclass:: Prolog
 .. autoclass:: DocType
 .. autoclass:: Body
 .. autoclass:: ImportAs
@@ -30,7 +29,9 @@ Module contents
 .. autoclass:: CommentBlock
 .. autoclass:: Statement
 .. autoclass:: TagLine
+.. autoclass:: TagSpans
 .. autoclass:: TagBlock
+.. autoclass:: Text
 .. autoclass:: TextBlock
 .. autoclass:: InterfaceBlock
 .. autoclass:: FunctionBlock

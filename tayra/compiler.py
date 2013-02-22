@@ -444,12 +444,3 @@ class TemplateLookup( object ) :
 
     ttlhash = property( _get_ttlhash )
 
-
-def supermost( module ):
-    """Walk through the module inheritance all the way to the parent most
-    module, and return the same
-    """
-    parmod = module.parent
-    while parmod : module, parmod = parmod, parmod.parent
-    return module
-

@@ -10,8 +10,6 @@
 "  finish
 "endif
 
-au BufRead,BufNewFile *.ttl           set filetype=ttl
-
-autocmd FileType ttl setlocal shiftwidth=2 tabstop=2
-
+au BufRead,BufNewFile *.ttl     set filetype=ttl
+autocmd FileType ttl            setlocal shiftwidth=2 tabstop=2
 " vim: ts=8 sw=2

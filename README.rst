@@ -1,29 +1,53 @@
 What is Tayra template ?
 ========================
 
-Tayra template language is a full-featured abstract markup language used to 
-describe web-documents. It is primarily inspired from
+Tayra is a full-featured abstract markup language to template web documents.
+It is primarily inspired from 
 `mako-templates <http://www.makotemplates.org/>`_ and
 `HAML <http://haml-lang.com/>`_ (especially the indentation based
 markup definitions). Although it is young and relatively a new kid among
 the old-timers, it can be considered as the evolutionary next step for some of
-them. And probably it is the only templating language that allows developers to build and distribute their templates as plugins, not to mention the fact that tayra's implementation itself is heavily based on plugins.
+them. And probably it is the only templating language that allows developers
+to build and distribute their templates as plugins, not to mention the fact
+that tayra's implementation itself is heavily based on plugins.
 
-You can learn more and hack into its guts at
+Example,
+
+.. code-block::
+
+  <div .pluggdappsfooter>
+    <div>
+      powered by pluggdapps, 
+      <span {font-style : italic}> ${counts['plugins']} plugins
+      implenting
+      <span {font-style : italic}> ${counts['interfaces']} interfaces
+
+  <ul ${kwargs.get('id', '')} .tbreadcrumbs>
+    @while navigate :
+      @@crumbsname, crumbsurl = navigate.pop(0)
+      <li .crumbs>
+        <a .crumbname "${crumbsurl or ''}"> ${crumbsname}
+        <ul .menu>
+          @for name, url in sorted( crumbsmenu[crumbsname] ) :
+            <li .item>
+              <a "${url}"> ${name}
+
+      @if navigate :
+        <li .crumbsep> &raquo;
+
+You can hack into its guts at
 `google-code <http://code.google.com/p/tayra/>`_ or
 `github <https://github.com/prataprc/tayra>`_
 
-Some interesting features in tayra are,
+**Features :**
 
 - concise and beautiful syntax.
 - pluggable tag handlers for custom tag elements.
 - full programmability available via,
-
   - expression substitution.
   - control-blocks like if-elif-else.
   - looping contructs like for / while.
   - python statements.
-
 - template abstraction using function blocks, with its own local scope.
 - import other template scripts into the local namespace and access their
   functions

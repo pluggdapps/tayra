@@ -1,19 +1,14 @@
-" This file is subject to the terms and conditions defined in
-" file 'LICENSE', which is part of this source code package.
-"       Copyright (c) 2011 R Pratap Chakravarthy
+" Vim filetype plugin file
+" Language: ttl
+" Maintainer: Pratap Chakravarthy <prataprc at gmail dot com>
+" Last Changed:
+" URL: pypi.python.org/pypi/tayra
 
-let b:did_ftplugin = 1
-
-setlocal matchpairs+=<:>
-setlocal matchpairs+=@::
-setlocal matchpairs+=@:;
-setlocal commentstring=<!--%s-->
-setlocal comments=s:<!--,m:\ \ \ \ ,e:-->,f:#
-
-if exists("g:ft_html_autocomment") && (g:ft_html_autocomment == 1)
-    setlocal formatoptions-=t formatoptions+=croql
+" Only use this filetype plugin when no other was loaded.
+if exists("b:did_ftplugin")
+  finish
 endif
 
-" Undo the stuff we changed.
-let b:undo_ftplugin = "setlocal commentstring< matchpairs< omnifunc< comments< formatoptions<" .
-    \	" | unlet! b:match_ignorecase b:match_skip b:match_words b:browsefilter"
+" Use HTML and Django template ftplugins.
+runtime! ftplugin/html.vim
+runtime! ftplugin/django.vim

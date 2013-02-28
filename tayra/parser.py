@@ -4,7 +4,8 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Parser grammer for Tayra Template Language"""
+"""Parser grammer for Tayra Template Language. Parser is defined using 
+`PLY <http://www.dabeaz.com/ply>`_."""
 
 import ply.yacc
 
@@ -12,8 +13,16 @@ from   tayra.lexer      import TTLLexer
 from   tayra.ast        import *
 
 class TTLParser( object ):
+    """Parser class for tayra template language. This class is initialized
+    with :class:`tayra.compiler.TTLCompiler` instance, and  configuration
+    options like, 
+        ``optimize``, ``lex_debug``, ``lextab``, ``yacc_debug``, ``yacctab``,
+        ``yacc_outputdir``.
 
-    """AST nodes that constitute prolog"""
+    It might be a costly operation to create a TTLParser instance every time,
+    and to avoid that use _initialize() method before starting off with a new
+    template.
+    """
 
     def __init__( self, compiler ) :
         self.compiler = compiler
@@ -49,45 +58,17 @@ class TTLParser( object ):
 
         self.prolog = True
 
-    def parse( self, text, ttlfile=None, debuglevel=0 ):
-        """Parse tayra templage language and creates an AST tree. For every
-        parsing invocation, the same lex, yacc, app options and objects will
-        be used.
-
-        ``ttlfile``
-            Name of the file being parsed (for meaningful error messages)
-        ``debuglevel``
-            Debug level to yacc
-        """
-        # Parser Initialize
-        self._initialize( ttlfile=ttlfile )
-        # parse and get the Translation Unit
-        self.ast = self.parser.parse(text, lexer=self.ttllex, debug=debuglevel)
-        return self.ast
-
     # ------------------------- Private functions -----------------------------
 
-    def _lex_error_func( self, lex, msg, line, column ):
-        self._parse_error( msg, self._coord( line, column ))
-    
     def _coord( self, lineno, column=None ):
         return Coord( file=self.ttllex.ttlfile, line=lineno, column=column )
     
     def _parse_error(self, msg, coord):
         raise Exception("%s: %s" % (coord, msg))
 
-    def _printparse( self, p ) :
-        print( p[0], "  : " )
-        for i in range(1,len(p)) :
-            print( p[i], end='' )
-        print(' ')
-
-    # ---------- Precedence and associativity of operators --------------------
-
-    precedence = (
-    )
-
     def _buildterms( self, p, terms ) :
+        """Convenience function to construct Terminal nodes from parser object
+        ``p``."""
         rc = []
         for t in terms :
             if t == None : 
@@ -100,6 +81,30 @@ class TTLParser( object ):
                 rc.append(t)
         return rc
  
+    #---- API methods.
+
+    def parse( self, text, ttlfile=None, debuglevel=0 ):
+        """Parse tayra templage text, ``text`` and return an AST tree. AST
+        tree starts with a root node :class:`tayra.ast.Template`. Every time
+        the parser is invoked the lexer, yaccer, app options will be reused.
+
+        ``ttlfile``
+            Name of the file being parsed (for meaningful error messages)
+
+        ``debuglevel``
+            Debug level to yacc
+        """
+        # Parser Initialize
+        self._initialize( ttlfile=ttlfile )
+        # parse and get the Translation Unit
+        self.ast = self.parser.parse(text, lexer=self.ttllex, debug=debuglevel)
+        return self.ast
+
+    # ---------- Precedence and associativity of operators --------------------
+
+    precedence = (
+    )
+
     def p_template_1( self, p ) :
         """template : script"""
         p[0] = Template( p.parser, p[1] )
@@ -197,7 +202,6 @@ class TTLParser( object ):
             terms = [ (COMMENTOPEN,1), None, (COMMENTCLOSE,2), (NEWLINES,3) ]
         p[0] = CommentBlock( p.parser, *self._buildterms( p, terms ), 
                              prolog=self.prolog )
-
 
     #---- Script lines
 

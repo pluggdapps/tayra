@@ -6,6 +6,34 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Command line interface to tayra package. When installing the package using
+easy_install, a shell command is automatically installed under **bin/**
+directory.
+
+.. code-block:: text
+
+  > tayra --help
+  usage: tayra [-h] [-l] [-d] [-s] [-t] [-a ARGS] [-c CONTEXT] [-g DEBUG]
+               [--version]
+               ttlfile
+
+  Pluggdapps command line script
+
+  positional arguments:
+    ttlfile     Input template file containing tayra script
+
+  optional arguments:
+    -h, --help  show this help message and exit
+    -l          Do lexical analysis of input file.
+    -d          Dump translation
+    -s          Show AST parse tree
+    -t          Execute test cases.
+    -a ARGS     Argument to template
+    -c CONTEXT  Context to template
+    -g DEBUG    Debug level for PLY argparser
+    --version   Version information of the package
+"""
+
 from   argparse            import ArgumentParser
 from   os.path             import isfile, join, dirname, basename
 import time, os
@@ -47,7 +75,7 @@ def mainoptions() :
             help='Version information of the package' )
     argparser.add_argument( 
             'ttlfile',
-            help='Output html file to store translated result' )
+            help='Input template file containing tayra script' )
 
     return argparser
 

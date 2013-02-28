@@ -4,11 +4,14 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Common library functions and utility functions specific to tayra package.
+"""
+
 import re
 from   xml.etree    import ElementTree
 
 def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
-    """Convert eazytext content either supplied as a file (containing the text)
+    """TBD : Convert eazytext content either supplied as a file (containing the text)
     or as raw-text, into html.
 
     ``etxconfig``,
@@ -27,6 +30,10 @@ def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
     return t( context={} )
 
 def directive_tokens( s ):
+    """Directives are meta constructs that provide more information on how to
+    interpret a template text. Typically a directive starts with a **@**
+    followed by directive name and one or more tokens and/or attributes
+    pairs."""
     parts = list( filter( None, s.split(' ') ))
     typ = parts.pop(0)
     params = []

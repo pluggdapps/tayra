@@ -1,5 +1,5 @@
-Common set of filters for expression substitution
-=================================================
+:mod:`tayra.escfilters.common` -- Common set of filters
+=======================================================
 
 .. automodule:: tayra.escfilters.common
 
@@ -7,5 +7,5 @@ Module contents
 ---------------
 
 .. autoclass:: TayraEscFilterCommon
-    :members:
+    :members: u, x, h, t, default
     :show-inheritance:

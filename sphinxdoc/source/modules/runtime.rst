@@ -1,5 +1,5 @@
-:mod:`tayra.runtime` -- Tayra stack machine runtime engine.
-===========================================================
+:mod:`tayra.runtime` -- Tayra stack machine runtime engine
+==========================================================
 
 .. automodule:: tayra.runtime
 
@@ -7,7 +7,8 @@ Module contents
 ---------------
 
 .. autoclass:: StackMachine
-    :members:
+    :members: indent, upindent, downindent, append, extend, pushbuf, popbuf,
+        popbuftext, popobject, handletag, evalexprs, inherit
     :show-inheritance:
 
 .. autoclass:: Namespace

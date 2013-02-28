@@ -5,11 +5,11 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 """
-The design of tayra template language is heavily based on plugins. The
+Tayra uses pluggdapps component architecture, and heavily based on plugins. The
 lexer and parser are just a glue logic over a very sophisticated plugin
-framework which does most of the language level heavy lifting. The plugin
-system is based on pluggdapps component architecture, and specifies interfaces
-to be implemented as plugins.
+framework which does most of the language level heavy lifting. This modules
+contains all the interface specifications that matters to tayra language
+implementation.
 """
 
 from pluggdapps.plugin import Interface
@@ -17,14 +17,19 @@ from pluggdapps.plugin import Interface
 __all__ = [ 'ITayraTags', 'ITayraEscapeFilter', 'ITayraFilterBlock' ]
 
 class ITayraTags( Interface ):
-    """Interface specification to translate tayra tags to HTML tags."""
+    """Interface specification to translate template tags to HTML tags.
+    Plugins implementing this interface is defined under ``tayra.tags``
+    package. It is possible for developers to implement their own plugins
+    to translate template tags just by configuring
+    :class:`tayra.compiler.TTLCompiler` plugin.
+    """
 
     def handle( mach, tagname, tokens, styles, attributes, content ):
         """Called during runtime, translates tayra tag into HTML tags.
-        Return html string.
+        Returns html string.
 
         ``mach``,
-            Stachmachine
+            Stackmachine.
 
         ``tagname``,
             Name of the tag.
@@ -39,14 +44,16 @@ class ITayraTags( Interface ):
             List of HTML attributes.
 
         ``content``,
-            Decendants of this tag in plain string.
+            Descendants of this tag in plain string.
         """
 
+
 class ITayraEscapeFilter( Interface ):
-    """Interface specification for escape filtering expression substitution.
+    """Interface specification for escape filtering results from expression 
+    substitution.
     """
     def filter( mach, name, text ):
-        """Apply the filter logic to the text string and return processed
+        """Apply the filtering logic to the text string and return processed
         text.
 
         ``mach``,
@@ -128,6 +135,7 @@ class ITayraFilterBlock( Interface ):
 #---- This interface will be used for testing
 
 class ITayraTestInterface( Interface ):
+    """Just a test specification. You can conviniently igore this."""
 
     def render( *args, **kwargs ):
         """Return renderable html-text"""

@@ -49,7 +49,10 @@ setup(
         ],
         'pluggdapps' : [
             'package=tayra:package',
-        ]
+        ],
+        'pygments.lexers' : [
+            'ttl = tayra.ext.ttlpygment:TemplateLexer',
+        ],
     },
     install_requires=[                      # setuptools
         'ply>=3.4',

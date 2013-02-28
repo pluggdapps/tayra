@@ -1,12 +1,5 @@
-Decorators Package
-==================
+:mod:`tayra.decorators` -- Decorators (Experimental)
+====================================================
 
 .. automodule:: tayra.decorators
 
-Module Listing
---------------
-
-.. toctree::
-    :maxdepth: 2
-
-    decorators.useragent

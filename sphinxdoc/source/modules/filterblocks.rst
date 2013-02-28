@@ -1,5 +1,5 @@
-Filterblocks Package
-====================
+:mod:`tayra.filterblocks` -- Filterblocks
+=========================================
 
 .. automodule:: tayra.filterblocks
 
@@ -7,6 +7,6 @@ Module Listing
 --------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     filterblocks.pycode

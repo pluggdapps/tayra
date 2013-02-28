@@ -6,18 +6,17 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Lexing rules for Tayra Template Language"""
+"""Lexing rules for Tayra Template Language. Lexer uses
+`PLY <http://www.dabeaz.com/ply>`_."""
 
 import re, sys, os
 import ply.lex
 from   ply.lex          import TOKEN, LexToken
 
 class TTLLexer( object ) :
-    """A lexer for the Tayra Template language
-        build() To build   
-        input() Set the input text
-        token() To get new tokens.
-    """
+    """Lexical analyser for tayra templates. This class is initialized
+    with :class:`tayra.compiler.TTLCompiler` instance."""
+
     def __init__( self, compiler ):
         """ Create a new Lexer"""
         self.compiler = compiler
@@ -28,22 +27,23 @@ class TTLLexer( object ) :
     #---- API methods
 
     def build( self, **kwargs ) :
-        """Builds the lexer from the specification. Must be called after the
-        lexer object is created. This method exists separately, because the
-        PLY manual warns against calling lex.lex inside __init__
+        """Builds the lexer from this class specification. Must be called
+        after the lexer object is created. This method exists separately,
+        because the PLY manual warns against calling lex.lex inside __init__
         """
         self.ttlfile = kwargs.pop( 'ttlfile', '<String>' )
         reflags = re.MULTILINE | re.UNICODE
         self.lexer = ply.lex.lex( module=self, reflags=reflags, **kwargs )
 
     def input( self, text ) :
-        """`text` to tokenise. Preprocess the text before tokenising,
-          * A line separator is automatically appended at the end of text.
+        """Set the input text for tokenising. Input text is pre-processed
+        before. A line separator is automatically appended at the end of
+        text for convenient parsing.
         """
         self.lexer.input( self._preprocess( text ) + os.linesep ) #self.finish
     
     def token( self ) :
-        """Get the next token"""
+        """Get next token. Primary interface for the parser."""
         tok = self.poptoken()
         tok = self.lexer.token() if tok == None else tok
         if tok == None and self.indentstack :
@@ -54,20 +54,30 @@ class TTLLexer( object ) :
         return tok 
 
     def reset_lineno( self ) :
-        """ Resets the internal line number counter of the lexer."""
+        """Resets the internal line number counter of the lexer."""
         self.lexer.lineno = 1
+ 
+    #---- Local methods
 
     def poptoken( self ) :
         tok = self.ttltokens.pop(0) if self.ttltokens else None
         return tok
 
-    #---- States
+    def replacetab( self, s ):
+        return s.replace( '\t', ' '*self.tab2space )
+
+    def indentby( self, here, to ):
+        return ' ' * (len(here) - currlevel)
+
+    #---- Lexer states
+
     states = ( 
         ( 'comment', 'exclusive' ),
         ( 'filter', 'exclusive' ),
     )
 
-    #---- Tokens
+    #---- Token types
+
     tokens = (
         # Tokens
         'INDENT', 'DEDENT', 'NEWLINES', 'TEXT',
@@ -148,17 +158,7 @@ class TTLLexer( object ) :
     tagchar     = r'([^>\\]|\r|\n|\r\n)'
     newtag      = r'<(%s)?%s*(?:\\.%s*)*>' % (tagmodifs, tagchar, tagchar)
 
-    def replacetab( self, s ):
-        return s.replace( '\t', ' '*self.tab2space )
-
-    def indentby( self, here, to ):
-        return ' ' * (len(here) - currlevel)
-
     #---- Generic tokens
-
-    #@TOKEN( finish )
-    #def t_FINISH_TEXT( self, t ) :
-    #    return t
 
     @TOKEN( escseq )
     def t_ESCAPED( self, t ) :

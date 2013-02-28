@@ -13,24 +13,23 @@ that tayra's implementation itself is heavily based on plugins.
 
 Example,
 
-.. code-block:: html
+.. code-block:: ttl
 
-  <div .pluggdappsfooter>
+    <div .pluggdappsfooter>
+
     <div>
       powered by pluggdapps, 
       <span {font-style : italic}> ${counts['plugins']} plugins
       implenting
       <span {font-style : italic}> ${counts['interfaces']} interfaces
 
-  ...
-  ...
-
-  <ul ${kwargs.get('id', '')} .tbreadcrumbs>
     @while navigate :
       @@crumbsname, crumbsurl = navigate.pop(0)
+
       <li .crumbs>
         <a .crumbname "${crumbsurl or ''}"> ${crumbsname}
         <ul .menu>
+
           @for name, url in sorted( crumbsmenu[crumbsname] ) :
             <li .item> <a "${url}"> ${name}
 
@@ -50,10 +49,12 @@ Features
 - works with python 3.x.
 - has full unicode support.
 - full programmability available via,
+
   - expression substitution with optional escape encoding.
   - control-blocks like if-elif-else.
   - looping contructs like for / while.
   - python statements.
+
 - template abstraction using function blocks, with its own local scope.
 - import other template scripts into the local namespace and access their
   functions
@@ -68,7 +69,7 @@ Features
 Getting it
 ----------
 
-There are multiple ways to install tayra and the easiest way is by 
+There are multiple ways to install tayra and the easiest way is using
 easy_install.
 
 .. code-block:: bash
@@ -87,6 +88,7 @@ easy_install.
 **Install from source code**,
 
 Alternately, you can obtain the source code,
+
 - downloading the `tar.gz <http://pypi.python.org/pypi/tayra>`_
 - cloning from one of the many places mentioned below.
 
@@ -108,33 +110,10 @@ your local machine, install source package by executing,
   > sudo python ./setup.py install
   > sudo python ./setup.py develop # to install the development version
 
-Command line usage
-------------------
+**License :** `GPLv3 license <http://www.gnu.org/licenses/>`.
+**Requires :** Linux, Python-3.x, Pluggdapps, PLY.**
+**Status :** Core design stable. Not expected to change.**
 
-Make sure that tayra package is installed in your environment (using
-easy_install) or available via ``PYTHONPATH``.  **tayra/tyr.py** script under
-tayra-package can be used as command line tool. Either invoke it from its
-original path, or create a symbolic link to a bin/ directory.
-
-``script-file:    <site-package>/tayra/tyr.py``
-
-symbolic link to your binary path, like,
-
-.. code-block:: bash
-
-    ln -s <site-package>/tayra/tyr.py $(HOME)/bin/tyr.py
-    # or,
-    ln -s <site-package>/tayra/tyr.py /usr/bin/tyr.py
-
-Once ``tyr.py`` is available as an executable command and `tayra` module 
-in your python path, use the command-line tool, like,
-
-.. code-block:: bash
-
-  # A corresponding .html file will be generated in the same directory
-  tyr.py <template-file>
-  # For more help, try
-  tyr.py -h
 
 Using it as python library
 --------------------------
@@ -186,9 +165,3 @@ which,
 - If you enable ['beautify_html'] option, you will have to install
   beautifulsoup4 package.
 
-License
--------
-
-Tayra is distributed under `GPLv3 license <http://www.gnu.org/licenses/>`.
-
-**Requires : Linux, Python-3.x, Pluggdapps, PLY.**

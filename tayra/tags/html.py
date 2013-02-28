@@ -4,10 +4,18 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""Module provides a plugin to handle standard html5 tags."""
+
 import pluggdapps.utils     as h
 from  tayra.tags    import TayraTags
 
 class TayraHTML5( TayraTags ):
+    """Basic plugin to handle most of the HTML5 tags. Other than the common
+    set of tokens and specifiers supported by the base 
+    :class:`tayra.tags.TayraTags` this plugin defines other tokens that are
+    specific to each tag. Individual tags are handle by their corresponding
+    method prefixed with 'tag_'. Refer to them for more details about the tags.
+    """
 
     def handle( self, mach, tagname, tokens, styles, attributes, content ):
         fn = getattr(self, 'tag_'+tagname, None)
@@ -21,8 +29,8 @@ class TayraHTML5( TayraTags ):
     def tag_a( self, mach, tagname, tokens, attributes, content ):
         """<a> tag handler. Supported tokens,
 
-          * a quoted string token is interpreted as ``href`` attribute and 
-            translated to ``href="string"``
+        * a quoted string token is interpreted as ``href`` attribute and 
+          translated to ``href="<string>"``
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -32,8 +40,8 @@ class TayraHTML5( TayraTags ):
     def tag_abbr( self, mach, tagname, tokens, attributes, content ):
         """<abbr> tag handler. Supported tokens,
 
-          * a quoted string token is interpreted as ``title`` attribute and 
-            translates to ``title=<string>``
+        * a quoted string token is interpreted as ``title`` attribute and 
+          translates to ``title="<string>"``
         """
         attributes += (' title=%s' % tokens[0]) if tokens else ''
         return '<abbr %s>%s</abbr>' % (attributes, content)
@@ -41,10 +49,10 @@ class TayraHTML5( TayraTags ):
     def tag_area( self, mach, tagname, tokens, attributes, content ):
         """<area> tag handler. Supported tokens,
 
-          * If token is of the form ''<shape>:<coords>'' it translates to
-            ``shape="<shape>" coords="<coords>"`` attributes.
-          * a quoted string token is interpreted as ``href`` attribute and 
-            translated to ``href="string"``.
+        * If token is of the form //<shape>:<coords>// it translates to
+          ``shape="<shape>" coords="<coords>"`` attributes.
+        * a quoted string token is interpreted as ``href`` attribute and 
+          translated to ``href="<string>"``.
         """
         for tok in tokens :
             try    :
@@ -65,14 +73,14 @@ class TayraHTML5( TayraTags ):
     def tag_audio( self, mach, tagname, tokens, attributes, content ):
         """<audio> tag handler. Support tokens,
 
-          * ``autoplay`` token translates to ``autoplay="autoplay"``
-          * ``controls`` token translates to ``controls="controls"``
-          * ``loop`` token translates to ``loop="loop"``
-          * ``auto`` token translates to ``preload="auto"``
-          * ``metadata`` token translates to ``preload="metadata"``
-          * ``none`` token translates to ``preload="none"``
-          * a quoted string is interpreted as ``src`` attribute and translates
-            to ``src=<string>``
+        * ``autoplay`` token translates to ``autoplay="autoplay"``
+        * ``controls`` token translates to ``controls="controls"``
+        * ``loop`` token translates to ``loop="loop"``
+        * ``auto`` token translates to ``preload="auto"``
+        * ``metadata`` token translates to ``preload="metadata"``
+        * ``none`` token translates to ``preload="none"``
+        * a quoted string is interpreted as ``src`` attribute and translates
+          to ``src="<string>"``
         """
         for t in tokens :
             attr = self.audio2attr.get( t, None )
@@ -82,8 +90,8 @@ class TayraHTML5( TayraTags ):
     def tag_base( self, mach, tagname, tokens, attributes, content ):
         """<base> tag handler. Supported tokens,
 
-          * If a token is present it is interpreted as ``target`` attribute 
-            and translates to ``target="<token>"``
+        * If a token is present it is interpreted as ``target`` attribute 
+          and translates to ``target="<token>"``
         """
         attributes += (' target="%s"' % tokens[0]) if tokens else ''
         return '<base %s>%s</base>' % (attributes, content)
@@ -91,8 +99,9 @@ class TayraHTML5( TayraTags ):
 
     def tag_blockquote( self, mach, tagname, tokens, attributes, content ):
         """<blockquote> tag handler. Supported tokens,
-          * a quoted string is interpreted as ``cite`` attribute and 
-            translates to ``cite=<string>``
+
+        * a quoted string is interpreted as ``cite`` attribute and 
+          translates to ``cite="<string>"``
         """
         attributes += (' cite=%s' % tokens[0]) if tokens else ''
         return '<blockquote %s>%s</blockquote>' % (attributes, content)
@@ -117,29 +126,30 @@ class TayraHTML5( TayraTags ):
     }
     def tag_button( self, mach, tagname, tokens, attributes, content ):
         """<button> tag handler. Supported tokens,
-          * ``button`` token translates to ``type="button"``.
-          * ``reset`` token translates to ``type="reset"``.
-          * ``submit`` token translates to ``type="submit"``.
-          * ``autofocus`` token translates to ``autofocus="autofocus"``.
-          * ``application/x-www-form-urlencoded`` token translates to
-            ``formenctype="application/x-www-form-urlencoded"``.
-          * ``multipart/form-data`` token translates to
-            ``formenctype="multipart/form-data"``.
-          * ``text/plain`` token translates to ``formenctype="text/plain"``.
-          * ``get`` token translates to ``formmethod="get"``.
-          * ``post`` token translates to ``formmethod="post"``.
-          * ``formnovalidate`` token translates to 
-            ``formnovalidate="formnovalidate"``.
-          * ``_blank`` token translates to ``target="_blank"``.
-          * ``_self`` token translates to ``target="_self"``.
-          * ``_parent`` token translates to ``target="_parent"``.
-          * ``_top`` token translates to ``target="_top"``.
-          * If a token starts with ``frame:<frametarget>`` it will be 
-            translated to ``frametarget="<frametarget>"``.
-          * If a token starts with ``form:<formname>`` it will be translated
-            to ``form="<formname>"``.
-          * a quoted string is interpreted as ``formaction`` attribute and 
-            translates to ``formaction=<string>``.
+
+        * ``button`` token translates to ``type="button"``.
+        * ``reset`` token translates to ``type="reset"``.
+        * ``submit`` token translates to ``type="submit"``.
+        * ``autofocus`` token translates to ``autofocus="autofocus"``.
+        * ``application/x-www-form-urlencoded`` token translates to
+          ``formenctype="application/x-www-form-urlencoded"``.
+        * ``multipart/form-data`` token translates to
+          ``formenctype="multipart/form-data"``.
+        * ``text/plain`` token translates to ``formenctype="text/plain"``.
+        * ``get`` token translates to ``formmethod="get"``.
+        * ``post`` token translates to ``formmethod="post"``.
+        * ``formnovalidate`` token translates to 
+          ``formnovalidate="formnovalidate"``.
+        * ``_blank`` token translates to ``target="_blank"``.
+        * ``_self`` token translates to ``target="_self"``.
+        * ``_parent`` token translates to ``target="_parent"``.
+        * ``_top`` token translates to ``target="_top"``.
+        * If a token starts with ``frame:<frametarget>`` it will be 
+          translated to ``frametarget="<frametarget>"``.
+        * If a token starts with ``form:<formname>`` it will be translated
+          to ``form="<formname>"``.
+        * a quoted string is interpreted as ``formaction`` attribute and 
+          translates to ``formaction="<string>"``.
         """
         for tok in tokens :
             if tok.startswith( 'frame:' ) :
@@ -154,8 +164,8 @@ class TayraHTML5( TayraTags ):
     def tag_canvas( self, mach, tagname, tokens, attributes, content ):
         """<canvas> tag handler. Supported tokens,
 
-          * If a specifier token is of the form ``<width>,<height>`` it 
-            translates to ``width="<width>" height="<height>"``.
+        * If a specifier token is of the form ``<width>,<height>`` it 
+          translates to ``width="<width>" height="<height>"``.
         """
         try :
             attributes += (
@@ -167,8 +177,8 @@ class TayraHTML5( TayraTags ):
     def tag_col( self, mach, tagname, tokens, attributes, content ):
         """<col> tag handler. Supported tokens,
 
-          * If a token is present, it will be interpreted as ``span``
-            attribute and translates to ``span="<span>"``
+        * If a token is present, it will be interpreted as ``span``
+          attribute and translates to ``span="<span>"``
         """
         attributes += (' span="%s"' % tokens[0]) if tokens else ''
         return '<col %s>%s</col>' % (attributes, content)
@@ -177,8 +187,8 @@ class TayraHTML5( TayraTags ):
     def tag_colgroup( self, mach, tagname, tokens, attributes, content ):
         """<colgroup> tag handler. Supported tokens,
 
-          * If a specifier token is present, it will be interpreted as ``span``
-            attribute and translates to ``span="<span>"``
+        * If a specifier token is present, it will be interpreted as ``span``
+          attribute and translates to ``span="<span>"``
         """
         attributes += (' span="%s"' % tokens[0]) if tokens else ''
         return '<colgroup %s>%s</colgroup>' % (attributes, content)
@@ -191,11 +201,11 @@ class TayraHTML5( TayraTags ):
     def tag_command( self, mach, tagname, tokens, attributes, content ):
         """<command> tag handler. Supported tokens,
 
-          * ``checkbox`` token translates to ``type="checkbox"``
-          * ``command`` token translates to ``type="command"``
-          * ``radio`` token translates to ``type="radio"``
-          * a quoted string is interpreted as ``icon`` attribute and translated
-            to ``icon=<string>``.
+        * ``checkbox`` token translates to ``type="checkbox"``
+        * ``command`` token translates to ``type="command"``
+        * ``radio`` token translates to ``type="radio"``
+        * a quoted string is interpreted as ``icon`` attribute and translated
+          to ``icon="<string>"``.
         """
         for t in tokens :
             attr = self.command2attr.get( t, None )
@@ -209,7 +219,7 @@ class TayraHTML5( TayraTags ):
           attribute and translates to ``datetime="<token>"``
 
         * a quoted string is interpreted as ``cite`` attribute and translated
-          to ``cite=<string>``
+          to ``cite="<string>"``
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -221,7 +231,7 @@ class TayraHTML5( TayraTags ):
     def tag_detail( self, mach, tagname, tokens, attributes, content ):
         """<details> tag handler. Supported tokens,
 
-          * ``open`` token translates to ``open="open"``
+        * ``open`` token translates to ``open="open"``
         """
         attributes += (' open="%s"' % tokens[0]) if tokens else ''
         return '<detail %s>%s</detail>' % (attributes, content)
@@ -229,11 +239,10 @@ class TayraHTML5( TayraTags ):
     def tag_embed( self, mach, tagname, tokens, attributes, content ):
         """<embed> tag handler. Supported tokens,
 
-          * If token of the form ``<width>,<height>`` it translates to 
-            ``width="<width>" height="<height>"``.
-
-          * a quoted string is interpreted as ``src`` attribute and translated
-            to ``src=<string>``.
+        * If token of the form ``<width>,<height>`` it translates to 
+          ``width="<width>" height="<height>"``.
+        * a quoted string is interpreted as ``src`` attribute and translated
+          to ``src="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -247,8 +256,8 @@ class TayraHTML5( TayraTags ):
     def tag_fieldset( self, mach, tagname, tokens, attributes, content ):
         """<fieldset> tag handler. Supported tokens,
 
-          * If a token is of the form ``f:<formname>``, it translates to
-            ``form="<formname>"``.
+        * If a token is of the form ``f:<formname>``, it translates to
+          ``form="<formname>"``.
         """
         try :
             attributes += (
@@ -281,7 +290,7 @@ class TayraHTML5( TayraTags ):
         * ``post`` token translates to ``formmethod="post"``
         * ``novalidate`` token translates to ``novalidate="novalidate"``
         * a quoted string is interpreted as ``action`` attribute and translated
-          to //action=<string>//
+          to ``action="<string>"``.
         """
         for tok in tokens :
             attr = self.form2attr.get( tok, None )
@@ -292,7 +301,7 @@ class TayraHTML5( TayraTags ):
         """<head> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``manifest`` attribute and
-          translated to ``manifest=<string>``.
+          translated to ``manifest="<string>"``.
         """
         attributes += (' manifest=%s' % tokens[0]) if tokens else ''
         return '<head %s>%s</head>' % (attributes, content)
@@ -301,7 +310,7 @@ class TayraHTML5( TayraTags ):
         """<html> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``manifest`` attribute and
-          translated to ``manifest=<string>``.
+          translated to ``manifest="<string>"``.
         """
         attributes += (' manifest=%s' % tokens[0]) if tokens else ''
         return '<html %s>%s</html>' % (attributes, content)
@@ -312,14 +321,14 @@ class TayraHTML5( TayraTags ):
     def tag_iframe( self, mach, tagname, tokens, attributes, content ):
         """<frame> tag handler. Supported tokens,
 
-          * ``seamless`` token translated to ``seamless="seamless"``.
-          * If a token is of the form ``<width>,<height>`` where width and 
-            height are integers, it translates to 
-            ``width="<width>" height="<height>"``.
-          * If a token starts with ``allow-`` it will be joined together as
-            comma separated value to ``sandbox`` attribute.
-          * a quoted string is interpreted as ``src`` attribute and
-            translated to ``src=<string>``
+        * ``seamless`` token translated to ``seamless="seamless"``.
+        * If a token is of the form ``<width>,<height>`` where width and 
+          height are integers, it translates to 
+          ``width="<width>" height="<height>"``.
+        * If a token starts with ``allow-`` it will be joined together as
+          comma separated value to ``sandbox`` attribute.
+        * a quoted string is interpreted as ``src`` attribute and
+          translated to ``src="<string>"``
         """
         sandbox = []
         for t in tokens :
@@ -342,11 +351,11 @@ class TayraHTML5( TayraTags ):
     def tag_img( self, mach, tagname, tokens, attributes, content ):
         """<img> tag handler. Supported tokens,
 
-          * ``ismap`` token translates to ``ismap="ismap"``
-          * If a token is of the form ``<width>,<height>`` it is translated
-            to ``width="<width>" height="<height>"``.
-          * a quoted string is interpreted as ``src`` attribute and translated
-            to //src=<string>//
+        * ``ismap`` token translates to ``ismap="ismap"``
+        * If a token is of the form ``<width>,<height>`` it is translated
+          to ``width="<width>" height="<height>"``.
+        * a quoted string is interpreted as ``src`` attribute and translated
+          to ``src="<string>"``
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -363,10 +372,10 @@ class TayraHTML5( TayraTags ):
     def tag_ins( self, mach, tagname, tokens, attributes, content ):
         """<ins> tag handler. Supported tokens,
 
-          * If a token is present it will interpreted as ``datetime`` 
-            attribute and translated to ``datetime="<token>"``.
-          * a quoted string is interpreted as ``cite`` attribute and translated
-            to ``cite=<string>``.
+        * If a token is present it will interpreted as ``datetime`` 
+          attribute and translated to ``datetime="<token>"``.
+        * a quoted string is interpreted as ``cite`` attribute and translated
+          to ``cite="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -380,7 +389,7 @@ class TayraHTML5( TayraTags ):
 
         * If a token looks like ``f:<formname>``, it will be translated to
           ``form="<formname>"``
-        * Otherwise the token will be translated to //for="<token>"//
+        * Otherwise the token will be translated to ``for="<token>"``.
         """
         for tok in tokens :
             if tok.startswith( 'f:' ) :
@@ -392,7 +401,7 @@ class TayraHTML5( TayraTags ):
     def tag_li( self, mach, tagname, tokens, attributes, content ):
         """<li> tag handler. Supported tokens,
 
-          * If a token is present it will be translated to ``value="<token>"``.
+        * If a token is present it will be translated to ``value="<token>"``.
         """
         attributes += (' value="%s"' % tokens[0]) if tokens else ''
         return '<li %s>%s</li>' % (attributes, content)
@@ -400,9 +409,9 @@ class TayraHTML5( TayraTags ):
     def tag_link( self, mach, tagname, tokens, attributes, content ):
         """<link> tag handler. Supported tokens,
 
-          * If a token is present it will be translated to ``type="<token>"``.
-          * a quoted string is interpreted as ``cite`` attribute and translated
-            to ``href=<string>``.
+        * If a token is present it will be translated to ``type="<token>"``.
+        * a quoted string is interpreted as ``cite`` attribute and translated
+          to ``href="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -414,9 +423,9 @@ class TayraHTML5( TayraTags ):
     def tag_menu( self, mach, tagname, tokens, attributes, content ):
         """<menu> tag handler. Supported tokens,
 
-          * If a token is present it will be translated to ``type="<token>"``.
-          * a quoted string is interpreted as ``label`` attribute and translated
-            to ``label=<string>``.
+        * If a token is present it will be translated to ``type="<token>"``.
+        * a quoted string is interpreted as ``label`` attribute and translated
+          to ``label="<string>"``.
         """
         for t in tokens :
             attributes += (' label=%s'%t) \
@@ -429,7 +438,7 @@ class TayraHTML5( TayraTags ):
         * If a token is present it will be translated to 
           ``http-equiv="<token>"``.
         * a quoted string is interpreted as ``content`` attribute and translated
-          to ``content=<string>``.
+          to ``content="<string>"``.
         """
         for t in tokens :
             attributes += (' content=%s'%t) if (t,t) == ('"','"') \
@@ -445,7 +454,7 @@ class TayraHTML5( TayraTags ):
           ``low="<low>" high="<high>"``
         * If a token is of the form ``low < optimum < high`` it will be 
           translated to ``low="<low>" optimum="<optimum>" high="<high>"``.
-        * Otherwise the token will be interpreted as //value// attribute and
+        * Otherwise the token will be interpreted as ``value`` attribute and
           translated as ``value="<value>"``.
         """
         for tok in tokens :
@@ -464,12 +473,12 @@ class TayraHTML5( TayraTags ):
     def tag_object( self, mach, tagname, tokens, attributes, content ):
         """<object> tag handler. Supported tokens,
 
-          * If a token starts with ``form:`` it will be translated to 
-            ``form="<formname>"``.
-          * If a token is of the form ``<width>,<height>`` it will be
-            translated to ``width="<width>" height="<height>"``.
-          * a quoted string is interpreted as ``data`` attribute and
-            translated as ``data=<string>``.
+        * If a token starts with ``form:`` it will be translated to 
+          ``form="<formname>"``.
+        * If a token is of the form ``<width>,<height>`` it will be
+          translated to ``width="<width>" height="<height>"``.
+        * a quoted string is interpreted as ``data`` attribute and
+          translated as ``data="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -493,14 +502,14 @@ class TayraHTML5( TayraTags ):
     def tag_ol( self, mach, tagname, tokens, attributes, content ):
         """<ol> tag handler. Supported tokens,
 
-          * ``reversed`` token translates to ``reversed="reversed"``.
-          * ``1`` token translates to ``type="1"``.
-          * ``A`` token translates to ``type="A"``.
-          * ''a'' token translates to ``type="a"``.
-          * ''l'' token translates to ``type="l"``.
-          * ''i'' token translates to ``type="i"``.
-          * If a token is of the form ``<type>,<start>``, it will be 
-            translated to ``type="<type>" start="<start>"``.
+        * ``reversed`` token translates to ``reversed="reversed"``.
+        * ``1`` token translates to ``type="1"``.
+        * ``A`` token translates to ``type="A"``.
+        * ''a'' token translates to ``type="a"``.
+        * ''l'' token translates to ``type="l"``.
+        * ''i'' token translates to ``type="i"``.
+        * If a token is of the form ``<type>,<start>``, it will be 
+          translated to ``type="<type>" start="<start>"``.
         """
         for tok in tokens :
             attr = self.ol2attr.get( tok, None )
@@ -513,8 +522,8 @@ class TayraHTML5( TayraTags ):
     def tag_optgroup( self, mach, tagname, tokens, attributes, content ):
         """<optgroup> tag handler. Supported tokens,
 
-          * a quoted string is interpreted as ``label`` attribute and translated
-            to ``label=<string>``.
+        * a quoted string is interpreted as ``label`` attribute and translated
+          to ``label="<string>"``.
         """
         attributes += (' label=%s' % tokens[0]) if tokens else ''
         return '<optgroup %s>%s</optgroup>' % (attributes, content)
@@ -523,7 +532,7 @@ class TayraHTML5( TayraTags ):
         """<option> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``value`` attribute and translated
-          as ``value=<string>``.
+          as ``value="<string>"``.
         """
         attributes += (' value=%s' % tokens[0]) if tokens else ''
         return '<option %s>%s</option>' % (attributes, content)
@@ -531,8 +540,8 @@ class TayraHTML5( TayraTags ):
     def tag_output( self, mach, tagname, tokens, attributes, content ):
         """<output> tag handler. Supported tokens,
 
-          * If a token is of the form ``<form>:<name>`` it will be translated
-            to ``form="<form>" for="<name>"``.
+        * If a token is of the form ``<form>:<name>`` it will be translated
+          to ``form="<form>" for="<name>"``.
         """
         try :
             attributes += (
@@ -545,7 +554,7 @@ class TayraHTML5( TayraTags ):
         """<param> tag handler. Supported tokens,
 
         * a quoted string is interpreted as ``value`` attribute and translated
-          as ``value=<string>``.
+          as ``value="<string>"``.
         """
         attributes += (' value=%s' % tokens[0]) if tokens else ''
         return '<param %s>%s</param>' % (attributes, content)
@@ -553,8 +562,8 @@ class TayraHTML5( TayraTags ):
     def tag_progress( self, mach, tagname, tokens, attributes, content ):
         """<progress> tag handler. Supported tokens,
 
-          * If token is of the form ``<max>,<value>`` it will be translated to
-            ``max="<max>" value="<value>"``.
+        * If token is of the form ``<max>,<value>`` it will be translated to
+          ``max="<max>" value="<value>"``.
         """
         try :
             attributes += (
@@ -566,8 +575,8 @@ class TayraHTML5( TayraTags ):
     def tag_q( self, mach, tagname, tokens, attributes, content ):
         """<q> tag handler. Supported tokens,
 
-          * a quoted string is interpreted as ``value`` attribute and 
-            translated to ``cite=<string>``.
+        * a quoted string is interpreted as ``value`` attribute and 
+          translated to ``cite="<string>"``.
         """
         attributes += (' cite=%s' % tokens[0]) if tokens else ''
         return '<q %s>%s</q>' % (attributes, content)
@@ -579,12 +588,12 @@ class TayraHTML5( TayraTags ):
     def tag_script(self, mach, tagname, tokens, attributes, content):
         """<script> tag handler. Supported tokens,
 
-          * ``async`` token translates to ``async="async"``.
-          * ''defer'' token translates to ``defer="defer"``.
-          * Otherwise it will be interpreted as ``type`` attribute and 
-            translated to ``type="<token>"``.
-          * a quoted string is interpreted as ``src`` attribute and 
-            as ``src=<string>``.
+        * ``async`` token translates to ``async="async"``.
+        * ''defer'' token translates to ``defer="defer"``.
+        * Otherwise it will be interpreted as ``type`` attribute and 
+          translated to ``type="<token>"``.
+        * a quoted string is interpreted as ``src`` attribute and 
+          as ``src="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :
@@ -597,10 +606,10 @@ class TayraHTML5( TayraTags ):
     def tag_source(self, mach, tagname, tokens, attributes, content):
         """<source> tag handler. Supported tokens,
 
-          * If a token is present it will be interpreted as ``type`` 
-            attribute and translated to ``type="<token>"``.
-          * a quoted string is interpreted as ``src`` attribute and 
-            as ``src=<string>``.
+        * If a token is present it will be interpreted as ``type`` 
+          attribute and translated to ``type="<token>"``.
+        * a quoted string is interpreted as ``src`` attribute and 
+          as ``src="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[1]) == ('"', '"') :
@@ -619,7 +628,7 @@ class TayraHTML5( TayraTags ):
         * ``text/css`` token translates to ``type="text/css"``.
         * ``scoped`` token translates to ``scoped="scoped"``.
         * a quoted string is interpreted as ``src`` attribute and 
-          as ``src=<string>``.
+          as ``src="<string>"``.
         """
         attributes += (' ' + 
                        ''.join([ self.style2attr.get(t, '') for t in tokens ]))
@@ -628,7 +637,7 @@ class TayraHTML5( TayraTags ):
     def tag_table(self, mach, tagname, tokens, attributes, content):
         """<table> tag handler. Supported tokens,
 
-          * ``1`` token translates to ``border="1"``.
+        * ``1`` token translates to ``border="1"``.
         """
         attributes += (' border="%s"' % tokens[0]) if tokens else ''
         return '<table %s>%s</table>' % (attributes, content)
@@ -636,10 +645,10 @@ class TayraHTML5( TayraTags ):
     def tag_time( self, mach, tagname, tokens, attributes, content ):
         """<time> tag handler. Supported tokens,
 
-          * If a token is present it will be interpreted as ``pubdate``
-            attribute and translated as ``pubdate="<token>"``.
-          * a quoted string is interpreted as ``datetime`` attribute and 
-            translated as ``datetime=<string>``.
+        * If a token is present it will be interpreted as ``pubdate``
+          attribute and translated as ``pubdate="<token>"``.
+        * a quoted string is interpreted as ``datetime`` attribute and 
+          translated as ``datetime="<string>"``.
         """
         for tok in tokens :
             if (tok[0], tok[-1]) == ('"', '"') :

@@ -1,5 +1,5 @@
-Escfilters Package
-==================
+:mod:`tayra.escfilters` -- Escape filters
+=========================================
 
 .. automodule:: tayra.escfilters
 
@@ -7,6 +7,6 @@ Module Listing
 --------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     escfilters.common

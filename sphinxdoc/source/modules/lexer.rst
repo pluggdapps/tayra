@@ -1,5 +1,5 @@
-:mod:`tayra.lexer` -- Tayra Lexer.
-==================================
+:mod:`tayra.lexer` -- Tayra Lexer
+=================================
 
 .. automodule:: tayra.lexer
 
@@ -7,6 +7,6 @@ Module contents
 ---------------
 
 .. autoclass:: TTLLexer
-    :members:
+    :members: build, input, token, reset_lineno
     :show-inheritance:
 

@@ -4,55 +4,82 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
+"""
+Module provides a plugin to handle custom tags for html5 forms.
+Following is a table of token-specifiers that are common to all tags handled
+by this plugin, and augment the standard set of specifiers provided by
+:class:`tayra.tags.TayraTags` base class.
+
+  +---------------------+------------------------------------------------+
+  |      token          |   Equivalent attribute pairs                   |
+  +=====================+================================================+
+  |   on                | autocomplete="on"                              |
+  +---------------------+------------------------------------------------+
+  |   off               | autocomplete="off"                             |
+  +---------------------+------------------------------------------------+
+  |   autofocus         | autofocus="autofocus"                          |
+  +---------------------+------------------------------------------------+
+  |application/         | enctype="application/x-www-form-urlencoded"    |
+  |x-www-form-urlencoded|                                                |
+  +---------------------+------------------------------------------------+
+  |multipart/form-data  | enctype="multipart/form-data"                  |
+  +---------------------+------------------------------------------------+
+  |   text/plain        | enctype="text/plain"                           |
+  +---------------------+------------------------------------------------+
+  |   get               | formmethod="get"                               |
+  +---------------------+------------------------------------------------+
+  |   post              | formmethod="post"                              |
+  +---------------------+------------------------------------------------+
+  |   novalidate        | formnovalidate="novalidate"                    |
+  +---------------------+------------------------------------------------+
+  |   required          | required="required"                            |
+  +---------------------+------------------------------------------------+
+  |   checked           | checked="checked"                              |
+  +---------------------+------------------------------------------------+
+  |   hard              | wrap="hard"                                    |
+  +---------------------+------------------------------------------------+
+  |   soft              | wrap="soft"                                    |
+  +---------------------+------------------------------------------------+
+  |[<item1>,<item2>]    | list="<item1>,<item2>"                         |
+  +---------------------+------------------------------------------------+
+  | `<pattern>` or      | pattern="<pattern>"                            |
+  | %<pattern>%         |                                                |
+  +---------------------+------------------------------------------------+
+  | h:<placeholder>     | placeholder="<placeholder>"                    |
+  +---------------------+------------------------------------------------+
+  | f:<formname>        | form="<formname>"                              |
+  +---------------------+------------------------------------------------+
+  | a:<formaction>      | formaction="<formaction>"                      |
+  +---------------------+------------------------------------------------+
+  | min < step < max    | min="<min>" step="<step>" max="<max>"          |
+  +---------------------+------------------------------------------------+
+  | min < max           | min="<min>" max="<max>"                        |
+  +---------------------+------------------------------------------------+
+  | <maxlength>:<size>  | maxlength="<maxength>" size="<size>"           |
+  +---------------------+------------------------------------------------+
+  | <width>,<height>    | height="<height>" width="<width>"              |
+  +---------------------+------------------------------------------------+
+
+  * if placeholder string has several words seperated by white-space, replace
+    spaces with ``+`` character. If help string is more complicated containing
+    several special characters it is better to avoid ``h:...`` format and
+    define them directly as an attribute.
+  * a quoted string is interpreted as ``value`` attribute and translated
+    to ``value=<string>``.
+  * If action-url contains white-spaces, replace them with ``+`` character.
+
+"""
+
 import re
 
 import pluggdapps.utils     as h
 from   tayra.tags           import TayraTags
 
 class TayraHTML5Forms( TayraTags ):
-    """Plugin to handle HTML input elements.
-      * ``on`` token translates to ``autocomplete="on"``.
-      * ``off`` token translates to ``autocomplete="off"'``.
-      * ``autofocus`` token translates to ``autofocus="autofocus"``.
-      * ``application/x-www-form-urlencoded`` token translates to
-         ``enctype="application/x-www-form-urlencoded"``.
-      * ``multipart/form-data`` token translates to
-         ``enctype="multipart/form-data"``.
-      * ``text/plain`` token translates to ``enctype="text/plain"//.
-      * ``get`` token translates to ``formmethod="get"``.
-      * ``post`` token translates to ``formmethod="post"``.
-      * ``novalidate`` token translates to ``formnovalidate="novalidate"``.
-      * ``required`` token translates to ``required="required"``.
-      * ``checked`` token translates to ``checked="checked"``.
-      * ``hard`` atom translates to ``wrap="hard"``.
-      * ``soft`` atom translates to ``wrap="soft"``.
-      * If a token is comma seperated items of the form [item1,item2] it will
-        be interpreted as ``list`` attribute and translates to 
-        ``list="item1,item2"``.
-      * If a token has the syntax, `pattern` or %pattern% it will be interpreted
-        as ``pattern`` attribute and translates to ``pattern="pattern"``
-      * If a token is of the form ``h:placeholder`` it will be interpreted as
-        ``placeholder`` attribute and translates to 
-        ``placeholder="placeholder"``.
-        If help string has several words seperated by white-space, replace
-        spaces with ``+`` character. If help string is more complicated
-        containing several special characters it is better to avoid ``h:...``
-        format and define them directly as an attribute.
-      * If a token is of the form ``f:formname`` it will be translated to
-        ``form="formname"``.
-      * If a token is of the form ``a:formaction`` it will be translated to
-        ``formaction="formaction"``. If action-url contains white-spaces,
-        replace them with ``+`` character.
-      * If a token has the syntax ``min<step<max`` where min, step and max are
-        integers, it translates to ``min="min" step="step" max="max"``.
-      * If a token has the syntax ``min<max`` where min and max are integers,
-        it is translated to ``min="min" max="max"``.
-      * If a token has the syntax ``maxlength:size`` where maxlength and size
-        are integers, it translates to ``maxlength="ma``ength" size="size"``
-      * If a token has the syntax ``width,height`` where width and height are
-        integers, it translates to ``height="height" width="width"``.
-      * a quoted string is interpreted as ``src`` attribute and translated
-        to ``value=<string>``.
+    """Plugin to handle HTML input elements and other form tags like,
+    `textarea` and `select`. It also provides a common set of token specifiers
+    described by this module documentation. To know more about tokens specific
+    to each tags refer to the corresponding handler function.
     """
 
     token2attrs = {
@@ -326,11 +353,11 @@ class TayraHTML5Forms( TayraTags ):
     def tag_select(self, mach, tagname, tokens, styles, attributes, content):
         """<select> handler. Supported tokens,
 
-          * ``autofocus`` atom translates to ``autofocus="autofocus"``.
-          * If a token is of the form ``f:formname`` it will be translated to
-            ``form="formname"``.
-          * Otherwise the atom is interpreted as integer ``size``, and 
-            translated to ``size="size"``.
+        * ``autofocus`` atom translates to ``autofocus="autofocus"``.
+        * If a token is of the form ``f:formname`` it will be translated to
+          ``form="formname"``.
+        * Otherwise the atom is interpreted as integer ``size``, and 
+          translated to ``size="size"``.
         """
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
         for tok in remtoks :

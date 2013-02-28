@@ -1,5 +1,5 @@
-Tag handlers
-============
+:mod:`tayra.tags` -- Tag handlers
+=================================
 
 .. automodule:: tayra.tags
 
@@ -7,14 +7,14 @@ Module Contents
 ---------------
 
 .. autoclass:: TayraTags
-    :members:
+    :members: handle, parse_specs, default_settings, normalize_settings
     :show-inheritance:
 
 Module Listing
 --------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
     tags.forms
     tags.html

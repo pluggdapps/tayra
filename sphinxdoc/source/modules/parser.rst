@@ -1,5 +1,5 @@
-:mod:`tayra.parser` -- Tayra Parser.
-==================================
+:mod:`tayra.parser` -- Tayra Parser
+===================================
 
 .. automodule:: tayra.parser
 
@@ -7,5 +7,5 @@ Module contents
 ---------------
 
 .. autoclass:: TTLParser
-    :members:
+    :members: parse
     :show-inheritance:

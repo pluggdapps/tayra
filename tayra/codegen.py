@@ -4,8 +4,8 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Instruction generator for :class:`StackMachine`. Generates the intermediate
-python file.
+"""Instruction generator for :class:`tayra.runtime.StackMachine`. Generates
+intermediate python file.
 """
 
 from   io   import   StringIO
@@ -19,7 +19,7 @@ from   tayra                import BaseTTLPlugin
 
 """
 
-tb_supplement = """\
+tb_decorator = """\
 def __traceback_decorator__( frames ):
     from copy    import deepcopy
     from os.path import basename
@@ -81,6 +81,13 @@ class %s( BaseTTLPlugin ):
 
 
 class InstrGen( object ):
+    """Instruction generator to compile template script to an intermediate
+    python file. This file can be loaded as template module and executed in
+    the context of a HTTP request to generate the final HTML response. Since
+    creating an instance of this class every time can be a costly operation,
+    create it once and use :meth:`_init` to initialize for subsequent uses.
+    """
+
     machname = '_m'
 
     def __init__( self, compiler ):
@@ -99,21 +106,25 @@ class InstrGen( object ):
     #---- API
 
     def initialize( self ):
-        """Initialize and begin generating the intermediate python file."""
+        """Initialize and begin generating the intermediate python file.
+        Generates import statements and in debug mode generate trace-back
+        generator.
+        """
         self.outfd.write( import_header )
         if self.compiler['debug'] :
-            self.outfd.write( tb_supplement )
+            self.outfd.write( tb_decorator )
         self.cr()
 
     def cr( self, count=1 ):
         """Generate a new-line (along with current indentation level) in
-        python generated text."""
+        python generated text.
+        """
         self.outfd.write( '\n'*count )
         self.outfd.write( self.pyindent )
 
     def codeindent( self, up=None, down=None, indent=True ):
-        """Increase or decrease the python code-indentation for the
-        intermediate text."""
+        """Increase or decrease python code-indentation for subsequently
+        generated code."""
         self.flushtext()
         if up != None :
             self.pyindent += up
@@ -245,15 +256,15 @@ class InstrGen( object ):
                     methodlines.append( '  %s = %s' % (meth, meth) )
             self.putblock( '\n'.join( [codeblock] + methodlines ) )
 
-    def useinterface( self, module, interfacename, pluginname, name ):
-        line = 'from  %s import %s' % ( module, interfacename )
-        self.putstatement(line)
-        if isinstance(pluginname, tuple):
-            line = '%s = _m.use( %s, _m.evalexprs(%s, %r) )' % (
-                        name, interfacename, pluginname[0], pluginname[1] )
-        else :
-            line = '%s = _m.use( %s, %r )' % ( name, interfacename, pluginname )
-        self.putstatement(line)
+    #def useinterface( self, module, interfacename, pluginname, name ):
+    #    line = 'from  %s import %s' % ( module, interfacename )
+    #    self.putstatement(line)
+    #    if isinstance(pluginname, tuple):
+    #        line = '%s = _m.use( %s, _m.evalexprs(%s, %r) )' % (
+    #                    name, interfacename, pluginname[0], pluginname[1] )
+    #    else :
+    #        line = '%s = _m.use( %s, %r )' % (name, interfacename, pluginname)
+    #    self.putstatement(line)
 
     def footer( self, ttlhash, ttlfile ):
         """Add the footer python code."""

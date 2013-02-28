@@ -1,3 +1,11 @@
+* Allow wiki markup as template tag contents. List of wiki markups,
+    markdown, reStructuredText, Org-mode, Textile, Asciidoc
+
+* Create hyper link reference for PLY project where ever it is mentioned in
+  the document text.
+
+* lexer rules in pygments to support TTL text.
+
 * There is an issue with `tayra` script file. It cannot be used from paenv
   environment, still need to use tyr.py. Issue is related to importing tayra
   module before importing pluggdapps module.

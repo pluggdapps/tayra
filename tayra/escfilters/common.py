@@ -4,9 +4,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Module implements a :class:`ITayraEscapeFilter` plugin providing a common 
-set of escape encoding for expression substitution.
-"""
+"""Proviles common set of escape filters for expression substition."""
 
 import re, urllib.parse, html
 
@@ -28,6 +26,8 @@ class TayraEscFilterCommon( Plugin ):
         "'" : '&#39;',
     }
     def filter( self, mach, name, text ):
+        """:meth:`tayra.interfaces.ITayraEscapeFilter.filter` interface 
+        method."""
         handler = getattr( self, name, self.default )
         return handler( mach, text )
 
@@ -57,10 +57,14 @@ class TayraEscFilterCommon( Plugin ):
 
     @classmethod
     def default_settings( cls ):
+        """:meth:`pluggdapps.plugin.ISettings.default_settings` interface 
+        method."""
         return _default_settings
 
     @classmethod
     def normalize_settings( cls, sett ):
+        """:meth:`pluggdapps.plugin.ISettings.normalize_settings` interface 
+        method."""
         return sett
 
 _default_settings = h.ConfigDict()

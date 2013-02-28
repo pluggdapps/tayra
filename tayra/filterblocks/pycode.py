@@ -4,9 +4,7 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Module implements filter-block with syntax ``:py:``. Handled by the
-following plugin.
-"""
+"""Plugin implements filter-block with syntax ``:py:``."""
 
 import re, os
 
@@ -20,22 +18,22 @@ class TayraFilterBlockPy( Plugin ):
     Follows indentation rules as defined by python language. To maintain
     consistency, it is better to indent the entire python code block by 2
     spaces. Each line will be interpreted as a python statement and substituted
-    as is while compiling them into an intermediate .py text. If ``pycode``
-    filter block is defined inside ``@def`` or ``@interface`` definition,
-    then the filter block will inherit the same local scope and context as
-    applicable to the function/interface definition. **Otherwise, it will be
-    considered as local to the implicitly defined body() function and will not
-    be considered at global scope.** To circumvent this situation, pycode
-    filter block accept a **global** token that can be passed while defining
-    the block.  For example,
+    as is while compiling them into an intermediate .py text.
+    
+    - If filter block is defined inside ``@def`` or ``@interface`` definition,
+      then the filter block will inherit the same local scope and context as
+      applicable to the function/interface definition.
+    - Otherwise, it will be considered as local to the implicitly defined
+      body() function.
+    - To define python code blocks that are global to entire template module,
+      define them outside template tags.
 
-    .. code-block:: html 
+    .. code-block:: ttl
 
         <div>
           :py:
-          print "hello world"
+            print( "hello world" )
           :py:
-
     """
     implements( ITayraFilterBlock )
 

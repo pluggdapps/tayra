@@ -22,6 +22,7 @@ Contents:
    template_plugins
    extendingtayra
    primer
+   glossary
    CHANGELOG
 
 Indices and tables
@@ -37,21 +38,23 @@ Module Listing
 --------------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
-    modules/ast
-    modules/codegen
+    modules/tayra
     modules/compiler
-    modules/decorators
-    modules/escfilters
-    modules/filterblocks
     modules/interfaces
     modules/lexer
     modules/parser
+    modules/ast
+    modules/codegen
     modules/runtime
+    modules/decorators
+    modules/escfilters
+    modules/escfilters.common
+    modules/filterblocks
+    modules/filterblocks.pycode
+    modules/tags
     modules/tags.forms
     modules/tags.html
-    modules/tags
-    modules/tayra
     modules/tyr
     modules/utils

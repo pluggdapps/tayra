@@ -1,5 +1,5 @@
-Tag handlers for standard html5 tags
-====================================
+:mod:`tayra.tags.html` -- Handlers for standard html5 tags
+==============================================================
 
 .. automodule:: tayra.tags.html
 

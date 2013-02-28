@@ -4,9 +4,8 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Tayra Compiler implemented as plugin implemententing :class:`IHTTPRenderer`
-interface to operate with pluggdapps web-framework and other methods to
-integrate with other packages.
+"""Tayra Compiler implemented as plugin. It also implements pluggapps' web
+interface :class:`IHTTPRenderer`.
 """
 
 import imp, os, re, sys
@@ -18,15 +17,19 @@ import pluggdapps.utils     as h
 from   pluggdapps.web.interfaces import IHTTPRenderer
 
 class TTLCompiler( Plugin ):
-    """Tayra compiler. Implemented as a plugin to leverage on pluggdapps
-    configuration system."""
+    """Tayra compiler. Implemented as plugin to leverage on pluggdapps
+    configuration system. Also implement :class:`IHTTPRenderer`. Creating a
+    plugin instance can be a costly operation, to avoid this instantiate this
+    plugin once and use :meth:`_init` to initialize it for subsequent uses.
+   """
 
     implements( IHTTPRenderer )
 
     _memcache = {}
 
     ttlloc = None
-    """TemplateLookup object."""
+    """TemplateLookup object. Encapsulates location information for template
+    file and its intermediate python file."""
 
     ttlfile = ''
     """Absolute file path pointing to .ttl template script file in."""
@@ -36,7 +39,8 @@ class TTLCompiler( Plugin ):
     received directly."""
 
     pyfile = ''
-    """Absolute file path pointing to compiled template script, .py file."""
+    """If present, absolute file path pointing to compiled template script,
+    .py file."""
 
     pytext = ''
     """String of python script translated from template script."""
@@ -45,13 +49,13 @@ class TTLCompiler( Plugin ):
     """Character encoding of original template script file."""
 
     ttlparser = None
-    """:class:`TTLParser` object."""
+    """:class:`tayra.parser.TTLParser` object."""
 
     igen = None
-    """:class:`InstrGen` object."""
+    """:class:`tayra.codegen.InstrGen` object."""
 
     mach = None
-    """:class:`StackMachine` object."""
+    """:class:`tayra.runtime.StackMachine` object."""
 
     def __init__( self ):
         from tayra.parser   import TTLParser
@@ -95,7 +99,7 @@ class TTLCompiler( Plugin ):
 
     def toast( self, ttltext=None ):
         """Convert template text into abstract-syntax-tree. Return the root
-        node :class:`Node`."""
+        node :class:`tayra.ast.Template`."""
         ttltext = ttltext or self.ttltext
         self.ast = self.ttlparser.parse( ttltext, ttlfile=self.ttlfile )
         return self.ast
@@ -104,7 +108,7 @@ class TTLCompiler( Plugin ):
         """Generate intermediate python text from ``ast`` obtained from
         :meth:`toast` method. If configuration settings allow for persisting
         the generated python text, then this method will save the intermediate
-        python text in file :attr:`pyfile`."""
+        python text in file pointed by :attr:`pyfile`."""
         ast.validate()
         ast.headpass1( self.igen )                   # Head pass, phase 1
         ast.headpass2( self.igen )                   # Head pass, phase 2
@@ -161,7 +165,8 @@ class TTLCompiler( Plugin ):
 
     def generatehtml( self, module, context ):
         """Using the ``module`` object obtained from :meth:`load` method, and
-        a context dictionary generate and return the final HTML text.
+        a context dictionary, call the template module's entry point to 
+        generate HTMl text and return the same.
         """
         try :
             entry = getattr( module.this, self['entry_function'] )
@@ -184,7 +189,8 @@ class TTLCompiler( Plugin ):
     #---- IHTTPRenderer interface methods
 
     def render( self, request, c, file=None, text=None ):
-        """Generate HTML string from template script passed either via 
+        """:meth:`pluggdapps.web.interfaces.IHTTPRenderer.render` interface 
+        method. Generate HTML string from template script passed either via 
         ``ttext`` or via ``tfile``.
 
         ``tfile``,
@@ -319,7 +325,9 @@ _defaultsettings['input_encoding']          = {
 _defaultsettings['use_tag_plugins']           = {
     'default' : 'TayraHTML5Forms, TayraHTML5, TayraTags',
     'types'   : ('csv', list),
-    'help'    : "Comma separated list of tag plugins to use."
+    'help'    : "Comma separated list of tag plugins to use. Plugins in the "
+                "specified order will be invoked to handle the template tags, "
+                "so the order of the plugin is important."
 }
 _defaultsettings['beautify_html']                = {
     'default' : True,

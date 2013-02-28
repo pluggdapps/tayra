@@ -1,5 +1,5 @@
-Tayra template language
-=======================
+:mod:`tayra` -- Tayra template language
+=======================================
 
 .. automodule:: tayra
 

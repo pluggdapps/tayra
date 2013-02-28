@@ -1,12 +1,4 @@
-Tayra template language
-=======================
+:mod:`tayra.tyr` -- Command line script
+===============================
 
 .. automodule:: tayra.tyr
-
-Module contents 
----------------
-
-.. autofunction:: main
-.. autofunction:: mainoptions
-.. autofunction:: lexical
-.. autofunction:: yaccer

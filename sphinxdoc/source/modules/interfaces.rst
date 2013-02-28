@@ -1,5 +1,5 @@
-:mod:`tayra.interfaces` -- Interfaces specified by tayra package.
-=================================================================
+:mod:`tayra.interfaces` -- Interfaces specified by tayra package
+================================================================
 
 .. automodule:: tayra.interfaces
 
@@ -15,5 +15,5 @@ Module contents
     :show-inheritance:
 
 .. autoclass:: ITayraFilterBlock
-    :members:
+    :members: headpass1, headpass2, generate, tailpass
     :show-inheritance:

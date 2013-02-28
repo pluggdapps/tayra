@@ -6,9 +6,9 @@
 
 """Module containing Terminal and Non-terminal definitions.
 
-The AST tree is constructed according to the parser-grammar :mod:`parser`.
-From the root non-terminal use the children() method on every node to walk
-through the tree.
+The AST tree is constructed according to the parser-grammar defined in
+:mod:`tayra.parser`. From the root non-terminal use the children() method on
+every node to walk through the tree.
 """
 
 import sys, re
@@ -28,7 +28,7 @@ class Node( object ):
     """Immediate non-terminal parent node."""
 
     parser = None
-    """:class:`TTLParser` instance."""
+    """:class:`tayra.parser.TTLParser` instance."""
 
     def __init__( self, parser ):
         self.parent = None
@@ -37,8 +37,9 @@ class Node( object ):
             parser.ttlparser.prolog = False
 
     def children( self ):
-        """Return a tuple of childrens in the same order as parsed by the
-        grammar rule.
+        """Return a tuple of children for this node in the same order as
+        parsed by the grammar rule. Must always be overriden by the deriving
+        class.
         """
         return tuple()
 
@@ -66,23 +67,24 @@ class Node( object ):
 
     def lstrip( self, chars ):
         """Strip the leftmost chars from the Terminal nodes. Each terminal node
-        must return the remaining the characters.
-        In case of the Non-terminal node, call all the children node's
-        lstrip() method, until the caller recieves a non-empty return value.
+        must return remaining characters. In case of the Non-terminal node,
+        call all the children node's lstrip() method, until the caller
+        recieves a non-empty return value.
         """
         pass
 
     def rstrip( self, chars ):
         """Strip the rightmost chars from the Terminal nodes. Each terminal
-        node must return the remaining the characters.
-        In case of the Non-terminal node, call all the children node's
-        rstrip() method, until the caller recieves a non-empty return value.
+        node must return remaining characters. In case of the Non-terminal
+        node, call all the children node's rstrip() method, until the caller
+        recieves a non-empty return value.
         """
         pass
 
     def dump( self, context ):
         """Simply dump the contents of this node and its children node and
-        return the same."""
+        return the same.
+        """
         return ''.join([ x.dump(context) for x in self.children() ])
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
@@ -94,7 +96,7 @@ class Node( object ):
             Open IO buffer into which the Node is printed.
         
         ``offset``,
-            Initial offset (amount of leading spaces) 
+            Initial offset (amount of leading spaces).
         
         ``attrnames``,
             True if you want to see the attribute names in name=value pairs.
@@ -141,7 +143,8 @@ class Terminal( Node ) :
     """Terminal's token String."""
 
     lineno = None
-    """Line number reference where the node starts in the text."""
+    """Line number reference where the node starts in the text. Useful in
+    debug mode."""
 
     def __init__( self, parser, lineno, terminal='', **kwargs ):
         Node.__init__( self, parser )
@@ -209,7 +212,7 @@ class NonTerminal( Node ):      # Non-terminal
     """List of :class:`Terminal` nodes under this node."""
 
     _nonterms = []
-    """List of :class:`NonTermial` nodes under this node."""
+    """List of :class:`NonTerminal` nodes under this node."""
 
     def __init__( self, parser, *args, **kwargs ) :
         super().__init__( parser )

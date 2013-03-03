@@ -89,13 +89,16 @@ class TTLCompiler( Plugin ):
         self.mach._init( self.ttlfile )
         self.igen._init()
 
+        # Check whether pyfile is older than the ttl file. In debug mode is is
+        # always re-generated.
         self.pytext = ''
-        if self.ttlfile and isfile( self.ttlfile ) :
-            if self.pyfile and isfile( self.pyfile ) :
-                m1 = os.stat( self.ttlfile ).st_mtime
-                m2 = os.stat( self.pyfile ).st_mtime
-                if m1 <= m2 :
-                    self.pytext = open( self.pyfile ).read()
+        if self['debug'] == False :
+            if self.ttlfile and isfile( self.ttlfile ) :
+                if self.pyfile and isfile( self.pyfile ) :
+                    m1 = os.stat( self.ttlfile ).st_mtime
+                    m2 = os.stat( self.pyfile ).st_mtime
+                    if m1 <= m2 :
+                        self.pytext = open( self.pyfile ).read()
 
     def toast( self, ttltext=None ):
         """Convert template text into abstract-syntax-tree. Return the root
@@ -309,7 +312,7 @@ _defaultsettings['nocache'] = {
     'default' : False,
     'types'   : (bool,),
     'help'    : "If set to True, will not persist the intermediate python "
-                "file. intermediate python file."
+                "file."
 }
 _defaultsettings['escape_filters']          = {
     'default' : 'TayraEscFilterCommon',

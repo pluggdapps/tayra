@@ -13,7 +13,7 @@ simpl
 <div :name .pluggdapps #id { color : blue } 
      ${[ x for x in range(1,2) ]} edit name="hello world">
   so be t 
-  <a okay :name>
+  <span :name> ${ [ x for x in range(1,10) ] } <a okay :name>
 
   :py:
     [ x for x in range(1,10) ]

@@ -21,8 +21,8 @@ Lexing rules are implemented in :mod:`tayra.lexer` module and parsing grammar
 is implmeneted in :mod:`tayra.parser` module. 
 
 Intermediate file is a regular python file containing imports, functions,
-support code and a stack-machine. Except directives rest of the template text
-gets compiled into stack-machine instructions by AST nodes.
+support code and a stack-machine. Except the directives, rest of the template
+text gets compiled into stack-machine instructions by AST nodes.
 
 Extending Tayra language
 ------------------------

@@ -947,27 +947,39 @@ class TagBlock( NonTerminal ):
 class Text( NonTerminal ):
     """class to handle `text` grammar."""
 
-    def __init__( self, parser, text, textterm ) :
-        super().__init__( parser, text, textterm )
-        self.text, self.TEXT = text, textterm
+    def __init__( self, parser, text, textterm, tagspans ) :
+        super().__init__( parser, text, textterm, tagspans )
+        self.text, self.TEXT, self.tagspans = text, textterm, tagspans
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        return list( filter( None, (self.text, self.TEXT) ))
+        return list( filter( None, (self.text, self.TEXT, self.tagspans) ))
 
     def generate( self, igen, *args, **kwargs ):
-        from  tayra.lexer import TTLLexer
-        text, s = self.dump(None), 0
-        if text :
+        if self.tagspans :
             igen.comment( "lineno:%s" % self.TEXT.lineno )
-            for m in re.finditer( TTLLexer.exprsubst, text ) :
-                expr = m.group()
-                start, end = m.regs[0]
-                igen.puttext( text[s:start] )
-                igen.evalexprs( expr[2:-1] )
-                s = end
-            igen.puttext( text[s:] ) if text[s:] else None
+            text = self.TEXT.dump(None)
+            if text :
+                self.generate_text( text, igen, *args, **kwargs )
+            self.tagspans.generate( igen, *args, **kwargs )
+            igen.handletag()
+        else :
+            igen.comment( "lineno:%s" % self.TEXT.lineno )
+            text = self.dump( None )
+            if text :
+                self.generate_text( text, igen, *args, **kwargs )
+
+    def generate_text( self, text, igen, *args, **kwargs ):
+        from  tayra.lexer import TTLLexer
+        s = 0
+        for m in re.finditer( TTLLexer.exprsubst, text ) :
+            expr = m.group()
+            start, end = m.regs[0]
+            igen.puttext( text[s:start] )
+            igen.evalexprs( expr[2:-1] )
+            s = end
+        igen.puttext( text[s:] ) if text[s:] else None
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):

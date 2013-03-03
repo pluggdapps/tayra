@@ -233,13 +233,18 @@ class TTLParser( object ):
             terms = [ p[1], (TAGBEGIN,2), p[3] ]
         p[0] = TagSpans( p.parser, *self._buildterms(p, terms) )
 
-    def p_text( self, p ):
+    def p_text_1( self, p ):    # text never spans across a newline
         """text         : TEXT
                         | text TEXT"""
         if len(p) == 2 :
-            terms = [ None, (TEXT,1) ]
-        elif len(p) == 3 :
-            terms = [ p[1], (TEXT,2) ]
+            terms = [ None, (TEXT,1), None ]
+        else :
+            terms = [ p[1], (TEXT,2), None ]
+        p[0] = Text( p.parser, *self._buildterms(p, terms) )
+
+    def p_text_2( self, p ):
+        """text         : TEXT tagspans"""
+        terms = [ None, (TEXT,1), p[2] ]
         p[0] = Text( p.parser, *self._buildterms(p, terms) )
 
     #---- Script blocks

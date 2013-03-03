@@ -22,6 +22,7 @@ Contents:
    template_plugins
    extendingtayra
    primer
+   develop
    glossary
    CHANGELOG
 
@@ -34,8 +35,8 @@ Indices and tables
 * :ref:`glossary`
 
 
-Module Listing
---------------
+API Listing
+-----------
 
 .. toctree::
     :maxdepth: 1

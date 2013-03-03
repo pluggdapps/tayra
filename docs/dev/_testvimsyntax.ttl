@@ -1,0 +1,87 @@
+## comment
+
+@doctype hello='world'
+@from re import match.import
+
+<!-- An inline comment spanning multiple lines -->
+
+@@a = 10 * 20 * 30 +40 + [ x for x in range(1,10)  ]
+@@pass
+hello ${[ 10 * 20 * 30 +40 + [x for x in range(1,10)] } for so be it
+
+simpl
+<div :name .pluggdapps #id { color : blue } 
+     ${[ x for x in range(1,2) ]} edit name="hello world">
+  so be t 
+  <a okay :name>
+
+  :py:
+    [ x for x in range(1,10) ]
+  :py:
+  <a okay :name>
+
+    @def func1( a=10, b='okay', d={ 10 : [x for x in range(1,1)] ) : 
+      <a okay :name>
+      @@pass
+
+    @interface ITayraTestInterface.render( self, args, kwargs ):
+      <div> interface successfully invoked, okay
+
+    @if a == 'pass' :
+      @@pass
+    @elif a == ':' :
+      @@pass
+    @else a == 1 :
+      Google will join its biggest mobile rival, Apple, on the space 
+      trip as well.  Apple's iPhone 4 will join a crew running an 
+      app, called "SpaceLab for iOS."
+
+    @for i in range(2) :
+      Google will join its biggest mobile rival, Apple, on the space 
+      trip as well. Apple's iPhone 4 will join a crew running an 
+      app, called "SpaceLab for iOS."
+
+  @for x in range(1,10) :
+    Simple text as it appears ${ 10 * 20 * 30 +40 + 
+    [x for x in range(1,10)] }
+      <div> interface successfully invoked, okay
+
+    @@ i = 1
+    @while i :
+      <!--  comment --> 
+      @@i -= 1
+
+  <style .ok scoped text/css>
+    ul.tbreadcrumbs {
+      font-size : medium;
+      list-style: none; position : relative; float : left ;
+      clear : both; 
+      margin : 0px; padding: 0px;
+    }
+    ul.tbreadcrumbs li.crumbs, ul.tbreadcrumbs li.crumbsep {
+      display : list-item;
+      float : left;
+      padding : 5px 10px 5px 0px;
+    }
+  
+  <script defer text/javascript> 
+      $(document).ready( function() {
+        $('span.value').each( function(idx) {
+          if( $(this).attr('contenteditable') == 'true' ) {
+            $(this).css( 'border-bottom', '1px dotted gray' );
+            $(this).blur( function( e ) {
+              $(this).data('value', $(this).html());
+              console.log( $(this).data() );
+              $.ajax({
+                url : "${url_putconfig}",
+                type : "PUT",
+                data : $(this).data()
+              })
+            })
+          }
+        })
+      });
+  
+  ${ 10 * 20 [ x for x in range(1,2) ] }
+
+  <style scoped text/css>

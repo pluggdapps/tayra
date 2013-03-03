@@ -115,7 +115,7 @@ class TTLLexer( object ) :
     finish    = r'OVER!!!!@\#END-OF-TEXT\#@!!!!OVER'
     prgsuffx  = r'(?=:[ \t]*$):[ \t]*$'
     text      = r'[^<\r\n\\]+'
-    exprsubst = r'(?<!\\)\$\{[^}]*\}'
+    exprsubst = r'(?<!\\)\$\{[^}\\]*(?:\\.[^}\\]*)*\}'
 
     # Single line statements
     statement   = r'@@[^\r\n]+$'

@@ -1,5 +1,7 @@
 ## File name : eg1.ttl
 
+@doctype html
+
 <html>
   <head>
   <body>

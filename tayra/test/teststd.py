@@ -11,6 +11,7 @@ from   argparse         import ArgumentParser
 from   os.path          import abspath, dirname, join, isdir, basename
 
 from   pluggdapps.platform  import Pluggdapps
+from   pluggdapps.plugin    import ISettings
 from   tayra                import translatefile
 
 THISDIR = dirname( abspath( __file__ ))
@@ -39,7 +40,7 @@ def test_stdttl( compiler, options ) :
         if any([ f.endswith( x ) for x in skipttls ]) :
             continue
         if f.endswith('.ttl') :
-            print( f )
+            print( f, ' ...', end='' )
             ttlfile = join(STDTTLDIR, f)
             options.context = contexts.get(f, '{}')
             translatefile( ttlfile, compiler, options )
@@ -49,17 +50,10 @@ def test_stdttl( compiler, options ) :
             refhtmlfile = join( STDTTLREFDIR, f.split('.', 1)[0]+'.html' )
             # os.system( 'diff %s %s' % (htmlfile, refhtmlfile) )
             if f in [ 'templaterule.ttl' ] : continue
-            assert open( pyfile ).read() == open( refpyfile ).read()
-            assert open( htmlfile ).read() == open( refhtmlfile ).read()
-
-def mainoptions() :
-    argparser = ArgumentParser( description="Test standard ttl files" )
-    return argparser
-
-if __name__ == '__main__' :
-    argparser = mainoptions()
-    options = argparser.parse_args()
-    pa = Pluggdapps.boot( None )
-
-    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler' )
-    test_stdttl( compiler, options )
+            try :
+                assert open( pyfile ).read() == open( refpyfile ).read()
+                assert open( htmlfile ).read() == open( refhtmlfile ).read()
+            except :
+                raise
+            else :
+                print( 'ok' )

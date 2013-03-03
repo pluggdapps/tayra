@@ -1,3 +1,8 @@
+* Document how to push source tree into public repositories. Especially
+  hg-git.
+ 
+* Create hyper link to vim-plugin in README.rst.
+
 * Allow wiki markup as template tag contents. List of wiki markups,
     markdown, reStructuredText, Org-mode, Textile, Asciidoc
 

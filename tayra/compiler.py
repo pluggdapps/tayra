@@ -163,7 +163,7 @@ class TTLCompiler( Plugin ):
         exec( code, module.__dict__, module.__dict__ )
         return module
 
-    def generatehtml( self, module, context ):
+    def generatehtml( self, module, context={} ):
         """Using the ``module`` object obtained from :meth:`load` method, and
         a context dictionary, call the template module's entry point to 
         generate HTMl text and return the same.

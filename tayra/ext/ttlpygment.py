@@ -11,116 +11,110 @@ from pygments.lexers.web   import CssLexer, JavascriptLexer, HtmlLexer
 
 from tayra.lexer    import TTLLexer
 
+# TODO :
+#   Detailed highlighting for directives.
+
 class TemplateLexer( RegexLexer ):
     name = 'ttl'
     aliases = ['tayra-template', 'tayratemplate', 'ttl']
     filenames = ['*.ttl']
 
-    stmttokens = bygroups( Name.Tag, using(PythonLexer) )
-    pytokens = bygroups( using(PythonLexer) )
-    directivetokens = bygroups( Keyword, Name.Attribute )
-    fntokens = bygroups( Keyword, using(PythonLexer), Operator )
-    styletokens = bygroups( Operator, using(CssLexer), Operator )
-    exprtokens = bygroups( Operator, using( pytokens ), Operator )
+    pylex = using(PythonLexer)
+    csslex = using(CssLexer)
+    jslex = using(JavascriptLexer)
 
-    symbol    = r'([a-zA-Z0-9_\-\.]+)'
-    attrtoken = r'[a-zA-Z0-9\-_"\']+'
-    attrname  = r'[a-zA-Z0-9\-_]+'
-    attrvalue = \
-        r'(?:"[^"\\]*(?:\\.[^"\\]*)*")'+r'|'+r"(?:'[^'\\]*(?:\\.[^'\\]*)*')"
-    prgsuffx  = r'(?=:[ \t]*$)(:[ \t]*)$'
-    text      = r'[^\<\r\n\\]+'
-    exprsubst = r'(?<!\\)(\$\{)([^}]*)(\})'
-
-    # Single line statements
-    statement   = r'(@@)([^\r\n]+$)'
+    #-- RegEx patterns
+    text      = r'[^\s]+'
+    ws        = r'\s+'
+    exprsubst = r'(?<!\\)(\$\{)([^}\\]*(?:\\.[^}\\]*)*)(\})'
 
     # Directive patterns
-    doctype   = r'(@doctype)([^\r\n]*)$'
-    body      = r'(@body)([^\r\n]*)$'
-    importas  = r'(@import|@from)([^\r\n]*)$'
-    inherit   = r'(@inherit)([^\r\n]*)$'
-    implement = r'(@implement)([^\r\n]*)$'
-    use       = r'(@use)([^\r\n]*)$'
+    diropen  = r'(@)(doctype|body|import|from|inherit|implement)'
 
-    # Macro blocks
-    openfb    = r'(:%s:)([^\r\n]*)$' % attrname
-    openfbpy  = r'(:py:)([^\r\n]*)$'
-    fbtext    = r'(.+)'
-    fbclose   = r'(:%s:)[ \t]*$' % attrname
-
-    # Program blocks
-    interface   = r'(^@interface)([^:]+)(:)'
-    function    = r'(@def)([^:]+)(:)'
-    if_         = r'(@if)(.*?)' + prgsuffx      # Matches newlines
-    elif_       = r'(@elif)(.*?)' + prgsuffx    # Matches newlines
-    else_       = r'(@else)(.*?)' + prgsuffx    # Matches newlines
-    for_        = r'(@for)(.*?)' + prgsuffx     # Matches newlines
-    while_      = r'(@while)(.*?)' + prgsuffx   # Matches newlines
+    # Single line statements
+    statement = r'(@@)([^\r\n\\]*(?:\\\n[^\r\n\\]*)*)$'
 
     # Tag blocks
-    tagmodifs   = r'!'
-    tagchar     = r'([^>\\]|\r|\n|\r\n)'
-    newtag      = r'(\<[^>]*\>)'
-    tagbegin    = r'(<%s?)(%s)' % (tagmodifs, attrname)
-    tagend      = r'>'
-    tagid       = r'#%s' % attrname
-    tagclass    = r'\.%s' % symbol
-    tagstyle    = r'(\{)([^\}]*)(\})'
-    text        = r'[^<\r\n\\]+'
+    tagmodifs = r'!'
+    tagopen   = r'(<)(%s?)(\s*[\w:]+)' % tagmodifs
+
+    # Program blocks
+    prgsuffx  = r'(?=:[ \t]*$)(:[ \t]*)$'
+    blocknms  = r'def|if|elif|else|for|while'
+    interface = r'(^@)(interface)(.*?)' + prgsuffx
+    pyblock   = r'(@)(%s)(.*?)%s' % (blocknms, prgsuffx)
+
+    # Filter blocks
+    fbsuffx   = r'(?=:py:\s*)(:)(py)(:)'
+    openfbpy  = r'(:)(py)(:)'
+    fbtext    = r'(.+?)' + fbsuffx
 
     tokens = {
         'root': [
-            ( statement, stmttokens ),
+        ],
+        'root': [
             ( TTLLexer.commentline, Comment ),
             # Directives
-            ( doctype, directivetokens ),
-            ( body, directivetokens ),
-            ( importas, directivetokens ),
-            ( inherit, directivetokens ),
-            ( implement, directivetokens ),
-            ( use, directivetokens ),
-            # States
+            ( diropen, bygroups(Punctuation, Keyword.Reserved), 'directive' ),
+            # Statements
+            ( statement, bygroups(Punctuation, pylex) ),
             ( TTLLexer.cmtopen, Comment, 'comment' ),
-            ( openfb, directivetokens, 'fb' ),
-            ( openfbpy, directivetokens, 'fbpy' ),
+            # Script
+            # ( r'<\s*script\s*', Name.Tag, ('script-content', 'tag')),
+            # ( r'<\s*style\s*', Name.Tag, ('style-content', 'tag')),
             # Blocks
-            ( interface, fntokens ),
-            ( function, fntokens ),
-            ( if_,  fntokens ),
-            ( elif_, fntokens ),
-            ( else_, fntokens ),
-            ( for_, fntokens ),
-            ( while_, fntokens ),
-            ( tagbegin, bygroups(Operator, Name.Tag), 'tag' ),
-            ( exprsubst, exprtokens ),
+            ( tagopen, bygroups(Name.Tag, Operator, Name.Tag), 'tag' ),
+            ( interface, bygroups(Punctuation,Keyword.Reserved,pylex,Text) ),
+            ( pyblock, bygroups(Punctuation, Keyword, pylex, Text) ),
+            ( exprsubst, bygroups(Operator,  pylex, Operator) ),
+            # filter-blocks
+            ( openfbpy, bygroups(Keyword, Name.Attribute, Keyword), 'fbpy' ),
+            # Normal text
+            ( r'&\S*?;', Name.Entity),
             ( text, Text ),
+            ( ws, Whitespace ),
         ],
         'comment': [
             ( TTLLexer.cmtclose, Comment, '#pop' ),
             ( TTLLexer.cmttext, Comment ),
         ],
-        'fb': [
-            ( fbtext, Text ),
-            ( fbclose, Operator, '#pop' ),
+        'tag': [
+            ( r'\s+', Text ),
+            ( r'#[\w-]+', Keyword.Declaration ),    # id
+            ( r'\.[\w:\.-]+', Keyword.Class ),      # class
+            ( r'(\{)([^\}]*)(\})', bygroups(Operator, String, Operator) ),
+            ( r'[\w:-]+\s*=', Name.Attribute, 'attr' ),
+            ( r'[^\s>]+', Name.Attribute ), # Attribute-token
+            ( exprsubst, bygroups(Operator,  pylex, Operator) ),
+            ( r'/?\s*>', Name.Tag, '#pop' ),
         ],
-        'fbpy': [
-            ( fbtext, pytokens ),
-            ( fbclose, Operator, '#pop' ),
-        ],
-        'tag' :[
-            ( tagid, Name.Class ),
-            ( tagclass, Keyword.Declaration ),
-            ( exprsubst, exprtokens ),
-            ( tagstyle, styletokens ),
-            ( attrname, Name ),
-            ( r'=', Operator ),
-            ( attrvalue, String ),
+        'directive' : [
             ( r'[ \t]+', Text ),
-            ( tagend, Operator, '#pop' ),
+            ( r'([^\s]+\s*=)(,?)', Name.Attribute, 'attr' ),
+            # Attribute-token
+            ( r'([^\s]+)(,?)', bygroups(Name.Attribute, Punctuation) ),
+            ( r'[\r\n]', Text, '#pop'),
+         ],
+        'fbpy': [
+            (fbtext, bygroups(pylex,Keyword,Name.Attribute,Keyword), '#pop'),
+        ],
+        'attr': [
+            ( '".*?"', String, '#pop' ),
+            ( "'.*?'", String, '#pop' ),
+            ( r'[^\s>]+', String, '#pop' ),
+        ],
+        'script-content': [
+            ( r'[^\r\n]+', jslex,  ),
+            ( r'[\r\n]+', Name.Tag ),
+            ( r'^$', Name.Tag, '#pop' ),
+        ],
+        'style-content': [
+            ( r'[^\r\n]+', csslex ),
+            ( r'[\r\n]+', Name.Tag ),
+            ( r'^$', Name.Tag, '#pop' ),
         ],
     }
 
-    def get_tokens( self, text ):
-        for x in super().get_tokens( text ) :
-            print( x )
+    # def get_tokens( self, text ):
+    #     for x in super().get_tokens( text ) :
+    #         print( x )

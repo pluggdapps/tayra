@@ -28,7 +28,7 @@ syn include @Python syntax/python.vim
 syn include @htmlCSS syntax/css.vim
 
 " Top-level patterns,
-"   string, htmlComment, ttlComment, prolog, pythonStatement, pythonExprs,
+"   string, htmlComment, ttlComment, prolog, pythonStmt, pythonExprs,
 "   ttlTag, filterPyCode, ttlFunc, ttlInterface, ttlControl
 
 " syn case ignore
@@ -54,9 +54,12 @@ syn region  prolog          start="^@[dibf]" end="[\r\n]" skip="\\\r\|\\\n"
     \ keepend contains=prologPrefix,prologKeywords,attrEqual,string,ttlEscape
 
 " Statement
-syn match   stmtPrefix      contained "@@"
-syn region  pythonStatement start="^[ \t]*@@" end="[\r\n]" skip="\\\r\|\\\n"
+if main_syntax != 'python'
+  unlet b:current_syntax
+  syn match   stmtPrefix    contained "@@"
+  syn region  pythonStmt    start="^[ \t]*@@" end="[\r\n]" skip="\\\r\|\\\n"
                             \ keepend contains=stmtPrefix,@Python,ttlEscape
+endif
 
 " Expression
 syn match   pythonOps       contained "\${}"
@@ -81,12 +84,18 @@ syn keyword ttlTagName      contained colgroup del fieldset iframe ins legend
 syn keyword ttlTagName      contained object optgroup q s tbody tfoot thead
 syn keyword ttlTagName      contained script style
 
+syn keyword ttlTagName      contained inpbutton inpchk inpcolor inpdate inpdt 
+syn keyword ttlTagName      contained inpdtlocal inpemail inpfile inphidden
+syn keyword ttlTagName      contained inpimg inpmonth inpnum inppass inpradio 
+syn keyword ttlTagName      contained inprange inpreset inpsearch inpsub inptel
+syn keyword ttlTagName      contained inptext intime inpurl inpweek
+
 syn match   ttlStyle        contained "[^\\]{[^}]\+}" contains=@htmlCSS
 syn match   ttlTagOp        contained "[<>]"
 syn match   ttlID           contained "#[^ \t\r\n>]\+" 
 syn match   ttlClass        contained "\.[^ \t\r\n>]\+" 
 syn match   ttlName         contained "\:[^ \t\r\n>]\+" 
-syn region  ttlTag          start="^[ \t]*<[^!-]" end=">" keepend
+syn region  ttlTag          start="[ \t]*<[^!-]" end=">" keepend
                             \ contains=ttlTagOp,ttlTagName,ttlID,ttlClass,
                             \ ttlName,ttlStyle,string,ttlEscape,pythonExprs
 
@@ -147,8 +156,7 @@ TTLHiLink ttlComment        Comment
 TTLHiLink prologPrefix      Special
 TTLHiLink prologKeywords    Operator
 TTLHiLink prolog            NonText
-TTLHiLink stmtPrefix        Include
-TTLHiLink pythonStatement   Ignore
+TTLHiLink stmtPrefix        Special
 TTLHiLink ttlTag            Function
 TTLHiLink ttlTagOp          ModeMsg
 TTLHiLink ttlTagName        Statement

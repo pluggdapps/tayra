@@ -1,0 +1,17 @@
+@doctype html
+
+@@word = 'goto here'
+
+<html>
+  <head>
+  <body>
+    <div #searchTranslate>
+      <div #googleSearch> <gcse:search>
+      <div #google_translate_element><a #top> ${ word }
+      <div {clear:both;}>
+
+    <form>
+      First name : <inptext :firstname>
+      <br>
+      Last name  : <inptext :lastname>
+

@@ -46,6 +46,8 @@ def __traceback_decorator__( frames ):
 def body( *args, **kwargs ) :  
   _m.pushbuf()
   _m.extend( ['<!DOCTYPE html>\n\n'] )
+  # lineno:3
+  word = 'goto here'
   # lineno:5
   _m.pushbuf()
   _m.extend( ['<html>'] )
@@ -64,57 +66,66 @@ def body( *args, **kwargs ) :
   _m.extend( ['\n    '] )
   # lineno:8
   _m.pushbuf()
-  _m.extend( ['<p>'] )
+  _m.extend( ['<div #searchTranslate>'] )
   _m.pushbuf()
-  # lineno:8
+  _m.extend( ['\n      '] )
+  # lineno:9
+  _m.pushbuf()
+  _m.extend( ['<div #googleSearch>'] )
+  _m.pushbuf()
+  # lineno:9
   _m.extend( [' '] )
   _m.pushbuf()
-  _m.extend( ['<span .black>'] )
+  _m.extend( ['<gcse:search>'] )
   _m.pushbuf()
-  # lineno:8
-  _m.extend( [' hello '] )
-  _m.pushbuf()
-  _m.extend( ['<a "http://google.com">'] )
-  _m.pushbuf()
-  # lineno:8
-  _m.extend( [' world'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.extend( ['\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  # lineno:9
-  _m.pushbuf()
-  _m.extend( ['<div>'] )
-  _m.pushbuf()
-  _m.pushbuf()
-  _m.extend( ['<span .white>'] )
-  _m.pushbuf()
-  _m.pushbuf()
-  _m.extend( ['<ins>'] )
-  _m.pushbuf()
-  # lineno:9
-  _m.extend( ['world'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.extend( ['\n    '] )
+  _m.extend( ['\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:10
   _m.pushbuf()
-  _m.extend( ['<div>'] )
+  _m.extend( ['<div #google_translate_element>'] )
   _m.pushbuf()
   _m.pushbuf()
-  _m.extend( ['<span .white>'] )
-  _m.pushbuf()
-  # lineno:10
-  _m.extend( [' hello '] )
-  _m.pushbuf()
-  _m.extend( ['<ins>'] )
+  _m.extend( ['<a #top>'] )
   _m.pushbuf()
   # lineno:10
-  _m.extend( ['world'] )
+  _m.extend( [' '] )
+  _m.append(_m.evalexprs( 'word', '', globals(), locals()) )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.extend( ['\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:11
+  _m.pushbuf()
+  _m.extend( ['<div {clear:both;}>'] )
+  _m.pushbuf()
+  _m.extend( ['\n\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.extend( ['\n'] )
+  # lineno:13
+  _m.pushbuf()
+  _m.extend( ['<form>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      '] )
+  # lineno:14
+  _m.extend( ['First name : '] )
+  _m.pushbuf()
+  _m.extend( ['<inptext :firstname>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:15
+  _m.pushbuf()
+  _m.extend( ['<br>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:16
+  _m.extend( ['Last name  : '] )
+  _m.pushbuf()
+  _m.extend( ['<inptext :lastname>'] )
+  _m.pushbuf()
+  _m.extend( ['\n\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -125,4 +136,4 @@ def body( *args, **kwargs ) :
 
 # ---- Footer
 _ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/example1.ttl' 
+_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/nestedtags.ttl' 

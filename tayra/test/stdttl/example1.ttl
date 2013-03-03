@@ -6,3 +6,5 @@
   <head>
   <body>
     <p> <span .black> hello <a "http://google.com"> world
+    <div><span .white><ins>world
+    <div><span .white> hello <ins>world

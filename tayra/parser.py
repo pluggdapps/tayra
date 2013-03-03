@@ -126,6 +126,7 @@ class TTLParser( object ):
                   | tagblock
                   | commentblock
                   | textblock
+                  | textspan
                   | filterblock
                   | functionblock
                   | interfaceblock
@@ -147,6 +148,7 @@ class TTLParser( object ):
                   | script tagblock
                   | script commentblock
                   | script textblock
+                  | script textspan
                   | script filterblock
                   | script functionblock
                   | script interfaceblock
@@ -212,6 +214,7 @@ class TTLParser( object ):
 
     def p_tagline( self, p ) :
         """tagline      : tagspans NEWLINES"""
+        p[1] = p[1].right_recursive( None, p[1].TAGBEGIN, p[1].text )
         terms = [ p[1], (NEWLINES, 2) ]
         p[0] = TagLine( p.parser, *self._buildterms(p, terms) )
 
@@ -233,19 +236,17 @@ class TTLParser( object ):
             terms = [ p[1], (TAGBEGIN,2), p[3] ]
         p[0] = TagSpans( p.parser, *self._buildterms(p, terms) )
 
-    def p_text_1( self, p ):    # text never spans across a newline
+    def p_text( self, p ):
         """text         : TEXT
                         | text TEXT"""
-        if len(p) == 2 :
-            terms = [ None, (TEXT,1), None ]
-        else :
-            terms = [ p[1], (TEXT,2), None ]
+        terms = [ None, (TEXT,1) ] if len(p) == 2 else [ p[1], (TEXT,2) ]
         p[0] = Text( p.parser, *self._buildterms(p, terms) )
 
-    def p_text_2( self, p ):
-        """text         : TEXT tagspans"""
-        terms = [ None, (TEXT,1), p[2] ]
-        p[0] = Text( p.parser, *self._buildterms(p, terms) )
+    def p_textspan( self, p ):
+        """textspan     : text tagspans NEWLINES"""
+        p[2] = p[2].right_recursive( None, p[2].TAGBEGIN, p[2].text )
+        terms = [ p[1], p[2], (NEWLINES,3) ] 
+        p[0] = TextSpan( p.parser, *self._buildterms(p, terms) )
 
     #---- Script blocks
 

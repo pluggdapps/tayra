@@ -855,7 +855,9 @@ class TagLine( NonTerminal ):
         [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 class TagSpans( NonTerminal ):
-    """class to handle `tagspan` grammar."""
+    """class to handle `tagspan` grammar. TagSpans go through a twisted logic
+    of reverse generate() using self.parent. Be careful when changing this
+    code !!!"""
 
     def __init__( self, parser, tagspans, tagbegin, text ) :
         super().__init__( parser, tagspans, tagbegin, text )
@@ -864,18 +866,21 @@ class TagSpans( NonTerminal ):
         self.setparent( self, self.children() )
 
     def children( self ):
-        x = self.tagspans, self.TAGBEGIN, self.text
+        """Return the children in right recursive fashion."""
+        x = self.TAGBEGIN, self.text, self.tagspans
         return list( filter( None, x ))
 
-    def generate( self, igen, *args, **kwargs ):
-        # nest until we reach the first tagspan on the line. Then do a
-        # gentag(). Kind of reverse generation.
-        if self.tagspans : 
-            self.tagspans.generate( igen, *args, **kwargs )
-        else :
-            self.gentag( igen, *args, **kwargs )
+    def right_recursive( self, tagspans, TAGBEGIN, text ):
+        """Convert left recursion to right recursion so that generate() can be
+        a straight forward logic. Call this method right in the parser once
+        the top node of the left recursive tree is detected."""
+        ts = TagSpans( self.parser, tagspans, TAGBEGIN, text )
+        if self.tagspans :
+            TAGBEGIN, text = self.tagspans.TAGBEGIN, self.tagspans.text
+            return self.tagspans.right_recursive( ts, TAGBEGIN, text )
+        return ts
 
-    def gentag( self, igen, *args, **kwargs ):
+    def generate( self, igen, *args, **kwargs ):
         from  tayra.lexer import TTLLexer
         # TAGBEGIN
         tagbegin = self.TAGBEGIN.dump(None).strip(' \t')
@@ -891,19 +896,13 @@ class TagSpans( NonTerminal ):
 
         # TEXT
         igen.pushbuf()
-        text = self.text.dump(None) if self.text else ''
-        if text :
-            s = 0
-            for m in re.finditer( TTLLexer.exprsubst, text ) :
-                expr = m.group()
-                start, end = m.regs[0]
-                igen.puttext( text[s:start] )
-                igen.evalexprs( expr[2:-1] )
-                s = end
-            igen.puttext( text[s:] ) if text[s:] else None
+        if self.text :
+            self.text.generate( igen, *args, **kwargs )
+
+        if self.tagspans :
+            self.tagspans.generate( igen, *args, **kwargs )
 
         if isinstance( self.parent, TagSpans ) :
-            self.parent.gentag( igen, *args, **kwargs )
             igen.handletag()
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
@@ -947,28 +946,20 @@ class TagBlock( NonTerminal ):
 class Text( NonTerminal ):
     """class to handle `text` grammar."""
 
-    def __init__( self, parser, text, textterm, tagspans ) :
-        super().__init__( parser, text, textterm, tagspans )
-        self.text, self.TEXT, self.tagspans = text, textterm, tagspans
+    def __init__( self, parser, text, textterm ) :
+        super().__init__( parser, text, textterm )
+        self.text, self.TEXT = text, textterm
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )
 
     def children( self ):
-        return list( filter( None, (self.text, self.TEXT, self.tagspans) ))
+        return list( filter( None, (self.text, self.TEXT) ))
 
     def generate( self, igen, *args, **kwargs ):
-        if self.tagspans :
-            igen.comment( "lineno:%s" % self.TEXT.lineno )
-            text = self.TEXT.dump(None)
-            if text :
-                self.generate_text( text, igen, *args, **kwargs )
-            self.tagspans.generate( igen, *args, **kwargs )
-            igen.handletag()
-        else :
-            igen.comment( "lineno:%s" % self.TEXT.lineno )
-            text = self.dump( None )
-            if text :
-                self.generate_text( text, igen, *args, **kwargs )
+        igen.comment( "lineno:%s" % self.TEXT.lineno )
+        text = self.dump( None )
+        if text :
+            self.generate_text( text, igen, *args, **kwargs )
 
     def generate_text( self, text, igen, *args, **kwargs ):
         from  tayra.lexer import TTLLexer
@@ -980,6 +971,32 @@ class Text( NonTerminal ):
             igen.evalexprs( expr[2:-1] )
             s = end
         igen.puttext( text[s:] ) if text[s:] else None
+
+    def show( self, buf=sys.stdout, offset=0, attrnames=False,
+              showcoord=False ):
+        lead = ' ' * offset
+        buf.write( lead + 'text: ' )
+        if showcoord:
+            buf.write( ' (at %s)' % self.coord )
+        buf.write('\n')
+        [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
+
+
+class TextSpan( NonTerminal ):
+    """class to handle `textspan` grammar."""
+
+    def __init__( self, parser, text, tagspans, newlines ) :
+        super().__init__( parser, text, tagspans, newlines )
+        self.text, self.tagspans, self.NEWLINES = text, tagspans, newlines
+        # Set parent attribute for children, should be last statement !!
+        self.setparent( self, self.children() )
+
+    def children( self ):
+        return list( filter( None, (self.text, self.tagspans, self.NEWLINES)))
+
+    def generate( self, igen, *args, **kwargs ):
+        super().generate( igen, *args, **kwargs )
+        igen.handletag()
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):

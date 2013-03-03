@@ -1,5 +1,8 @@
 * Document how to push source tree into public repositories. Especially
   hg-git.
+
+* Example ttl files demonstrating the tokens and shortcuts implemented by
+  tayra.tags.html plugin and tayra.tags.forms plugin.
  
 * Create hyper link to vim-plugin in README.rst.
 

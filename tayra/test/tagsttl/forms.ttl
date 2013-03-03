@@ -1,0 +1,11 @@
+@doctype html
+
+## Example file explaining the use case of form tags.
+
+<html>
+  <head>
+  <body>
+    <form on>
+      First name : <inptext :firstname>
+      <br>
+      Last name  : <inptext :lastname>

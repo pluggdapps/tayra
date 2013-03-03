@@ -285,9 +285,9 @@ class TayraHTML5( TayraTags ):
           ``enctype="application/x-www-form-urlencoded"``.
         * ``multipart/form-data`` token translates to 
           ``enctype="multipart/form-data"``.
-        * ``text/plain`` token translates to ``menctype="text/plain"``.
-        * ``get`` token translates to ``formmethod="get"``
-        * ``post`` token translates to ``formmethod="post"``
+        * ``text/plain`` token translates to ``enctype="text/plain"``.
+        * ``get`` token translates to ``method="get"``
+        * ``post`` token translates to ``method="post"``
         * ``novalidate`` token translates to ``novalidate="novalidate"``
         * a quoted string is interpreted as ``action`` attribute and translated
           to ``action="<string>"``.

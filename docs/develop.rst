@@ -33,20 +33,78 @@ Eventually we expect all the code to reside in one plugin or the other,
 thereby providing maximum flexibility. Right now tayra can be extended using
 the following interfaces,
 
-:class:`tayra.interfaces.ITayraTags`
-    In its simplest use case, tayra is just plain HTML without the closing
-    tags. But behind the scenese these tag elements are parsed and passed to
-    ITayraTags plugins, where plugins are configured in 
-    ``TTLCompiler['use_tag_plugins']`` settings. Here is an example,
+**:class:`tayra.interfaces.ITayraTags`**
 
-:class:`tayra.interfaces.ITayraEscapeFilter`
-:class:`tayra.interfaces.ITayraFilterBlock`
+In its simplest use case, tayra is just plain HTML without the closing
+tags. But behind the scene these tag elements are parsed and passed to
+ITayraTags plugins, where plugins are configured using
+``TTLCompiler['use_tag_plugins']`` settings. Here is an example,
+
+.. code-block:: ttl
+
+    <form on>
+      First name : <inptext :firstname>
+      <br>
+      Last name  : <inptext :lastname>
+
+uses `inptext` tag implemented by ``TayraHTML5Forms`` plugin, where tokens
+with in the tag definition are parsed and interpreted by plugins and are taken
+into account while generating a corresponding HTML text. You can refer
+:mod:`tayra.tags.forms` module for more information on how to implement a
+:class:`tayra.interfaces.ITayraTags` plugin.
+
+**:class:`tayra.interfaces.ITayraEscapeFilter`**
+
+Expressions can be substituted inside a template file using **${...}** tokens.
+Additionally, evaluated output can be passed to filters using **${... |
+<filters> }** the pipe token, where `filters` is comma separated value of
+filters to be applied in the specified order.
+
+.. code-block:: ttl
+
+    <li .crumbs>
+      <a .crumbname "${crumbsurl or '' | u }"> ${crumbsname}
+      <ul .menu>
+
+By defining a plugin implementing :class:`tayra.interfaces.ITayraEscapeFilter`
+interface and configuring the same in ``TTLCompiler['escape_filters']``
+parameter settings, it is possible to extend escape filtering for expression
+substitution.
+
+**:class:`tayra.interfaces.ITayraFilterBlock`**
+
+Filter blocks provide powerful yet a generic way to extend the template
+language. Filter blocks are handled by plugins implementing
+:class:`tayra.interfaces.ITayraFilterBlock` interface and they take part in
+multi-pass compilation. Although filter-blocks cannot blend with ttl-language 
+syntactically, they can provided features that can be close integrated with
+the template language.
+
+``:py:`` filter block in implemented by :class:`tayra.filterblocks.pycode`
+plugin. Using this developers can add python code blocks inside the template
+script, both in local scope and global scope. For EG,
+
+.. code-block:: ttl
+
+    @interface ITTLBreadCrumbs.default_settings( self ):
+      :py:
+      ds = h.ConfigDict()
+      ds.__doc__ = "Configuration settings for `tbreadcrumbs`"
+
+      ds['type']  = {
+          'default'  : 'simple',
+          'types'    : (str,),
+          'options'  : ('simple', 'styled', 'collapsible', 'none'),
+          'help'     : "Type of bread crumb styling."
+      }
+      :py:
+      @@return ds
 
 **Setting up,**
 
 It is always better to setup the development tree under a virtual environemnt.
-To begin with, first checkout the source tree from the latest repository tree
-and then use the ``make`` command to create a development environment.
+To begin with, first checkout latest source tree from the repository and then
+use the ``make`` command to create a development environment.
 
 .. code-block:: bash
 

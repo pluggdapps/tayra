@@ -68,6 +68,7 @@ def func( a ) :
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
+  # lineno:5
   _m.extend( [' hey firefox 5 '] )
   _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
@@ -83,6 +84,7 @@ def func( a ) :
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
+  # lineno:9
   _m.extend( [' hey chromium 8 '] )
   _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
@@ -98,6 +100,7 @@ def func( a ) :
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
+  # lineno:13
   _m.extend( [' Hey everyone '] )
   _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
   _m.extend( ['\n\n'] )

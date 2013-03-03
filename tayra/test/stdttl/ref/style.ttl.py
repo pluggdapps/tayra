@@ -62,6 +62,7 @@ def body( *args, **kwargs ) :
   _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
   _m.extend( [" ' style with line break' } >"] )
   _m.pushbuf()
+  # lineno:4
   _m.extend( [' hello {world}', '\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

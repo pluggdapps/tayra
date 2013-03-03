@@ -91,6 +91,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   _m.extend( ['<title #titleid .cls1 "title string">'] )
   _m.pushbuf()
+  # lineno:12
   _m.extend( [' hello '] )
   _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
   _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
@@ -105,6 +106,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   _m.extend( ['<h1 { color : red; border : 1px solid gray; }>'] )
   _m.pushbuf()
+  # lineno:14
   _m.extend( [' ', '\n        '] )
   # lineno:15
   _m.extend( ['I am the space station '] )
@@ -115,6 +117,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   _m.extend( ['<p first second>'] )
   _m.pushbuf()
+  # lineno:16
   _m.extend( [' of any 12x or more,  '] )
   _m.append(_m.evalexprs( '20', '', globals(), locals()) )
   _m.extend( ['  ', '\n      '] )
@@ -125,6 +128,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
+  # lineno:18
   _m.extend( [' of good. They also have a', '\n        '] )
   # lineno:19
   _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n        '] )
@@ -144,6 +148,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
   _m.extend( ['>'] )
   _m.pushbuf()
+  # lineno:25
   _m.extend( [' Sign my guestbook', '\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

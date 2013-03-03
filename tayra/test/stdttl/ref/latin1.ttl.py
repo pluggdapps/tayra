@@ -77,6 +77,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<em>'] )
   _m.pushbuf()
+  # lineno:8
   _m.extend( [' Wikipédia est un projet dencyclopédie collective établie sur', '\n           '] )
   # lineno:9
   _m.extend( ['Internet,', '\n      '] )

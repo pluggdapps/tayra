@@ -140,6 +140,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<abbr "World Health Organization">'] )
     _m.pushbuf()
+    # lineno:26
     _m.extend( [' WHO', '\n    \n        '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     # lineno:28
@@ -156,6 +157,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<div>'] )
     _m.pushbuf()
+    # lineno:32
     _m.extend( [' '] )
     _m.append(_m.evalexprs( '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
     _m.extend( ['\n      '] )
@@ -199,6 +201,7 @@ def func( a, x, y, z, s ) :
     _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
     _m.extend( [" ' style with line\n          break' } >"] )
     _m.pushbuf()
+    # lineno:44
     _m.extend( [' hello {world} /> ', '\n  '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
@@ -226,6 +229,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<title #titleid .cls1 "title \n          string">'] )
     _m.pushbuf()
+    # lineno:52
     _m.extend( [' hello '] )
     _m.append(_m.evalexprs( 's', '', globals(), locals()) )
     _m.extend( [' @ ! # "helo" \'world "ok', '\n      '] )
@@ -240,6 +244,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<h1 { color : red;\n    border : 1px solid gray;\n        }>'] )
     _m.pushbuf()
+    # lineno:56
     _m.extend( [' I am the space station '] )
     _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
     _m.extend( [' seven cameras', '\n        '] )
@@ -251,6 +256,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<p first\n        second>'] )
     _m.pushbuf()
+    # lineno:61
     _m.extend( [' of any 12x or more,', '\n        '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.extend( ['<!--', ' comment1\n           comment ', '-->', '\n        '] )
@@ -260,6 +266,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<div>'] )
     _m.pushbuf()
+    # lineno:65
     _m.extend( [' of good. They also have a', '\n          '] )
     # lineno:66
     _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n          '] )
@@ -279,6 +286,7 @@ def func( a, x, y, z, s ) :
     _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
     _m.extend( ['>'] )
     _m.pushbuf()
+    # lineno:74
     _m.extend( [' Sign my guestbook', '\n  '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
@@ -290,6 +298,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     _m.extend( ['<form #idname\n    formname "', 'http://\n    google.com" >'] )
     _m.pushbuf()
+    # lineno:80
     _m.extend( [' '] )
     _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
     _m.extend( ['\n        '] )

@@ -51,6 +51,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<form #idname\nformname "', 'http://\ngoogle.com" >'] )
   _m.pushbuf()
+  # lineno:5
   _m.extend( [' '] )
   _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
   _m.extend( ['\n    '] )

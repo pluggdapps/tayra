@@ -60,19 +60,23 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<body>'] )
   _m.pushbuf()
+  # lineno:3
   _m.extend( [' ', '\n    '] )
   # lineno:4
   _m.pushbuf()
   _m.extend( ['<p>'] )
   _m.pushbuf()
+  # lineno:4
   _m.extend( [' '] )
   _m.pushbuf()
   _m.extend( ['<span>'] )
   _m.pushbuf()
+  # lineno:4
   _m.extend( [' '] )
   _m.pushbuf()
   _m.extend( ['<a>'] )
   _m.pushbuf()
+  # lineno:4
   _m.extend( [' hello world'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

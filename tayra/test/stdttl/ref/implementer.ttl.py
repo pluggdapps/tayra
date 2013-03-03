@@ -57,6 +57,7 @@ def render( self, *args, **kwargs ):
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
+  # lineno:5
   _m.extend( [' interface successfully invoked, okay', '\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()

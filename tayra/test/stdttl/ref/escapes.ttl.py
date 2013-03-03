@@ -109,6 +109,7 @@ def willbecomeglobal( *args ):
   _m.pushbuf()
   _m.extend( ['<b>'] )
   _m.pushbuf()
+  # lineno:12
   _m.extend( [' Ghost', '\n        '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   
@@ -119,6 +120,7 @@ def willbecomeglobal( *args ):
     _m.pushbuf()
     _m.extend( ['<em>'] )
     _m.pushbuf()
+    # lineno:14
     _m.extend( [' Rider', '\n        '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     return _m.popbuftext()  

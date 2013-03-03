@@ -126,6 +126,7 @@ def hd_title() :
   _m.pushbuf()
   _m.extend( ['<title>'] )
   _m.pushbuf()
+  # lineno:25
   _m.extend( [' '] )
   _m.append(_m.evalexprs( 'title', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
@@ -326,6 +327,7 @@ def body_leftpane() :
   _m.pushbuf()
   _m.extend( ['<a "/index">'] )
   _m.pushbuf()
+  # lineno:92
   _m.extend( [' home', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -338,6 +340,7 @@ def body_leftpane() :
   _m.pushbuf()
   _m.extend( ['<a "/overview">'] )
   _m.pushbuf()
+  # lineno:94
   _m.extend( [' bootstrap', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -350,6 +353,7 @@ def body_leftpane() :
   _m.pushbuf()
   _m.extend( ['<a "/ispecroot">'] )
   _m.pushbuf()
+  # lineno:96
   _m.extend( [' Interface Specification Request', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -362,6 +366,7 @@ def body_leftpane() :
   _m.pushbuf()
   _m.extend( ['<a "/config">'] )
   _m.pushbuf()
+  # lineno:98
   _m.extend( [' Configuration', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -374,6 +379,7 @@ def body_leftpane() :
   _m.pushbuf()
   _m.extend( ['<a "/psite_getstarted">'] )
   _m.pushbuf()
+  # lineno:100
   _m.extend( [' Get Started', '\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -402,6 +408,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a .fntbold "/googlegroup">'] )
   _m.pushbuf()
+  # lineno:107
   _m.extend( [' Join', '\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -420,6 +427,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<b>'] )
   _m.pushbuf()
+  # lineno:110
   _m.extend( [' built-on ', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:111
@@ -436,6 +444,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://whatwg.org">'] )
   _m.pushbuf()
+  # lineno:113
   _m.extend( [' HTML5', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -448,6 +457,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://python.org">'] )
   _m.pushbuf()
+  # lineno:115
   _m.extend( [' python', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -460,6 +470,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "https://developer.mozilla.org/en/JavaScript_Language_Resources">'] )
   _m.pushbuf()
+  # lineno:117
   _m.extend( [' JavaScript', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -472,6 +483,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://erlang.org">'] )
   _m.pushbuf()
+  # lineno:119
   _m.extend( [' Erlang', '\n\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -486,6 +498,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<b>'] )
   _m.pushbuf()
+  # lineno:122
   _m.extend( [' built-with ', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:123
@@ -502,6 +515,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://pylonsproject.com">'] )
   _m.pushbuf()
+  # lineno:125
   _m.extend( [' Pyramid', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -514,6 +528,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://eazytext.pluggdapps.com">'] )
   _m.pushbuf()
+  # lineno:127
   _m.extend( [' EazyText', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -526,6 +541,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://tayra.pluggdapps.com">'] )
   _m.pushbuf()
+  # lineno:129
   _m.extend( [' Tayra', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -538,6 +554,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://couchdb.org">'] )
   _m.pushbuf()
+  # lineno:131
   _m.extend( [' CouchDB', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -550,6 +567,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://couchpy.pluggdapps.com">'] )
   _m.pushbuf()
+  # lineno:133
   _m.extend( [' CouchPy', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -562,6 +580,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://jquery.com/">'] )
   _m.pushbuf()
+  # lineno:135
   _m.extend( [' jQuery', '\n\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -576,6 +595,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<b>'] )
   _m.pushbuf()
+  # lineno:138
   _m.extend( [' built-for ', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:139
@@ -592,6 +612,7 @@ def body_rightpane() :
   _m.pushbuf()
   _m.extend( ['<a "http://pluggdapps.com">'] )
   _m.pushbuf()
+  # lineno:141
   _m.extend( [' pluggdapps.com', '\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

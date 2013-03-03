@@ -95,6 +95,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<abbr "World Health Organization">'] )
     _m.pushbuf()
+    # lineno:26
     _m.extend( [' WHO', '\n  \n      '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     # lineno:28
@@ -112,6 +113,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<div>'] )
     _m.pushbuf()
+    # lineno:32
     _m.extend( [' '] )
     _m.append(_m.evalexprs( '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
     _m.extend( ['\n    '] )
@@ -156,6 +158,7 @@ def body( *args, **kwargs ) :
     _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
     _m.extend( [" ' style with line\n        break' } >"] )
     _m.pushbuf()
+    # lineno:44
     _m.extend( [' hello {world} /> ', '\n\n'] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
@@ -184,6 +187,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<title #titleid .cls1 "title \n        string">'] )
     _m.pushbuf()
+    # lineno:54
     _m.extend( [' hello '] )
     _m.append(_m.evalexprs( 's', '', globals(), locals()) )
     _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
@@ -198,6 +202,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<h1 { color : red;\n  border : 1px solid gray;\n      }>'] )
     _m.pushbuf()
+    # lineno:58
     _m.extend( [' I am the space station '] )
     _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
     _m.extend( [' seven cameras', '\n      '] )
@@ -209,6 +214,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<p first\n      second>'] )
     _m.pushbuf()
+    # lineno:63
     _m.extend( [' of any 12x or more,', '\n      '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.extend( ['<!--', ' comment1\n         comment ', '-->', '\n      '] )
@@ -218,6 +224,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<div>'] )
     _m.pushbuf()
+    # lineno:67
     _m.extend( [' of good. They also have a', '\n        '] )
     # lineno:68
     _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n        '] )
@@ -237,6 +244,7 @@ def body( *args, **kwargs ) :
     _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
     _m.extend( ['>'] )
     _m.pushbuf()
+    # lineno:76
     _m.extend( [' Sign my guestbook', '\n\n'] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
@@ -249,6 +257,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     _m.extend( ['<form #idname\n  formname "', 'http://\n  google.com" >'] )
     _m.pushbuf()
+    # lineno:83
     _m.extend( [' '] )
     _m.append(_m.evalexprs( '"hello " + str(10) +     \' world\'', '', globals(), locals()) )
     _m.extend( ['\n      '] )

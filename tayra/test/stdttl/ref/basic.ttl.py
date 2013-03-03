@@ -60,6 +60,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<body>'] )
   _m.pushbuf()
+  # lineno:3
   _m.extend( [' hello world', '\n    '] )
   # lineno:4
   _m.pushbuf()

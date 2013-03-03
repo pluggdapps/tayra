@@ -73,6 +73,7 @@ def _toc( level, heads ) :
     _m.append(_m.evalexprs( 'href', '', globals(), locals()) )
     _m.extend( ['">'] )
     _m.pushbuf()
+    # lineno:11
     _m.extend( [' '] )
     _m.append(_m.evalexprs( 'text', '', globals(), locals()) )
     _m.extend( ['\n      '] )
@@ -98,6 +99,7 @@ def toc( details, heads ) :
   _m.pushbuf()
   _m.extend( ['<summary>'] )
   _m.pushbuf()
+  # lineno:16
   _m.extend( [' '] )
   _m.append(_m.evalexprs( 'details', '', globals(), locals()) )
   _m.extend( ['\n    '] )
@@ -127,6 +129,7 @@ def papowered( pcount, icount ) :
   _m.pushbuf()
   _m.extend( ['<span .prop>'] )
   _m.pushbuf()
+  # lineno:22
   _m.extend( [' On', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:23
@@ -136,6 +139,7 @@ def papowered( pcount, icount ) :
   _m.pushbuf()
   _m.extend( ['<div .counts>'] )
   _m.pushbuf()
+  # lineno:24
   _m.extend( [' '] )
   _m.append(_m.evalexprs( 'pcount', '', globals(), locals()) )
   _m.extend( [' plugins via '] )

@@ -71,12 +71,14 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<div title="hello world">'] )
   _m.pushbuf()
+  # lineno:14
   _m.extend( [' attribute value is provided as a string.', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:15
   _m.pushbuf()
   _m.extend( ['<div disabled="disabled">'] )
   _m.pushbuf()
+  # lineno:15
   _m.extend( [' attribute value is provided as an atom.', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:16
@@ -91,6 +93,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<a>'] )
   _m.pushbuf()
+  # lineno:18
   _m.extend( [' fine clause', '\n      \n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:20
@@ -105,6 +108,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<a>'] )
   _m.pushbuf()
+  # lineno:23
   _m.extend( [' hello world', '\n      \n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

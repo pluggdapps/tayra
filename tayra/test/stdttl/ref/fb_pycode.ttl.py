@@ -91,6 +91,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<h1 { color : red; border : 1px solid gray; }>'] )
   _m.pushbuf()
+  # lineno:28
   _m.extend( [' ', '\n      '] )
   # lineno:29
   _m.extend( ['I am the space station '] )
@@ -101,6 +102,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<p first second>'] )
   _m.pushbuf()
+  # lineno:30
   _m.extend( [' of any 12x or more, '] )
   _m.append(_m.evalexprs( '20', '', globals(), locals()) )
   _m.extend( [' and some of the wide-angle view ', '\n    '] )
@@ -109,6 +111,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
+  # lineno:31
   _m.extend( [' of good. They also have a', '\n      '] )
   # lineno:32
   _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n      '] )
@@ -121,6 +124,7 @@ def body( *args, **kwargs ) :
   _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
   _m.extend( ['>'] )
   _m.pushbuf()
+  # lineno:34
   _m.extend( [' Sign my guestbook', '\n      '] )
   # lineno:35
   _m.pushbuf()

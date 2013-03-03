@@ -251,6 +251,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<p .title>'] )
   _m.pushbuf()
+  # lineno:96
   _m.extend( [' Pluggdapps in a nutshell, that it is today and that it will be', '\n      '] )
   # lineno:97
   _m.extend( ['tomorrow.', '\n    '] )
@@ -270,6 +271,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<a .showall.fntxsmall.pointer>'] )
   _m.pushbuf()
+  # lineno:100
   _m.extend( [' show-all', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:101
@@ -281,6 +283,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<legend>'] )
   _m.pushbuf()
+  # lineno:102
   _m.extend( [' Common search terms', '\n        '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:103
@@ -292,36 +295,42 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<span .dsrch.pointer.ralign>'] )
   _m.pushbuf()
+  # lineno:104
   _m.extend( ['plugin', '\n          '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:105
   _m.pushbuf()
   _m.extend( ['<span .dsrch.pointer.ralign>'] )
   _m.pushbuf()
+  # lineno:105
   _m.extend( ['template', '\n          '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:106
   _m.pushbuf()
   _m.extend( ['<span .dsrch.pointer.ralign>'] )
   _m.pushbuf()
+  # lineno:106
   _m.extend( ['web|html', '\n          '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:107
   _m.pushbuf()
   _m.extend( ['<span .dsrch.pointer.ralign>'] )
   _m.pushbuf()
+  # lineno:107
   _m.extend( ['couch', '\n          '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:108
   _m.pushbuf()
   _m.extend( ['<span .dsrch.pointer.ralign>'] )
   _m.pushbuf()
+  # lineno:108
   _m.extend( ['tayra', '\n          '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:109
   _m.pushbuf()
   _m.extend( ['<span .dsrch.pointer.ralign>'] )
   _m.pushbuf()
+  # lineno:109
   _m.extend( ['program', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -336,12 +345,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:111
   _m.extend( ['Build applications on web-technologies. Build it on pluggdapps.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:112
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:112
   _m.extend( ['Linus took unix to all programmers, and apt-get took Linux to all people.', '\n        '] )
   # lineno:113
   _m.extend( ['In pluggdapps, deploy a website by installing a package.', '\n      '] )
@@ -350,6 +361,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:114
   _m.extend( ['Not just websites, whether it is an application or web-application, libraries', '\n        '] )
   # lineno:115
   _m.extend( ['or plugins or just couple of template files, deploy them by installing an egg', '\n        '] )
@@ -360,6 +372,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:117
   _m.extend( ['MVC (Model-View-Controller) is great. Plugin architecture is great. Do them', '\n        '] )
   # lineno:118
   _m.extend( ['both in pluggdapps and get the best of both worlds.', '\n      '] )
@@ -368,12 +381,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:119
   _m.extend( ['Should client and server run on different machines ? Not with pluggdapps.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:120
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:120
   _m.extend( ['Pluggdapps run on python and javascript and web-browser and uses erlang for', '\n        '] )
   # lineno:121
   _m.extend( ['database, hence, it can run on any device supporting them. Why not ?', '\n      '] )
@@ -382,6 +397,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:122
   _m.extend( ['Library is a tool. Great libraries are stateless and re-entrant. For', '\n        '] )
   # lineno:123
   _m.extend( ['pluggdapps, even applications are stateless and re-entrant.', '\n      '] )
@@ -390,6 +406,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:124
   _m.extend( ['A framework is just a library, with callback APIs. A plugin is just a library,', '\n        '] )
   # lineno:125
   _m.extend( ['with callback APIs. Hence, plugins are great way to design frameworks.', '\n      '] )
@@ -398,12 +415,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:126
   _m.extend( ['To access a library, import them. To access plugins, query for them.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:127
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:127
   _m.extend( ['Pluggdapps is not first to do it right, it merely tracks the footsteps of', '\n        '] )
   # lineno:128
   _m.extend( ['its masters - Python, Zope, Pyramid, ...', '\n      '] )
@@ -412,6 +431,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:129
   _m.extend( ['Interface will specify attributes, methods, method-signature and its function.', '\n        '] )
   # lineno:130
   _m.extend( ['A callback API is nothing but an interface, hence, plugins are nothing but', '\n        '] )
@@ -424,12 +444,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:133
   _m.extend( ['Install applications and access them on the url.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:134
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:134
   _m.extend( ['Configure and customize application along with modules, interfaces and plugins', '\n        '] )
   # lineno:135
   _m.extend( ['used by the application. Configure them in .ini file, configure them via web.', '\n      '] )
@@ -438,6 +460,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:136
   _m.extend( ['Applications are mounted on the url in three ways - domain, subdomain and', '\n        '] )
   # lineno:137
   _m.extend( ['script. While the default is script, choose the one that fits, and', '\n        '] )
@@ -448,6 +471,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:139
   _m.extend( ['Url-rewriting. Requests are automatically routed to the mounted', '\n        '] )
   # lineno:140
   _m.extend( ['application.', '\n      '] )
@@ -456,12 +480,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:141
   _m.extend( ['Cross application access. For apps to access each other in the same run-time.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:142
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:142
   _m.extend( ['Scaffolding. From first key-stroke to first application page in less than', '\n        '] )
   # lineno:143
   _m.extend( ['30 seconds.', '\n      '] )
@@ -470,6 +496,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:144
   _m.extend( ['Authenticate users and authorize them with permissions. Off-the-shelf plugins', '\n        '] )
   # lineno:145
   _m.extend( ['available for challenging credentials and interfacing with backend store.', '\n      '] )
@@ -478,6 +505,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:146
   _m.extend( ['Your browser has got the best documentation engine ever and wiki makes it', '\n        '] )
   # lineno:147
   _m.extend( ['accessible. Use EazyText to create content for your apps.', '\n      '] )
@@ -486,6 +514,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:148
   _m.extend( ['EazyText wiki markup. Generate HTML documents with out compromising on its', '\n        '] )
   # lineno:149
   _m.extend( ['readability.', '\n      '] )
@@ -494,6 +523,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:150
   _m.extend( ['With EazyText highlight your text as bold, italic, underline, subscript,', '\n        '] )
   # lineno:151
   _m.extend( ['superscript and more.', '\n      '] )
@@ -502,12 +532,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:152
   _m.extend( ['EazyText can hyperlink documents and images.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:153
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:153
   _m.extend( ['Text in EazyText looks natural for reading. All the same it can generate', '\n        '] )
   # lineno:154
   _m.extend( ['lists, tables, definitions, blockquotes and paragraphs.', '\n      '] )
@@ -516,30 +548,35 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:155
   _m.extend( ['EazyText macros, create new functions and use them in your documents.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:156
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:156
   _m.extend( ['EazyText extensions, extend the wiki engine.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:157
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:157
   _m.extend( ['Become an expert in EazyText and create interactive documents.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:158
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:158
   _m.extend( ['And EazyText is moving towards HTML5.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:159
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:159
   _m.extend( ['With CSS and javascript, your browser can be way more than just a document', '\n        '] )
   # lineno:160
   _m.extend( ['renderer. Use tayra templates to design your front end.', '\n      '] )
@@ -548,18 +585,21 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:161
   _m.extend( ['HTML is verbose. Make it consise with Tayra.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:162
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:162
   _m.extend( ['CSS Selector. That which pulls HTML, Javascript and CSS together.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:163
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:163
   _m.extend( ['Tayra templating language. Bunch of syntax wrapped around a bunch of', '\n        '] )
   # lineno:164
   _m.extend( ['specification. Adapt the language to your needs.', '\n      '] )
@@ -568,18 +608,21 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:165
   _m.extend( ['Intendations are only natural to html. Why not enforce them ?', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:166
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:166
   _m.extend( ['Tayra templates. Define templates as function.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:167
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:167
   _m.extend( ['Tayra templates. Organise template functions as modules. Import them in other', '\n        '] )
   # lineno:168
   _m.extend( ['templates.', '\n      '] )
@@ -588,6 +631,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:169
   _m.extend( ['Tayra templates. Templates are modules. Templates are objects. Use template', '\n        '] )
   # lineno:170
   _m.extend( ['inheritance to design layouts.', '\n      '] )
@@ -596,6 +640,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:171
   _m.extend( ['Tayra templates. Specify template interface. Implement template plugins. Use', '\n        '] )
   # lineno:172
   _m.extend( ['them else-where.', '\n      '] )
@@ -604,18 +649,21 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:173
   _m.extend( ['If you like decorators in python, you will like it in Tayra templates.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:174
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:174
   _m.extend( ['NoSQL is cool. CouchDB is radical. Program your database with CouchPy.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:175
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:175
   _m.extend( ["Don't you feel stored procedure in SQL as an after-thought ? After programming", '\n        '] )
   # lineno:176
   _m.extend( ['(views,...) in CouchDB, there is a high chance you might.', '\n      '] )
@@ -624,12 +672,14 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:177
   _m.extend( ['CouchDB on HTTP is nothing but CRUD on ReST.', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:178
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:178
   _m.extend( ['CouchPy for CouchDB. Model. Transact. Replicate. Program. Query. Eventually', '\n        '] )
   # lineno:179
   _m.extend( ['consistent with MVCC.', '\n      '] )
@@ -643,6 +693,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<em>'] )
   _m.pushbuf()
+  # lineno:181
   _m.extend( ['Programmers believe that the value of their system lies in', '\n          '] )
   # lineno:182
   _m.extend( ['the whole, in the building: posterity discovers it in the bricks with which', '\n          '] )
@@ -664,6 +715,7 @@ def body_centerpane() :
   _m.pushbuf()
   _m.extend( ['<li>'] )
   _m.pushbuf()
+  # lineno:187
   _m.extend( ['Start by contributing plugins, grow as you design apps and become a network', '\n        '] )
   # lineno:188
   _m.extend( ['geek.', '\n'] )

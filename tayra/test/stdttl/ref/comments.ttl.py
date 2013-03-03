@@ -49,6 +49,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<html>'] )
   _m.pushbuf()
+  # lineno:3
   _m.extend( [' ', '\n  ', '<!--', ' Trying to inline a comment ', '-->', '\n  '] )
   # lineno:5
   _m.extend( ['fair enough', '\n  '] )

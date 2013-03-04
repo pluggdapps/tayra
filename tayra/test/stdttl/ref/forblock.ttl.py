@@ -134,18 +134,18 @@ def body( *args, **kwargs ) :
     _m.append(_m.evalexprs( '', '"sun is " " shining"', '', globals(), locals()) )
     _m.extend( [' brightly">'] )
     _m.pushbuf()
-    _m.extend( ['\n'] )
+    _m.extend( ['\n\n'] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
   _m.extend( ['\n\n  '] )
-  # lineno:36
+  # lineno:37
   for i in range(1) :    
-    # lineno:38
+    # lineno:39
     _m.pushbuf()
     _m.extend( ['<div {} >'] )
     _m.pushbuf()
     _m.extend( ['\n\n    '] )
-    # lineno:40
+    # lineno:41
     _m.pushbuf()
     _m.extend( ['<a #'] )
     _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
@@ -157,110 +157,110 @@ def body( *args, **kwargs ) :
     _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
     _m.extend( [" ' style with line\n        break' } >"] )
     _m.pushbuf()
-    # lineno:44
+    # lineno:45
     _m.extend( [' hello {world} /> ', '\n\n'] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
   _m.extend( ['\n  '] )
-  # lineno:46
+  # lineno:47
   for i in range(1) :    
-    # lineno:47
+    # lineno:48
     _m.pushbuf()
     _m.extend( ['<html>'] )
     _m.pushbuf()
     _m.extend( ['\n    '] )
-    # lineno:48
-    b = 'hello'   
     # lineno:49
+    b = 'hello'   
+    # lineno:50
     _m.extend( [''] )
     _m.append(_m.evalexprs( '', 'x+y', '', globals(), locals()) )
     _m.extend( ['\n    '] )
-    # lineno:50
+    # lineno:51
     _m.pushbuf()
     _m.extend( ['<head #headid .cls1.'] )
     _m.append(_m.evalexprs( '', 's.strip(\n    )', '', globals(), locals()) )
     _m.extend( [' "title" {color:red} lang="en"\n     data="hello">'] )
     _m.pushbuf()
     _m.extend( ['\n      '] )
-    # lineno:53
+    # lineno:54
     _m.pushbuf()
     _m.extend( ['<title #titleid .cls1 "title \n        string">'] )
     _m.pushbuf()
-    # lineno:54
+    # lineno:55
     _m.extend( [' hello '] )
     _m.append(_m.evalexprs( '', 's', '', globals(), locals()) )
     _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    # lineno:55
+    # lineno:56
     _m.pushbuf()
     _m.extend( ['<body>'] )
     _m.pushbuf()
     _m.extend( ['\n      '] )
-    # lineno:56
+    # lineno:57
     _m.pushbuf()
     _m.extend( ['<h1 { color : red;\n  border : 1px solid gray;\n      }>'] )
     _m.pushbuf()
-    # lineno:58
+    # lineno:59
     _m.extend( [' I am the space station '] )
     _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
     _m.extend( [' seven cameras', '\n      '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.extend( ['<!--', ' comment1\n     comment ', '-->', '\n      '] )
-    # lineno:61
-    _m.extend( ['have a zoom range ', '\n      '] )
     # lineno:62
+    _m.extend( ['have a zoom range ', '\n      '] )
+    # lineno:63
     _m.pushbuf()
     _m.extend( ['<p first\n      second>'] )
     _m.pushbuf()
-    # lineno:63
+    # lineno:64
     _m.extend( [' of any 12x or more,', '\n      '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.extend( ['<!--', ' comment1\n         comment ', '-->', '\n      '] )
-    # lineno:66
-    _m.extend( ['and some of the wide-angle view ', '\n      '] )
     # lineno:67
+    _m.extend( ['and some of the wide-angle view ', '\n      '] )
+    # lineno:68
     _m.pushbuf()
     _m.extend( ['<div>'] )
     _m.pushbuf()
-    # lineno:67
-    _m.extend( [' of good. They also have a', '\n        '] )
     # lineno:68
-    _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n        '] )
+    _m.extend( [' of good. They also have a', '\n        '] )
     # lineno:69
+    _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n        '] )
+    # lineno:70
     _m.extend( ['important for people who are with a powerful zoom lens. Some other', '\n      '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    # lineno:70
+    # lineno:71
     _m.extend( ['important features thatThese cameras contain electronic viewfinder,', '\n        ', '<!--', ' comment1 comment ', '-->', '\n  \n    '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    # lineno:73
-    _m.extend( ['full control while shooting. In general, these cameras are all seem ', '\n      '] )
     # lineno:74
+    _m.extend( ['full control while shooting. In general, these cameras are all seem ', '\n      '] )
+    # lineno:75
     _m.extend( ['very similar.', '\n    \n      '] )
-    # lineno:76
+    # lineno:77
     _m.pushbuf()
     _m.extend( ['<p #'] )
     _m.append(_m.evalexprs( '', 'b', '', globals(), locals()) )
     _m.extend( ['>'] )
     _m.pushbuf()
-    # lineno:76
+    # lineno:77
     _m.extend( [' Sign my guestbook', '\n\n'] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
   _m.extend( ['\n  '] )
-  # lineno:78
+  # lineno:79
   for i in range(1) :    
-    # lineno:79
+    # lineno:80
     world = 10
-    # lineno:81
+    # lineno:82
     _m.pushbuf()
     _m.extend( ['<form #idname\n  formname "', 'http://\n  google.com" >'] )
     _m.pushbuf()
-    # lineno:83
+    # lineno:84
     _m.extend( [' '] )
     _m.append(_m.evalexprs( '', '"hello " + str(10) +     \' world\'', '', globals(), locals()) )
     _m.extend( ['\n      '] )
-    # lineno:84
+    # lineno:85
     _m.pushbuf()
     _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
     _m.append(_m.evalexprs( '', 'world', '', globals(), locals()) )

@@ -33,6 +33,7 @@
     <a #${'idname \ '} .${'cls' 'name'} "${"http://" 'google.com'}" 
        { ${'color : ' } ${ "red;" } } 
        ${"title"}="${"sun is " " shining"} brightly">
+
 @for i in range(1) :
 
   <div {} >

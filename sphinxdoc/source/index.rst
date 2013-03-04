@@ -20,8 +20,6 @@ Contents:
    template_layout
    template_libraries
    template_plugins
-   extendingtayra
-   primer
    develop
    glossary
    CHANGELOG
@@ -50,8 +48,9 @@ API Listing
     modules/codegen
     modules/runtime
     modules/decorators
-    modules/escfilters
-    modules/escfilters.common
+    modules/expr
+    modules/expr.defaultpy
+    modules/expr.evalpy
     modules/filterblocks
     modules/filterblocks.pycode
     modules/tags

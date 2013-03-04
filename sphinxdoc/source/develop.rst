@@ -13,20 +13,122 @@ constructed using :class:`tayra.ast.Terminal` :class:`tayra.ast.NonTerminal`
 base classes. A multi-pass compilation is applied on the AST, two headpasses
 for preprocessing, generation pass to generate intermediate python file and a
 tail pass to do post processing. Some times tail pass can be used to perform 
-a delayed generation of intermediate python file. AST also supports methods to
-reverse generate the source text and to print the tree to stdout for
+a delayed generation of intermediate python file. AST nodes also provide
+methods to reverse generate the source text and to print the tree on stdout for
 reference.
 
 Lexing rules are implemented in :mod:`tayra.lexer` module and parsing grammar
 is implmeneted in :mod:`tayra.parser` module. 
 
 Intermediate file is a regular python file containing imports, functions,
-support code and a stack-machine. Except directives rest of the template text
-gets compiled into stack-machine instructions by AST nodes.
+support code and a stack-machine. Except the directives, rest of the template
+text gets compiled into stack-machine instructions by AST nodes.
+
+Extending Tayra language
+------------------------
+
+Like mentioned above many aspects of the language are implemented using
+plugins and these plugins can be customised, configured or even replaced.
+Eventually we expect all the code to reside in one plugin or the other,
+thereby providing maximum flexibility. Right now tayra can be extended using
+the following interfaces,
+
+**:class:`tayra.interfaces.ITayraTags`**
+
+In its simplest use case, tayra is just plain HTML without the closing
+tags. But behind the scene these tag elements are parsed and passed to
+ITayraTags plugins, where plugins are configured using
+``TTLCompiler['use_tag_plugins']`` settings. Here is an example,
+
+.. code-block:: ttl
+
+    <form on>
+      First name : <inptext :firstname>
+      <br>
+      Last name  : <inptext :lastname>
+
+uses `inptext` tag implemented by ``TayraHTML5Forms`` plugin, where tokens
+with in the tag definition are parsed and interpreted by plugins and are taken
+into account while generating a corresponding HTML text. You can refer
+:mod:`tayra.tags.forms` module for more information on how to implement a
+:class:`tayra.interfaces.ITayraTags` plugin.
+
+**:class:`tayra.interfaces.ITayraExpression`**
+
+Expressions can be substituted inside a template file using **${...}** syntax.
+Additionally, evaluated output can be passed to filters using **${... |
+<filters> }** the pipe token, where `filters` is comma separated value of
+filters to be applied in the specified order.
+
+.. code-block:: ttl
+
+    <li .crumbs>
+      <a .crumbname "${crumbsurl or '' | u }"> ${crumbsname}
+      <ul .menu>
+
+Behind the scenes, expression substitution is handled by plugins implementing
+implementing :class:`tayra.interfaces.ITayraExpression` interface. While
+coding an expression inside a template script it is possible to target the
+expression for specific plugin, like,
+
+.. code-block:: ttl
+
+    @@l = [1,2,3]
+
+    ## Evaluating with expression extension
+    <div> ${-evalpy l.append(10)}
+    <div> ${-py l}
+    <div> ${-evalpy l.pop(0)}
+    <div> ${l}
+
+where, ``-evalpy`` and ``-py`` refers to plugin name. For instance ``-evalpy``
+will refer to a plugin whose class name is ``TayraExpressionEvalPy``, note the
+`TayraExpression` prefix in the class name. Similarly ``-py`` will refer to
+plugin whose class name is ``TayraExpressionPy``. The difference by `-eval`
+and `-py` is that in the former case expression is only evaluated in the
+global and local scope and in the later case expression is both evaluated and
+substituted.
+
+If an expression is coded without a target plugin then default plugin will be
+picked based on the configuration parameter
+``TTLCompiler['expression.default']``. To learn more about expression
+substitution and filtering refer to :class:`tayra.interfaces.ITayraExpression`
+interface specification.
+
+**:class:`tayra.interfaces.ITayraFilterBlock`**
+
+Filter blocks provide powerful yet a generic way to extend the template
+language. Filter blocks are handled by plugins implementing
+:class:`tayra.interfaces.ITayraFilterBlock` interface and they take part in
+multi-pass compilation. Although filter-blocks cannot blend with ttl-language 
+syntactically, they can provided features that can be close integrated with
+the template language.
+
+``:py:`` filter block in implemented by :class:`tayra.filterblocks.pycode`
+plugin. Using this developers can add python code blocks inside the template
+script, both in local scope and global scope. For EG,
+
+.. code-block:: ttl
+
+    @interface ITTLBreadCrumbs.default_settings( self ):
+      :py:
+      ds = h.ConfigDict()
+      ds.__doc__ = "Configuration settings for `tbreadcrumbs`"
+
+      ds['type']  = {
+          'default'  : 'simple',
+          'types'    : (str,),
+          'options'  : ('simple', 'styled', 'collapsible', 'none'),
+          'help'     : "Type of bread crumb styling."
+      }
+      :py:
+      @@return ds
+
+**Setting up,**
 
 It is always better to setup the development tree under a virtual environemnt.
-To begin with, first checkout the source tree from the latest repository tree
-and then use the ``make`` command to create a development environment.
+To begin with, first checkout latest source tree from the repository and then
+use the ``make`` command to create a development environment.
 
 .. code-block:: bash
 

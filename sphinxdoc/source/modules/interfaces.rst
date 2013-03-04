@@ -10,7 +10,7 @@ Module contents
     :members:
     :show-inheritance:
 
-.. autoclass:: ITayraEscapeFilter
+.. autoclass:: ITayraExpression
     :members:
     :show-inheritance:
 

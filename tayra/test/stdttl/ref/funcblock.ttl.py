@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -47,39 +46,39 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:83
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func1()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func1()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:84
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func2()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func2()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:85
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func3()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func3()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:86
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func4()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func4()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:87
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func5()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func5()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:88
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func6()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func6()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:89
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func7()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func7()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:90
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func8()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func8()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   # lineno:91
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'func10()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'func10()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   return _m.popbuftext()
 
@@ -127,7 +126,7 @@ def func5(z=10):
   # lineno:16
   _m.pushbuf()
   _m.extend( ['<html #std1 .testcase.sample { color: red; font-size : '] )
-  _m.append(_m.evalexprs( 'z*2', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'z*2', '', globals(), locals()) )
   _m.extend( ['px }\n        title="hello world">'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
@@ -175,7 +174,7 @@ def func5(z=10):
     
     # lineno:25
     _m.extend( [''] )
-    _m.append(_m.evalexprs( 'nestednestedfunc()', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', 'nestednestedfunc()', '', globals(), locals()) )
     _m.extend( ['\n      '] )
     return _m.popbuftext()  
   
@@ -187,7 +186,7 @@ def func5(z=10):
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:27
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'nestedfunc()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'nestedfunc()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -203,24 +202,24 @@ def func6 () :
   _m.pushbuf()
   # lineno:31
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:32
   _m.pushbuf()
   _m.extend( ['<a #'] )
-  _m.append(_m.evalexprs( "'idname  \\ '", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'idname  \\ '", '', globals(), locals()) )
   _m.extend( [' .'] )
-  _m.append(_m.evalexprs( "'cls' 'name'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'cls' 'name'", '', globals(), locals()) )
   _m.extend( [' \n       "'] )
-  _m.append(_m.evalexprs( '"http://" \'google.com\'', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"http://" \'google.com\'', '', globals(), locals()) )
   _m.extend( ['" { '] )
-  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
   _m.extend( ['\n                               '] )
-  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
   _m.extend( [' } \n                               '] )
-  _m.append(_m.evalexprs( '"title"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"title"', '', globals(), locals()) )
   _m.extend( ['="'] )
-  _m.append(_m.evalexprs( '"sun is " " shining"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"sun is " " shining"', '', globals(), locals()) )
   _m.extend( [' brightly">'] )
   _m.pushbuf()
   _m.extend( ['\n'] )
@@ -240,13 +239,13 @@ def func7() :
   # lineno:40
   _m.pushbuf()
   _m.extend( ['<a #'] )
-  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
   _m.extend( [' .'] )
-  _m.append(_m.evalexprs( "'cls'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'cls'", '', globals(), locals()) )
   _m.extend( ['\n   \n      "http://pluggdapps.com"\n      { '] )
-  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
   _m.extend( [" ' style with line\n        break' } >"] )
   _m.pushbuf()
   # lineno:44
@@ -268,12 +267,12 @@ def func8( a=10, b=12.2, c="string" ) :
   b = 'hello'   
   # lineno:48
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'a+2', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'a+2', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:49
   _m.pushbuf()
   _m.extend( ['<head #headid .cls1.'] )
-  _m.append(_m.evalexprs( 'c.strip(\n        )', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'c.strip(\n        )', '', globals(), locals()) )
   _m.extend( [' "title" {color:red} lang="en"\n     data="hello">'] )
   _m.pushbuf()
   _m.extend( ['\n      '] )
@@ -283,7 +282,7 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.pushbuf()
   # lineno:53
   _m.extend( [' hello '] )
-  _m.append(_m.evalexprs( 'c', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'c', '', globals(), locals()) )
   _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -298,7 +297,7 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.pushbuf()
   # lineno:57
   _m.extend( [' I am the space station '] )
-  _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
   _m.extend( [' seven cameras', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.extend( ['<!--', ' comment1\n     comment ', '-->', '\n      '] )
@@ -335,7 +334,7 @@ def func8( a=10, b=12.2, c="string" ) :
   # lineno:75
   _m.pushbuf()
   _m.extend( ['<p #'] )
-  _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'b', '', globals(), locals()) )
   _m.extend( ['>'] )
   _m.pushbuf()
   # lineno:75
@@ -356,12 +355,12 @@ def func10():
   _m.pushbuf()
   # lineno:80
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"hello " + str(10) + \' world\'', '', globals(), locals()) )
   _m.extend( ['\n      '] )
   # lineno:81
   _m.pushbuf()
   _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
-  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'world', '', globals(), locals()) )
   _m.extend( ['}>'] )
   _m.pushbuf()
   _m.extend( ['\n\n'] )

@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -113,7 +112,7 @@ def body( *args, **kwargs ) :
     # lineno:34
     _m.pushbuf()
     _m.extend( ['<html #std1 .testcase.sample { color: red; font-size : '] )
-    _m.append(_m.evalexprs( 'z*2', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', 'z*2', '', globals(), locals()) )
     _m.extend( ['px }\n        title="hello world">'] )
     _m.pushbuf()
     _m.extend( ['\n    '] )
@@ -156,7 +155,7 @@ def body( *args, **kwargs ) :
     _m.pushbuf()
     # lineno:46
     _m.extend( [' '] )
-    _m.append(_m.evalexprs( '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', '"hello " + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
     _m.extend( ['\n    '] )
     # lineno:47
     i -= 1
@@ -165,19 +164,19 @@ def body( *args, **kwargs ) :
     # lineno:49
     _m.pushbuf()
     _m.extend( ['<a #'] )
-    _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
     _m.extend( [' .'] )
-    _m.append(_m.evalexprs( "'cls' 'name'", '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', "'cls' 'name'", '', globals(), locals()) )
     _m.extend( [' "'] )
-    _m.append(_m.evalexprs( '"http://" \'google.com\'', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', '"http://" \'google.com\'', '', globals(), locals()) )
     _m.extend( ['"\n       { '] )
-    _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
     _m.extend( [' '] )
-    _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
     _m.extend( [' } \n       '] )
-    _m.append(_m.evalexprs( '"title"', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', '"title"', '', globals(), locals()) )
     _m.extend( ['="'] )
-    _m.append(_m.evalexprs( '"sun is " " shining"', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', '"sun is " " shining"', '', globals(), locals()) )
     _m.extend( [' brightly">'] )
     _m.pushbuf()
     _m.extend( ['\n  '] )
@@ -196,13 +195,13 @@ def body( *args, **kwargs ) :
       # lineno:56
       _m.pushbuf()
       _m.extend( ['<a #'] )
-      _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
       _m.extend( [' .'] )
-      _m.append(_m.evalexprs( "'cls'", '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', "'cls'", '', globals(), locals()) )
       _m.extend( ['\n     \n        "http://pluggdapps.com"\n        { '] )
-      _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
       _m.extend( [' '] )
-      _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
       _m.extend( [" ' style with line\n          break' } >"] )
       _m.pushbuf()
       # lineno:60
@@ -221,12 +220,12 @@ def body( *args, **kwargs ) :
       b = 'hello'   
       # lineno:65
       _m.extend( [''] )
-      _m.append(_m.evalexprs( 'x+y', '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', 'x+y', '', globals(), locals()) )
       _m.extend( ['\n      '] )
       # lineno:66
       _m.pushbuf()
       _m.extend( ['<head #headid .cls1.'] )
-      _m.append(_m.evalexprs( 's.strip()', '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', 's.strip()', '', globals(), locals()) )
       _m.extend( [' "title" {color:red} lang="en"\n            data="hello">'] )
       _m.pushbuf()
       _m.extend( ['\n        '] )
@@ -236,7 +235,7 @@ def body( *args, **kwargs ) :
       _m.pushbuf()
       # lineno:69
       _m.extend( [' hello '] )
-      _m.append(_m.evalexprs( 's', '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', 's', '', globals(), locals()) )
       _m.extend( [' @ ! # "helo" \'world "ok', '\n      '] )
       _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
       _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -251,7 +250,7 @@ def body( *args, **kwargs ) :
       _m.pushbuf()
       # lineno:72
       _m.extend( [' I am the space station '] )
-      _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
       _m.extend( [' seven cameras', '\n        '] )
       _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
       _m.extend( ['<!--', ' comment1\n       comment ', '-->', '\n        '] )
@@ -288,7 +287,7 @@ def body( *args, **kwargs ) :
       # lineno:90
       _m.pushbuf()
       _m.extend( ['<p #'] )
-      _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
+      _m.append(_m.evalexprs( '', 'b', '', globals(), locals()) )
       _m.extend( ['>'] )
       _m.pushbuf()
       # lineno:90
@@ -307,12 +306,12 @@ def body( *args, **kwargs ) :
         _m.extend( [' ', '\n            '] )
         # lineno:96
         _m.extend( [''] )
-        _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
+        _m.append(_m.evalexprs( '', '"hello " + str(10) + \' world\'', '', globals(), locals()) )
         _m.extend( ['\n              '] )
         # lineno:97
         _m.pushbuf()
         _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
-        _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+        _m.append(_m.evalexprs( '', 'world', '', globals(), locals()) )
         _m.extend( ['}>'] )
         _m.pushbuf()
         _m.extend( ['\n\n'] )

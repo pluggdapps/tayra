@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -57,12 +56,12 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   b = 'hello'   
   # lineno:17
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'x+y', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'x+y', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   # lineno:18
   _m.pushbuf()
   _m.extend( ['<head #headid .cls1.'] )
-  _m.append(_m.evalexprs( 'a.strip()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'a.strip()', '', globals(), locals()) )
   _m.extend( [' "title" {color:red} lang="en"\n   data="hello">'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
@@ -72,7 +71,7 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.pushbuf()
   # lineno:21
   _m.extend( [' hello '] )
-  _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( [' @ ! # "helo" \'world "ok', '\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -87,7 +86,7 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.pushbuf()
   # lineno:24
   _m.extend( [' I am the space station '] )
-  _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
   _m.extend( [' seven cameras', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.extend( ['<!--', ' comment1\n   comment ', '-->', '\n    '] )
@@ -124,7 +123,7 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   # lineno:42
   _m.pushbuf()
   _m.extend( ['<p #'] )
-  _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'b', '', globals(), locals()) )
   _m.extend( ['>'] )
   _m.pushbuf()
   # lineno:42

@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -49,7 +48,7 @@ def body( *args, **kwargs ) :
   _m.extend( ["<!-- \nThis file is subject to the terms and conditions defined in\nfile 'LICENSE', which is part of this source code package.\n      Copyright (c) 2011 SKR Farms (P) LTD.\n-->\n\n"] )
   # lineno:9
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'parent.body()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'parent.body()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
   return _m.popbuftext()
 
@@ -60,7 +59,7 @@ def hd_styles() :
   _m.pushbuf()
   # lineno:12
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'parent.hd_styles()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'parent.hd_styles()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   # lineno:13
   _m.pushbuf()
@@ -180,7 +179,7 @@ def hd_script() :
   _m.pushbuf()
   # lineno:68
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'parent.hd_script()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'parent.hd_script()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   # lineno:69
   _m.pushbuf()
@@ -240,7 +239,7 @@ def body_centerpane() :
   _m.pushbuf()
   # lineno:94
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'parent.body_centerpane()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'parent.body_centerpane()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   # lineno:95
   _m.pushbuf()

@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -55,7 +54,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:9
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'body_leftpane()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'body_leftpane()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   return _m.popbuftext()
 
@@ -66,15 +65,15 @@ def body_leftpane() :
   _m.pushbuf()
   # lineno:5
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'f.func3()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'f.func3()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   # lineno:6
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'f.func4()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'f.func4()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   # lineno:7
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'f.func5()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'f.func5()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
   return _m.popbuftext()
 

@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -65,30 +64,30 @@ def body( *args, **kwargs ) :
   # lineno:10
   _m.pushbuf()
   _m.extend( ['<link image/ico "'] )
-  _m.append(_m.evalexprs( 'favicon', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'favicon', '', globals(), locals()) )
   _m.extend( ['" rel="icon">'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:11
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.hd_title()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.hd_title()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:12
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.hd_meta()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.hd_meta()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:13
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.hd_links()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.hd_links()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:14
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.hd_styles()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.hd_styles()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:15
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.hd_script()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.hd_script()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:16
@@ -98,15 +97,15 @@ def body( *args, **kwargs ) :
   _m.extend( ['\n    '] )
   # lineno:17
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.bd_header()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.bd_header()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:18
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.bd_body()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.bd_body()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:19
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.bd_footer()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.bd_footer()', '', globals(), locals()) )
   _m.extend( ['\n\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -128,7 +127,7 @@ def hd_title() :
   _m.pushbuf()
   # lineno:25
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( 'title', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'title', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
@@ -165,7 +164,7 @@ def hd_links() :
   _m.extend( ['font-weight: normal;', '\n      '] )
   # lineno:40
   _m.extend( ["src: local('Amaranth'), url('"] )
-  _m.append(_m.evalexprs( 'fnt_amaranth', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'fnt_amaranth', '', globals(), locals()) )
   _m.extend( ["') format('woff');", '\n    '] )
   # lineno:41
   _m.extend( ['}', '\n    '] )
@@ -179,7 +178,7 @@ def hd_links() :
   _m.extend( ['font-weight: normal;', '\n      '] )
   # lineno:46
   _m.extend( ["src: local('Open Sans'), url('"] )
-  _m.append(_m.evalexprs( 'fnt_opensans', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'fnt_opensans', '', globals(), locals()) )
   _m.extend( ["') format('woff');", '\n    '] )
   # lineno:47
   _m.extend( ['}', '\n\n  '] )
@@ -189,7 +188,7 @@ def hd_links() :
   # lineno:50
   _m.pushbuf()
   _m.extend( ['<link text/css "'] )
-  _m.append(_m.evalexprs( 'defaultcss', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'defaultcss', '', globals(), locals()) )
   _m.extend( ['" rel="stylesheet" charset="utf-8">'] )
   _m.pushbuf()
   _m.extend( ['\n    \n'] )
@@ -215,7 +214,7 @@ def hd_script() :
   # lineno:58
   _m.pushbuf()
   _m.extend( ['<script text/javascript "'] )
-  _m.append(_m.evalexprs( 'jqueryfile', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'jqueryfile', '', globals(), locals()) )
   _m.extend( ['">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
@@ -223,7 +222,7 @@ def hd_script() :
   # lineno:59
   _m.pushbuf()
   _m.extend( ['<script text/javascript "'] )
-  _m.append(_m.evalexprs( 'jqlibfile', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'jqlibfile', '', globals(), locals()) )
   _m.extend( ['">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
@@ -279,7 +278,7 @@ def bd_body() :
   _m.extend( ['\n    '] )
   # lineno:82
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.body_rightpane()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.body_rightpane()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:83
@@ -289,7 +288,7 @@ def bd_body() :
   _m.extend( ['\n    '] )
   # lineno:84
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.body_leftpane()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.body_leftpane()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:85
@@ -299,7 +298,7 @@ def bd_body() :
   _m.extend( ['\n    '] )
   # lineno:86
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'this.body_centerpane()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'this.body_centerpane()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
@@ -659,7 +658,7 @@ def bd_footer() :
   _m.extend( ['\n        '] )
   # lineno:152
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'blocks.papowered( 100, 10 )', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'blocks.papowered( 100, 10 )', '', globals(), locals()) )
   _m.extend( ['\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -68,20 +67,20 @@ def _toc( level, heads ) :
     # lineno:11
     _m.pushbuf()
     _m.extend( ['<a .level'] )
-    _m.append(_m.evalexprs( 'level', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', 'level', '', globals(), locals()) )
     _m.extend( [' "'] )
-    _m.append(_m.evalexprs( 'href', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', 'href', '', globals(), locals()) )
     _m.extend( ['">'] )
     _m.pushbuf()
     # lineno:11
     _m.extend( [' '] )
-    _m.append(_m.evalexprs( 'text', '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', 'text', '', globals(), locals()) )
     _m.extend( ['\n      '] )
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
     # lineno:12
     _m.extend( [''] )
-    _m.append(_m.evalexprs( "children and _toc( level+1, children ) or ''", '', globals(), locals()) )
+    _m.append(_m.evalexprs( '', "children and _toc( level+1, children ) or ''", '', globals(), locals()) )
     _m.extend( ['\n\n'] )  
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
@@ -101,12 +100,12 @@ def toc( details, heads ) :
   _m.pushbuf()
   # lineno:16
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( 'details', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'details', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:17
   _m.extend( [''] )
-  _m.append(_m.evalexprs( '_toc( 1, heads )', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '_toc( 1, heads )', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
@@ -141,9 +140,9 @@ def papowered( pcount, icount ) :
   _m.pushbuf()
   # lineno:24
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( 'pcount', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'pcount', '', globals(), locals()) )
   _m.extend( [' plugins via '] )
-  _m.append(_m.evalexprs( 'icount', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'icount', '', globals(), locals()) )
   _m.extend( [' interface', '\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')

@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -60,7 +59,7 @@ def body( *args, **kwargs ) :
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:32
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'helloword()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'helloword()', '', globals(), locals()) )
   _m.extend( ['\n'] )
   return _m.popbuftext()
 
@@ -78,12 +77,12 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   b = 'hello'   
   # lineno:10
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'x+y', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'x+y', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:11
   _m.pushbuf()
   _m.extend( ['<head #headid .cls1.'] )
-  _m.append(_m.evalexprs( 'a.strip()', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'a.strip()', '', globals(), locals()) )
   _m.extend( [' "title" {color:red} lang="en" data="hello">'] )
   _m.pushbuf()
   _m.extend( ['\n      '] )
@@ -93,7 +92,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   # lineno:12
   _m.extend( [' hello '] )
-  _m.append(_m.evalexprs( 'a', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
@@ -110,7 +109,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.extend( [' ', '\n        '] )
   # lineno:15
   _m.extend( ['I am the space station '] )
-  _m.append(_m.evalexprs( '"These "', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
   _m.extend( [' seven cameras have a zoom range ', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:16
@@ -119,7 +118,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   _m.pushbuf()
   # lineno:16
   _m.extend( [' of any 12x or more,  '] )
-  _m.append(_m.evalexprs( '20', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '20', '', globals(), locals()) )
   _m.extend( ['  ', '\n      '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:17
@@ -145,7 +144,7 @@ def helloword( x=10, y=20, a='wer', b='ehl' ) :
   # lineno:25
   _m.pushbuf()
   _m.extend( ['<p #'] )
-  _m.append(_m.evalexprs( 'b', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'b', '', globals(), locals()) )
   _m.extend( ['>'] )
   _m.pushbuf()
   # lineno:25

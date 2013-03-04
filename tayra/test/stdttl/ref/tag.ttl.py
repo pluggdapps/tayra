@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -53,7 +52,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:5
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"hello " + str(10) + \' world\'', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"hello " + str(10) + \' world\'', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:6
   _m.pushbuf()
@@ -71,7 +70,7 @@ def body( *args, **kwargs ) :
   # lineno:14
   _m.pushbuf()
   _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
-  _m.append(_m.evalexprs( 'world', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', 'world', '', globals(), locals()) )
   _m.extend( ['}>'] )
   _m.pushbuf()
   _m.extend( ['\n      \n'] )

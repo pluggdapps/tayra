@@ -1,7 +1,6 @@
 import imp
 from   io                   import StringIO
 from   pluggdapps.plugin    import Plugin, implements
-import pluggdapps.utils     as h
 from   tayra                import BaseTTLPlugin
 
 def __traceback_decorator__( frames ):
@@ -53,13 +52,13 @@ def body( *args, **kwargs ) :
   # lineno:2
   _m.pushbuf()
   _m.extend( ['<a #'] )
-  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
   _m.extend( [' .'] )
-  _m.append(_m.evalexprs( "'cls'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'cls'", '', globals(), locals()) )
   _m.extend( ['\n    "http://pluggdapps.com"\n    { '] )
-  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
   _m.extend( [" ' style with line break' } >"] )
   _m.pushbuf()
   # lineno:4

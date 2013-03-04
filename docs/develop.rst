@@ -47,18 +47,18 @@ ITayraTags plugins, where plugins are configured using
       <br>
       Last name  : <inptext :lastname>
 
-uses `inptext` tag implemented by ``TayraHTML5Forms`` plugin, where tokens
-with in the tag definition are parsed and interpreted by plugins and are taken
-into account while generating a corresponding HTML text. You can refer
-:mod:`tayra.tags.forms` module for more information on how to implement a
-:class:`tayra.interfaces.ITayraTags` plugin.
+uses `inptext` tag, a non-standard tag, implemented by ``TayraHTML5Forms``
+plugin, where tokens within the tag definition are parsed and interpreted by
+plugins and are taken into account while generating a corresponding HTML 
+text. You can refer :mod:`tayra.tags.forms` module for more information on
+how to implement a :class:`tayra.interfaces.ITayraTags` plugin.
 
 **:class:`tayra.interfaces.ITayraExpression`**
 
 Expressions can be substituted inside a template file using **${...}** syntax.
 Additionally, evaluated output can be passed to filters using **${... |
 <filters> }** the pipe token, where `filters` is comma separated value of
-filters to be applied in the specified order.
+filters to be applied in specified order.
 
 .. code-block:: ttl
 

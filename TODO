@@ -80,6 +80,23 @@
 
 * Test cases / profiling / code-coverage.
 
+* ``with`` filter block, something like
+
+    :with: foo = 42
+      ${ foo }           ... foo is 42 here
+    :with:
+
+     ... foo is not visible here any longer
+
+* Same template might cater to different geography and hence different
+  language. Provide a framework so that parts of template are translatable
+  based on the language modifier (which mostly comes from HTTP request).
+
+  There are three ways in which this framework be made accessible to template
+  authors,
+    decorators, expression substitution, filterblocks.
+
+
 Errors and warnings :
 ---------------------
 

@@ -394,6 +394,8 @@ Finally, a table of 100 rows and 4 columns is generated using an outer
 variable **i** and an inner variable **j**, which gets updated on every
 iteration of the outer loop.
 
+TODO : Document loop controls like @@pass, @@break here.
+
 Configuration
 -------------
 

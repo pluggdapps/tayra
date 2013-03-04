@@ -16,6 +16,12 @@ from   pluggdapps.plugin    import Plugin, implements, ISettings
 import pluggdapps.utils     as h
 from   pluggdapps.web.interfaces import IHTTPRenderer
 
+import tayra.utils
+
+tmplh = h.Bunch(
+    **{ name : getattr(tayra.utils, name) for name in tayra.utils.h }
+)
+
 class TTLCompiler( Plugin ):
     """Tayra compiler. Implemented as plugin to leverage on pluggdapps
     configuration system. Also implement :class:`IHTTPRenderer`. Creating a
@@ -147,7 +153,7 @@ class TTLCompiler( Plugin ):
         the code object obtained from :meth:`compilettl` method, create a new
         module instance populating it with ``context`` and some standard
         references."""
-        from tayra.runtime import Namespace
+        from   tayra.runtime import Namespace
 
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
@@ -158,6 +164,7 @@ class TTLCompiler( Plugin ):
             'local'       : module,
             'parent'      : None,
             'next'        : None,
+            'h'           : tmplh,
         }
         ctxt.update( context )
         ctxt['_context'] = ctxt

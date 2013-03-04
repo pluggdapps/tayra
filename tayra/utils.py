@@ -4,18 +4,35 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Common library functions and utility functions specific to tayra package.
-"""
+"""Common library functions and utility functions specific to tayra package."""
 
 import re
-from   xml.etree    import ElementTree
+from   xml.etree                import ElementTree
+
+from   pluggdapps.utils.asset   import parse_assetspec, \
+                                       asset_spec_from_abspath, \
+                                       abspath_from_asset_spec
+from   pluggdapps.utils.config  import settingsfor, plugin2sec, sec2plugin, \
+                                       ConfigDict
+from   pluggdapps.utils.jsonlib import json_encode, json_decode
+from   pluggdapps.utils.lib     import parsecsv, parsecsvlines, asbool, \
+                                       asint, asfloat, docstr, reseed_random, \
+                                       mergedict, takewhile, dropwhile, \
+                                       flatten
+
+h = [ 'parse_assetspec', 'asset_spec_from_abspath', 'abspath_from_asset_spec',
+      'settingsfor', 'plugin2sec', 'sec2plugin', 'json_encode', 'json_decode',
+      'parsecsv', 'parsecsvlines', 'asbool', 'asint', 'asfloat', 'docstr',
+      'reseed_random', 'mergedict', 'takewhile', 'dropwhile', 'flatten', 
+      'ConfigDict' ]
 
 def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
-    """TBD : Convert eazytext content either supplied as a file (containing the text)
-    or as raw-text, into html.
+    """TBD : Convert eazytext content either supplied as a file (containing
+    the text) or as raw-text, into html.
 
     ``etxconfig``,
-        Configuration parameters for eazytext. A deep-copy of this will be used.
+        configuration parameters for eazytext. A deep-copy of this will be
+        used.
     ``etxloc``,
         file location, either in asset specification format, or absolute path.
     ``etxtext``

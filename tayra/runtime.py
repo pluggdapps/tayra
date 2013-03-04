@@ -82,7 +82,7 @@ Other than this every template script will have the following standard imports
     from   tayra                import BaseTTLPlugin
 """
 
-import re, imp
+import re
 
 import pluggdapps.utils     as h
 from   pluggdapps.plugin    import pluginname

@@ -1,0 +1,10 @@
+## File name : eg1.ttl
+
+@doctype html
+
+<html>
+  <head>
+  <body>
+    ${ h.parsecsv( 'one, two, three' ) }
+    ${ h.parsecsvlines( 'one, \\n two, three' ) }
+    ${ dir(h) }

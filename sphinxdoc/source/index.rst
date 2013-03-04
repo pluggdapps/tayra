@@ -14,6 +14,7 @@ Contents:
    README
    gettingstarted
    tutorial
+   h
    directives
    filter_blocks
    functions

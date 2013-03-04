@@ -9,23 +9,6 @@
 import re
 from   xml.etree                import ElementTree
 
-from   pluggdapps.utils.asset   import parse_assetspec, \
-                                       asset_spec_from_abspath, \
-                                       abspath_from_asset_spec
-from   pluggdapps.utils.config  import settingsfor, plugin2sec, sec2plugin, \
-                                       ConfigDict
-from   pluggdapps.utils.jsonlib import json_encode, json_decode
-from   pluggdapps.utils.lib     import parsecsv, parsecsvlines, asbool, \
-                                       asint, asfloat, docstr, reseed_random, \
-                                       mergedict, takewhile, dropwhile, \
-                                       flatten
-
-h = [ 'parse_assetspec', 'asset_spec_from_abspath', 'abspath_from_asset_spec',
-      'settingsfor', 'plugin2sec', 'sec2plugin', 'json_encode', 'json_decode',
-      'parsecsv', 'parsecsvlines', 'asbool', 'asint', 'asfloat', 'docstr',
-      'reseed_random', 'mergedict', 'takewhile', 'dropwhile', 'flatten', 
-      'ConfigDict' ]
-
 def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
     """TBD : Convert eazytext content either supplied as a file (containing
     the text) or as raw-text, into html.

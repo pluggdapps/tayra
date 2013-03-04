@@ -44,7 +44,7 @@ syn region  string          contained start=+\z(['"]\)+ end="\z1"
 syn match   commentText     contained ".+"
 syn region  htmlComment     start=+<!--+  end=+-->+ keepend
                             \ contains=commentText,ttlTodo
-syn match   ttlComment      +^##.*$+ contains=ttlTodo,pythonTodo
+syn match   ttlComment      +^[ \t]*##.*$+ contains=ttlTodo,pythonTodo
 
 " Prolog
 syn match   prologPrefix    contained "@"
@@ -62,9 +62,12 @@ if main_syntax != 'python'
 endif
 
 " Expression
-syn match   pythonOps       contained "\${}"
-syn region  pythonExprs     start="[^\\]\${" end="}" skip="\\\r\|\\\n\|\\}"
-                            \ keepend contains=pythonOps,ttlEscape,@Python
+syn match   pythonOps       contained "\${\|}"
+syn keyword exprkeys        contained evalpy py
+syn region  pythonExprs     start="[^\\]\${" end="}" 
+                            \ skip="\\\r\|\\\n\|\\}"
+                            \ keepend contains=pythonOps,ttlEscape,exprkeys,
+                            \ @Python
 
 " Tagline
 syn keyword ttlTagName      contained address applet area a base basefont
@@ -147,6 +150,7 @@ endif
 TTLHiLink ttlEscape         Special
 TTLHiLink ttlBraces         Special
 TTLHiLink pythonOps         Special
+TTLHiLink exprkeys          ModeMsg
 TTLHiLink tokenSpecial      Comment
 TTLHiLink string            String
 TTLHiLink attr              Comment

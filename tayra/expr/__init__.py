@@ -5,6 +5,7 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 """Package directory contains plugins implementing 
-:class:`tayra.interfaces.ITayraEscapeFilter` interface specification."""
+:class:`tayra.interfaces.ITayraExpression` interface specification."""
 
-import tayra.escfilters.common
+import tayra.expr.defaultpy
+import tayra.expr.evalpy

@@ -133,7 +133,7 @@ class TayraTags( Plugin ):
         
         This method is expected to be overriden by the deriving plugin
         class, only for undefined template tags this method will be called,
-        after trying with other plugins in the list of ``use_tag_plugins``."""
+        after trying with other plugins in the list of ``tag.plugins``."""
         attrs, remtoks = self.parse_specs( tokens, styles, attributes )
         l = len(content) - len(content.rstrip())
         content, nl = (content[:-l], content[-l:]) if l else (content, '')

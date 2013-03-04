@@ -1,5 +1,13 @@
+@@l = [1,2,3]
+
 <div> ${ "hello עברית" + str([ str(10) ]) + ' world' }
   <a #${'idname'} .${'cls' 'name'} 
-     "${"http://" 'google.com'}" 
+     "${'http://' 'google.com'}" 
      { ${'color : ' } ${ "red;" } }
-     ${"title"}="${"sun is " " shining"} brightly">
+     ${"title"}="${'sun is ' ' shining'} brightly">
+
+  ## Evaluating with expression extension
+  ${-evalpy l.append(10)}
+  ${-py l}
+  ${-evalpy l.pop(0)}
+  ${l}

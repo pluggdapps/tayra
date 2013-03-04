@@ -88,8 +88,7 @@ import pluggdapps.utils     as h
 from   pluggdapps.plugin    import pluginname
 
 from   tayra.lexer      import TTLLexer
-from   tayra.interfaces import ITayraTags, ITayraEscapeFilter, \
-                               ITayraFilterBlock
+from   tayra.interfaces import ITayraTags, ITayraExpression, ITayraFilterBlock
 
 __traceback_hide__ = True
 
@@ -108,16 +107,17 @@ class StackMachine( object ) :
     def __init__( self, compiler ):
         self.compiler = compiler
         self.encoding = compiler.encoding
-        self.tagplugins = [
-            compiler.query_plugin( ITayraTags, name )
-            for name in compiler['use_tag_plugins']
-        ]
-        if 'TayraTags' not in compiler['use_tag_plugins'] :
-            self.tagplugins.append( compiler.query_plugin( ITayraTags, name ))
-        self.escfilters = [
-            compiler.query_plugin( ITayraEscapeFilter, name ) 
-            for name in compiler['escape_filters']
-        ]
+        self.tagplugins = [ compiler.query_plugin( ITayraTags, name )
+                            for name in compiler['tag.plugins'] ]
+        self.tagplugins.append(
+                compiler.query_plugin( ITayraTags, pluginname('TayraTags') ))
+
+        self.exprplugins = {
+            pluginname(p) : p
+            for p in compiler.query_plugins( ITayraExpression )
+        }
+        self.exprdefault = compiler.query_plugin( 
+                            ITayraExpression, compiler['expression.default'] )
         self.filterblocks = compiler.query_plugins( ITayraFilterBlock )
         self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
 
@@ -212,24 +212,30 @@ class StackMachine( object ) :
         else :
             raise Exception("Unable to handle tag %r" % tagname)
 
-    def evalexprs( self, text, filters, globals_, locals_ ) :
+    def evalexprs( self, name, text, filters, globals_, locals_ ) :
         """Evaluate expression ``text`` in ``globals_`` and ``locals_``
-        contenxt. Convert the resulting object to string, pipe them to the
-        list of filters specified by ``filters``. ``filters`` is comma
-        separated value of escape filters to be applied on the output string.
+        context using plugin prefix in ``text`` or using the
+        TTLCompiler['expression.default'] plugin. Convert the resulting 
+        object to string, pipe them to the list of filters specified by 
+        ``filters``. ``filters`` is comma separated value of escape filters 
+        to be applied on the output string.
         """
-        out = str( eval( text, globals_, locals_ ))
+        exprp = self.exprplugins[name] if name else self.exprdefault
+        out = exprp.eval( self, text, globals_, locals_ )
         if not filters : return out
 
         filters = h.parsecsv( filters )
-        if 'n' in filters : return ou
+        if 'n' in filters : return out
 
+        # TODO : if exprdefault and exprp are same plugin, we might end up
+        # calling it twice. Try to improve the performance.
         for f in filters :
-            for p in self.escfilters :
-                out1 = p.filter( self, f, out )
-                if out1 != None : 
-                    out = out1
-                    break
+            out1 = exprp.filter( self, f, out )
+            if out1 == None :
+                out1 = self.exprdefault.filter( self, f, out )
+            if out1 != None : 
+                out = out1
+                break
         return out
 
     def inherit( self, ttlloc, childglobals ):

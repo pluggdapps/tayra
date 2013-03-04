@@ -4,29 +4,29 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Proviles common set of escape filters for expression substition."""
+"""Provides default expression evaluated and a common set of filtering
+methods."""
 
 import re, urllib.parse, html
 
 from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
-from   tayra.interfaces     import ITayraEscapeFilter
+from   tayra.interfaces     import ITayraExpression
 
-class TayraEscFilterCommon( Plugin ):
-    """Plugin supplies escape filtering like url-encode, xml-encode, 
+class TayraExpressionPy( Plugin ):
+    """Plugin evaluates python expression, converts the result into
+    string and supplies escape filtering like url-encode, xml-encode, 
     html-encode, stripping whitespaces on expression substitution."""
 
-    implements( ITayraEscapeFilter )
+    implements( ITayraExpression )
 
-    xmlescapes = {
-        '&' : '&amp;',
-        '>' : '&gt;', 
-        '<' : '&lt;', 
-        '"' : '&#34;',
-        "'" : '&#39;',
-    }
+    def eval( self, mach, text, globals_, locals_ ):
+        """:meth:`tayra.interfaces.ITayraExpression.eval` interface 
+        method."""
+        return str( eval( text, globals_, locals_ ))
+
     def filter( self, mach, name, text ):
-        """:meth:`tayra.interfaces.ITayraEscapeFilter.filter` interface 
+        """:meth:`tayra.interfaces.ITayraExpression.filter` interface 
         method."""
         handler = getattr( self, name, self.default )
         return handler( mach, text )
@@ -35,6 +35,13 @@ class TayraEscFilterCommon( Plugin ):
         """Assume text as url and quote using urllib.parse.quote()"""
         return urllib.parse.quote( text )
 
+    xmlescapes = {
+        '&' : '&amp;',
+        '>' : '&gt;', 
+        '<' : '&lt;', 
+        '"' : '&#34;',
+        "'" : '&#39;',
+    }
     def x( self, mach, text ):
         """Assume text as XML, and apply escape encoding."""
         return re.sub( r'([&<"\'>])', 
@@ -68,4 +75,4 @@ class TayraEscFilterCommon( Plugin ):
         return sett
 
 _default_settings = h.ConfigDict()
-_default_settings.__doc__ = TayraEscFilterCommon.__doc__
+_default_settings.__doc__ = TayraExpressionPy.__doc__

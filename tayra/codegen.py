@@ -171,14 +171,17 @@ class InstrGen( object ):
     def evalexprs( self, s ):
         """Evaluate a string as python expression and append the result into
         the stack buffer."""
-        try    : code, filts = s.split('|', 1)
-        except : code, filts = s, ''
-        code, filts = code.strip(), filts.strip()
-        if code :
+        name, s = s.split(' ',1) if s.startswith('-') else ('', s)
+        name = ('tayraexpression' + name[1:]) if name else name
+        try    : text, filts = s.split('|', 1)
+        except : text, filts = s, ''
+        text, filts = text.strip(), filts.strip()
+        if text :
             self.flushtext()
-            self.outline( 
-                '_m.append(_m.evalexprs( %r, %r, globals(), locals()) )' % (
-                        code, filts ))
+            self.outline(
+            '_m.append(_m.evalexprs( %r, %r, %r, globals(), locals()) )' % (
+                        name, text, filts )
+            )
 
     def pushbuf( self ):
         """Create a new buffer in the stack. The newly created buffer will

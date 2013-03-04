@@ -46,33 +46,51 @@ def __traceback_decorator__( frames ):
 def body( *args, **kwargs ) :  
   _m.pushbuf()
   # lineno:1
+  l = [1,2,3]
+  # lineno:3
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
-  # lineno:1
+  # lineno:3
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"hello עברית" + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"hello עברית" + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
   _m.extend( ['\n  '] )
-  # lineno:2
+  # lineno:4
   _m.pushbuf()
   _m.extend( ['<a #'] )
-  _m.append(_m.evalexprs( "'idname'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
   _m.extend( [' .'] )
-  _m.append(_m.evalexprs( "'cls' 'name'", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'cls' 'name'", '', globals(), locals()) )
   _m.extend( [' \n     "'] )
-  _m.append(_m.evalexprs( '"http://" \'google.com\'', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'http://' 'google.com'", '', globals(), locals()) )
   _m.extend( ['" \n     { '] )
-  _m.append(_m.evalexprs( "'color : '", '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
   _m.extend( [' '] )
-  _m.append(_m.evalexprs( '"red;"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
   _m.extend( [' }\n     '] )
-  _m.append(_m.evalexprs( '"title"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', '"title"', '', globals(), locals()) )
   _m.extend( ['="'] )
-  _m.append(_m.evalexprs( '"sun is " " shining"', '', globals(), locals()) )
+  _m.append(_m.evalexprs( '', "'sun is ' ' shining'", '', globals(), locals()) )
   _m.extend( [' brightly">'] )
   _m.pushbuf()
-  _m.extend( ['\n'] )
+  _m.extend( ['\n\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:10
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( 'tayraexpressionevalpy', 'l.append(10)', '', globals(), locals()) )
+  _m.extend( ['\n  '] )
+  # lineno:11
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( 'tayraexpressionpy', 'l', '', globals(), locals()) )
+  _m.extend( ['\n  '] )
+  # lineno:12
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( 'tayraexpressionevalpy', 'l.pop(0)', '', globals(), locals()) )
+  _m.extend( ['\n  '] )
+  # lineno:13
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( '', 'l', '', globals(), locals()) )
+  _m.extend( ['\n'] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 

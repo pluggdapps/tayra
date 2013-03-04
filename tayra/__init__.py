@@ -120,4 +120,4 @@ import tayra.decorators     # Implementation of  TTL function decorators
 import tayra.interfaces     # Import interfaces specified by tayra project.
 import tayra.tags           # Import plugins implementing ITayraTags
 import tayra.filterblocks   # Import plugins implementing ITayraFilterBlock
-import tayra.escfilters     # Import plugins implementing ITayraEscapeFilter
+import tayra.expr           # Import plugins implementing ITayraExpression

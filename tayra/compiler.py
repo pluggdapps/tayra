@@ -226,8 +226,7 @@ class TTLCompiler( Plugin ):
         sett['yacc_debug'] = h.asint( sett['yacc_debug'] )
         sett['strict_undefined'] = h.asbool( sett['strict_undefined'] )
         sett['directories'] = h.parsecsvlines( sett['directories'] )
-        sett['escape_filters'] = h.parsecsvlines( sett['escape_filters'] )
-        sett['use_tag_plugins'] = h.parsecsvlines( sett['use_tag_plugins'] )
+        sett['tag.plugins'] = h.parsecsvlines( sett['tag.plugins'] )
         sett['beautify_html'] = h.asbool( sett['beautify_html'] )
         sett['memcache'] = h.asbool( sett['memcache'] )
         return sett
@@ -314,23 +313,24 @@ _defaultsettings['nocache'] = {
     'help'    : "If set to True, will not persist the intermediate python "
                 "file."
 }
-_defaultsettings['escape_filters']          = {
-    'default' : 'TayraEscFilterCommon',
-    'types'   : ('csv', list),
-    'help'    : "Comma separated list of default escape filters to be applied "
-                "during expression substitution."
-}
-_defaultsettings['input_encoding']          = {
-    'default' : 'utf-8-sig',
+_defaultsettings['expression.default']          = {
+    'default' : 'TayraExpressionPy',
     'types'   : (str,),
-    'help'    : "Default input encoding for .ttl file."
+    'help'    : "Default plugin to use for evaluating text in expression "
+                "substitution. This plugin will be used if filter() call"
+                "fails in other ITayraExpression plugins."
 }
-_defaultsettings['use_tag_plugins']           = {
+_defaultsettings['tag.plugins']           = {
     'default' : 'TayraHTML5Forms, TayraHTML5, TayraTags',
     'types'   : ('csv', list),
     'help'    : "Comma separated list of tag plugins to use. Plugins in the "
                 "specified order will be invoked to handle the template tags, "
                 "so the order of the plugin is important."
+}
+_defaultsettings['input_encoding']          = {
+    'default' : 'utf-8-sig',
+    'types'   : (str,),
+    'help'    : "Default input encoding for .ttl file."
 }
 _defaultsettings['beautify_html']                = {
     'default' : True,

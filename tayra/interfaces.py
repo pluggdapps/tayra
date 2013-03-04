@@ -14,7 +14,7 @@ implementation.
 
 from pluggdapps.plugin import Interface
 
-__all__ = [ 'ITayraTags', 'ITayraEscapeFilter', 'ITayraFilterBlock' ]
+__all__ = [ 'ITayraTags', 'ITayraExpression', 'ITayraFilterBlock' ]
 
 class ITayraTags( Interface ):
     """Interface specification to translate template tags to HTML tags.
@@ -48,13 +48,34 @@ class ITayraTags( Interface ):
         """
 
 
-class ITayraEscapeFilter( Interface ):
-    """Interface specification for escape filtering results from expression 
-    substitution.
+class ITayraExpression( Interface ):
+    """Interface specification to handle expressions within template script.
+    IMPORTANT : Plugins implementing this interface should have its name
+    prefixed with 'TayraExpression'. For instance a plugin implementing python
+    expression evaluation will look like, ``TayraExpressionPy``, and in the
+    template script this plugin can be referred as,::
+    
+            ${-py <python-expression>}
     """
+
+    def eval( mach, text, globals_, locals_ ):
+        """Evaluate ``text`` expression in the context of ``globals_`` and
+        ``locals_``. Return evaluated expression converted to a string. This
+        string will be substituted in the place where the expression is
+        refered.
+
+        ``mach``,
+            is stack-machine instance.
+        """
+
     def filter( mach, name, text ):
-        """Apply the filtering logic to the text string and return processed
-        text.
+        """Inside the template script, filtering is applied on the expression
+        result using the following syntax,::
+
+            ${ ... | <filters> }
+
+        Stack machine ``mach`` will parse <filter> spec and call this method
+        along with evaluated text.
 
         ``mach``,
             is stack-machine instance.
@@ -64,6 +85,9 @@ class ITayraEscapeFilter( Interface ):
 
         ``text``
             text, result of expression substitution, to be filtered.
+
+        If filter ``name`` is successfully applied return filterted text, else
+        return None.
         """
 
 

@@ -45,7 +45,6 @@ sphinx-compile :
 	cp docs/commandline.rst sphinxdoc/source
 	cp docs/develop.rst sphinxdoc/source
 	cp docs/directives.rst sphinxdoc/source
-	cp docs/extendingtayra.rst sphinxdoc/source
 	cp docs/filter_blocks.rst sphinxdoc/source
 	cp docs/functions.rst sphinxdoc/source
 	cp docs/gettingstarted.rst sphinxdoc/source
@@ -53,7 +52,6 @@ sphinx-compile :
 	cp docs/template_layout.rst sphinxdoc/source
 	cp docs/template_libraries.rst sphinxdoc/source
 	cp docs/template_plugins.rst sphinxdoc/source
-	cp docs/tutorial.rst sphinxdoc/source
 	rm -rf sphinxdoc/build/html/
 	make -C sphinxdoc html
 

@@ -4,8 +4,8 @@
 # file 'LICENSE', which is part of this source code package.
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
-"""Provides default expression evaluated and a common set of filtering
-methods."""
+"""Provides default expression evaluator and a common set of filtering
+methods. Evaluates python expression."""
 
 import re, urllib.parse, html
 

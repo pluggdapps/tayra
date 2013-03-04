@@ -53,9 +53,9 @@ into account while generating a corresponding HTML text. You can refer
 :mod:`tayra.tags.forms` module for more information on how to implement a
 :class:`tayra.interfaces.ITayraTags` plugin.
 
-**:class:`tayra.interfaces.ITayraEscapeFilter`**
+**:class:`tayra.interfaces.ITayraExpression`**
 
-Expressions can be substituted inside a template file using **${...}** tokens.
+Expressions can be substituted inside a template file using **${...}** syntax.
 Additionally, evaluated output can be passed to filters using **${... |
 <filters> }** the pipe token, where `filters` is comma separated value of
 filters to be applied in the specified order.
@@ -66,10 +66,34 @@ filters to be applied in the specified order.
       <a .crumbname "${crumbsurl or '' | u }"> ${crumbsname}
       <ul .menu>
 
-By defining a plugin implementing :class:`tayra.interfaces.ITayraEscapeFilter`
-interface and configuring the same in ``TTLCompiler['escape_filters']``
-parameter settings, it is possible to extend escape filtering for expression
-substitution.
+Behind the scenes, expression substitution is handled by plugins implementing
+implementing :class:`tayra.interfaces.ITayraExpression` interface. While
+coding an expression inside a template script it is possible to target the
+expression for specific plugin, like,
+
+.. code-block:: ttl
+
+    @@l = [1,2,3]
+
+    ## Evaluating with expression extension
+    <div> ${-evalpy l.append(10)}
+    <div> ${-py l}
+    <div> ${-evalpy l.pop(0)}
+    <div> ${l}
+
+where, ``-evalpy`` and ``-py`` refers to plugin name. For instance ``-evalpy``
+will refer to a plugin whose class name is ``TayraExpressionEvalPy``, note the
+`TayraExpression` prefix in the class name. Similarly ``-py`` will refer to
+plugin whose class name is ``TayraExpressionPy``. The difference by `-eval`
+and `-py` is that in the former case expression is only evaluated in the
+global and local scope and in the later case expression is both evaluated and
+substituted.
+
+If an expression is coded without a target plugin then default plugin will be
+picked based on the configuration parameter
+``TTLCompiler['expression.default']``. To learn more about expression
+substitution and filtering refer to :class:`tayra.interfaces.ITayraExpression`
+interface specification.
 
 **:class:`tayra.interfaces.ITayraFilterBlock`**
 

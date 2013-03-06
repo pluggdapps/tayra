@@ -28,9 +28,9 @@ Glossary
     through directives.
 
   escape filtering
-    Before substituting an expression result in the final output, the result
-    is string-ified and optionally piped through filter handlers. Typically
-    these filters will perform actions like html encoding, url encoding etc ...
+    Before substituting an evaluated expressio they are string-ified and 
+    optionally piped through filter handlers. Typically these filters will 
+    perform actions like html encoding, url encoding etc ...
 
   expressions
     A key requirement in templated HTML page is to be able to substitute 
@@ -61,11 +61,21 @@ Glossary
     deep should start with 6 blank-spaces. The indentation syntax is followed
     very strictly unless otherwise explicitly mentioned.
 
+  interface
+    Plugin interface, follows pluggdapps component architecture. Interfaces
+    are called at specific points by core language, some are called during
+    compile time, others are called at run-time. Plugins can implement one or
+    more interfaces to extend the language definition.
+
   local context
     Inside templates, functions and interface methods can create a local
     context of its own during execution. Even the root level template text
     that is not part of any function or interface-method will be processed
     under an implicitly defined function called **body()**.
+
+  plugin
+    Plugins are pluggdapps components implementing one or more interfaces.
+    They are the only means available to extend the language.
 
   specifiers
     Specifiers are tokens, strings and other structures that can be included

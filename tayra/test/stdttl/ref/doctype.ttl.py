@@ -53,33 +53,34 @@ def body( z=10, *args, **kwargs ) :
   _m.extend( ['<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'] )
   _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">\n'] )
   _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">\n'] )
-  _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n\n'] )
-  # lineno:14
+  _m.extend( ['<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">\n'] )
+  _m.extend( ['<!DOCTYPE html>\n\n'] )
+  # lineno:15
   _m.pushbuf()
   _m.extend( ['<html #std1 .testcase.sample \n      { color: red; font-size : '] )
   _m.append(_m.evalexprs( '', 'z*2', '', globals(), locals()) )
   _m.extend( ['px } title="hello world">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  # lineno:16
+  # lineno:17
   _m.pushbuf()
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  # lineno:17
+  # lineno:18
   _m.pushbuf()
   _m.extend( ['<body>'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
-  # lineno:18
+  # lineno:19
   _m.pushbuf()
   _m.extend( ['<abbr "World Health Organization">'] )
   _m.pushbuf()
-  # lineno:18
+  # lineno:19
   _m.extend( [' WHO', '\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  # lineno:19
+  # lineno:20
   _m.pushbuf()
   _m.extend( ['<button #id_ reset disabled makefriend "button value">'] )
   _m.pushbuf()

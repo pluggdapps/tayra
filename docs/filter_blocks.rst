@@ -17,7 +17,7 @@ similar to the opening line.
 
 Here is an example,
 
-.. code-block:: html
+.. code-block:: ttl
 
     :py:
       a = 'empty'
@@ -36,9 +36,9 @@ Here is an example,
       <div> hello world
 
 The above example demonstrates a filter-block called **py** implemented by an
-ITayraFilterBlock plugin called **py**. Filter blocks are handled by plugins
-and the correct plugin to handle the filter block is choosed based on the
-opening line's filter-block name.
+:class:`tayra.interfaces.ITayraFilterBlock` plugin called **py**. Filter
+blocks are handled by plugins and the correct plugin to handle the filter
+block is choosen based on the opening line's filter-block name.
 
 Plugins handling filter-blocks, directly take part in compilation phases of the
 template script and can even generate stack machine instructions

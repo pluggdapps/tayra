@@ -1,61 +1,68 @@
-.. tayra documentation master file, created by
-   sphinx-quickstart on Thu Jan  3 17:30:27 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Tayra is a full-featured abstract markup language to template web documents.
+It is primarily inspired from 
+`mako-templates <http://www.makotemplates.org/>`_ and
+`HAML <http://haml-lang.com/>`_ (especially the indentation based
+markup definitions). Probably it is the only templating language that allow
+developers to build and distribute their templates as plugins, not to mention
+the fact that tayra's implementation itself is heavily based on plugins.
 
-Welcome to tayra's documentation!
-=================================
+Example,
 
-Contents:
+.. code-block:: ttl
 
-.. toctree::
-   :maxdepth: 1
+    @doctype html
 
-   README
-   gettingstarted
-   tutorial
-   h
-   directives
-   filter_blocks
-   functions
-   template_layout
-   template_libraries
-   template_plugins
-   develop
-   glossary
-   CHANGELOG
+    <html>
+      <head>
 
-Indices and tables
-==================
+      <body>
+        <div>
+          <p> <span .italics> hello world
+          <p> counting to hundred, ${[ x for x in range(1, 100) ]}
+
+            
+Features
+--------
+
+- concise and beautiful syntax.
+- based on pluggdapps component architecture.
+- leverages on pluggdapps' configuration system.
+- full programmability available via,
+
+  - expression substitution with optional escape encoding.
+  - control-blocks like if-elif-else.
+  - looping contructs like for / while.
+  - python statements.
+
+- template abstraction using function blocks, with its own local scope.
+- import other template scripts into the local namespace and access their
+  functions
+- template inheritance for re-usable web-layouts.
+- extensible filter blocks.
+- expression substitution can be extended by plugins to interpret different
+  types of expression.
+- unique ability to create template plugins, distribute them as separate
+  package.
+- easy to debug. when used with pluggdapps' ``CatchAndDebug`` plugin, exception
+  tracebacks are tweaked to directly point to faulting line in the
+  template.
+- pluggable tag handlers for custom tag elements.
+- compiles down to optimal python code and optionally memcached. Also possible
+  to persist the intermediate python code to avoid re-compilation in case of
+  server restart.
+- works with python 3.x.
+- has full unicode support.
+- lexer for generating syntax-highlighted web documents using Pygments.
+- vim plugin for template scripts.
+- **License:** `GPLv3 license <http://www.gnu.org/licenses/>`.
+- **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
+- **Status:** Core design stable. Not expected to change.
+
+
+.. include:: contents.rst.inc
+
+If you can't find the information you're looking for, have a look at the
+index or try to find it using the search function:
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
-* :ref:`glossary`
-
-
-API Listing
------------
-
-.. toctree::
-    :maxdepth: 1
-
-    modules/tayra
-    modules/compiler
-    modules/interfaces
-    modules/lexer
-    modules/parser
-    modules/ast
-    modules/codegen
-    modules/runtime
-    modules/decorators
-    modules/expr
-    modules/expr.defaultpy
-    modules/expr.evalpy
-    modules/filterblocks
-    modules/filterblocks.pycode
-    modules/tags
-    modules/tags.forms
-    modules/tags.html
-    modules/tyr
-    modules/utils

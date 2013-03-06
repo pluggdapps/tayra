@@ -2,20 +2,20 @@ Template layouts
 ================
 
 HTML designers normally template their pages based on layouts. A layout 
-defines base structure of all the pages in the site or web-application
+defines base structure for all pages in the site / web-application
 and each page is composed based on one or more templates stacked on top of
 each other.
 
 For example, pages can have its layout as header, footer, and
-left / right panes provided by a base template called `base.ttl`. Subsequently,
-templates stacked on top of the base template defines more detailed structure
-for each page.
+left / right panes, defined by a base template called `base.ttl`. Subsequently,
+templates stacked on top of the base template can add more structure / content
+to each element of the layout.
 
 In Tayra, templates can be stacked on a base template by inheriting them, which
 enables designers to abstract and organize their templates in more interesting
 ways. For example,
 
-.. code-block:: html
+.. code-block:: ttl
 
     <!-- file-name base.ttl -->
 
@@ -27,7 +27,7 @@ ways. For example,
         ${this.hd_links()}
         ${this.hd_styles()}
         ${this.hd_script()}
-      <body.pluggdsite>
+      <body .pluggdsite>
         ${this.bd_header()}
         ${this.bd_body()}
         ${this.bd_footer()}
@@ -53,9 +53,9 @@ functions like, `hd_title`, `hd_meta`, `hd_links`, `hd_styles`, `hd_script`,
 Make a note that if these functions are not called on ``this`` object, then
 it always refer to the template-local functions. If, on the other hand these
 functions are refered on ``this`` object then, it follows the inheritance
-chain. Let use see an example template inheriting our base.ttl,
+chain. Let use see an example template inheriting our `base.ttl`,
 
-.. code-block:: html
+.. code-block:: ttl
 
     <!-- file-name page.ttl -->
 
@@ -87,7 +87,6 @@ chain. Let use see an example template inheriting our base.ttl,
               <span .dsrch.pointer.ralign>couch
               <span .dsrch.pointer.ralign>tayra
               <span .dsrch.pointer.ralign>program
-        <ul>
 
 **@inherit directive**
 
@@ -100,11 +99,11 @@ inheriting template can override functions defined in the base template.
 The deriving template now implements all the layout functions referred in the
 base templated. If the deriving template does not have anything to fill in
 particular portion of the layout, then it may not implement the
-corresponding function, for instance if page.ttl is not interested in filling
+corresponding function, for instance if `page.ttl` is not interested in filling
 up meta-information for the page, it can skip implementing ``hd_meta`` layout
 function.
 
-The inheritance chain for page.ttl can be viewed as, ::
+The inheritance chain for `page.ttl` can be viewed as, ::
   
     base.ttl ---> page.ttl
     
@@ -113,7 +112,7 @@ The inheritance chain for page.ttl can be viewed as, ::
 ``this`` object is more or less equivalend to python's ``self`` object that
 gets implicitly passed to every object method. When a template-script is part
 of an inheritance chaing, ``this`` will always refer to the last, or the
-bottom-most, template-script, which is page.ttl. When a template-script is not
+bottom-most, template-script which is `page.ttl`. When a template-script is not
 part of an inheritance chain ``this`` is same as ``local``. 
 
 When ever an attribute is referred on ``this`` object, it will walk through
@@ -150,3 +149,6 @@ that defines the referred attribute.
 All names ``this``, ``local``, ``parent``, ``next`` refer to the same type of
 object - template module. Having a reference to template-module allows
 developers to access global variables and functions defined in the module.
+
+For a more upto date documentation on template context refer to
+:mod:`tayra.runtime` module.

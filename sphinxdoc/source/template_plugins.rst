@@ -6,21 +6,29 @@ defined as python class in python modules. Template plugins are
 template-scripts implementing one or more interface specifications. They can
 do so by first declaring it using **@implement** directive, like,
 
-.. code-block:: python
+.. code-block:: ttl
 
-    @implement tayra.interfaces:ITestInterface as testinterface;
+    @doctype html
+    @implement tayrakit.interfaces:ITTLFooter as PluggdappsFooter
 
-    @interface ITestInterface.render( args, kwargs ) :
-      <div> interface successfully invoked
+    @interface ITTLFooter.render( self, counts ):
+      <div .pluggdappsfooter>
+        <div>
+          powered by pluggdapps, 
+          <span {font-style : italic}> ${counts['plugins']} plugins
+          implenting
+          <span {font-style : italic}> ${counts['interfaces']} interfaces
 
-In the above example, ``tayra.interfaces`` is a python module containing
-``ITestInterface`` specification. An interface specification is a python class
-deriving from pluggdapps' :class:`Interface` base class and documents a
-collection of attributes and methods, which are to be implemented by template
-plugins.
+
+
+In the above example, ``tayrakit.interfaces`` is a python module containing
+``ITTLFooter`` specification. An interface specification is a python class
+deriving from pluggdapps' :class:`pluggdapps.plugin.Interface` base class and
+documents a collection of attributes and methods, which are to be implemented
+by template plugins.
 
 **@implement** directive declares that this ttl template implements
-``ITestInterface`` defining methods specified in them.
+``ITTLFooter`` defining methods specified in them.
 
 Interface functions
 -------------------
@@ -41,21 +49,25 @@ abstracts an interface method defined in the statement,
 
 Following example illustrates how to use a plugin,
 
-.. code-block:: html
+.. code-block:: ttl
     
-    @from tayra.interface import ITestInterface
-
-    @@ obj = _compiler.query_plugin( ITestInterface, 'testinterface' )
+    @doctype html
+    @from tayrakit.interfaces import ITTLFooter
 
     <html>
       <head>
+        ...
       <body>
-        ${ obj.render() }
+        ...
+        <div .footer>
+          @@ footer = _compiler.query_plugin( ITTLFooter, 'PluggdappsFooter' )
+          @@ counts = { 'interfaces' : interfaces_no, 'plugins' : plugins_no }
+          ${ footer.render( counts ) }
 
 - First import the interface class in which we are interested in.
-- Use ``_compiler`` object, implicitly available in the template's context and
-  query for the plugin implementing the interface-spec. Here we are interested
-  for in plugin by name `testinterface` implementing `ITestInterface`.
+- Use ``_compiler`` object, implicitly available in the template's context, to
+  query for plugin implementing the interface-spec. Here we are interested
+  for in plugin by name `PluggdappsFooter` implementing `ITTLFooter`.
 - Just use the queried plugin like any other python object inside expression
   substitution.
 
@@ -67,9 +79,9 @@ Note that Interfaces and Plugins are expected to be loaded during platform
 boot time.
 
 Since template files are not python files and they had to be
-compile to template-modules before be intepreted as python code, developers 
-can use pluggdapps's package() entry point to dynamically compile and load
-their template plugins. Let us look at an example.
+compile to template-modules, developers can use pluggdapps's package() entry
+point to dynamically compile and load their template plugins. Let us look at
+an example.
 
 Let us say that we have started a project to create web UI took-kit and
 has choosed to implement UI elements as template-plugins, under the project
@@ -92,7 +104,7 @@ our setup.py file like,
         ]
     },
 
-And inside out toolkit/__init__.py package file, we define out entry point as,
+And inside our toolkit/__init__.py package file, we define our entry point as,
 
 .. code-block:: python
 
@@ -116,5 +128,7 @@ And inside out toolkit/__init__.py package file, we define out entry point as,
         loadttls( pa, template_plugins, { 'debug' : True } )
         return {}
 
-This will make sure that template-plugins are automatically loaded during
-platform boot-up.
+This will make sure that template-plugins are automatically loaded by
+``loadttls`` function during platform boot-up, which is when package() entry
+point is called.
+

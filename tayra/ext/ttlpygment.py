@@ -26,7 +26,7 @@ class TemplateLexer( RegexLexer ):
     #-- RegEx patterns
     text      = r'[^\s]+'
     ws        = r'\s+'
-    exprsubst = r'(?<!\\)(\$\{)([^}\\]*(?:\\.[^}\\]*)*)(\})'
+    exprsubst = r'(?<!\\)(\$\{)(-\S*)?([^}\\]*(?:\\.[^}\\]*)*)(\})'
 
     # Directive patterns
     diropen  = r'(@)(doctype|body|import|from|inherit|implement)'
@@ -49,26 +49,28 @@ class TemplateLexer( RegexLexer ):
     openfbpy  = r'(:)(py)(:)'
     fbtext    = r'(.+?)' + fbsuffx
 
+    Red = Generic.Deleted
+    Str = String.Other
+
     tokens = {
-        'root': [
-        ],
         'root': [
             ( TTLLexer.commentline, Comment ),
             # Directives
-            ( diropen, bygroups(Punctuation, Keyword.Reserved), 'directive' ),
+            ( diropen, bygroups(Red, Keyword.Reserved), 'directive' ),
             # Statements
-            ( statement, bygroups(Punctuation, pylex) ),
+            ( statement, bygroups(Red, pylex) ),
             ( TTLLexer.cmtopen, Comment, 'comment' ),
             # Script
             # ( r'<\s*script\s*', Name.Tag, ('script-content', 'tag')),
             # ( r'<\s*style\s*', Name.Tag, ('style-content', 'tag')),
             # Blocks
-            ( tagopen, bygroups(Name.Tag, Operator, Name.Tag), 'tag' ),
-            ( interface, bygroups(Punctuation,Keyword.Reserved,pylex,Text) ),
-            ( pyblock, bygroups(Punctuation, Keyword, pylex, Text) ),
-            ( exprsubst, bygroups(Operator,  pylex, Operator) ),
+            ( tagopen,
+                bygroups(Operator, Operator, Name.Decorator), 'tag' ),
+            ( interface, bygroups(Red, Keyword.Reserved, pylex, Text) ),
+            ( pyblock, bygroups(Red, Keyword.Reserved, pylex, Text) ),
+            ( exprsubst, bygroups(Red, Red, pylex, Red) ),
             # filter-blocks
-            ( openfbpy, bygroups(Keyword, Name.Attribute, Keyword), 'fbpy' ),
+            ( openfbpy, bygroups(Operator, Red, Operator), 'fbpy' ),
             # Normal text
             ( r'&\S*?;', Name.Entity),
             ( text, Text ),
@@ -80,13 +82,14 @@ class TemplateLexer( RegexLexer ):
         ],
         'tag': [
             ( r'\s+', Text ),
-            ( r'#[\w-]+', Keyword.Declaration ),    # id
-            ( r'\.[\w:\.-]+', Keyword.Class ),      # class
-            ( r'(\{)([^\}]*)(\})', bygroups(Operator, String, Operator) ),
+            ( r'#[\w-]+', Keyword.Type ),        # id
+            ( r'\.[\w:\.-]+', Keyword.Type ),    # class
+            ( r':[\w:\.-]+', Keyword.Type ),     # name
+            ( r'(?<!\$)(\{)([^\}]*)(\})', bygroups(Operator, Str, Operator) ),
             ( r'[\w:-]+\s*=', Name.Attribute, 'attr' ),
             ( r'[^\s>]+', Name.Attribute ), # Attribute-token
-            ( exprsubst, bygroups(Operator,  pylex, Operator) ),
-            ( r'/?\s*>', Name.Tag, '#pop' ),
+            ( exprsubst, bygroups(Keyword, Keyword.Type, pylex, Keyword) ),
+            ( r'/?\s*>', Operator, '#pop' ),
         ],
         'directive' : [
             ( r'[ \t]+', Text ),
@@ -96,12 +99,12 @@ class TemplateLexer( RegexLexer ):
             ( r'[\r\n]', Text, '#pop'),
          ],
         'fbpy': [
-            (fbtext, bygroups(pylex,Keyword,Name.Attribute,Keyword), '#pop'),
+            (fbtext, bygroups(pylex, Operator, Red, Operator), '#pop'),
         ],
         'attr': [
-            ( '".*?"', String, '#pop' ),
-            ( "'.*?'", String, '#pop' ),
-            ( r'[^\s>]+', String, '#pop' ),
+            ( '".*?"', Str, '#pop' ),
+            ( "'.*?'", Str, '#pop' ),
+            ( r'[^\s>]+', Str, '#pop' ),
         ],
         'script-content': [
             ( r'[^\r\n]+', jslex,  ),

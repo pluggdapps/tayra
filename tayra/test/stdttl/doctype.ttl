@@ -8,6 +8,7 @@
 @doctype html4.01frameset
 @doctype html4.01strict
 @doctype html4.01transitional
+@doctype html
 
 @body z=10
 

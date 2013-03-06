@@ -15,9 +15,8 @@ from   tayra.ast        import *
 class TTLParser( object ):
     """Parser class for tayra template language. This class is initialized
     with :class:`tayra.compiler.TTLCompiler` instance, and  configuration
-    options like, 
-        ``optimize``, ``lex_debug``, ``lextab``, ``yacc_debug``, ``yacctab``,
-        ``yacc_outputdir``.
+    options like, ``optimize``, ``lex_debug``, ``lextab``, ``yacc_debug``,
+    ``yacctab``, ``yacc_outputdir``.
 
     It might be a costly operation to create a TTLParser instance every time,
     and to avoid that use _initialize() method before starting off with a new

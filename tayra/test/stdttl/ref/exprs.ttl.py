@@ -46,50 +46,92 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:1
   l = [1,2,3]
+  # lineno:2
+  content = "hello world, %s times"
   # lineno:3
+  rawhtml = "HTML snippet, <pre> hello world </pre>"
+  # lineno:4
+  html = "Install couchdb <pre> sudo apt-get install couchdb </pre>"
+  # lineno:6
+  _m.pushbuf()
+  _m.extend( ['<html>'] )
+  _m.pushbuf()
+  _m.extend( ['\n  '] )
+  # lineno:7
+  _m.pushbuf()
+  _m.extend( ['<head>'] )
+  _m.pushbuf()
+  _m.extend( ['\n  '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:8
+  _m.pushbuf()
+  _m.extend( ['<body>'] )
+  _m.pushbuf()
+  _m.extend( ['\n    '] )
+  # lineno:9
   _m.pushbuf()
   _m.extend( ['<div>'] )
   _m.pushbuf()
-  # lineno:3
+  # lineno:9
   _m.extend( [' '] )
   _m.append(_m.evalexprs( '', '"hello עברית" + str([ str(10) ]) + \' world\'', '', globals(), locals()) )
-  _m.extend( ['\n  '] )
-  # lineno:4
+  _m.extend( ['\n      '] )
+  # lineno:10
   _m.pushbuf()
   _m.extend( ['<a #'] )
   _m.append(_m.evalexprs( '', "'idname'", '', globals(), locals()) )
   _m.extend( [' .'] )
   _m.append(_m.evalexprs( '', "'cls' 'name'", '', globals(), locals()) )
-  _m.extend( [' \n     "'] )
+  _m.extend( [' \n         "'] )
   _m.append(_m.evalexprs( '', "'http://' 'google.com'", '', globals(), locals()) )
-  _m.extend( ['" \n     { '] )
+  _m.extend( ['" \n         { '] )
   _m.append(_m.evalexprs( '', "'color : '", '', globals(), locals()) )
   _m.extend( [' '] )
   _m.append(_m.evalexprs( '', '"red;"', '', globals(), locals()) )
-  _m.extend( [' }\n     '] )
+  _m.extend( [' }\n         '] )
   _m.append(_m.evalexprs( '', '"title"', '', globals(), locals()) )
   _m.extend( ['="'] )
   _m.append(_m.evalexprs( '', "'sun is ' ' shining'", '', globals(), locals()) )
   _m.extend( [' brightly">'] )
   _m.pushbuf()
-  _m.extend( ['\n\n  '] )
+  _m.extend( ['\n\n    '] )
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  # lineno:10
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:15
+  _m.pushbuf()
+  _m.extend( ['<div>'] )
+  _m.pushbuf()
+  _m.extend( ['\n      '] )
+  # lineno:16
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( '', 'content % 5', '', globals(), locals()) )
+  _m.extend( ['\n        '] )
+  # lineno:17
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( '', 'rawhtml', 'h', globals(), locals()) )
+  _m.extend( ['\n          '] )
+  # lineno:18
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( '', 'html', 'n', globals(), locals()) )
+  _m.extend( ['\n\n    '] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  # lineno:21
   _m.extend( [''] )
   _m.append(_m.evalexprs( 'tayraexpressionevalpy', 'l.append(10)', '', globals(), locals()) )
-  _m.extend( ['\n  '] )
-  # lineno:11
+  _m.extend( ['\n    '] )
+  # lineno:22
   _m.extend( [''] )
   _m.append(_m.evalexprs( 'tayraexpressionpy', 'l', '', globals(), locals()) )
-  _m.extend( ['\n  '] )
-  # lineno:12
+  _m.extend( ['\n    '] )
+  # lineno:23
   _m.extend( [''] )
   _m.append(_m.evalexprs( 'tayraexpressionevalpy', 'l.pop(0)', '', globals(), locals()) )
-  _m.extend( ['\n  '] )
-  # lineno:13
+  _m.extend( ['\n    '] )
+  # lineno:24
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'l', '', globals(), locals()) )
   _m.extend( ['\n'] )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   return _m.popbuftext()
 

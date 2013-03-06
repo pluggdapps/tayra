@@ -19,7 +19,7 @@ easy_install.
 
 **Install from source code**,
 
-Alternately, you can obtain the source code,
+Alternately, you can obtain the source code by,
 
 - downloading the `tar.gz <http://pypi.python.org/pypi/tayra>`_
 - cloning from one of the many places mentioned below.
@@ -39,8 +39,8 @@ your local machine, install source package by executing,
 
 .. code-block:: bash
 
-  > sudo python ./setup.py install
-  > sudo python ./setup.py develop # to install the development version
+  sudo python ./setup.py install
+  sudo python ./setup.py develop # to install the development version
 
 
 Using it as python library
@@ -60,7 +60,7 @@ Using it as python library
     # Generate
     html = compiler.generatehtml( module, context={} )
 
-Alternately you can pass the file name to `.compilettl` method,
+Alternately you can pass the file name to `.compilettl()` method,
 
 .. code-block:: python
 
@@ -98,21 +98,21 @@ should pass without any errors. Some useful ``tayra`` commands,
 
 .. code-block:: bash
 
-  # Translate a template file to corresponding html file.
-  tayra <template-file>
+    # Translate a template file to corresponding html file.
+    tayra <template-file>
 
-  # For more help one the command line tool.
-  tayra --help
+    # For more help one the command line tool.
+    tayra --help
 
 
 Start templating
 ----------------
 
-It starts with your .ttl file, where ''ttl'' stands for tayra template language.
-Open your favorite editor and we will start writing our first template.
-Ofcourse our first template is going to be a welcome message to this world.
+It starts with your .ttl file, where ''ttl'' stands for tayra template 
+language. Open your favorite editor and we will start writing our first
+template. In the long tradition of programming, let us welcome this world,
 
-.. code-block:: html
+.. code-block:: ttl
 
     ## File name : eg1.ttl
 
@@ -126,7 +126,7 @@ Let us now translate this to a html document,
 .. code-block:: bash
 
     # Assuming that tayra is available in your environment,
-    $ tayra/tyr.py eg1.ttl
+    tayra eg1.ttl
 
 which looks like,
 
@@ -164,4 +164,22 @@ contains the `hello world` text.
       </body>
     </html>
 
-That is all it takes to get you started. Happy templating !
+Integration with other tools
+----------------------------
+
+**vim**
+
+TTL plugin is available for vim and downloaded from
+`here <http://www.vim.org/scripts/script.php?script_id=4464>`.
+
+**pygments**
+
+If you are going to use pygments for highlighting source code with HTML and
+CSS styles, there is a lexer available `tayra.ext.ttlpygments` for that. The
+lexer is not yet part of `pygments` package, so make sure that `tayra` package 
+is installed in your environment along with `pygments` package so that the
+lexer automatically gets detected.
+
+**pluggdapps web framework**
+
+--TBD--

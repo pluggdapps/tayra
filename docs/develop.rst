@@ -1,5 +1,5 @@
-Development
-===========
+Extending Tayra language
+========================
 
 The language is defined as a bunch of meta syntax that can be extended and
 customised using plugins. Developers can author plugins implementing one or
@@ -9,13 +9,13 @@ system is based on pluggdapps component architecture.
 The design is based on simple, formal methods that are easy to understand
 and extend as per future needs. Language front end is based on LALR parser and
 uses PLY for lexing and parsing, during parsing, Abstract Syntax Tree (AST) is
-constructed using :class:`tayra.ast.Terminal` :class:`tayra.ast.NonTerminal`
-base classes. A multi-pass compilation is applied on the AST, two headpasses
-for preprocessing, generation pass to generate intermediate python file and a
-tail pass to do post processing. Some times tail pass can be used to perform 
-a delayed generation of intermediate python file. AST nodes also provide
-methods to reverse generate the source text and to print the tree on stdout for
-reference.
+constructed using :class:`tayra.ast.Terminal` and 
+:class:`tayra.ast.NonTerminal` base classes. A multi-pass compilation is 
+applied on the AST, two headpasses for preprocessing, generation pass to 
+generate intermediate python file and a tail pass to do post processing. Some 
+times tail pass on a sub-tree can be used to perform a delayed generation of
+intermediate python file. AST nodes also provide methods to reverse generate
+the source text and to print the tree on stdout for reference.
 
 Lexing rules are implemented in :mod:`tayra.lexer` module and parsing grammar
 is implmeneted in :mod:`tayra.parser` module. 
@@ -33,7 +33,7 @@ Eventually we expect all the code to reside in one plugin or the other,
 thereby providing maximum flexibility. Right now tayra can be extended using
 the following interfaces,
 
-**:class:`tayra.interfaces.ITayraTags`**
+**tayra.interfaces.ITayraTags**
 
 In its simplest use case, tayra is just plain HTML without the closing
 tags. But behind the scene these tag elements are parsed and passed to
@@ -53,7 +53,7 @@ plugins and are taken into account while generating a corresponding HTML
 text. You can refer :mod:`tayra.tags.forms` module for more information on
 how to implement a :class:`tayra.interfaces.ITayraTags` plugin.
 
-**:class:`tayra.interfaces.ITayraExpression`**
+**tayra.interfaces.ITayraExpression**
 
 Expressions can be substituted inside a template file using **${...}** syntax.
 Additionally, evaluated output can be passed to filters using **${... |
@@ -62,9 +62,9 @@ filters to be applied in specified order.
 
 .. code-block:: ttl
 
-    <li .crumbs>
+    <li #crumbs>
       <a .crumbname "${crumbsurl or '' | u }"> ${crumbsname}
-      <ul .menu>
+      <ul :menu {color : blue}>
 
 Behind the scenes, expression substitution is handled by plugins implementing
 implementing :class:`tayra.interfaces.ITayraExpression` interface. While
@@ -84,10 +84,10 @@ expression for specific plugin, like,
 where, ``-evalpy`` and ``-py`` refers to plugin name. For instance ``-evalpy``
 will refer to a plugin whose class name is ``TayraExpressionEvalPy``, note the
 `TayraExpression` prefix in the class name. Similarly ``-py`` will refer to
-plugin whose class name is ``TayraExpressionPy``. The difference by `-eval`
-and `-py` is that in the former case expression is only evaluated in the
-global and local scope and in the later case expression is both evaluated and
-substituted.
+plugin whose class name is ``TayraExpressionPy``. The difference between
+`-eval` and `-py` is that in the former case expression is only evaluated in
+the global and local scope and in the later case expression is both evaluated
+and substituted.
 
 If an expression is coded without a target plugin then default plugin will be
 picked based on the configuration parameter
@@ -95,13 +95,13 @@ picked based on the configuration parameter
 substitution and filtering refer to :class:`tayra.interfaces.ITayraExpression`
 interface specification.
 
-**:class:`tayra.interfaces.ITayraFilterBlock`**
+**tayra.interfaces.ITayraFilterBlock**
 
 Filter blocks provide powerful yet a generic way to extend the template
 language. Filter blocks are handled by plugins implementing
 :class:`tayra.interfaces.ITayraFilterBlock` interface and they take part in
 multi-pass compilation. Although filter-blocks cannot blend with ttl-language 
-syntactically, they can provided features that can be close integrated with
+syntactically, they can provided features that can be closely integrated with
 the template language.
 
 ``:py:`` filter block in implemented by :class:`tayra.filterblocks.pycode`
@@ -181,8 +181,9 @@ List of make commands
 
 - after doing a `bdis_egg` or `sdist`, .egg packages will be availabe under
   ``dist/`` directory
-- if you enable ['beautify_html'] option TTLCompiler plugin you will have to
-  install ``beautifulsoup4`` package.
+- if you enable ['beautify_html'] configuration option in
+  :class:`tayra.compiler.TTLCompiler` plugin you will have to install 
+  ``beautifulsoup4`` package.
 
 	
 Push code to repositories

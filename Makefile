@@ -40,18 +40,20 @@ sdist :
 
 # Generate sphinx documentation.
 sphinx-compile :
-	cp README.rst sphinxdoc/source/
+	cp README.rst sphinxdoc/source/index.rst
+	cat sphinxdoc/source/index.rst.inc >> sphinxdoc/source/index.rst
 	cp CHANGELOG.rst sphinxdoc/source/
 	cp docs/commandline.rst sphinxdoc/source
 	cp docs/develop.rst sphinxdoc/source
 	cp docs/directives.rst sphinxdoc/source
+	cp docs/expressions.rst sphinxdoc/source
 	cp docs/filter_blocks.rst sphinxdoc/source
 	cp docs/functions.rst sphinxdoc/source
 	cp docs/gettingstarted.rst sphinxdoc/source
 	cp docs/glossary.rst sphinxdoc/source
 	cp docs/template_layout.rst sphinxdoc/source
-	cp docs/template_libraries.rst sphinxdoc/source
 	cp docs/template_plugins.rst sphinxdoc/source
+	cp docs/tutorial.rst sphinxdoc/source
 	rm -rf sphinxdoc/build/html/
 	make -C sphinxdoc html
 
@@ -78,8 +80,8 @@ push-github:
 
 # Package vim plugin.
 vimplugin :
-	rm -rf ./vim-plugin/vim-tayra.tar.gz
-	cd ./vim-plugin; tar cvfz ./vim-tayra.tar.gz *
+	rm -f tayra/ext/vim/vim-tayra.tar.gz
+	cd tayra/ext/vim/; tar cvfz ./vim-tayra.tar.gz *
 
 cleanall : clean
 	rm -rf tayra-env

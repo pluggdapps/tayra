@@ -11,7 +11,7 @@ Once the command is available in your environment or via ``PYTHONPATH``,
 
 .. code-block:: text
 
-  > tayra --help
+  $ tayra --help
   usage: tayra [-h] [-l] [-d] [-s] [-t] [-a ARGS] [-c CONTEXT] [-g DEBUG]
                [--version]
                ttlfile

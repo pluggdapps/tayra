@@ -96,6 +96,10 @@
   authors,
     decorators, expression substitution, filterblocks.
 
+* default(value, default_value=u'', boolean=False) context function,
+
+    If the value is undefined in the context it will return the passed 
+    default value, otherwise the value of the variable
 
 Errors and warnings :
 ---------------------
@@ -134,7 +138,8 @@ Language syntax and feature.
 * White space preservation.
 
 * Whitespace pruning,
-    before and after opening tag and closing tag (for outerprune)
+    before and after opening tag and closing tag (for outerprune), use
+    tagmodifiers like `-`, `%` etc...
 
 * Enable wiki text as content selectable using the tag's specifier. like,
     <div etx> **hello** world

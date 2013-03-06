@@ -1,13 +1,24 @@
 @@l = [1,2,3]
+@@ content = "hello world, %s times"
+@@ rawhtml = "HTML snippet, <pre> hello world </pre>"
+@@ html = "Install couchdb <pre> sudo apt-get install couchdb </pre>"
 
-<div> ${ "hello עברית" + str([ str(10) ]) + ' world' }
-  <a #${'idname'} .${'cls' 'name'} 
-     "${'http://' 'google.com'}" 
-     { ${'color : ' } ${ "red;" } }
-     ${"title"}="${'sun is ' ' shining'} brightly">
+<html>
+  <head>
+  <body>
+    <div> ${ "hello עברית" + str([ str(10) ]) + ' world' }
+      <a #${'idname'} .${'cls' 'name'} 
+         "${'http://' 'google.com'}" 
+         { ${'color : ' } ${ "red;" } }
+         ${"title"}="${'sun is ' ' shining'} brightly">
 
-  ## Evaluating with expression extension
-  ${-evalpy l.append(10)}
-  ${-py l}
-  ${-evalpy l.pop(0)}
-  ${l}
+    <div>
+      ${ content % 5 }
+        ${ rawhtml | h }
+          ${ html | n }
+
+    ## Evaluating with expression extension
+    ${-evalpy l.append(10)}
+    ${-py l}
+    ${-evalpy l.pop(0)}
+    ${l}

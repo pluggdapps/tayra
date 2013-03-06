@@ -101,3 +101,4 @@ clean :
 	rm -f tayra/test/tagsttl/*.html;
 	rm -f tayra/test/bench/tayra/*.html;
 	rm -f tayra/test/bench/tayra/*.ttl.py;
+	rm -f tayra/ext/vim/vim-tayra.tar.gz

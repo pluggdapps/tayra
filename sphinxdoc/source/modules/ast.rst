@@ -20,3 +20,5 @@ Module contents
     :members: _terms, _nonterms, lstrip, rstrip, gencontrolblock, genfunction,
         flatten
     :show-inheritance:
+
+.. autoclass:: DocType

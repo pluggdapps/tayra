@@ -6,16 +6,16 @@ easy_install.
 
 .. code-block:: bash
 
-  # -Z to do unzipped install. The reason for installing it
-  #    in un-zipped form is to make use of the command line tool.
-  # -U to upgrade install
-  easy_install tayra
+    # -Z to do unzipped install. The reason for installing it
+    #    in un-zipped form is to make use of the command line tool.
+    # -U to upgrade install
+    easy_install tayra
 
-  # If beautify_html configuration option is desired,
-  easy_install beautifulsoup4 
+    # If beautify_html configuration option is desired,
+    easy_install beautifulsoup4 
 
-  # To compile sphinx documentation
-  easy_install sphinx
+    # To compile sphinx documentation
+    easy_install sphinx
 
 **Install from source code**,
 
@@ -26,11 +26,11 @@ Alternately, you can obtain the source code by,
 
 .. code-block:: bash
 
-  hg clone https://code.google.com/p/tayra/
-  # or
-  hg clone https://bitbucket.org/prataprc/tayra
-  # or 
-  git clone https://github.com/prataprc/tayra.git
+    hg clone https://code.google.com/p/tayra/
+    # or
+    hg clone https://bitbucket.org/prataprc/tayra
+    # or 
+    git clone https://github.com/prataprc/tayra.git
 
 tayra uses mercurial as native repository.
 
@@ -39,8 +39,8 @@ your local machine, install source package by executing,
 
 .. code-block:: bash
 
-  sudo python ./setup.py install
-  sudo python ./setup.py develop # to install the development version
+    sudo python ./setup.py install
+    sudo python ./setup.py develop # to install the development version
 
 
 Using it as python library
@@ -59,13 +59,6 @@ Using it as python library
     module = compiler.load( code, context={} )
     # Generate
     html = compiler.generatehtml( module, context={} )
-
-Alternately you can pass the file name to `.compilettl()` method,
-
-.. code-block:: python
-
-    # Compile
-    code = compiler.compilettl( file='myapp:template/blogpage.ttl' )
 
 
 Command line usage
@@ -142,7 +135,7 @@ which looks like,
 Now, we will add an id and couple of class attributes to the paragraph tag that
 contains the `hello world` text.
 
-.. code-block:: html
+.. code-block:: ttl
 
     ## File name : eg1.ttl
 
@@ -170,7 +163,7 @@ Integration with other tools
 **vim**
 
 TTL plugin is available for vim and downloaded from
-`here <http://www.vim.org/scripts/script.php?script_id=4464>`.
+`here <http://www.vim.org/scripts/script.php?script_id=4464>`_.
 
 **pygments**
 

@@ -434,7 +434,62 @@ class Prolog( NonTerminal ):
 
 class DocType( NonTerminal ):
     """class to handle `doctype` grammar. Note that DTDs are deprecated in
-    HTML5. We will have to wait and see how it evolves under HTML5."""
+    HTML5. We will have to wait and see how it evolves under HTML5.
+
+    +-------------------------+-----------------------------------------------+
+    | ttl doctype name        | Transted to html                              |
+    +=========================+===============================================+
+    | html4.01transitional    | <!DOCTYPE HTML PUBLIC                         |
+    |                         | "-//W3C//DTD HTML 4.01 Transitional//EN"      |
+    |                         | "http://www.w3.org/TR/html4/loose.dtd">       |
+    +-------------------------+-----------------------------------------------+
+    | html4.01strict          | <!DOCTYPE HTML PUBLIC                         |
+    |                         | "-//W3C//DTD HTML 4.01//EN"                   |
+    |                         | "http://www.w3.org/TR/html4/strict.dtd">      |
+    +-------------------------+-----------------------------------------------+
+    | html4.01frameset        | <!DOCTYPE HTML PUBLIC                         |
+    |                         | "-//W3C//DTD HTML 4.01 Frameset//EN"          |
+    |                         | "http://www.w3.org/TR/html4/frameset.dtd">    |
+    +-------------------------+-----------------------------------------------+
+    | xhtml1.0transitional    | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//W3C//DTD XHTML 1.0 Transitional//EN"      |
+    |                         | "http://www.w3.org/TR/xhtml1/DTD/             |
+    |                         | xhtml1-transitional.dtd">                     |
+    +-------------------------+-----------------------------------------------+
+    | xhtml1.0strict          | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//W3C//DTD XHTML 1.0 Strict//EN"            |
+    |                         | "http://www.w3.org/TR/xhtml1/DTD/             |
+    |                         | xhtml1-strict.dtd">                           |
+    +-------------------------+-----------------------------------------------+
+    | xhtml1.0frameset        | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//W3C//DTD XHTML 1.0 Frameset//EN"          |
+    |                         | "http://www.w3.org/TR/xhtml1/DTD/             |
+    |                         | xhtml1-frameset.dtd">                         |
+    +-------------------------+-----------------------------------------------+
+    | xhtml1.1                | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//W3C//DTD XHTML 1.1//EN"                   |
+    |                         | "http://www.w3.org/TR/xhtml11/DTD/            |
+    |                         |  xhtml11.dtd">                                |
+    +-------------------------+-----------------------------------------------+
+    | xhtml1.1basic           | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//W3C//DTD XHTML Basic 1.1//EN"             |
+    |                         | "http://www.w3.org/TR/xhtml-basic/            |
+    |                         | xhtml-basic11.dtd">                           |
+    +-------------------------+-----------------------------------------------+
+    | xhtml1.1mobile          | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//WAPFORUM//DTD XHTML Mobile 1.2//EN"       |
+    |                         | "http://www.openmobilealliance.org/tech/DTD/  |
+    |                         | xhtml-mobile12.dtd">                          |
+    +-------------------------+-----------------------------------------------+
+    | xhtml+rdfa1.0           | <!DOCTYPE html PUBLIC                         |
+    |                         | "-//W3C//DTD XHTML+RDFa 1.0//EN"              |
+    |                         | "http://www.w3.org/MarkUp/DTD/                |
+    |                         | xhtml-rdfa-1.dtd">                            |
+    +-------------------------+-----------------------------------------------+
+    | html                    | <!DOCTYPE html>                               |
+    +-------------------------+-----------------------------------------------+
+
+    """
 
     dtdurls = {
       "html4.01transitional"    : (

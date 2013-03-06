@@ -10,7 +10,6 @@ Contents:
    directives
    expressions
    filter_blocks
-   functions
    template_layout
    template_plugins
    develop

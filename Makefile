@@ -48,7 +48,6 @@ sphinx-compile :
 	cp docs/directives.rst sphinxdoc/source
 	cp docs/expressions.rst sphinxdoc/source
 	cp docs/filter_blocks.rst sphinxdoc/source
-	cp docs/functions.rst sphinxdoc/source
 	cp docs/gettingstarted.rst sphinxdoc/source
 	cp docs/glossary.rst sphinxdoc/source
 	cp docs/template_layout.rst sphinxdoc/source

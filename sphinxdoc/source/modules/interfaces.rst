@@ -1,5 +1,5 @@
-:mod:`tayra.interfaces` -- Interfaces specified by tayra package
-================================================================
+:mod:`tayra.interfaces` -- Interfaces for language extension
+============================================================
 
 .. automodule:: tayra.interfaces
 

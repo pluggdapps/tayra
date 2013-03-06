@@ -91,7 +91,7 @@ That is all is required to write your first template.
 
 Template script contain directives and scriptlines, directives must come
 in the beginning of the document, followed by template script. Template
-scripts are made up of, tags, statements, comments, textlines, functions,
+scripts are made up of tags, statements, comments, textlines, functions,
 control-blocks like `if-elif-else`, `for` `while` and filter-blocks.
 
 Expression-substitution can be applied pretty much anywhere in the document
@@ -123,8 +123,8 @@ Shortcuts inside tag definitions
 --------------------------------
 
 Shotcuts are tokens for tag attributes. Like the example above some attributes
-are common to all tags, like ``id`` (tokens prefixed with **#**) and 
-``class`` (tokens separated by **.**), have common syntax for
+are common to all tags, like, ``id`` (tokens prefixed with **#**) and 
+``class`` (tokens separated by **.**) shortcuts have common syntax for
 all tags. While other tokens can be specific to individual tags. Plugins
 implementing :class:`tayra.interfaces.ITayraTag` interface is responsible for
 translating shortcuts to corresponding tag-attributes. Following is a list of
@@ -164,7 +164,7 @@ them with **@@**. Let us see an example for this,
 Escape filtering
 
   Like mentioned before final value emitted by the python expression will be
-  converted to string before substituted in the HTML output. But before
+  converted to string before substituting them in HTML output. But before
   substituting the string, it is possible to apply one or more filters on the
   output string. Filters are applied in the specified order.
 
@@ -187,7 +187,7 @@ substitute variables that come from web application context. Note that
 assignments in python are statements, so they are not allowed inside 
 expression-substitution syntax.
 
-- In the first case, **content** is simple text content and does not require
+- In the first case, **content** is simple text and does not require
   any escape filtering to be applied on the result. Output is calculated by
   evaluating the expression and final value is substituted after converting it
   to string.
@@ -240,40 +240,15 @@ Comments can be of two forms,
 In the above example the copyright notice will be preserved in the final HTML
 output while developer comments starting with `##` will be ignored.
 
-Directives
-----------
-
-Directives are meta commands specified right at the top of the template script.
-There are several directive types defined by tayra,
-
-- ``@doctype`` directive translates to <!DOCTYPE ... > HTML element. It can
-  also have other options and parameters provided as simple tokens or
-  attribute,value pair.
-
-- ``@body`` defines positional and key-word arguments that can be passed
-  to the template module while evaluating them. Note that a block of template
-  script that is not a directive and that is not under a function or 
-  interface-method context is considered as body of the template and
-  accessible as ``local.body(...)``
-
-- ``@import`` directive to import template libraries.
-
-- ``@inherit`` directive to define template inheritance and complex page
-  layouts.
-
-- ``@implement`` directive to define template plugins.
-
-For detailed explanations refer to `template directives <./directives.html>`_.
-
 Control blocks
 --------------
 
 Control blocks allow to selectively include parts of template script based on
 predicates. Other control blocks like `for` and `while` can be used to repeat
 a block of template script based on predicates. While a python statements can be
-included inside the template script, prefixing them with **@@** token, control
-blocks are prefixed with **@**, and the block of template script under the
-control block must be `indented to the right`. Let us see an example now,
+included inside the template script by prefixing them with **@@** token,
+control blocks are prefixed with **@**, and the block of template script under
+the control block must be `indented to the right`. Let us see an example now,
 
 .. code-block:: ttl
 
@@ -318,7 +293,7 @@ continues with the next iteration. The following is an example,
         @@continue
       ...
 
-    ## Likewise a look that stops processing after the 10th iteration:
+    ## Likewise a loop that stops processing after the 10th iteration:
 
     @@i = 0
     @while users :
@@ -326,15 +301,109 @@ continues with the next iteration. The following is an example,
         @@break
       ...
 
+Functions
+---------
+
+Template functions are ways to abstract and reuse template script. Although the
+syntax and signature of a template-function follows python rules, they do
+not abstract python code, instead they abstract template script intended to
+right by two spaces from function signature.
+
+Functions can be called, with positional arguments and key-word arguments, and
+return html text, which shall be substituted in the caller's context using
+exrpression-substitution.
+
+Functions are always called inside expression substitution syntax **${ ... }**.
+Functions also provide a local context for template blocks that are
+encapsulated under it. Functions can be nested and follows the same scoping
+rules defined by python functions. A function's definition starts with a 
+newline followed by one or more white-space and continues with the function
+signature.
+
+Function signature starts with **@def** keyword and ends with a **colon (:)**.
+
+.. code-block:: ttl
+
+    @def justtext() : 
+      Google will join its biggest mobile rival, Apple, on the space trip as
+      well.  Apple's iPhone 4 will join a crew running an app, called
+      "SpaceLab for iOS."
+
+    @def involved( z ):
+      <abbr "World Health Organization"> ${z}
+      @def nestedfunc() :
+        <b> this is nested function
+        @def nestednestedfunc() :
+          <em> this is nested nested function
+        ${ nestednestedfunc() }
+      <button #id_ reset disabled makefriend "button value">
+      ${ nestedfunc() }
+
+    ${ justtext() }
+    ${ involved( 'WHO' ) }
+
+When functions are combined with template modules, it will provide a powerful
+way to abstract and organise your view-templates.
+
+Directives
+----------
+
+Directives are meta commands specified right at the top of the template script.
+Here is a shotlist of directives defined by tayra,
+
+- ``@doctype`` directive translates to `<!DOCTYPE ... >` HTML element. It can
+  also have other options and parameters provided as simple tokens or
+  attribute,value pair.
+
+- ``@body`` defines positional and key-word arguments that can be passed
+  to the template module while evaluating them. Note that a block of template
+  script that is not a directive and that is not under a function or 
+  interface-method is considered as body of the template and accessible as
+  ``local.body(...)``
+
+- ``@import`` directive to import template libraries.
+
+- ``@inherit`` directive to define template inheritance and complex page
+  layouts.
+
+- ``@implement`` directive to define template plugins.
+
+For detailed explanations refer to `template directives <./directives.html>`_.
+
+Template libraries
+------------------
+
+Developers can abstract and organise their templates as a library or a
+tool-kit. Since every template script is compiled and interpreted as a python
+module, importing them is similar to importing a python module using
+**@import** directive.
+
+The import directive specifies which template file to be imported and the 
+name to access the template module. For example,
+
+.. code-block:: html
+
+    @import etsite:templates/_base/elements.ttl as e ;
+    @import os, sys;
+
+    @def body_leftpane() :
+      ${e.leftpane( menupane )}
+
+Here `elements.ttl` is imported as a template module ``e``, which can be
+referred in the template script. Further down, you can notice that library
+function ``leftpane(...)`` is called from the imported template module.
+
 Template context
 ----------------
 
-TODO :
-
-  Create a reference for ``h`` helper functions made available in the
-  context.
-
-  Also document about template context.
+Every template script is compiled into a template module and executed as
+python program to generate the final html output. While loading and executing
+the template modules it is possible to supply a dictionary of context, like
+explained in this `section <./gettingstarted.html#using-it-as-python-library>`_.
+In addition to that some standard set of objects are automatically made
+available by the `runtime engine <./modules/runtime.html>`_. One such object
+is `h <./h.html>`_ helper container object that supplies wide variety of
+library functions that can be useful while scripting your templates. 
 
 Configuration
 -------------

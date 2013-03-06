@@ -1,5 +1,5 @@
-Filter blocks in template scripts
-=================================
+Filter blocks
+=============
 
 Filter blocks provide a way to include non-template text inside the template
 script. Unlike the template syntax which follow strict indentation rules,
@@ -59,3 +59,6 @@ to the scope of the function or method.
 Globally defined code blocks will be interpreted in the global scope and the
 side effects created by the code block will be available to all function and
 methods defined in the template script.
+
+To learn how to extend filter blocks with a plugin, refer to
+ITayraFilterBlock section in this `article <./develop.html>`_.

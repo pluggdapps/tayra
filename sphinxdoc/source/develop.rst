@@ -146,8 +146,8 @@ List of make commands
 
   source ./tayra-env/bin/activate # To start using the tayra package
 
-  # Setup virtual environment under tayra-env/ directory. And installs sphinx
-  # generator package.
+  # Setup virtual environment under tayra-env/ directory. And installs
+  # sphinx generator package.
   make develop
 
   # Test tayra package with standard test cases.
@@ -156,15 +156,15 @@ List of make commands
   # Install other template packages for benchmark.
   make bench-setup
 
-  # Execute the bench-mark suite. This is work in progress, you can help me to
-  # setup this benchmark.
+  # Execute the bench-mark suite. This is work in progress, you can
+  # help me to setup this benchmark.
   make benchmark
 
   # Generate binary egg distribution.
   make bdist_egg
 
-  # Generate source distribution. This is the command used to generate the
-  # public distribution package.
+  # Generate source distribution. This is the command used to generate
+  # the public distribution package.
   make sdist
 
   # Generate sphinx documentation.

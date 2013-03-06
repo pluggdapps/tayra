@@ -28,20 +28,20 @@ documents a collection of attributes and methods, which are to be implemented
 by template plugins.
 
 **@implement** directive declares that this ttl template implements
-``ITTLFooter`` defining methods specified in them.
+``ITTLFooter``, defining methods specified in them.
 
 Interface functions
 -------------------
 
-To implement interface methods, **@interface** statement can to be used. They
-are similar **@def** statement, but with a semantic meaning that the function
+To implement interface methods, ``@interface`` statement can to be used. They
+are similar ``@def`` statement, but with a semantic meaning that the function
 abstracts an interface method defined in the statement,
 
 - It starts with a key word ''@interface''
 - Function name must be specified in namespace format which will resolve to a
   method specified in an ``Interface`` class residing in a python module. For
   instance, in the example mentioned above, ``render()`` is the method
-  specified by the interface class ``ITestInterface``.
+  specified by the interface class ``ITTLFooter``.
 - The first argument to interface functions is ``self``, that refers to the
   plugin instance that encapsulates this interface function definition.
 

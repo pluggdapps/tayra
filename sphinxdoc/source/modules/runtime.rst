@@ -1,5 +1,5 @@
-:mod:`tayra.runtime` -- Tayra stack machine runtime engine
-==========================================================
+:mod:`tayra.runtime` -- Stack machine runtime
+=============================================
 
 .. automodule:: tayra.runtime
 

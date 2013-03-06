@@ -5,7 +5,7 @@ Directives are meta statements that come in the beginning of template script.
 They alter the way rest of the script is compiled and interpreted. They are
 also used to import other templates and define plugins. A directive always
 come in the beginning and start with **@** and ends with a newline, if
-a directive had to span multiple lines, escape the new-lines with back-slash.
+a directive had to span multiple lines escape the new-lines with back-slash.
 
 @doctype
 --------
@@ -18,10 +18,12 @@ This directive can be used to specify html document's DTD
     @doctype html
 
 This will be translated to ``<!DOCTYPE html>`` in the final html file.
+Available `list <./modules/ast.html#tayra.ast.DocType>`_ of doctypes. If
+template document does not have doctype specification, it is assumed
+as, ``@doctype html``.
 
-If template document does not have doctype specification, it is assumed
-as, ``@doctype html``. For more information on doctypes refer
-`here <http://www.w3schools.com/tags/tag_doctype.asp>`_.
+For more information on HTML doctypes refer
+`here <http://www.w3schools.com/tags/tag_doctype.asp>`_. 
 
 **character-encoding**
 
@@ -81,7 +83,7 @@ with your application,
 
 Template scripts can be abstracted into functions and organised as a library.
 And library templates can be imported in other template scripts using 
-**@import** directive by specifying which template file to be imported and the 
+**@import** directive by specifying which template file to be imported and a 
 name to access the template module.
 
 .. code-block:: ttl
@@ -92,9 +94,9 @@ name to access the template module.
     @def body_leftpane() :
       ${ e.leftpane( menupane ) }
 
-Here elements.ttl is imported as a template module ``e``, which can be
+Here `elements.ttl` is imported as a template module ``e``, which can be
 referred in the template script. Further down, you can notice that library
-function ``leftpane(...)`` is called.
+function ``leftpane(...)`` is called from the imported template module.
 
 @inherit directive
 ------------------
@@ -112,8 +114,8 @@ to each element of the layout.
 In Tayra, templates can be stacked on a base template by inheriting them, which
 enables designers to abstract and organize their templates in more interesting
 ways. This section explains the syntax of **@inherit** directive to
-declare template inheritance, more details on how inheritance works and its
-usage will be discussed in a `separate article <./template_layout.html>`_.
+declare template inheritance, more details on how inheritance works can be
+found `here <./template_layout.html>`_.
 
 .. code-block:: ttl
 

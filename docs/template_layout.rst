@@ -45,7 +45,7 @@ web-application. In this case the layout is made up of header, body and
 footer. Along with that, page-title, page-meta-information,
 .css file references, .js file references, are also defined as part of layout.
 
-Along with the layout definition, the base template should also provide a
+Along with the layout definition, the base template is expected to provide a
 default or dummy (if there is no default behaviour) implementations for
 functions like, `hd_title`, `hd_meta`, `hd_links`, `hd_styles`, `hd_script`, 
 `bd_header`, `bd_body` and `bd_footer`.
@@ -115,7 +115,7 @@ of an inheritance chaing, ``this`` will always refer to the last, or the
 bottom-most, template-script which is `page.ttl`. When a template-script is not
 part of an inheritance chain ``this`` is same as ``local``. 
 
-When ever an attribute is referred on ``this`` object, it will walk through
+Whenever an attribute is referred on ``this`` object, it will walk through
 the inheritance chain all the way to the top until it finds a template-script
 that defines the referred attribute.
 

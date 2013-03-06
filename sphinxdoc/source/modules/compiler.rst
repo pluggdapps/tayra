@@ -1,5 +1,5 @@
-:mod:`tayra.compiler` -- Tayra compiler
-=======================================
+:mod:`tayra.compiler` -- Compiler
+=================================
 
 .. automodule:: tayra.compiler
 

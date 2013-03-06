@@ -1,10 +1,10 @@
 Expression substitution and escape filtering
 ============================================
 
-Expressions can be substituted inside a template file using **${...}** syntax.
-Additionally, evaluated output can be passed to filters using **${... |
-<filters> }** the pipe token, where `filters` is comma separated value of
-filters to be applied in specified order.
+Expressions can be substituted inside a template script using **${...}**
+syntax.  Additionally, evaluated output can be passed to filters using
+**${... | <filters> }** the pipe token, where `filters` is comma separated
+value of filters to be applied in specified order.
 
 .. code-block:: ttl
 
@@ -23,8 +23,8 @@ py
 --
 
 Evaluate the text as python expression, convert the result to string, pass
-them to supplied filter (if any) and then substitute the final output in the
-final html output.
+them to supplied filter (if any) and then substitute the final output in html
+output.
 
 .. code-block:: ttl
 
@@ -52,6 +52,7 @@ evalpy
 
 Evaluate the text as python expression and ignore the result. In the final
 HTMl output the expression text will be replace with an empty string.
+This plugin does not support any filter methods.
 
 .. code-block:: ttl
 
@@ -62,4 +63,6 @@ HTMl output the expression text will be replace with an empty string.
     ${-evalpy l.pop(0)}
     <div> ${l}
 
-This plugin does not support any filter methods.
+
+To learn how to extend expression substitution with a plugin, refer to
+ITayraExpression section in this `article <./develop.html>`_.

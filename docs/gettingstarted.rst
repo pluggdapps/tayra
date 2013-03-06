@@ -135,7 +135,7 @@ which looks like,
 Now, we will add an id and couple of class attributes to the paragraph tag that
 contains the `hello world` text.
 
-.. code-block:: html
+.. code-block:: ttl
 
     ## File name : eg1.ttl
 
@@ -163,7 +163,7 @@ Integration with other tools
 **vim**
 
 TTL plugin is available for vim and downloaded from
-`here <http://www.vim.org/scripts/script.php?script_id=4464>`.
+`here <http://www.vim.org/scripts/script.php?script_id=4464>`_.
 
 **pygments**
 

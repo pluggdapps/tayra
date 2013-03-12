@@ -189,12 +189,21 @@ List of make commands
 Push code to repositories
 -------------------------
 
-push-googlecode:
-	hg push https://prataprc@code.google.com/p/tayra/
+From source root, 
 
-push-bitbucket:
-	hg push https://prataprc@bitbucket.org/prataprc/tayra
+.. code-block:: bash
 
-push-github:
-	hg bookmark -f -r default master
-	hg push git+ssh://git@github.com:prataprc/tayra.git
+    # for code.google.com
+	$ hg push https://<username>@code.google.com/p/tayra/
+
+    # for bitbucket.org
+	$ hg push https://<username>@bitbucket.org/prataprc/tayra
+
+To push code into github, you may need to use install `mercurial-git` package
+in ubuntu. And login to git account and
+`add your public-key <https://help.github.com/articles/generating-ssh-keys>`_.
+
+.. code-block:: bash
+
+	$ hg bookmark -f -r default master
+	$ hg push git+ssh://git@github.com:prataprc/tayra.git

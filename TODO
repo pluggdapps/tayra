@@ -224,11 +224,13 @@ Release check-list
 
 * Upload the source into pypi.
         make upload
-* If ttl vim-plugin was updated, package and upload to vim script repository
+* Upload documentation zip.
 
 * Create a tag and push the tagged branch to 
     code.google.com 
     bitbucket.com
     github.com
+
+* If ttl vim-plugin was updated, package and upload to vim script repository
 
 * After making the release, taging the branch, increment the version number.

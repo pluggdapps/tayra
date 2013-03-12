@@ -218,9 +218,7 @@ Release check-list
 
 * Change the release version in 
     ./CHANGELOG,
-    ./Makefile
     ./tayra/__init__.py
-    ./sphinxdoc/source/conf.gpy
 
 * Update setup.py and MANIFEST.in for release
 

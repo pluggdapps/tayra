@@ -21,7 +21,7 @@ from   os.path            import dirname, join, basename
 from   pluggdapps.plugin  import Plugin, ISettings
 import pluggdapps.utils   as h
 
-__version__ = '0.3dev'
+__version__ = '0.4dev'
 
 template_plugins = [
     'tayra:test/stdttl/implementer.ttl'

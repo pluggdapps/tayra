@@ -114,8 +114,8 @@ to each element of the layout.
 In Tayra, templates can be stacked on a base template by inheriting them, which
 enables designers to abstract and organize their templates in more interesting
 ways. This section explains the syntax of **@inherit** directive to
-declare template inheritance, more details on how inheritance works can be
-found `here <./template_layout.html>`_.
+declare template inheritance, find `more details <./template_layout.html>`_ on
+how inheritance works.
 
 .. code-block:: ttl
 

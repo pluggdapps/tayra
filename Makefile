@@ -82,8 +82,11 @@ vimplugin :
 	rm -f tayra/ext/vim/vim-tayra.tar.gz
 	cd tayra/ext/vim/; tar cvfz ./vim-tayra.tar.gz *
 
-cleanall : clean
+cleanall : clean cleandoc
 	rm -rf tayra-env
+
+cleandoc :
+	rm -rf sphinxdoc/build/*
 
 clean :
 	rm -rf build;

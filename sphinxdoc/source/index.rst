@@ -14,6 +14,8 @@ Example,
 
     <html>
       <head>
+        <style text/css>
+          .italics { font-style : italics; }
 
       <body>
         <div>
@@ -53,7 +55,8 @@ Features
 - works with python 3.x.
 - has full unicode support.
 - lexer for generating syntax-highlighted web documents using Pygments.
-- vim plugin for template scripts.
+- `vim plugin <http://www.vim.org/scripts/script.php?script_id=4464>`_ for
+  template scripts.
 - **License:** `GPLv3 license <http://www.gnu.org/licenses/>`.
 - **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
 - **Status:** Core design stable. Not expected to change.

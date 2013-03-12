@@ -412,23 +412,3 @@ Tayra follows configurations and settings provided by pluggdapps component
 architecture. Tayra compiler is implemented as a pluggdapps plugin and hence
 can be configured like configuring any other plugin under pluggdapps platform.
 
-**A note on implementation philosopy**
-
-- The templating engine itself is nothing but a specification of syntax
-  spun around a collection of plugin framework. And advanced users may find it
-  exiting that they can change and extend the behavior (to some extent even the
-  syntax) of the template language. Fact is, tayra cannot even parse simple
-  html
-  tags by itself.
-
-- All programmable expressions, statements and other language-like concepts
-  are nothing but pure python, wrapped inside convenient syntax.
-
-- TTL (Tayra Template Language) files are compiled into python text containing
-  stack-machine instructions, interpreted using a stack machine object.
-
-- Almost every aspect of language functionalities (except the programmable
-  parts) are extensible via plugins.
-
-- But personally I would love to do tayra-templating just for the way the 
-  template code looks - concise and beautiful (thanks to HAML).

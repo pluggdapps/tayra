@@ -1,10 +1,9 @@
 Tayra is a full-featured abstract markup language to template web documents.
-It is primarily inspired from 
-`mako-templates <http://www.makotemplates.org/>`_ and
-`HAML <http://haml-lang.com/>`_ (especially the indentation based
-markup definitions). Probably it is the only templating language that allow
-developers to build and distribute their templates as plugins, not to mention
-the fact that tayra's implementation itself is heavily based on plugins.
+It is primarily inspired from `mako-templates <http://www.makotemplates.org/>`_
+and `HAML <http://haml-lang.com/>`_ (especially the indentation based
+markup definitions). Only templating language that allow developers to build
+and distribute their templates as plugins, not to mention the fact that
+tayra's implementation itself is heavily based on plugins.
 
 Example,
 
@@ -26,9 +25,9 @@ Example,
 Features
 --------
 
-- concise and beautiful syntax.
-- based on pluggdapps component architecture.
-- leverages on pluggdapps' configuration system.
+- concise and neat syntax.
+- based on `pluggdapps` component architecture.
+- leverages on `pluggdapps'` configuration system.
 - full programmability available via,
 
   - expression substitution with optional escape encoding.
@@ -45,10 +44,10 @@ Features
   types of expression.
 - unique ability to create template plugins, distribute them as separate
   package.
-- easy to debug. when used with pluggdapps' ``CatchAndDebug`` plugin, exception
-  tracebacks are tweaked to directly point to faulting line in the
+- easy to debug. when used with `pluggdapps'` ``CatchAndDebug`` plugin,
+  exception tracebacks are tweaked to directly point to faulting line in the
   template.
-- pluggable tag handlers for custom tag elements.
+- `pluggable` tag handlers for custom tag elements.
 - compiles down to optimal python code and optionally memcached. Also possible
   to persist the intermediate python code to avoid re-compilation in case of
   server restart.
@@ -61,4 +60,5 @@ Features
 - **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
 - **Status:** Core design stable. Not expected to change.
 
+Refer to `package documentation <http://pythonhosted.org/tayra/>`_.
 

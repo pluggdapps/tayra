@@ -9,10 +9,13 @@ from   setuptools import setup, find_packages
 from   os.path    import abspath, dirname, join
 
 here = abspath( dirname(__file__) )
-LONG_DESCRIPTION = open( join( here, 'README.rst' )).read(
-                       ).replace(':class:`', '`'
-                                ).replace(':mod:`', '`'
-                                         ).replace(':meth:`', '`')
+try :
+    LONG_DESCRIPTION = open( join( here, 'README.rst' )).read(
+                           ).replace(':class:`', '`'
+                                    ).replace(':mod:`', '`'
+                                             ).replace(':meth:`', '`')
+except :
+    LONG_DESCRIPTION = ''
 
 version = re.compile( 
             r".*__version__[ ]*=[ ]*'(.*?)'",
@@ -72,7 +75,7 @@ setup(
     author_email='prataprc@gmail.com',
     maintainer='Pratap R Chakravarthy',
     maintainer_email='prataprc@gmail.com',
-    url='http://tayra.pluggdapps.com',
+    url='',
     download_url='',
     license='General Public License',
     description=description,

@@ -40,9 +40,8 @@ sdist :
 
 # Generate sphinx documentation.
 sphinx-compile :
-	cp README.rst sphinxdoc/source/index.rst
-	cat sphinxdoc/source/index.rst.inc >> sphinxdoc/source/index.rst
-	cp CHANGELOG.rst sphinxdoc/source/
+	pa -w confdoc -p tayra -o docs/configuration.rst
+	cp docs/configuration.rst sphinxdoc/source/
 	cp docs/commandline.rst sphinxdoc/source
 	cp docs/develop.rst sphinxdoc/source
 	cp docs/directives.rst sphinxdoc/source
@@ -53,6 +52,9 @@ sphinx-compile :
 	cp docs/template_layout.rst sphinxdoc/source
 	cp docs/template_plugins.rst sphinxdoc/source
 	cp docs/tutorial.rst sphinxdoc/source
+	cp README.rst sphinxdoc/source/index.rst
+	cp CHANGELOG.rst sphinxdoc/source/
+	cat sphinxdoc/source/index.rst.inc >> sphinxdoc/source/index.rst
 	rm -rf sphinxdoc/build/html/
 	make -C sphinxdoc html
 

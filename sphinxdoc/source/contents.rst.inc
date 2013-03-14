@@ -14,6 +14,7 @@ Contents:
    template_plugins
    develop
    commandline
+   configuration
 
 Additional Information
 ----------------------

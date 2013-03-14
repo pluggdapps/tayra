@@ -46,8 +46,7 @@ def loadttls( pa, ttlfiles, compiler_setts={} ):
     """
 
     for ttlfile in ttlfiles :
-        compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler',
-                                    settings=compiler_setts )
+        compiler = pa.qp(pa, ISettings, 'ttlcompiler', settings=compiler_setts)
         code = compiler.compilettl( file=ttlfile )
         compiler.load( code, context={} )
         pa.logdebug( "Loaded template plugin %r ..." % ttlfile )

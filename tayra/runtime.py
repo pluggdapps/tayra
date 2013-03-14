@@ -107,18 +107,17 @@ class StackMachine( object ) :
     def __init__( self, compiler ):
         self.compiler = compiler
         self.encoding = compiler.encoding
-        self.tagplugins = [ compiler.query_plugin( ITayraTags, name )
+        self.tagplugins = [ compiler.qp( ITayraTags, name )
                             for name in compiler['tag.plugins'] ]
         self.tagplugins.append(
-                compiler.query_plugin( ITayraTags, pluginname('TayraTags') ))
+                compiler.qp( ITayraTags, pluginname('TayraTags') ))
 
         self.exprplugins = {
-            pluginname(p) : p
-            for p in compiler.query_plugins( ITayraExpression )
+            pluginname(p) : p for p in compiler.qps( ITayraExpression )
         }
-        self.exprdefault = compiler.query_plugin( 
+        self.exprdefault = compiler.qp( 
                             ITayraExpression, compiler['expression.default'] )
-        self.filterblocks = compiler.query_plugins( ITayraFilterBlock )
+        self.filterblocks = compiler.qps( ITayraFilterBlock )
         self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
 
     def _init( self, ifile ):

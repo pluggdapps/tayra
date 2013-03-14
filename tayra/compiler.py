@@ -76,7 +76,7 @@ class TTLCompiler( Plugin ):
         settings.update({ k : self[k] for k in self })
         settings.update( kwargs.pop( 'settings', {} ))
         kwargs['settings'] = settings
-        return self.query_plugin( ISettings, 'ttlcompiler', **kwargs )
+        return self.qp( ISettings, 'ttlcompiler', **kwargs )
 
     def _init( self, file=None, text=None ):
         """Reinitialize the compiler object to compile a different template

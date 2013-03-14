@@ -92,7 +92,7 @@ def lexical( pa, options ):
     from tayra.lexer import TTLLexer
     stats = {}
     setts = { 'optimize' : 0 }
-    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
+    compiler = pa.qp( pa, ISettings, 'ttlcompiler', settings=setts )
     ttllex = TTLLexer( compiler )
     ttllex.build( ttlfile=options.ttlfile )
     ttllex.input( open( options.ttlfile, encoding='utf-8-sig' ).read() )
@@ -104,7 +104,7 @@ def lexical( pa, options ):
 def yaccer( pa, options, debuglevel=0 ):
     from tayra.parser import TTLParser
     setts = { 'optimize' : 0 }
-    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
+    compiler = pa.qp( pa, ISettings, 'ttlcompiler', settings=setts )
     ttlparser = TTLParser( compiler )
     text   = open( options.ttlfile, encoding='utf-8-sig' ).read()
     t1     = time.time()
@@ -125,7 +125,7 @@ def main() :
         'debug'      : True,
     }
 
-    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler', settings=setts )
+    compiler = pa.qp( pa, ISettings, 'ttlcompiler', settings=setts )
     if options.version :
         print( tayra.__version__ )
 
@@ -133,7 +133,7 @@ def main() :
         from tayra.test.teststd import test_stdttl
         print( "Executing TTL tests ..." )
         setts['beautify_html'] = True
-        compiler = pa.query_plugin(pa,ISettings,'ttlcompiler',settings=setts)
+        compiler = pa.qp(pa,ISettings,'ttlcompiler',settings=setts)
         test_stdttl( compiler, options )
 
     elif options.ttllex and options.ttlfile : 

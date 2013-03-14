@@ -8,6 +8,7 @@ tayra's implementation itself is heavily based on plugins.
 Example,
 
 .. code-block:: ttl
+    :linenos:
 
     @doctype html
 

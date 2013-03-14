@@ -8,11 +8,12 @@
 ``h``. And the entire namespace is accessible as ``h.<attr>``.
 
 .. code-block:: ttl
+    :linenos:
 
-  <head>
-  <body>
-    ${ h.parsecsv( 'one, two, three' ) }
-    ${ h.parsecsvlines( 'one, \\n two, three' ) }
+    <head>
+    <body>
+      ${ h.parsecsv( 'one, two, three' ) }
+      ${ h.parsecsvlines( 'one, \\n two, three' ) }
 
 Instead of importing python stdlib modules directly in template scripts it is
 better to access them via this module, so that in future when sandboxing

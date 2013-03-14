@@ -5,17 +5,18 @@ There are multiple ways to install tayra and the easiest way is using
 easy_install.
 
 .. code-block:: bash
+    :linenos:
 
     # -Z to do unzipped install. The reason for installing it
     #    in un-zipped form is to make use of the command line tool.
     # -U to upgrade install
-    easy_install tayra
+    $ easy_install tayra
 
     # If beautify_html configuration option is desired,
-    easy_install beautifulsoup4 
+    $ easy_install beautifulsoup4 
 
     # To compile sphinx documentation
-    easy_install sphinx
+    $ easy_install sphinx
 
 **Install from source code**,
 
@@ -25,12 +26,13 @@ Alternately, you can obtain the source code by,
 - cloning from one of the many places mentioned below.
 
 .. code-block:: bash
+    :linenos:
 
-    hg clone https://code.google.com/p/tayra/
+    $ hg clone https://code.google.com/p/tayra/
     # or
-    hg clone https://bitbucket.org/prataprc/tayra
+    $ hg clone https://bitbucket.org/prataprc/tayra
     # or 
-    git clone https://github.com/prataprc/tayra.git
+    $ git clone https://github.com/prataprc/tayra.git
 
 tayra uses mercurial as native repository.
 
@@ -38,15 +40,17 @@ After untarring the source package, or cloning the source repository into
 your local machine, install source package by executing,
 
 .. code-block:: bash
+    :linenos:
 
-    sudo python ./setup.py install
-    sudo python ./setup.py develop # to install the development version
+    $ sudo python ./setup.py install
+    $ sudo python ./setup.py develop # to install the development version
 
 
 Using it as python library
 --------------------------
 
 .. code-block:: python
+    :linenos:
 
     from pluggdapps.platform import Pluggdapps
     from pluggdapps.plugin   import ISettings
@@ -71,31 +75,34 @@ script file from tayra package and make sure that the package is in
 PYTHONPATH, like,
 
 .. code-block:: bash
+    :linenos:
 
-    ln -s <site-package>/tayra/tyr.py $(HOME)/bin/tayra
-    chmod +x $(HOME)/bin/tayra
+    $ ln -s <site-package>/tayra/tyr.py $(HOME)/bin/tayra
+    $ chmod +x $(HOME)/bin/tayra
 
     # or,
-    ln -s <site-package>/tayra/tyr.py /usr/bin/tayra
-    chmod +x $(HOME)/bin/tayra
+    $ ln -s <site-package>/tayra/tyr.py /usr/bin/tayra
+    $ chmod +x $(HOME)/bin/tayra
 
 To check whether the package is installed and available in your environment
 run the test cases,
 
 .. code-block:: bash
+    :linenos:
 
     # After entering your virtual-environment, if any.
-    make testall
+    $ make testall
 
 should pass without any errors. Some useful ``tayra`` commands,
 
 .. code-block:: bash
+    :linenos:
 
     # Translate a template file to corresponding html file.
-    tayra <template-file>
+    $ tayra <template-file>
 
     # For more help one the command line tool.
-    tayra --help
+    $ tayra --help
 
 
 Start templating
@@ -106,6 +113,7 @@ language. Open your favorite editor and we will start writing our first
 template. In the long tradition of programming, let us welcome this world,
 
 .. code-block:: ttl
+    :linenos:
 
     ## File name : eg1.ttl
 
@@ -117,13 +125,15 @@ template. In the long tradition of programming, let us welcome this world,
 Let us now translate this to a html document,
 
 .. code-block:: bash
+    :linenos:
 
     # Assuming that tayra is available in your environment,
-    tayra eg1.ttl
+    $ tayra eg1.ttl
 
 which looks like,
 
 .. code-block:: html
+    :linenos:
 
     <html>
       <head></head>
@@ -136,6 +146,7 @@ Now, we will add an id and couple of class attributes to the paragraph tag that
 contains the `hello world` text.
 
 .. code-block:: ttl
+    :linenos:
 
     ## File name : eg1.ttl
 
@@ -149,6 +160,7 @@ contains the `hello world` text.
   `highlight`. And our translated html looks like
 
 .. code-block:: html
+    :linenos:
 
     <html>
       <head></head>

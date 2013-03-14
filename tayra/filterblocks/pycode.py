@@ -29,6 +29,7 @@ class TayraFilterBlockPy( Plugin ):
       define them outside template tags.
 
     .. code-block:: ttl
+        :linenos:
 
         <div>
           :py:

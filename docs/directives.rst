@@ -14,6 +14,7 @@ This directive can be used to specify html document's DTD
 (Document-Type-Definition). To template a html5 document,
 
 .. code-block:: ttl
+    :linenos:
 
     @doctype html
 
@@ -31,6 +32,7 @@ For more information on HTML doctypes refer
 describe template document's character-encoding. For Example.
 
 .. code-block:: ttl
+    :linenos:
 
     @doctype html charset='latin1'    
 
@@ -48,6 +50,7 @@ function signature for **body()**. Function signature must be specified in
 python syntax like,
 
 .. code-block:: ttl
+    :linenos:
 
     @body id, cls, style=''
 
@@ -60,6 +63,7 @@ function or template interface method. Subsquently while integrating tayra
 with your application,
 
 .. code-block:: python
+    :linenos:
 
     from pluggdapps.platform import Pluggdapps
     from pluggdapps.plugin   import ISettings
@@ -87,6 +91,7 @@ And library templates can be imported in other template scripts using
 name to access the template module.
 
 .. code-block:: ttl
+    :linenos:
 
     @import etsite:templates/_base/elements.ttl as e ;
     @import os, sys;
@@ -118,6 +123,7 @@ declare template inheritance, find `more details <./template_layout.html>`_ on
 how inheritance works.
 
 .. code-block:: ttl
+    :linenos:
 
     @inherit app:templates/_base/base.ttl ;
 
@@ -142,6 +148,7 @@ implementing one or more interface specifications. They can do so by first
 declaring it using **@implement** directive, like,
 
 .. code-block:: ttl
+    :linenos:
 
     @doctype html
     @implement tayrakit.interfaces:ITTLFooter as PluggdappsFooter

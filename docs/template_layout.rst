@@ -16,6 +16,7 @@ enables designers to abstract and organize their templates in more interesting
 ways. For example,
 
 .. code-block:: ttl
+    :linenos:
 
     <!-- file-name base.ttl -->
 
@@ -56,6 +57,7 @@ functions are refered on ``this`` object then, it follows the inheritance
 chain. Let use see an example template inheriting our `base.ttl`,
 
 .. code-block:: ttl
+    :linenos:
 
     <!-- file-name page.ttl -->
 

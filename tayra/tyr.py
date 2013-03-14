@@ -11,27 +11,28 @@ easy_install, a shell command is automatically installed under **bin/**
 directory.
 
 .. code-block:: text
+    :linenos:
 
-  > tayra --help
-  usage: tayra [-h] [-l] [-d] [-s] [-t] [-a ARGS] [-c CONTEXT] [-g DEBUG]
-               [--version]
-               ttlfile
+    > tayra --help
+    usage: tayra [-h] [-l] [-d] [-s] [-t] [-a ARGS] [-c CONTEXT] [-g DEBUG]
+                 [--version]
+                 ttlfile
 
-  Pluggdapps command line script
+    Pluggdapps command line script
 
-  positional arguments:
-    ttlfile     Input template file containing tayra script
+    positional arguments:
+      ttlfile     Input template file containing tayra script
 
-  optional arguments:
-    -h, --help  show this help message and exit
-    -l          Do lexical analysis of input file.
-    -d          Dump translation
-    -s          Show AST parse tree
-    -t          Execute test cases.
-    -a ARGS     Argument to template
-    -c CONTEXT  Context to template
-    -g DEBUG    Debug level for PLY argparser
-    --version   Version information of the package
+    optional arguments:
+      -h, --help  show this help message and exit
+      -l          Do lexical analysis of input file.
+      -d          Dump translation
+      -s          Show AST parse tree
+      -t          Execute test cases.
+      -a ARGS     Argument to template
+      -c CONTEXT  Context to template
+      -g DEBUG    Debug level for PLY argparser
+      --version   Version information of the package
 """
 
 from   argparse            import ArgumentParser

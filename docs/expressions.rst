@@ -7,6 +7,7 @@ syntax.  Additionally, evaluated output can be passed to filters using
 value of filters to be applied in specified order.
 
 .. code-block:: ttl
+    :linenos:
 
     <li #crumbs>
       <a .crumbname "${crumbsurl or '' | u }"> ${crumbsname}
@@ -27,6 +28,7 @@ them to supplied filter (if any) and then substitute the final output in html
 output.
 
 .. code-block:: ttl
+    :linenos:
 
     @@l = [1,2,3]
 
@@ -55,6 +57,7 @@ HTMl output the expression text will be replace with an empty string.
 This plugin does not support any filter methods.
 
 .. code-block:: ttl
+    :linenos:
 
     @@l = [1,2,3]
 

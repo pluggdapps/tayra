@@ -104,6 +104,7 @@ to body(), that the final html is generated and returned, the call is
 automatically done by tayra APIs.
 
 .. code-block:: ttl
+    :linenos:
 
     @doctype html
 
@@ -139,6 +140,7 @@ common shortcuts,
 Here is an example,
 
 .. code-block:: ttl
+    :linenos:
 
     <!-- File name : eg2.ttl -->
 
@@ -170,6 +172,7 @@ Escape filtering
 
 
 .. code-block:: ttl
+    :linenos:
 
     <!-- File name : eg3.ttl -->
 
@@ -204,6 +207,7 @@ expression-substitution syntax.
 The above example when translted to html, will look like,
 
 .. code-block:: html
+    :linenos:
 
     <div >
       hello world, 5 times
@@ -223,6 +227,7 @@ Comments can be of two forms,
 - HTML comments that are preserved in html output.
 
 .. code-block:: ttl
+    :linenos:
 
     <!--
     This file is subject to the terms and conditions defined in
@@ -251,6 +256,7 @@ control blocks are prefixed with **@**, and the block of template script under
 the control block must be `indented to the right`. Let us see an example now,
 
 .. code-block:: ttl
+    :linenos:
 
     @if bodylocal == 'pass' :
       @@pass
@@ -287,6 +293,7 @@ the loop is terminated; if continue is reached, the processing is stopped and
 continues with the next iteration. The following is an example,
 
 .. code-block:: ttl
+    :linenos:
 
     @for user in users :
       @if user.startswith('admin-') :
@@ -323,6 +330,7 @@ signature.
 Function signature starts with **@def** keyword and ends with a **colon (:)**.
 
 .. code-block:: ttl
+    :linenos:
 
     @def justtext() : 
       Google will join its biggest mobile rival, Apple, on the space trip as
@@ -382,6 +390,7 @@ The import directive specifies which template file to be imported and the
 name to access the template module. For example,
 
 .. code-block:: html
+    :linenos:
 
     @import etsite:templates/_base/elements.ttl as e ;
     @import os, sys;

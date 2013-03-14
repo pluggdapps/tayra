@@ -18,6 +18,7 @@ similar to the opening line.
 Here is an example,
 
 .. code-block:: ttl
+    :linenos:
 
     :py:
       a = 'empty'

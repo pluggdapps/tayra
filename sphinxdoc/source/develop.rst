@@ -41,6 +41,7 @@ ITayraTags plugins, where plugins are configured using
 ``TTLCompiler['use_tag_plugins']`` settings. Here is an example,
 
 .. code-block:: ttl
+    :linenos:
 
     <form on>
       First name : <inptext :firstname>
@@ -61,6 +62,7 @@ Additionally, evaluated output can be passed to filters using **${... |
 filters to be applied in specified order.
 
 .. code-block:: ttl
+    :linenos:
 
     <li #crumbs>
       <a .crumbname "${crumbsurl or '' | u }"> ${crumbsname}
@@ -72,6 +74,7 @@ coding an expression inside a template script it is possible to target the
 expression for specific plugin, like,
 
 .. code-block:: ttl
+    :linenos:
 
     @@l = [1,2,3]
 
@@ -109,6 +112,7 @@ plugin. Using this developers can add python code blocks inside the template
 script, both in local scope and global scope. For EG,
 
 .. code-block:: ttl
+    :linenos:
 
     @interface ITTLBreadCrumbs.default_settings( self ):
       :py:
@@ -131,9 +135,10 @@ To begin with, first checkout latest source tree from the repository and then
 use the ``make`` command to create a development environment.
 
 .. code-block:: bash
+    :linenos:
 
-  cd tayra
-  make develop
+    $ cd tayra
+    $ make develop
 
 - sets-up a virtual environment under ``tayra-env/`` directory.
 - installs tayra under the virtual environment in development
@@ -143,41 +148,42 @@ List of make commands
 ---------------------
 
 .. code-block:: bash
+    :linenos:
 
-  source ./tayra-env/bin/activate # To start using the tayra package
+    $ source ./tayra-env/bin/activate # To start using the tayra package
 
-  # Setup virtual environment under tayra-env/ directory. And installs
-  # sphinx generator package.
-  make develop
+    # Setup virtual environment under tayra-env/ directory. And installs
+    # sphinx generator package.
+    $ make develop
 
-  # Test tayra package with standard test cases.
-  make testall
+    # Test tayra package with standard test cases.
+    $ make testall
 
-  # Install other template packages for benchmark.
-  make bench-setup
+    # Install other template packages for benchmark.
+    $ make bench-setup
 
-  # Execute the bench-mark suite. This is work in progress, you can
-  # help me to setup this benchmark.
-  make benchmark
+    # Execute the bench-mark suite. This is work in progress, you can
+    # help me to setup this benchmark.
+    $ make benchmark
 
-  # Generate binary egg distribution.
-  make bdist_egg
+    # Generate binary egg distribution.
+    $ make bdist_egg
 
-  # Generate source distribution. This is the command used to generate
-  # the public distribution package.
-  make sdist
+    # Generate source distribution. This is the command used to generate
+    # the public distribution package.
+    $ make sdist
 
-  # Generate sphinx documentation.
-  make sphinx-compile
+    # Generate sphinx documentation.
+    $ make sphinx-compile
 
-  # Generate sphinx documentation and zip the same for package upload.
-  make sphinx
+    # Generate sphinx documentation and zip the same for package upload.
+    $ make sphinx
 
-  # Upload package to python cheese shop (pypi).
-  make upload
+    # Upload package to python cheese shop (pypi).
+    $ make upload
 
-  # Create vim package to upload into vim script base.
-  make vimplugin
+    # Create vim package to upload into vim script base.
+    $ make vimplugin
 
 - after doing a `bdis_egg` or `sdist`, .egg packages will be availabe under
   ``dist/`` directory
@@ -192,6 +198,7 @@ Push code to repositories
 From source root, 
 
 .. code-block:: bash
+    :linenos:
 
     # for code.google.com
 	$ hg push https://<username>@code.google.com/p/tayra/
@@ -204,6 +211,7 @@ in ubuntu. And login to git account and
 `add your public-key <https://help.github.com/articles/generating-ssh-keys>`_.
 
 .. code-block:: bash
+    :linenos:
 
 	$ hg bookmark -f -r default master
 	$ hg push git+ssh://git@github.com:prataprc/tayra.git

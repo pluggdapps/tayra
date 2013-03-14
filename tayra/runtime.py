@@ -74,6 +74,7 @@ until an attribute is found in one of the base module.
 Other than this every template script will have the following standard imports
 
 .. code-block :: python
+    :linenos:
 
     import imp
     from   io                   import StringIO

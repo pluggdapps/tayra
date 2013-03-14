@@ -7,6 +7,7 @@ template-scripts implementing one or more interface specifications. They can
 do so by first declaring it using **@implement** directive, like,
 
 .. code-block:: ttl
+    :linenos:
 
     @doctype html
     @implement tayrakit.interfaces:ITTLFooter as PluggdappsFooter
@@ -50,6 +51,7 @@ abstracts an interface method defined in the statement,
 Following example illustrates how to use a plugin,
 
 .. code-block:: ttl
+    :linenos:
     
     @doctype html
     @from tayrakit.interfaces import ITTLFooter
@@ -97,6 +99,7 @@ Now to package them as template-plugins, we will have to add an entry point in
 our setup.py file like,
 
 .. code-block:: python
+    :linenos:
 
     entry_points={                          # setuptools
         'pluggdapps' : [
@@ -107,6 +110,7 @@ our setup.py file like,
 And inside our toolkit/__init__.py package file, we define our entry point as,
 
 .. code-block:: python
+    :linenos:
 
     from tayra  import loadttls
 

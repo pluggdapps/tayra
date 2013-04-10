@@ -1,8 +1,3 @@
-* Check out Angular JS. Can tayra learn anything from them ?
-
-* Document how to push source tree into public repositories. Especially
-  hg-git.
-
 * Example ttl files demonstrating the tokens and shortcuts implemented by
   tayra.tags.html plugin and tayra.tags.forms plugin.
  
@@ -102,6 +97,9 @@
 
     If the value is undefined in the context it will return the passed 
     default value, otherwise the value of the variable
+
+* Check out Angular JS. Can tayra learn anything from them ?
+
 
 Errors and warnings :
 ---------------------

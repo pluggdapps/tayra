@@ -16,7 +16,7 @@ to build and distribute their templates as plugins, not to mention the fact
 that tayra's implementation itself is heavily based on plugins.
 """
     
-from   os.path            import dirname, join, basename
+from   os.path            import dirname, join, basename, abspath
 
 from   pluggdapps.plugin  import Plugin, ISettings
 import pluggdapps.utils   as h
@@ -72,8 +72,19 @@ def translatefile( ttlfile, compiler, options ):
     """
     args = getattr( options, 'args', [] )
     args = eval( args ) if isinstance( args, str ) else args
-    context = getattr( options, 'context', {} )
-    context = eval( context ) if isinstance( context, str ) else context
+
+    # Update context
+    context = getattr( options, 'context', '{}' ).strip()
+    try :
+        context = eval(context)
+    except :
+        try :
+            cxtfile = abspath( context )
+            if isfile( cxtfile ) :
+                context = eval( open( cxtfile ).strip() )
+        except :
+            context = {}
+
     context.update( _bodyargs=args )
 
     # Generate

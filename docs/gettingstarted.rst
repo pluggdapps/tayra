@@ -169,6 +169,93 @@ contains the `hello world` text.
       </body>
     </html>
 
+Tayra sand pit
+--------------
+
+This section explains how to setup tayra locally and play with templates.
+
+* tayra depends on `pluggdapps`, hence clone both tayra and pluggdapps 
+  repository from `github`.
+* create a virtual environment.
+* enter the virtual environment.
+* setup pluggdapps and tayra package in development mode.
+
+Above sequence of steps are suggested by following bash script.
+
+.. code-block:: bash
+    :linenos:
+
+    # Get the source package.
+    $ cd $HOME/dev
+    $ git clone https://github.com/prataprc/pluggdapps.git pluggdapps
+    $ git clone https://github.com/prataprc/tayra.git tayra
+
+    # create a virtual environment.
+    $ cd pluggdapps
+    $ make develop
+
+    # enter the virtual environment.
+    $ source pa-env/bin/activate
+
+    # install development packages
+    $ cd $HOME/dev/pluggdapps
+    $ python ./setup develop
+    $ cd $HOME/dev/tayra
+    $ python ./setup develop
+
+    $ cd $HOME/dev
+    $ mkdir tayra-sandpit
+    $ cd tayra-sandpit
+
+inside the sandpit directory create as many templates (save them as .ttl files)
+as you want and compile them to html files like,
+
+.. code-block:: bash
+    :linenos:
+
+    # Make sure that you are inside the `virtual environment`
+
+    # Translate a template file to corresponding html file.
+    $ tayra <template-file>
+
+    # For more help one the command line tool.
+    $ tayra --help
+
+to supply context for template files, use the ``-c`` switch in the command
+line,
+    
+.. code-block:: bash
+    :linenos:
+
+    $ tayra tables.ttl -c context.py.file
+
+above example used a template file - `tables.ttl` and a context file -
+`context.py.file`. Context file should contain a single python object, a
+dictionary, providing template context as key, value pairs.
+
+.. code-block:: python
+    :linenos:
+    
+    # context.py.file dictionary of context
+    { 'rows' : 10,
+      'cols' : 20
+    }
+
+and the template file in the above example, `tables.ttl` might look like,
+
+.. code-block:: ttl
+    :linenos:
+
+    <html>
+      <head>
+      <body>
+        <table>
+          @for i in range(rows) :
+            <tr>
+              @for j in range(cols) :
+                <td>
+
+
 Integration with other tools
 ----------------------------
 

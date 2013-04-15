@@ -202,6 +202,7 @@ Above sequence of steps are suggested by following bash script.
     $ python ./setup develop
     $ cd $HOME/dev/tayra
     $ python ./setup develop
+    $ easy_install beautifulsoup4
 
     $ cd $HOME/dev
     $ mkdir tayra-sandpit

@@ -207,11 +207,13 @@ From source root,
 	$ hg push https://<username>@bitbucket.org/prataprc/tayra
 
 To push code into github, you may need to use install `mercurial-git` package
-in ubuntu. And login to git account and
+in ubuntu. Then login to your git account and
 `add your public-key <https://help.github.com/articles/generating-ssh-keys>`_.
 
 .. code-block:: bash
     :linenos:
 
+	$ hg clone <trunk> tayra-git
+    $ cd tayra-git
 	$ hg bookmark -f -r default master
 	$ hg push git+ssh://git@github.com:prataprc/tayra.git

@@ -53,7 +53,8 @@ def tayratemplate( dirname, verbose=False ):
         'beautify_html' : False,
     }
     options = O()
-    compiler = pa.query_plugin(pa, ISettings, 'ttlcompiler', settings=settings)
+    compiler = pa.query_plugin(
+                    pa, ISettings, 'tayra.TTLCompiler', settings=settings )
     options.context = dict( 
             title='Just a test', user='joe',
             list_items=['Number %d' % num for num in range(1, 15)]

@@ -1,3 +1,5 @@
+* Rename tyr.py to script.py.
+
 * Example ttl files demonstrating the tokens and shortcuts implemented by
   tayra.tags.html plugin and tayra.tags.forms plugin.
  

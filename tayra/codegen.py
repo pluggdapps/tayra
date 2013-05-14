@@ -60,8 +60,7 @@ def __traceback_decorator__( frames ):
 """
 
 footer = """\
-_ttlhash = %r
-_ttlfile = %r """
+"""
 
 importtext = """\
 __compiler = _compiler()
@@ -171,7 +170,7 @@ class InstrGen( object ):
         """Evaluate a string as python expression and append the result into
         the stack buffer."""
         name, s = s.split(' ',1) if s.startswith('-') else ('', s)
-        name = ('tayraexpression' + name[1:]) if name else name
+        name = name[1:] if name else name
         try    : text, filts = s.split('|', 1)
         except : text, filts = s, ''
         text, filts = text.strip(), filts.strip()
@@ -268,9 +267,10 @@ class InstrGen( object ):
     #        line = '%s = _m.use( %s, %r )' % (name, interfacename, pluginname)
     #    self.putstatement(line)
 
+    # TODO : Remove ttlhash and ttlfile.
     def footer( self, ttlhash, ttlfile ):
         """Add the footer python code."""
-        self.outline( footer % (ttlhash, ttlfile) )
+        self.outline( footer )
 
     def finish( self ):
         """Call this when there is no more instruction to generate. Before

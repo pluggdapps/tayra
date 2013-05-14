@@ -7,12 +7,12 @@
 """Module provides a plugin to handle standard html5 tags."""
 
 import pluggdapps.utils     as h
-from  tayra.tags    import TayraTags
+from  tayra.tags    import Tags
 
-class TayraHTML5( TayraTags ):
+class HTML5( Tags ):
     """Basic plugin to handle most of the HTML5 tags. Other than the common
     set of tokens and specifiers supported by the base 
-    :class:`tayra.tags.TayraTags` this plugin defines other tokens that are
+    :class:`tayra.tags.Tags` this plugin defines other tokens that are
     specific to each tag. Individual tags are handle by their corresponding
     method prefixed with 'tag_'. Refer to them for more details about the tags.
     """

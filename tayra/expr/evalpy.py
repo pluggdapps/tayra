@@ -11,7 +11,7 @@ from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraExpression
 
-class TayraExpressionEvalPy( Plugin ):
+class ExpressionEvalPy( Plugin ):
     """Plugin evaluates python expression and discards the resulting
     value. Doesn't supply any filtering rules."""
 

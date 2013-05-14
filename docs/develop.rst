@@ -48,7 +48,7 @@ ITayraTags plugins, where plugins are configured using
       <br>
       Last name  : <inptext :lastname>
 
-uses `inptext` tag, a non-standard tag, implemented by ``TayraHTML5Forms``
+uses `inptext` tag, a non-standard tag, implemented by ``HTML5Forms``
 plugin, where tokens within the tag definition are parsed and interpreted by
 plugins and are taken into account while generating a corresponding HTML 
 text. You can refer :mod:`tayra.tags.forms` module for more information on
@@ -85,9 +85,9 @@ expression for specific plugin, like,
     <div> ${l}
 
 where, ``-evalpy`` and ``-py`` refers to plugin name. For instance ``-evalpy``
-will refer to a plugin whose class name is ``TayraExpressionEvalPy``, note the
+will refer to a plugin whose class name is ``ExpressionEvalPy``, note the
 `TayraExpression` prefix in the class name. Similarly ``-py`` will refer to
-plugin whose class name is ``TayraExpressionPy``. The difference between
+plugin whose class name is ``ExpressionPy``. The difference between
 `-eval` and `-py` is that in the former case expression is only evaluated in
 the global and local scope and in the later case expression is both evaluated
 and substituted.

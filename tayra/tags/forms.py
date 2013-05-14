@@ -8,7 +8,7 @@
 Module provides a plugin to handle custom tags for html5 forms.
 Following is a table of token-specifiers that are common to all tags handled
 by this plugin, and augment the standard set of specifiers provided by
-:class:`tayra.tags.TayraTags` base class.
+:class:`tayra.tags.Tags` base class.
 
   +---------------------+------------------------------------------------+
   |      token          |   Equivalent attribute pairs                   |
@@ -73,9 +73,9 @@ by this plugin, and augment the standard set of specifiers provided by
 import re
 
 import pluggdapps.utils     as h
-from   tayra.tags           import TayraTags
+from   tayra.tags           import Tags
 
-class TayraHTML5Forms( TayraTags ):
+class HTML5Forms( Tags ):
     """Plugin to handle HTML input elements and other form tags like,
     `textarea` and `select`. It also provides a common set of token specifiers
     described by this module documentation. To know more about tokens specific

@@ -1226,7 +1226,7 @@ class FilterBlock( NonTerminal ):
         self.FILTEROPEN, self.filtertext, self.FILTERCLOSE = \
                 filteropen, filtertext, filterclose
         self.NEWLINES1, self.NEWLINES2 = nl1, nl2
-        name = 'tayrafilterblock' + filteropen.dump(None)[1:].split(':', 1)[0]
+        name = 'tayra.filterblock' + filteropen.dump(None)[1:].split(':', 1)[0]
         self.plugin = parser.compiler.qp( ITayraFilterBlock, name )
         # Set parent attribute for children, should be last statement !!
         self.setparent( self, self.children() )

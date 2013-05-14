@@ -7,9 +7,9 @@
 """Template tags have one-to-one correspondence with HTML tags. On top of that
 plugins can extend tag definitions, adding composite tags, by implementing 
 :class:`tayra.interfaces.ITayraTags` interface specification. An example of
-this can be found in :class:`tayra.tags.forms.TayraHTML5Forms` plugin. 
+this can be found in :class:`tayra.tags.forms.HTML5Forms` plugin. 
 Plugins wanting to implement :class:`ITayraTags` interface must derive from 
-the base class :class:`TayraTags` defined in this module. The base class
+the base class :class:`Tags` defined in this module. The base class
 defines standard specifier tokens common to all template tags, also gracefully
 handles undefined tags in safest possible way.
 
@@ -83,7 +83,7 @@ from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraTags
 
-class TayraTags( Plugin ):
+class Tags( Plugin ):
     """Base class for all plugins wanting to handle template tags. Since the
     base class declares that it implements :class:`tayra.interfaces.ITayraTags`
     interface, deriving plugins need not do the same. 

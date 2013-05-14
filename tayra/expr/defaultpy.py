@@ -13,7 +13,7 @@ from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraExpression
 
-class TayraExpressionPy( Plugin ):
+class ExpressionPy( Plugin ):
     """Plugin evaluates python expression, converts the result into
     string and supplies escape filtering like url-encode, xml-encode, 
     html-encode, stripping whitespaces on expression substitution."""
@@ -75,4 +75,4 @@ class TayraExpressionPy( Plugin ):
         return sett
 
 _default_settings = h.ConfigDict()
-_default_settings.__doc__ = TayraExpressionPy.__doc__
+_default_settings.__doc__ = ExpressionPy.__doc__

@@ -46,7 +46,8 @@ def loadttls( pa, ttlfiles, compiler_setts={} ):
     """
 
     for ttlfile in ttlfiles :
-        compiler = pa.qp(pa, ISettings, 'ttlcompiler', settings=compiler_setts)
+        compiler = pa.qp(
+                pa, ISettings, 'tayra.ttlcompiler', settings=compiler_setts )
         code = compiler.compilettl( file=ttlfile )
         compiler.load( code, context={} )
         pa.logdebug( "Loaded template plugin %r ..." % ttlfile )
@@ -131,3 +132,5 @@ import tayra.interfaces     # Import interfaces specified by tayra project.
 import tayra.tags           # Import plugins implementing ITayraTags
 import tayra.filterblocks   # Import plugins implementing ITayraFilterBlock
 import tayra.expr           # Import plugins implementing ITayraExpression
+
+

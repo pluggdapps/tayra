@@ -62,7 +62,7 @@ Following example illustrates how to use a plugin,
       <body>
         ...
         <div .footer>
-          @@ footer = _compiler.query_plugin( ITTLFooter, 'PluggdappsFooter' )
+          @@ footer = _compiler.query_plugin( ITTLFooter, 'tayrakit.PluggdappsFooter' )
           @@ counts = { 'interfaces' : interfaces_no, 'plugins' : plugins_no }
           ${ footer.render( counts ) }
 

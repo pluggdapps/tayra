@@ -52,7 +52,7 @@ class ITayraExpression( Interface ):
     """Interface specification to handle expressions within template script.
     IMPORTANT : Plugins implementing this interface should have its name
     prefixed with 'TayraExpression'. For instance a plugin implementing python
-    expression evaluation will look like, ``TayraExpressionPy``, and in the
+    expression evaluation will look like, ``ExpressionPy``, and in the
     template script this plugin can be referred as,::
     
             ${-py <python-expression>}

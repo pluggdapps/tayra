@@ -12,7 +12,7 @@ from   pluggdapps.plugin    import Plugin, implements
 import pluggdapps.utils     as h
 from   tayra.interfaces     import ITayraFilterBlock
 
-class TayraFilterBlockPy( Plugin ):
+class FilterBlockPy( Plugin ):
     """Handle python code blocks.
 
     Follows indentation rules as defined by python language. To maintain

@@ -1,37 +1,38 @@
 Catalog of plugin configuration.
 ================================
+
 basettlplugin
 -------------
 
 -- configuration is not supported by plugin --
 
-tayraexpressionevalpy
----------------------
+expressionevalpy
+----------------
 
 -- configuration is not supported by plugin --
 
-tayraexpressionpy
------------------
+expressionpy
+------------
 
 -- configuration is not supported by plugin --
 
-tayrafilterblockpy
-------------------
+filterblockpy
+-------------
 
 -- configuration is not supported by plugin --
 
-tayrahtml5
+html5
+-----
+
+-- configuration is not supported by plugin --
+
+html5forms
 ----------
 
 -- configuration is not supported by plugin --
 
-tayrahtml5forms
----------------
-
--- configuration is not supported by plugin --
-
-tayratags
----------
+tags
+----
 
 -- configuration is not supported by plugin --
 

@@ -86,7 +86,6 @@ Other than this every template script will have the following standard imports
 import re
 
 import pluggdapps.utils     as h
-from   pluggdapps.plugin    import pluginname
 
 from   tayra.lexer      import TTLLexer
 from   tayra.interfaces import ITayraTags, ITayraExpression, ITayraFilterBlock
@@ -110,16 +109,12 @@ class StackMachine( object ) :
         self.encoding = compiler.encoding
         self.tagplugins = [ compiler.qp( ITayraTags, name )
                             for name in compiler['tag.plugins'] ]
-        self.tagplugins.append(
-                compiler.qp( ITayraTags, pluginname('TayraTags') ))
+        self.tagplugins.append( compiler.qp( ITayraTags, 'tayra.Tags' ))
 
-        self.exprplugins = {
-            pluginname(p) : p for p in compiler.qps( ITayraExpression )
-        }
-        self.exprdefault = compiler.qp( 
+        self.exprplugins = { p.caname.split('.', 1)[1] : p 
+                             for p in compiler.qps(ITayraExpression) }
+        self.exprdefault = compiler.qp(
                             ITayraExpression, compiler['expression.default'] )
-        self.filterblocks = compiler.qps( ITayraFilterBlock )
-        self.filterblocks = { pluginname(x) : x for x in self.filterblocks }
 
     def _init( self, ifile ):
         self.bufstack = [ [] ]
@@ -220,7 +215,7 @@ class StackMachine( object ) :
         ``filters``. ``filters`` is comma separated value of escape filters 
         to be applied on the output string.
         """
-        exprp = self.exprplugins[name] if name else self.exprdefault
+        exprp=self.exprplugins['expression'+name] if name else self.exprdefault
         out = exprp.eval( self, text, globals_, locals_ )
         if not filters : return out
 

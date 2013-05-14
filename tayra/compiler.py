@@ -8,7 +8,7 @@
 interface :class:`IHTTPRenderer`.
 """
 
-import imp, os, re, sys
+import imp, os, re, sys, os.path
 from   os.path              import isfile, basename, join, isdir, dirname
 from   hashlib              import sha1
 
@@ -76,17 +76,22 @@ class TTLCompiler( Plugin ):
         settings.update({ k : self[k] for k in self })
         settings.update( kwargs.pop( 'settings', {} ))
         kwargs['settings'] = settings
-        return self.qp( ISettings, 'ttlcompiler', **kwargs )
+        return self.qp( ISettings, 'tayra.ttlcompiler', **kwargs )
 
     def _init( self, file=None, text=None ):
         """Reinitialize the compiler object to compile a different template
         script."""
+        from pluggdapps import papackages
         self.ttlloc = TemplateLookup( self, file, text )
         self.encoding = self.ttlloc.encoding
         self.ttlfile = self.ttlloc.ttlfile
         self.ttltext = self.ttlloc.ttltext
         self.pyfile = self.ttlloc.pyfile
-        self.modulename = basename( self.ttlfile ).split('.', 1)[0]
+        
+        # Compute the module name from ttlfile.
+        asset = h.asset_spec_from_abspath( self.ttlfile, papackages )
+        n = '.'.join(asset.split(':', 1)[1].split( os.path.sep ))
+        self.modulename = n[:-4] if n.endswith('.ttl') else n
 
         self.mach._init( self.ttlfile )
         self.igen._init()
@@ -162,11 +167,15 @@ class TTLCompiler( Plugin ):
             'parent'      : None,
             'next'        : None,
             'h'           : tmplh,
+            '__file__'    : self.pyfile,
+            '_ttlfile'    : self.ttlfile,
+            '_ttlhash'    : self.ttlloc.ttlhash,
         }
         ctxt.update( context )
         ctxt['_context'] = ctxt
         module.__dict__.update( ctxt )
         # Execute the code in module's context
+        sys.modules.setdefault( self.modulename, module )
         exec( code, module.__dict__, module.__dict__ )
         return module
 
@@ -318,14 +327,14 @@ _defaultsettings['nocache'] = {
                 "file."
 }
 _defaultsettings['expression.default']          = {
-    'default' : 'TayraExpressionPy',
+    'default' : 'tayra.ExpressionPy',
     'types'   : (str,),
     'help'    : "Default plugin to use for evaluating text in expression "
                 "substitution. This plugin will be used if filter() call"
                 "fails in other ITayraExpression plugins."
 }
 _defaultsettings['tag.plugins']           = {
-    'default' : 'TayraHTML5Forms, TayraHTML5, TayraTags',
+    'default' : 'tayra.HTML5Forms, tayra.HTML5, tayra.Tags',
     'types'   : ('csv', list),
     'help'    : "Comma separated list of tag plugins to use. Plugins in the "
                 "specified order will be invoked to handle the template tags, "
@@ -398,12 +407,7 @@ class TemplateLookup( object ) :
                             "Creating cache directory %r " % cachedir )
                     os.makedirs( cachedir )
 
-            elif compiler['debug'] == True :
-                self.pyfile = ttlfile + '.py'
-
-            else :
-                self.pyfile = 'intermediate %r' % ttlfile
-
+            self.pyfile = ttlfile + '.py'
             self.ttlfile = h.locatefile( ttlfile, compiler['directories'] )
             self.ttltext = open( self.ttlfile, encoding=self.encoding ).read()
 

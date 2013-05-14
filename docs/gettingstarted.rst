@@ -56,7 +56,7 @@ Using it as python library
     from pluggdapps.plugin   import ISettings
 
     pa = Pluggdapps.boot( None )    # Start pluggdapps component system.
-    compiler = pa.query_plugin( pa, ISettings, 'ttlcompiler' )
+    compiler = pa.query_plugin( pa, ISettings, 'tayra.ttlcompiler' )
     # Compile
     code = compiler.compilettl( text="<html>\n" )
     # Load

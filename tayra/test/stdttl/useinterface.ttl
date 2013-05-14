@@ -1,7 +1,7 @@
 @doctype html
 @from tayra.interfaces import ITayraTestInterface 
 
-@@obj = _compiler.query_plugin( ITayraTestInterface, 'XYZTestInterface' )
+@@obj = _compiler.query_plugin( ITayraTestInterface, 'tayra.XYZTestInterface' )
 
 <html>
   <head>

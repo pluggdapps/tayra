@@ -62,5 +62,3 @@ def body( id="hello", cls="world", style='color: red;', *args, **kwargs ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/body.ttl' 

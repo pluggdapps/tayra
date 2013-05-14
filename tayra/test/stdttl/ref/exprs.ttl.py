@@ -117,15 +117,15 @@ def body( *args, **kwargs ) :
   _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
   # lineno:21
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'tayraexpressionevalpy', 'l.append(10)', '', globals(), locals()) )
+  _m.append(_m.evalexprs( 'evalpy', 'l.append(10)', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:22
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'tayraexpressionpy', 'l', '', globals(), locals()) )
+  _m.append(_m.evalexprs( 'py', 'l', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:23
   _m.extend( [''] )
-  _m.append(_m.evalexprs( 'tayraexpressionevalpy', 'l.pop(0)', '', globals(), locals()) )
+  _m.append(_m.evalexprs( 'evalpy', 'l.pop(0)', '', globals(), locals()) )
   _m.extend( ['\n    '] )
   # lineno:24
   _m.extend( [''] )
@@ -139,5 +139,3 @@ def body( *args, **kwargs ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/exprs.ttl' 

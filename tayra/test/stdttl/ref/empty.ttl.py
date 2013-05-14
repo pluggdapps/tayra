@@ -50,5 +50,3 @@ def body( *args, **kwargs ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/empty.ttl' 

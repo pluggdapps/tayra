@@ -47,7 +47,7 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   _m.extend( ['<!DOCTYPE html>\n'] )
   # lineno:4
-  obj = _compiler.query_plugin( ITayraTestInterface, 'XYZTestInterface' )
+  obj = _compiler.query_plugin( ITayraTestInterface, 'tayra.XYZTestInterface' )
   # lineno:6
   _m.pushbuf()
   _m.extend( ['<html>'] )
@@ -76,5 +76,3 @@ def body( *args, **kwargs ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/useinterface.ttl' 

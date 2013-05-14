@@ -181,5 +181,3 @@ def helloworld( x=10, y=20, a='wer', b='ehl' ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/fb_pycode.ttl' 

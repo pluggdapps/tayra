@@ -80,5 +80,3 @@ def body_leftpane() :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/import.ttl' 

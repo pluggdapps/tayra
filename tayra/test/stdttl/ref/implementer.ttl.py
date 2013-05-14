@@ -69,5 +69,3 @@ class XYZTestInterface( BaseTTLPlugin ):
   render = render
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/implementer.ttl' 

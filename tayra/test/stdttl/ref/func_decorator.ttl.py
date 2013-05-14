@@ -109,5 +109,3 @@ def func( a ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/func_decorator.ttl' 

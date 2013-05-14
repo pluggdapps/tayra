@@ -321,5 +321,3 @@ def func( a, x, y, z, s ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/ifblock.ttl' 

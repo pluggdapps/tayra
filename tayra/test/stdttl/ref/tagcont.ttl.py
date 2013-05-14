@@ -136,5 +136,3 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/tagcont.ttl' 

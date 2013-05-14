@@ -94,5 +94,3 @@ def body( z=10, *args, **kwargs ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/doctype.ttl' 

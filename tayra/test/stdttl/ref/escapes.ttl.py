@@ -133,5 +133,3 @@ def willbecomeglobal( *args ):
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/escapes.ttl' 

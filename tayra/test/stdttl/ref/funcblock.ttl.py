@@ -371,5 +371,3 @@ def func10():
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl' 

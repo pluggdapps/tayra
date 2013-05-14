@@ -151,5 +151,3 @@ def papowered( pcount, icount ) :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/element.ttl' 

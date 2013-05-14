@@ -726,5 +726,3 @@ def body_centerpane() :
 # ---- Interface functions
 
 # ---- Footer
-_ttlhash = ''
-_ttlfile = '/home/pratap/dev/tayra/tayra/test/stdttl/inherit.ttl' 

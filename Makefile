@@ -41,26 +41,15 @@ sdist :
 # Generate sphinx documentation.
 sphinx-compile :
 	pa -w confdoc -p tayra -o docs/configuration.rst
-	cp docs/configuration.rst sphinxdoc/source/
-	cp docs/commandline.rst sphinxdoc/source
-	cp docs/develop.rst sphinxdoc/source
-	cp docs/directives.rst sphinxdoc/source
-	cp docs/expressions.rst sphinxdoc/source
-	cp docs/filter_blocks.rst sphinxdoc/source
-	cp docs/gettingstarted.rst sphinxdoc/source
-	cp docs/glossary.rst sphinxdoc/source
-	cp docs/template_layout.rst sphinxdoc/source
-	cp docs/template_plugins.rst sphinxdoc/source
-	cp docs/tutorial.rst sphinxdoc/source
-	cp README.rst sphinxdoc/source/index.rst
-	cp CHANGELOG.rst sphinxdoc/source/
-	cat sphinxdoc/source/index.rst.inc >> sphinxdoc/source/index.rst
-	rm -rf sphinxdoc/build/html/
-	make -C sphinxdoc html
+	cp README.rst docs/index.rst
+	cp CHANGELOG.rst docs/
+	cat docs/index.rst.inc >> docs/index.rst
+	rm -rf docs/_build/html/
+	make -C docs html
 
 # Generate sphinx documentation and zip the same for package upload.
 sphinx : sphinx-compile
-	cd sphinxdoc/build/html; zip -r tayra.sphinxdoc.zip ./
+	cd docs/_build/html; zip -r tayra.sphinxdoc.zip ./
 
 # Upload package to python cheese shop (pypi).
 upload :
@@ -88,10 +77,10 @@ cleanall : clean cleandoc
 	rm -rf tayra-env
 
 cleandoc :
-	rm -rf sphinxdoc/build/*
+	rm -rf docs/_build/*
 
 clean :
-	rm -rf build;
+	rm -rf docs/_build;
 	rm -rf dist;
 	rm -rf tayra.egg-info/;
 	rm -rf `find ./ -name parsetyrtab.py`;

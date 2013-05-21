@@ -1,3 +1,6 @@
+* Rename ITayra* interface names to I* names. Remove the `Tayra` prefix to
+  names, now that interface names are canonical.
+
 * Example ttl files demonstrating the tokens and shortcuts implemented by
   tayra.tags.html plugin and tayra.tags.forms plugin.
  
@@ -9,7 +12,8 @@
 * Create hyper link reference for PLY project where ever it is mentioned in
   the document text.
 
-* lexer rules in pygments to support TTL text.
+* lexer rules in pygments to support TTL text. Submit ttl lexer to pygment
+  project.
 
 * There is an issue with `tayra` script file. It cannot be used from paenv
   environment, still need to use script.py. Issue is related to importing tayra

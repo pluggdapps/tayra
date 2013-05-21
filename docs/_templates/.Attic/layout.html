@@ -1,0 +1,24 @@
+{% extends "!layout.html" %}
+
+{% block extrahead %}
+{{ super() }}
+<link href='http://fonts.googleapis.com/css?family=Inconsolata'
+      rel='stylesheet' type='text/css'>
+<style type="text/css">
+    body {
+        font-family: 'Inconsolata', sans-serif;
+        font-size: large;
+        width : 75%;
+        margin : 0px auto;
+        background-color : #AAA;
+        color : #000;
+    }
+    div.footer {
+        background-color : #1C4E63;
+    }
+</style>
+{% endblock %}
+
+{% block sidebartoc %}
+{{ super() }}
+{% endblock %}

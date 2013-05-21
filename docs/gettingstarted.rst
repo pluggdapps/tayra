@@ -12,10 +12,10 @@ easy_install.
     # -U to upgrade install
     $ easy_install tayra
 
-    # If beautify_html configuration option is desired,
+    # if beautify_html configuration option is desired,
     $ easy_install beautifulsoup4 
 
-    # To compile sphinx documentation
+    # generate sphinx documentation
     $ easy_install sphinx
 
 **Install from source code**,
@@ -174,42 +174,27 @@ Tayra sand pit
 
 This section explains how to setup tayra locally and play with templates.
 
-* tayra depends on `pluggdapps`, hence clone both tayra and pluggdapps 
-  repository from `github`.
+* tayra depends on `pluggdapps`.
 * create a virtual environment.
 * enter the virtual environment.
-* setup pluggdapps and tayra package in development mode.
+* setup pluggdapps and tayra package.
 
 Above sequence of steps are suggested by following bash script.
 
 .. code-block:: bash
     :linenos:
 
-    # Get the source package.
-    $ cd $HOME/dev
-    $ git clone https://github.com/prataprc/pluggdapps.git pluggdapps
-    $ git clone https://github.com/prataprc/tayra.git tayra
+    # Setting up virtual environment for python 3.x ...
+	$ echo
+	$ virtualenv --python=python3.2 env
+    $ source env/bin/activate   # Enter the virtual environment
+	$ easy_install-3.2 pluggdapps tayra
 
-    # create a virtual environment.
-    $ cd pluggdapps
-    $ make develop
-
-    # enter the virtual environment.
-    $ source pa-env/bin/activate
-
-    # install development packages
-    $ cd $HOME/dev/pluggdapps
-    $ python ./setup develop
-    $ cd $HOME/dev/tayra
-    $ python ./setup develop
-    $ easy_install beautifulsoup4
-
-    $ cd $HOME/dev
-    $ mkdir tayra-sandpit
-    $ cd tayra-sandpit
+    $ mkdir -p $HOME/dev/tayra-sandpit
+    $ cd $HOME/dev/tayra-sandpit
 
 inside the sandpit directory create as many templates (save them as .ttl files)
-as you want and compile them to html files like,
+as you want and compile them to html files,
 
 .. code-block:: bash
     :linenos:

@@ -86,7 +86,7 @@ expression for specific plugin, like,
 
 where, ``-evalpy`` and ``-py`` refers to plugin name. For instance ``-evalpy``
 will refer to a plugin whose class name is ``ExpressionEvalPy``, note the
-`TayraExpression` prefix in the class name. Similarly ``-py`` will refer to
+`Expression` prefix in the class name. Similarly ``-py`` will refer to
 plugin whose class name is ``ExpressionPy``. The difference between
 `-eval` and `-py` is that in the former case expression is only evaluated in
 the global and local scope and in the later case expression is both evaluated

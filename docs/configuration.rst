@@ -1,43 +1,40 @@
-Catalog of plugin configuration.
-================================
-
-basettlplugin
--------------
+tayra.basettlplugin
+-------------------
 
 -- configuration is not supported by plugin --
 
-expressionevalpy
+tayra.expressionevalpy
+----------------------
+
+-- configuration is not supported by plugin --
+
+tayra.expressionpy
+------------------
+
+-- configuration is not supported by plugin --
+
+tayra.filterblockpy
+-------------------
+
+-- configuration is not supported by plugin --
+
+tayra.html5
+-----------
+
+-- configuration is not supported by plugin --
+
+tayra.html5forms
 ----------------
 
 -- configuration is not supported by plugin --
 
-expressionpy
-------------
-
--- configuration is not supported by plugin --
-
-filterblockpy
--------------
-
--- configuration is not supported by plugin --
-
-html5
------
-
--- configuration is not supported by plugin --
-
-html5forms
+tayra.tags
 ----------
 
 -- configuration is not supported by plugin --
 
-tags
-----
-
--- configuration is not supported by plugin --
-
-ttlcompiler
------------
+tayra.ttlcompiler
+-----------------
 
 yacc_outputdir
     To change the directory in which the PLY YACC's parsetab.py file (and
@@ -110,4 +107,9 @@ optimize
     handle this case, you can set this parameter to ``1``. For more
     information refer,  http://www.dabeaz.com/ply/ply.html#ply_nn15.
 
+
+tayra.xyztestinterface
+----------------------
+
+-- configuration is not supported by plugin --
 

@@ -48,7 +48,7 @@ setup(
     zip_safe=False,                         # setuptools
     entry_points={                          # setuptools
         'console_scripts' : [
-           'tayra = tayra.tyr:main',
+           'tayra = tayra.script:main',
         ],
         'pluggdapps' : [
             'package=tayra:package',

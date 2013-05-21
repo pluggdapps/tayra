@@ -1,5 +1,3 @@
-* Rename tyr.py to script.py.
-
 * Example ttl files demonstrating the tokens and shortcuts implemented by
   tayra.tags.html plugin and tayra.tags.forms plugin.
  
@@ -14,7 +12,7 @@
 * lexer rules in pygments to support TTL text.
 
 * There is an issue with `tayra` script file. It cannot be used from paenv
-  environment, still need to use tyr.py. Issue is related to importing tayra
+  environment, still need to use script.py. Issue is related to importing tayra
   module before importing pluggdapps module.
 
 * Create integration points to write JavaScript snippets inside the template.
@@ -224,13 +222,15 @@ Release check-list
 
 * Upload the source into pypi.
         make upload
+
 * Upload documentation zip.
+
+* If ttl vim-plugin was updated, package and upload to vim script repository
+
+* After making the release, taging the branch, increment the version number.
 
 * Create a tag and push the tagged branch to 
     code.google.com 
     bitbucket.com
     github.com
 
-* If ttl vim-plugin was updated, package and upload to vim script repository
-
-* After making the release, taging the branch, increment the version number.

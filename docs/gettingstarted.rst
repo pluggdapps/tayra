@@ -70,18 +70,18 @@ Command line usage
 
 Make sure that tayra package is installed in your environment (using
 easy_install), in which case command ``tayra`` should be available in your
-path. Otherwise create a symbolic link for ``tayra`` to ``tayra/tyr.py``
+path. Otherwise create a symbolic link for ``tayra`` to ``tayra/script.py``
 script file from tayra package and make sure that the package is in
 PYTHONPATH, like,
 
 .. code-block:: bash
     :linenos:
 
-    $ ln -s <site-package>/tayra/tyr.py $(HOME)/bin/tayra
+    $ ln -s <site-package>/tayra/script.py $(HOME)/bin/tayra
     $ chmod +x $(HOME)/bin/tayra
 
     # or,
-    $ ln -s <site-package>/tayra/tyr.py /usr/bin/tayra
+    $ ln -s <site-package>/tayra/script.py /usr/bin/tayra
     $ chmod +x $(HOME)/bin/tayra
 
 To check whether the package is installed and available in your environment

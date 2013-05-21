@@ -224,7 +224,7 @@ Release check-list
 
 * Update setup.py and MANIFEST.in for release
 
-* Upload the source into pypi.
+* Enter virtual environment and upload the source into pypi.
         make upload
 
 * Upload documentation zip.

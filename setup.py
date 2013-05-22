@@ -71,9 +71,9 @@ setup(
     requires='',
     obsoletes='',
 
-    author='Pratap R Chakravarthy',
+    author='Pratap Chakravarthy',
     author_email='prataprc@gmail.com',
-    maintainer='Pratap R Chakravarthy',
+    maintainer='Pratap Chakravarthy',
     maintainer_email='prataprc@gmail.com',
     url='',
     download_url='',

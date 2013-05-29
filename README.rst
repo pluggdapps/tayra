@@ -5,7 +5,9 @@ markup definitions). Only templating language that allow developers to build
 and distribute their templates as plugins, not to mention the fact that
 tayra's implementation itself is heavily based on plugins.
 
-Example, ::
+Example,
+
+.. code-block:: text
 
     @doctype html
 

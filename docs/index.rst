@@ -7,8 +7,7 @@ tayra's implementation itself is heavily based on plugins.
 
 Example,
 
-.. code-block:: ttl
-    :linenos:
+.. code-block:: text
 
     @doctype html
 
@@ -61,8 +60,18 @@ Features
 - **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
 - **Status:** Core design stable. Not expected to change.
 
-Refer to `package documentation <http://pythonhosted.org/tayra/>`_.
+Related links
+-------------
 
+* `Package documentation <http://pythonhosted.org/tayra/>`_.
+* `Changelog <https://github.com/prataprc/tayra/blob/master/CHANGELOG.rst>`_.
+* `Roadmap <https://github.com/prataprc/tayra/blob/master/TODO.rst>`_.
+
+To hack the guts of tayra check-out the source code from
+`github <https://github.com/prataprc/tayra>`_ or from
+`google-code <http://code.google.com/p/tayra>`_. Note that the orginal
+repository is maintained with mercurial and uses hg-git plugin to publish it
+on github.
 
 .. include:: contents.rst.inc
 

@@ -13,7 +13,7 @@ every node to walk through the tree.
 
 import sys, re
 import pluggdapps.utils as h
-from   os.path          import dirname
+from   os.path          import dirname, splitext, basename
 
 from   tayra.utils      import directive_tokens
 from   tayra.interfaces import ITayraFilterBlock
@@ -598,8 +598,10 @@ class Body( NonTerminal ):
 
 
 class ImportAs( NonTerminal ):
-    """class to handle `importas` grammar.
+    """class to handle `importas` grammar. Supported variants
+        @import .. [, .., ..]
         @import .. [as ..]
+        @from .. import .. [,..,..]
     """
 
     def __init__( self, parser, directive, newlines ) :
@@ -611,20 +613,28 @@ class ImportAs( NonTerminal ):
     def children( self ):
         return self._terms
 
+    def parseline(self, line):
+        mainfile = self.parser.compiler.ttlfile
+        relpath = dirname(mainfile) if mainfile else None
+        parts = list( filter( None, [ x for x in line.split(' ') ] ))
+        ttlfile, modname = None, None
+
+        if len(parts) == 2 and parts[0] == 'include' :
+            ttlfile = h.abspath_from_asset_spec( parts[1], relativeto=relpath )
+            modname = splitext( basename( ttlfile ))[0]
+
+        elif len(parts) == 4 and (parts[0], parts[2]) == ('include', 'as') :
+            ttlfile = h.abspath_from_asset_spec( parts[1], relativeto=relpath )
+            modname = parts[3]
+
+        return ttlfile, modname
+
     def headpass2( self, igen ):
         line = self.DIRECTIVE.dump(None)[1:]
-        parts = list( filter( None, [ x for x in line.split(' ') ] ))
-        if self.parser.compiler.ttlfile :
-            relativeto = dirname( self.parser.compiler.ttlfile )
-        else :
-            relativeto = None
-        if parts[1].endswith('.ttl') :
-            ttlfile = h.abspath_from_asset_spec( 
-                                parts[1], relativeto=relativeto )
-            assert parts[2] == 'as'
-            # self.bubbleupaccum( 'importttls', (ttlfile, parts[3]) )
-            igen.importttl( parts[3], ttlfile )
-        else :
+        ttlfile, modname = self.parseline(line)
+        if ttlfile and modname :    # include directive
+            igen.importttl( modname, ttlfile )
+        else :                      # import directive
             igen.putstatement( line )
 
     def generate( self, igen, *args, **kwargs ):

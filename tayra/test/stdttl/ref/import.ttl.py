@@ -41,18 +41,15 @@ def __traceback_decorator__( frames ):
     return newframes
 
 
-__compiler = _compiler()
-ttlcode = __compiler.compilettl( file='/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl' )
 _context = globals()['_context']
-_context['_compiler'] = __compiler
-_context['this'] = this
-f = __compiler.load( ttlcode, context=_context )
-
+f = _compiler.importlib(this, _context, '/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl')
+_context = globals()['_context']
+funcblock = _compiler.importlib(this, _context, '/home/pratap/dev/tayra/tayra/test/stdttl/funcblock.ttl')
 import os, sys
 
 def body( *args, **kwargs ) :  
   _m.pushbuf()
-  # lineno:9
+  # lineno:10
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'body_leftpane()', '', globals(), locals()) )
   _m.extend( ['\n'] )
@@ -60,18 +57,18 @@ def body( *args, **kwargs ) :
 
 # ---- Global Functions
 
-# lineno:4
+# lineno:5
 def body_leftpane() :  
   _m.pushbuf()
-  # lineno:5
+  # lineno:6
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'f.func3()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
-  # lineno:6
-  _m.extend( [''] )
-  _m.append(_m.evalexprs( '', 'f.func4()', '', globals(), locals()) )
-  _m.extend( ['\n  '] )
   # lineno:7
+  _m.extend( [''] )
+  _m.append(_m.evalexprs( '', 'funcblock.func4()', '', globals(), locals()) )
+  _m.extend( ['\n  '] )
+  # lineno:8
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'f.func5()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )

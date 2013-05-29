@@ -56,7 +56,7 @@ upload :
 	python ./setup.py sdist register -r http://www.python.org/pypi upload -r http://www.python.org/pypi
 	
 # Push code to repositories.
-pushcode: push-googlecode push-bitbucket push-github 
+pushcode: push-googlecode push-github push-bitbucket 
 
 push-googlecode:
 	hg push https://prataprc@code.google.com/p/tayra/

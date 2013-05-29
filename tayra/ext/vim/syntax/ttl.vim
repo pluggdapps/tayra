@@ -48,8 +48,8 @@ syn match   ttlComment      +^[ \t]*##.*$+ contains=ttlTodo,pythonTodo
 
 " Prolog
 syn match   prologPrefix    contained "@"
-syn keyword prologKeywords  contained doctype import as body inherit 
-syn keyword prologKeywords  contained implement from import
+syn keyword prologKeywords  contained doctype include import as body inherit 
+syn keyword prologKeywords  contained implement from include import
 syn region  prolog          start="^@[dibf]" end="[\r\n]" skip="\\\r\|\\\n"
     \ keepend contains=prologPrefix,prologKeywords,attrEqual,string,ttlEscape
 

@@ -41,13 +41,8 @@ def __traceback_decorator__( frames ):
     return newframes
 
 
-__compiler = _compiler()
-ttlcode = __compiler.compilettl( file='/home/pratap/dev/tayra/tayra/test/stdttl/element.ttl' )
 _context = globals()['_context']
-_context['_compiler'] = __compiler
-_context['this'] = this
-blocks = __compiler.load( ttlcode, context=_context )
-
+blocks = _compiler.importlib(this, _context, '/home/pratap/dev/tayra/tayra/test/stdttl/element.ttl')
 
 def body( *args, **kwargs ) :  
   _m.pushbuf()

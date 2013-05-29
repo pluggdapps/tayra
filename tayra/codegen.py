@@ -63,12 +63,8 @@ footer = """\
 """
 
 importtext = """\
-__compiler = _compiler()
-ttlcode = __compiler.compilettl( file=%r )
 _context = globals()['_context']
-_context['_compiler'] = __compiler
-_context['this'] = this
-%s = __compiler.load( ttlcode, context=_context )\n
+%s = _compiler.importlib(this, _context, %r)
 """
 
 interfaceClass = """\
@@ -230,7 +226,7 @@ class InstrGen( object ):
 
     def importttl( self, modname, ttlfile ):
         """Special method to handle @import directive."""
-        lines = importtext % (ttlfile, modname)
+        lines = importtext % (modname, ttlfile)
         self.putblock( lines )
 
     def putinherit( self, ttlloc ):

@@ -5,27 +5,27 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 """Tayra Compiler implemented as plugin. It also implements pluggapps' web
-interface :class:`IHTTPRenderer`.
+interface :class:`ITemplate`.
 """
 
 import imp, os, re, sys, os.path
 from   os.path              import isfile, basename, join, isdir, dirname
 from   hashlib              import sha1
 
-from   pluggdapps.plugin    import Plugin, implements, ISettings
-import pluggdapps.utils     as h
-from   pluggdapps.web.interfaces import IHTTPRenderer
+from   pluggdapps.plugin        import Plugin, implements, ISettings
+import pluggdapps.utils         as h
+from   pluggdapps.interfaces    import ITemplate
 
 import tayra.utils
 
 class TTLCompiler( Plugin ):
     """Tayra compiler. Implemented as plugin to leverage on pluggdapps
-    configuration system. Also implement :class:`IHTTPRenderer`. Creating a
+    configuration system. Also implement :class:`ITemplate`. Creating a
     plugin instance can be a costly operation, to avoid this instantiate this
     plugin once and use :meth:`_init` to initialize it for subsequent uses.
    """
 
-    implements( IHTTPRenderer )
+    implements( ITemplate )
 
     _memcache = {}
 
@@ -90,8 +90,12 @@ class TTLCompiler( Plugin ):
         
         # Compute the module name from ttlfile.
         asset = h.asset_spec_from_abspath( self.ttlfile, papackages )
-        n = '.'.join(asset.split(':', 1)[1].split( os.path.sep ))
-        self.modulename = n[:-4] if n.endswith('.ttl') else n
+        if asset :
+            n = '.'.join(asset.split(':', 1)[1].split( os.path.sep ))
+            self.modulename = n[:-4] if n.endswith('.ttl') else n
+        else :
+            n = '.'.join(self.ttlfile.split( os.path.sep ))
+            self.modulename = n[:-4] if n.endswith('.ttl') else n
 
         self.mach._init( self.ttlfile )
         self.igen._init()
@@ -201,11 +205,18 @@ class TTLCompiler( Plugin ):
             if self['debug'] : raise
             return ''
 
+    def importlib(self, this, context, file):
+        """Import library ttl files inside the main script's context"""
+        compiler = self()
+        context['_compiler'] = compiler
+        context['this'] = this
+        return compiler.load( compiler.compilettl(file=file), context=context )
+        
 
-    #---- IHTTPRenderer interface methods
+    #---- ITemplate interface methods
 
-    def render( self, request, c, file=None, text=None ):
-        """:meth:`pluggdapps.web.interfaces.IHTTPRenderer.render` interface 
+    def render( self, context, **kwargs ):
+        """:meth:`pluggdapps.interfaces.ITemplate.render` interface 
         method. Generate HTML string from template script passed either via 
         ``ttext`` or via ``tfile``.
 
@@ -216,9 +227,10 @@ class TTLCompiler( Plugin ):
         ``ttext``,
             Tayra template text string.
         """
+        file, text = kwargs.get('file', None), kwargs.get('text', None)
         code = self.compilettl( file=file, text=text )
-        module = self.load( code, context=c )
-        html = self.generatehtml( module, c )
+        module = self.load( code, context=context )
+        html = self.generatehtml( module, context )
         return html
 
     #---- ISettings interface methods
@@ -395,19 +407,19 @@ class TemplateLookup( object ) :
             self.encoding = self.charset( ttlfile=ttlfile,
                                           encoding=compiler['encoding'] )
             if compiler['nocache'] :
-                self.pyfile = None
+                self.pyfile = '<Source provided directly as text>'
 
             elif cachedir :
-                if isdir( cachedir ):
-                    self.pyfile = join( cachedir, ttlloc+'.py' )
-                    if not isfile( self.pyfile ):
-                        os.makedirs( dirname( self.pyfile ), exist_ok=True )
-                else :
+                if not isdir( cachedir ):
                     compiler.pa.logdebug(
                             "Creating cache directory %r " % cachedir )
-                    os.makedirs( cachedir )
+                    os.makedirs( cachedir, exist_ok=True )
+                self.pyfile = join( cachedir, ttlloc+'.py' )
+                if not isfile( self.pyfile ):
+                    os.makedirs( dirname( self.pyfile ), exist_ok=True )
+            else :
+                self.pyfile = ttlfile + '.py'
 
-            self.pyfile = ttlfile + '.py'
             self.ttlfile = h.locatefile( ttlfile, compiler['directories'] )
             self.ttltext = open( self.ttlfile, encoding=self.encoding ).read()
 

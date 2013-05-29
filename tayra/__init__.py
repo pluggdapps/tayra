@@ -21,7 +21,7 @@ from   os.path            import dirname, join, basename, abspath, isfile
 from   pluggdapps.plugin  import Plugin, ISettings
 import pluggdapps.utils   as h
 
-__version__ = '0.41dev'
+__version__ = '0.42dev'
 
 template_plugins = [
     'tayra:test/stdttl/implementer.ttl'
@@ -89,7 +89,7 @@ def translatefile( ttlfile, compiler, options ):
     context.update( _bodyargs=args )
 
     # Generate
-    html = compiler.render( None, context, file=ttlfile )
+    html = compiler.render( context, file=ttlfile )
 
     # Most probably invoked via command line, save as html file.
     htmlfile = join( dirname(compiler.ttlfile), 

@@ -1,4 +1,4 @@
-@import tayra:test/stdttl/element.ttl as blocks
+@include tayra:test/stdttl/element.ttl as blocks
 
 :py:
 favicon = 'static/paicon16x16.png'

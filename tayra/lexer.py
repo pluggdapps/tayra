@@ -126,7 +126,7 @@ class TTLLexer( object ) :
     # Directive patterns
     doctype   = r'@doctype[^\r\n]*$'
     body      = r'@body[^\r\n]*$'
-    importas  = r'(@import|@from)[^\r\n]*$'
+    importas  = r'(@import|@from|@include)[^\r\n]*$'
     inherit   = r'@inherit[^\r\n]*$'
     implement = r'@implement[^\r\n]*$'
     use       = r'@use[^\r\n]*$'

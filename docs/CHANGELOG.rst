@@ -3,6 +3,19 @@
 
 ``Tue May 29, 2013``
 
+- CHANGELOG.rst and TODO.rst are web-friendly.
+
+- Removed unwanted glob-patterns from MANIFEST.in
+
+- Sphinx documentation, min-width is set to 970px.
+
+- TTLCompiler compiler implements `pluggdapps.interfaces.ITemplate` interface.
+
+- ``@import`` is now used for importing python modules and ``@include`` is now
+  used for importing TTL template-modules. Test cases added to verify this.
+
+- Bug fixes while making h.packagedin() calls.
+
 
 0.41dev
 -------

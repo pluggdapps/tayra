@@ -77,8 +77,7 @@
 - TTLCompiler['expression.default'] configuration parameter specifies
   the default `ITayraExpression` plugin to handle the expression.
 
-- To invoke a specific plugin,
-    ${-<name> ... }
+- To invoke a specific plugin, ``${-<name> ... }``,
   where <name> is the plugin name to handle expression substitution.
 
 - Renamed TTLCompiler['use_tag_plugins'] to TTLCompiler['tag.plugins'].

@@ -119,7 +119,7 @@ dictionary of //key-value// pairs. Configuration dictionary provided by
 caller program will override package default configuration. Final configuration
 will be remembered by Compiler() object as ''ttlconfig''. //ttlconfig//
 is chained all the way from Compiler() object to every object that are part of
-the template instance, including referred templates via ''{y}@import'' and 
+the template instance, including referred templates via ''{y}@include'' and 
 ''{y} @inherit'' directives.
 
 A template instance will have //Compiler()// object, //StachMachine()// object,
@@ -252,11 +252,11 @@ html = r( context=context )
 h4. Importing another template
 
 Template functions can be organised as library files, imported as and when
-needed. //{y}@import// directive specifies which template file to be imported
+needed. //{y}@include// directive specifies which template file to be imported
 and the name to access the template module.
 
 {{{ Code ttl
-@import etsite:templates/_base/elements.ttl as e ;
+@include etsite:templates/_base/elements.ttl as e ;
 @import os, sys;
 
 @function body_leftpane() :
@@ -264,7 +264,8 @@ and the name to access the template module.
 }}}
 
 format to specify template file is same as else-where and explained
-[[ ./reference#Looking up template files | here ]].
+[[ ./reference#Looking up template files | here ]]. Note that @import can be
+used to import python-modules.
 
 h4. Inheriting templates
 
@@ -850,7 +851,7 @@ class IHTMLFormSignin( IHTMLNode ) :
         :cssasset ::
             If supported by plugins, specify css-styling as static asset file
             which will be included along with template's html result. If the
-            specified file has an extension of //.xss//, its //@imports//
+            specified file has an extension of //.xss//, its //@include//
             references will be interpreted as static-assets and included with
             the template result. //If specified as False//, resulting html will
             not include plugin style, assuming that they are done else-where in

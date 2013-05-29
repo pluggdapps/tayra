@@ -369,7 +369,9 @@ Here is a shotlist of directives defined by tayra,
   interface-method is considered as body of the template and accessible as
   ``local.body(...)``
 
-- ``@import`` directive to import template libraries.
+- ``@import`` and ``@from`` directive to import regular python modules.
+
+- ``@include`` directive to import template libraries.
 
 - ``@inherit`` directive to define template inheritance and complex page
   layouts.
@@ -384,7 +386,7 @@ Template libraries
 Developers can abstract and organise their templates as a library or a
 tool-kit. Since every template script is compiled and interpreted as a python
 module, importing them is similar to importing a python module using
-**@import** directive.
+**@include** directive.
 
 The import directive specifies which template file to be imported and the 
 name to access the template module. For example,
@@ -392,8 +394,8 @@ name to access the template module. For example,
 .. code-block:: html
     :linenos:
 
-    @import etsite:templates/_base/elements.ttl as e ;
-    @import os, sys;
+    @include etsite:templates/_base/elements.ttl as e
+    @import os, sys
 
     @def body_leftpane() :
       ${e.leftpane( menupane )}

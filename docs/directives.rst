@@ -85,16 +85,34 @@ with your application,
 @import
 -------
 
+Regular python modules can be imported using this directive. Semantics are
+similar to python-imports,
+
+.. code-block:: ttl
+    :linenos:
+
+    @import os.path
+    @import os.path as ospath
+    @from   os.path import abspath
+
+    @def filepath( path ) :
+      ${ os.path.abspath.path( path ) }
+      ${ ospath.abspath.path( path ) }
+      ${ abspath.path( path ) }
+
+
+@include
+--------
+
 Template scripts can be abstracted into functions and organised as a library.
 And library templates can be imported in other template scripts using 
-**@import** directive by specifying which template file to be imported and a 
+**@include** directive by specifying which template file to be imported and a 
 name to access the template module.
 
 .. code-block:: ttl
     :linenos:
 
-    @import etsite:templates/_base/elements.ttl as e ;
-    @import os, sys;
+    @include etsite:templates/_base/elements.ttl as e
 
     @def body_leftpane() :
       ${ e.leftpane( menupane ) }
@@ -102,6 +120,14 @@ name to access the template module.
 Here `elements.ttl` is imported as a template module ``e``, which can be
 referred in the template script. Further down, you can notice that library
 function ``leftpane(...)`` is called from the imported template module.
+
+If ``as`` part is left, ie, if the template library is included as, ::
+
+    @include etsite:templates/_base/elements.ttl
+
+the template library is accessible using the template-library's basename
+``elements``.
+    
 
 @inherit directive
 ------------------

@@ -1,6 +1,6 @@
 @doctype html
-@import header.ttl as header
-@import footer.ttl as footer
+@include header.ttl
+@include footer.ttl
 
 @def greeting( name ) :
   <p> hello ${name}!

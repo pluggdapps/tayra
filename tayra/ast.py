@@ -599,9 +599,17 @@ class Body( NonTerminal ):
 
 class ImportAs( NonTerminal ):
     """class to handle `importas` grammar. Supported variants
+
+    To import python modules, ::
+
         @import .. [, .., ..]
         @import .. [as ..]
         @from .. import .. [,..,..]
+
+    To import template-modules, ::
+
+        @include .. [, .., ..]
+        @include .. [as ..]
     """
 
     def __init__( self, parser, directive, newlines ) :

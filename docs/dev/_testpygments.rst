@@ -4,7 +4,7 @@
       lines -->
     @doctype xhtml+rdfa1.0 
     @body id="hello", cls="world", style='color: red;'
-    @import tayra:test/stdttl/funcblock.ttl as f
+    @include tayra:test/stdttl/funcblock.ttl as f
     @import os, sys
     @inherit tayra:test/stdttl/base.ttl
     @implement tayra.interfaces:ITayraTestInterface as XYZTestInterface

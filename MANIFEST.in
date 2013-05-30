@@ -1,1 +1,2 @@
 recursive-include tayra *.ttl
+recursive-include tayra/test/stdttl/ref *.ttl.py *.html

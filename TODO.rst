@@ -1,6 +1,9 @@
 A roadmap of things to do
 -------------------------
 
+* Upload the latest vim-plugin. Write an article in prataprc.github.io on
+  using the plugin.
+
 * @from directive to be supported.
 
 * Rename ITayra* interface names to I* names. Remove the `Tayra` prefix to

@@ -21,6 +21,8 @@ Example,
           <p> <span .italics> hello world
           <p> counting to hundred, ${[ x for x in range(1, 100) ]}
 
+Tayra templating language is under development - you can hack the code,
+contribute back with `github <https://github.com/prataprc/tayra>`_.
             
 Features
 --------

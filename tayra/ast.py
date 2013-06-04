@@ -912,11 +912,14 @@ class TagLine( NonTerminal ):
     def children( self ):
         return list( filter( None, (self.tagspans, self.NEWLINES) ))
 
+    def genhandle( self, igen, *args, **kwargs ):
+        self.tagspans.genhandle( igen, *args, **kwargs )
+
     def generate( self, igen, *args, **kwargs ):
         igen.comment( "lineno:%s" % self.tagspans.TAGBEGIN.lineno )
         super().generate( igen, *args, **kwargs )
         if not isinstance( self.parent, TagBlock ):
-            igen.handletag()
+            self.genhandle( igen, *args, **kwargs )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -928,14 +931,25 @@ class TagLine( NonTerminal ):
         [x.show(buf, offset+2, attrnames, showcoord) for x in self.children()]
 
 class TagSpans( NonTerminal ):
-    """class to handle `tagspan` grammar. TagSpans go through a twisted logic
+    """class to handle `tagspans` grammar. TagSpans go through a twisted logic
     of reverse generate() using self.parent. Be careful when changing this
     code !!!"""
+
+    iprune = False
+    """Boolean, if True, should remove all whitespaces before and after the 
+    content enclosed by this tag."""
+
+    oprune = False
+    """Boolean, if True, should remove all leading and trailining whitespaces
+    around this tag element."""
 
     def __init__( self, parser, tagspans, tagbegin, text ) :
         super().__init__( parser, tagspans, tagbegin, text )
         self.tagspans, self.TAGBEGIN, self.text = tagspans, tagbegin, text
         # Set parent attribute for children, should be last statement !!
+        tbtext = tagbegin.dump(None)
+        self.oprune = '!' in tbtext.split(' ', 1)[0]
+        self.iprune = '!' in tbtext.rsplit(' ', 1)[-1]
         self.setparent( self, self.children() )
 
     def children( self ):
@@ -952,6 +966,10 @@ class TagSpans( NonTerminal ):
             TAGBEGIN, text = self.tagspans.TAGBEGIN, self.tagspans.text
             return self.tagspans.right_recursive( ts, TAGBEGIN, text )
         return ts
+
+    def genhandle( self, igen, *args, **kwargs ):
+        igen.handletag(
+                indent=False, nl='', iprune=self.iprune, oprune=self.oprune )
 
     def generate( self, igen, *args, **kwargs ):
         from  tayra.lexer import TTLLexer
@@ -976,7 +994,7 @@ class TagSpans( NonTerminal ):
             self.tagspans.generate( igen, *args, **kwargs )
 
         if isinstance( self.parent, TagSpans ) :
-            igen.handletag()
+            self.genhandle( igen, *args, **kwargs )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1004,7 +1022,7 @@ class TagBlock( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         super().generate( igen, *args, **kwargs )
-        igen.handletag()
+        self.tagline.genhandle( igen, *args, **kwargs )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):
@@ -1069,7 +1087,7 @@ class TextSpan( NonTerminal ):
 
     def generate( self, igen, *args, **kwargs ):
         super().generate( igen, *args, **kwargs )
-        igen.handletag()
+        self.tagspans.genhandle( igen, *args, **kwargs )
 
     def show( self, buf=sys.stdout, offset=0, attrnames=False,
               showcoord=False ):

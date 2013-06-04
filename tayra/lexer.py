@@ -156,7 +156,8 @@ class TTLLexer( object ) :
     # Tag blocks
     tagmodifs   = r'!'
     tagchar     = r'([^>\\]|\r|\n|\r\n)'
-    newtag      = r'<(%s)?%s*(?:\\.%s*)*>' % (tagmodifs, tagchar, tagchar)
+    newtag      = r'<(%s)?%s*(?:\\.%s*)*(%s)>' % (
+                        tagmodifs, tagchar, tagchar, tagmodifs)
 
     #---- Generic tokens
 

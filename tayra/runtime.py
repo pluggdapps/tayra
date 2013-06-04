@@ -181,10 +181,34 @@ class StackMachine( object ) :
         r'(\{[^\}]*\})|(%s=%s)|(%s)|([^ \t\r\n]+)' % (
             TTLLexer.attrname, TTLLexer.attrvalue, TTLLexer.attrvalue ))
 
-    def handletag( self, contents, tagbegin, indent=False, nl='' ):
+    def handletag( self, contents, tagbegin, **kwargs ):
         """Parse ``tagbegin`` for tokens, style and attribute. Along with them
         add ``content`` to pass them to tag-plugin handlers. :meth:`append`
-        the html text returned by the handler into the buffer stack."""
+        the html text returned by the handler into the buffer stack.
+        
+        There are two types of pruning, inner-prunning (specified by <... !>)
+        and outer-prunning (specified by <! ...>). Pruning modifiers are
+        detected by the AST and passed as part of modifier dictionary. ::
+
+        optional key-word arguments,
+
+        ``indent``,
+            Boolean to keep indentation in output html.
+        ``nl``,
+            String.
+        ``iprune``,
+            Boolean, if True, should remove all whitespaces before and after
+            the content enclosed by this tag.
+        ``oprune``,
+            Boolean, if True, should remove all leading and trailining
+            whitespaces around this tag element.
+        """
+        indent = kwargs.get('indent', False)
+        nl = kwargs.get('nl', '')
+        contents = self.iprune(contents) \
+                        if kwargs.get('iprune',False) else contents
+        None if kwargs.get('oprune', False) else None
+
         tagbegin = tagbegin.replace('\n', ' ')[1:-1]    # remove < and >
         try    : tagname, tagbegin = tagbegin.split(' ', 1)
         except : tagname, tagbegin = tagbegin, ''
@@ -254,6 +278,9 @@ class StackMachine( object ) :
             kwargs.update( kw )
             return interfacefunc( self, *(args+a), **kwargs )
         return fnhitched.__get__( obj, cls )
+
+    def iprune(self, contents):
+        return contents.strip(' \n\r\t\f')
 
 
 class Namespace( object ):

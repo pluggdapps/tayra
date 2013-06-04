@@ -198,7 +198,6 @@ class TTLCompiler( Plugin ):
                 if self['beautify_html'] :
                     html = BeautifulSoup( html ).prettify()
             except :
-                raise
                 pass
             return html
         except :

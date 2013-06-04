@@ -211,15 +211,14 @@ class InstrGen( object ):
         else :
             self.outline( 'return _m.popobject()' )
 
-    def handletag( self, indent=False, newline='' ):
+    def handletag( self, **kwargs ):
         """Pop the last two buffers from the stack and supply them to
         :class:`ITayraTags` plugins. The returned HTML text from the plugin is
         only again pushed into the stack buffer."""
         self.flushtext()
         # first arg is `content` and second arg is `tag`
         self.outline(
-          '_m.handletag( _m.popbuftext(), _m.popbuftext(), indent=%s, nl=%r)'\
-                  % (indent, newline)
+          '_m.handletag( _m.popbuftext(), _m.popbuftext(), **%s )' % kwargs
         )
 
     #---- Instructions to handle directives.

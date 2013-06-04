@@ -1,6 +1,13 @@
 A roadmap of things to do
 -------------------------
 
+* Whitespace pruning,
+    before and after opening tag and closing tag (for outerprune), use
+    tagmodifiers like `-`, `%` `!` etc...
+  Document it.
+ 
+* Write an article on converting left-recursive AST to right recursive.
+
 * Upload the latest vim-plugin. Write an article in prataprc.github.io on
   using the plugin.
 
@@ -148,10 +155,6 @@ Language syntax and feature.
 ----------------------------
 
 * White space preservation.
-
-* Whitespace pruning,
-    before and after opening tag and closing tag (for outerprune), use
-    tagmodifiers like `-`, `%` etc...
 
 * Enable wiki text as content selectable using the tag's specifier. like,
     <div etx> **hello** world

@@ -29,3 +29,4 @@ from   pluggdapps.utils.lib     import parsecsv, parsecsvlines, asbool, \
                                        asint, asfloat, docstr, reseed_random, \
                                        mergedict, takewhile, dropwhile, \
                                        flatten
+import os.path

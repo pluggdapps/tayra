@@ -76,7 +76,7 @@ Following example illustrates how to use a plugin,
 Packaging and exporting template plugins
 ----------------------------------------
 
-Tayra used pluggdapps' component architecture to provide pluggable templates.
+Tayra used pluggdapps component system to provide pluggable templates.
 Note that Interfaces and Plugins are expected to be loaded during platform
 boot time.
 

@@ -28,7 +28,7 @@ Features
 --------
 
 - concise and neat syntax.
-- based on `pluggdapps` component architecture.
+- based on `pluggdapps` component system.
 - leverages on `pluggdapps'` configuration system.
 - full programmability available via,
 

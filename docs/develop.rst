@@ -4,7 +4,7 @@ Extending Tayra language
 The language is defined as a bunch of meta syntax that can be extended and
 customised using plugins. Developers can author plugins implementing one or
 more interfaces specified in :mod:`tayra.interfaces` module. Tayra's plugin
-system is based on pluggdapps component architecture.
+system is based on pluggdapps component system.
 
 The design is based on simple, formal methods that are easy to understand
 and extend as per future needs. Language front end is based on LALR parser and

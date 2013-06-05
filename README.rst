@@ -23,13 +23,16 @@ Example,
 
 Tayra templating language is under development - you can hack the code,
 contribute back with `github <https://github.com/prataprc/tayra>`_.
+Note that the orginal repository is maintained with mercurial and uses hg-git
+plugin to publish it on github.
+
             
 Features
 --------
 
 - concise and neat syntax.
-- based on `pluggdapps` component architecture.
-- leverages on `pluggdapps'` configuration system.
+- based on pluggdapps_ component system.
+- leverages on `pluggdapps' configuration system`_.
 - full programmability available via,
 
   - expression substitution with optional escape encoding.
@@ -65,13 +68,8 @@ Features
 Related links
 -------------
 
-* `Package documentation <http://pythonhosted.org/tayra/>`_.
-* `Changelog <https://github.com/prataprc/tayra/blob/master/CHANGELOG.rst>`_.
-* `Roadmap <https://github.com/prataprc/tayra/blob/master/TODO.rst>`_.
-
-To hack the guts of tayra check-out the source code from
-`github <https://github.com/prataprc/tayra>`_ or from
-`google-code <http://code.google.com/p/tayra>`_. Note that the orginal
-repository is maintained with mercurial and uses hg-git plugin to publish it
-on github.
+* `package documentation <http://pythonhosted.org/tayra/>`_.
+* `changelog <https://github.com/prataprc/tayra/blob/master/CHANGELOG.rst>`_.
+* `roadmap <https://github.com/prataprc/tayra/blob/master/TODO.rst>`_.
+* `mailing-list <http://groups.google.com/group/pluggdapps>`_.
 

@@ -74,8 +74,8 @@ Here is a basic list of features and functions available from tayra,
   template-plugins can simply query for them.
 
 ``Configuration``,
-  Tayra uses pluggdapps component architecture and plugins in tayra leverages
-  on pluggdapps configuration system.
+  Tayra uses pluggdapps component system and plugins in tayra leverages
+  on pluggdapps' configuration system.
 
 General layout of template script
 ---------------------------------

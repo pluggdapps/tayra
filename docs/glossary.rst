@@ -62,7 +62,7 @@ Glossary
     very strictly unless otherwise explicitly mentioned.
 
   interface
-    Plugin interface, follows pluggdapps component architecture. Interfaces
+    Plugin interface, follows pluggdapps component system. Interfaces
     are called at specific points by core language, some are called during
     compile time, others are called at run-time. Plugins can implement one or
     more interfaces to extend the language definition.

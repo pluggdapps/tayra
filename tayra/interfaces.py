@@ -5,7 +5,7 @@
 #       Copyright (c) 2011 R Pratap Chakravarthy
 
 """
-Tayra uses pluggdapps component architecture, and heavily based on plugins. The
+Tayra uses pluggdapps component system, and heavily based on plugins. The
 lexer and parser are just a glue logic over a very sophisticated plugin
 framework which does most of the language level heavy lifting. This modules
 contains all the interface specifications that matters to tayra language

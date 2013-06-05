@@ -110,7 +110,7 @@ available in template context as ``h``. Eg, ::
 
 ``Sat Jan 05, 2013``
 
-- Migrating tayra to pluggdapps component architecture.
+- Migrating tayra to pluggdapps component system.
 - Migrating tayra to python 3.2
 - Updated test cases and benchmarks to this revision.
 

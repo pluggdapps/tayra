@@ -63,6 +63,8 @@ Features
   template scripts.
 - **License:** `GPLv3 license <http://www.gnu.org/licenses/>`.
 - **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
+    - If `beautify_html` settings is enabled for ``tayra.ttlcompiler`` plugin,
+      the ``beautifulsoup4`` needs to be installed.
 - **Status:** Core design stable. Not expected to change.
 
 Related links

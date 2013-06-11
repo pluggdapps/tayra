@@ -435,7 +435,7 @@ class Prolog( NonTerminal ):
 class DocType( NonTerminal ):
     """class to handle `doctype` grammar. Note that DTDs are deprecated in
     HTML5. We will have to wait and see how it evolves under HTML5.
-
+    
     +-------------------------+-----------------------------------------------+
     | ttl doctype name        | Transted to html                              |
     +=========================+===============================================+
@@ -488,7 +488,6 @@ class DocType( NonTerminal ):
     +-------------------------+-----------------------------------------------+
     | html                    | <!DOCTYPE html>                               |
     +-------------------------+-----------------------------------------------+
-
     """
 
     dtdurls = {

@@ -188,7 +188,7 @@ class StackMachine( object ) :
         
         There are two types of pruning, inner-prunning (specified by <... !>)
         and outer-prunning (specified by <! ...>). Pruning modifiers are
-        detected by the AST and passed as part of modifier dictionary. ::
+        detected by the AST and passed as part of modifier dictionary.
 
         optional key-word arguments,
 

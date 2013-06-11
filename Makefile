@@ -9,7 +9,7 @@ develop :
 	@echo "Setting up virtual environment for python 3.x ..."
 	@virtualenv --python=python3.2 tayra-env 
 	@bash -c "source tayra-env/bin/activate ; python ./setup.py develop"
-	@bash -c "source pa-env/bin/activate ; easy_install-3.2 sphinx"
+	@bash -c "source pa-env/bin/activate ; pip install sphinx"
 
 # Test tayra package with standard test cases.
 testall :
@@ -17,12 +17,12 @@ testall :
 
 # Install other template packages for benchmark.
 bench-setup :
-	bash -c "source tayra-env/bin/activate ; easy_install mako"
-	bash -c "source tayra-env/bin/activate ; easy_install cheetah"
-	bash -c "source tayra-env/bin/activate ; easy_install django"
-	bash -c "source tayra-env/bin/activate ; easy_install genshi"
-	bash -c "source tayra-env/bin/activate ; easy_install kid"
-	bash -c "source tayra-env/bin/activate ; easy_install myghty"
+	bash -c "source tayra-env/bin/activate ; pip install mako"
+	bash -c "source tayra-env/bin/activate ; pip install cheetah"
+	bash -c "source tayra-env/bin/activate ; pip install django"
+	bash -c "source tayra-env/bin/activate ; pip install genshi"
+	bash -c "source tayra-env/bin/activate ; pip install kid"
+	bash -c "source tayra-env/bin/activate ; pip install myghty"
 
 # Execute the bench-mark suite. This is work in progress, you can help me to
 # setup this benchmark.

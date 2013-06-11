@@ -1,2 +1,3 @@
+recursive-include tayra/ext/vim *
 recursive-include tayra *.ttl
 recursive-include tayra/test/stdttl/ref *.ttl.py *.html

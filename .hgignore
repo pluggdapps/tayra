@@ -7,8 +7,8 @@ tayra-env
 eggs/
 _build/
 dist/
-yacctab.py
-parsetab.py
+lextyrtab.py
+parsetyrtab.py
 parser.out
 distribute-0.6.10.tar.gz
 .vim_maindev

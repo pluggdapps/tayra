@@ -1,9 +1,8 @@
 Tayra is a full-featured abstract markup language to template web documents.
-It is primarily inspired from `mako-templates <http://www.makotemplates.org/>`_
-and `HAML <http://haml-lang.com/>`_ (especially the indentation based
-markup definitions). Only templating language that allow developers to build
-and distribute their templates as plugins, not to mention the fact that
-tayra's implementation itself is heavily based on plugins.
+It is primarily inspired from mako-templates_ and HAML_ (especially the
+indentation based markup definitions). Only templating language that allow
+developers to build and distribute their templates as plugins, not to mention
+the fact that tayra's implementation itself is heavily based on plugins.
 
 Example,
 
@@ -23,13 +22,16 @@ Example,
 
 Tayra templating language is under development - you can hack the code,
 contribute back with `github <https://github.com/prataprc/tayra>`_.
+Note that the orginal repository is maintained with mercurial and uses hg-git
+plugin to publish it on github.
+
             
 Features
 --------
 
 - concise and neat syntax.
-- based on `pluggdapps` component system.
-- leverages on `pluggdapps'` configuration system.
+- based on pluggdapps_ component system.
+- leverages on `pluggdapps' configuration system`.
 - full programmability available via,
 
   - expression substitution with optional escape encoding.
@@ -56,25 +58,34 @@ Features
 - works with python 3.x.
 - has full unicode support.
 - lexer for generating syntax-highlighted web documents using Pygments.
-- `vim plugin <http://www.vim.org/scripts/script.php?script_id=4464>`_ for
-  template scripts.
-- **License:** `GPLv3 license <http://www.gnu.org/licenses/>`.
+- vim-plugin_ for template scripts.
+- **License:** `GPLv3 license`_.
 - **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
+
+  - If `beautify_html` settings is enabled for ``tayra.ttlcompiler`` plugin,
+    the beautifulsoup4_ needs to be installed.
+
 - **Status:** Core design stable. Not expected to change.
 
 Related links
 -------------
 
-* `Package documentation <http://pythonhosted.org/tayra/>`_.
-* `Changelog <https://github.com/prataprc/tayra/blob/master/CHANGELOG.rst>`_.
-* `Roadmap <https://github.com/prataprc/tayra/blob/master/TODO.rst>`_.
+* `package documentation`_.
+* changelog_.
+* todo_.
+* mailing-list_.
 
-To hack the guts of tayra check-out the source code from
-`github <https://github.com/prataprc/tayra>`_ or from
-`google-code <http://code.google.com/p/tayra>`_. Note that the orginal
-repository is maintained with mercurial and uses hg-git plugin to publish it
-on github.
+.. _pluggdapps: http://pythonhosted.org/pluggdapps
+.. _mako-templates: http://www.makotemplates.org
+.. _HAML: http://haml-lang.com
+.. _vim-plugin: http://www.vim.org/scripts/script.php?script_id=4464
+.. _GPLv3 license:  http://www.gnu.org/licenses/
+.. _beautifulsoup4: https://pypi.python.org/pypi/beautifulsoup4
 
+.. _package documentation: http://pythonhosted.org/tayra
+.. _changelog: http://pythonhosted.org/tayra/CHANGELOG.html
+.. _todo: http://pythonhosted.org/tayra/TODO.html
+.. _mailing-list: http://groups.google.com/group/pluggdapps
 .. include:: contents.rst.inc
 
 If you can't find the information you're looking for, have a look at the

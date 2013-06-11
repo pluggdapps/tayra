@@ -1,9 +1,8 @@
 Tayra is a full-featured abstract markup language to template web documents.
-It is primarily inspired from `mako-templates <http://www.makotemplates.org/>`_
-and `HAML <http://haml-lang.com/>`_ (especially the indentation based
-markup definitions). Only templating language that allow developers to build
-and distribute their templates as plugins, not to mention the fact that
-tayra's implementation itself is heavily based on plugins.
+It is primarily inspired from mako-templates_ and HAML_ (especially the
+indentation based markup definitions). Only templating language that allow
+developers to build and distribute their templates as plugins, not to mention
+the fact that tayra's implementation itself is heavily based on plugins.
 
 Example,
 
@@ -32,7 +31,7 @@ Features
 
 - concise and neat syntax.
 - based on pluggdapps_ component system.
-- leverages on `pluggdapps' configuration system`_.
+- leverages on `pluggdapps' configuration system`.
 - full programmability available via,
 
   - expression substitution with optional escape encoding.
@@ -59,19 +58,31 @@ Features
 - works with python 3.x.
 - has full unicode support.
 - lexer for generating syntax-highlighted web documents using Pygments.
-- `vim plugin <http://www.vim.org/scripts/script.php?script_id=4464>`_ for
-  template scripts.
-- **License:** `GPLv3 license <http://www.gnu.org/licenses/>`.
+- vim-plugin_ for template scripts.
+- **License:** `GPLv3 license`_.
 - **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
-    - If `beautify_html` settings is enabled for ``tayra.ttlcompiler`` plugin,
-      the ``beautifulsoup4`` needs to be installed.
+
+  - If `beautify_html` settings is enabled for ``tayra.ttlcompiler`` plugin,
+    the beautifulsoup4_ needs to be installed.
+
 - **Status:** Core design stable. Not expected to change.
 
 Related links
 -------------
 
-* `package documentation <http://pythonhosted.org/tayra/>`_.
-* `changelog <https://github.com/prataprc/tayra/blob/master/CHANGELOG.rst>`_.
-* `roadmap <https://github.com/prataprc/tayra/blob/master/TODO.rst>`_.
-* `mailing-list <http://groups.google.com/group/pluggdapps>`_.
+* `package documentation`_.
+* changelog_.
+* todo_.
+* mailing-list_.
 
+.. _pluggdapps: http://pythonhosted.org/pluggdapps
+.. _mako-templates: http://www.makotemplates.org
+.. _HAML: http://haml-lang.com
+.. _vim-plugin: http://www.vim.org/scripts/script.php?script_id=4464
+.. _GPLv3 license:  http://www.gnu.org/licenses/
+.. _beautifulsoup4: https://pypi.python.org/pypi/beautifulsoup4
+
+.. _package documentation: http://pythonhosted.org/tayra
+.. _changelog: http://pythonhosted.org/tayra/CHANGELOG.html
+.. _todo: http://pythonhosted.org/tayra/TODO.html
+.. _mailing-list: http://groups.google.com/group/pluggdapps

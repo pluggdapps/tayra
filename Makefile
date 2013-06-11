@@ -43,6 +43,7 @@ sphinx-compile :
 	pa -w confdoc -p tayra -o docs/configuration.rst
 	cp README.rst docs/index.rst
 	cp CHANGELOG.rst docs/
+	cp TODO.rst docs/
 	cat docs/index.rst.inc >> docs/index.rst
 	rm -rf docs/_build/html/
 	make -C docs html

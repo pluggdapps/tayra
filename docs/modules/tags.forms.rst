@@ -1,5 +1,5 @@
-:mod:`tayra.tags.forms` -- Handlers for custom form tags
-========================================================
+:mod:`forms` -- Handlers for custom form tags
+=============================================
 
 .. automodule:: tayra.tags.forms
 

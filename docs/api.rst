@@ -14,13 +14,8 @@ API Listing
     modules/runtime
     modules/decorators
     modules/expr
-    modules/expr.defaultpy
-    modules/expr.evalpy
     modules/filterblocks
-    modules/filterblocks.pycode
     modules/tags
-    modules/tags.forms
-    modules/tags.html
     modules/script
     modules/utils
 

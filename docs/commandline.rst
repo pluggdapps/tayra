@@ -1,7 +1,7 @@
 Command line script
 ===================
 
-While installing the package using easy_install a command line script `tayra`
+While installing the package using pip, a command line script `tayra`
 is automatically created in **bin/** directory. If you are installing it
 inside a virtual environment you can expect it in the directory
 **<virtual-env-path>/bin/** directory. 

@@ -1,5 +1,5 @@
-:mod:`tayra.utils` -- Utility functions
-=======================================
+:mod:`utils` -- Utility functions
+=================================
 
 .. automodule:: tayra.utils
 

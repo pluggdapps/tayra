@@ -1,5 +1,5 @@
-:mod:`tayra.lexer` -- Lexical analyser
-======================================
+:mod:`lexer` -- Lexical analyser
+================================
 
 .. automodule:: tayra.lexer
 

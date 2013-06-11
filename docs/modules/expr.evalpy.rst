@@ -1,5 +1,5 @@
-:mod:`tayra.expr.evalpy` -- Evaluate python expressions
-=======================================================
+:mod:`evalpy` -- Evaluate python expressions
+============================================
 
 .. automodule:: tayra.expr.evalpy
 

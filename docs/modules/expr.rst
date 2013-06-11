@@ -1,5 +1,5 @@
-:mod:`tayra.expr` -- Expression Substitution
-============================================
+:mod:`expr` -- Expression Substitution
+======================================
 
 .. automodule:: tayra.expr
 

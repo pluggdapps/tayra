@@ -1,5 +1,5 @@
-:mod:`tayra.parser` -- LALR parser grammar
-==========================================
+:mod:`parser` -- LALR parser grammar
+====================================
 
 .. automodule:: tayra.parser
 

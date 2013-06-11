@@ -201,7 +201,7 @@ A roadmap of things to do
 * May be I am wrong and I would love to stand corrected.
 
 Release check-list 
------------------
+------------------
 
 - Sphinx doc quick-start, one time activity.
         sphinx-quickstart   # And follow the prompts.

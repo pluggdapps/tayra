@@ -1,5 +1,5 @@
-:mod:`tayra.tags` -- Tag handlers
-=================================
+:mod:`tags` -- Tag handlers
+===========================
 
 .. automodule:: tayra.tags
 

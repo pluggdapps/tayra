@@ -2,7 +2,7 @@ Getting started
 ===============
 
 There are multiple ways to install tayra and the easiest way is using
-easy_install.
+``pip``.
 
 .. code-block:: bash
     :linenos:
@@ -10,13 +10,13 @@ easy_install.
     # -Z to do unzipped install. The reason for installing it
     #    in un-zipped form is to make use of the command line tool.
     # -U to upgrade install
-    $ easy_install tayra
+    $ pip install tayra
 
     # if beautify_html configuration option is desired,
-    $ easy_install beautifulsoup4 
+    $ pip install beautifulsoup4 
 
     # generate sphinx documentation
-    $ easy_install sphinx
+    $ pip install sphinx
 
 **Install from source code**,
 
@@ -69,7 +69,7 @@ Command line usage
 ------------------
 
 Make sure that tayra package is installed in your environment (using
-easy_install), in which case command ``tayra`` should be available in your
+pip), in which case command ``tayra`` should be available in your
 path. Otherwise create a symbolic link for ``tayra`` to ``tayra/script.py``
 script file from tayra package and make sure that the package is in
 PYTHONPATH, like,
@@ -188,7 +188,7 @@ Above sequence of steps are suggested by following bash script.
 	$ echo
 	$ virtualenv --python=python3.2 env
     $ source env/bin/activate   # Enter the virtual environment
-	$ easy_install-3.2 pluggdapps tayra
+	$ pip install pluggdapps tayra
 
     $ mkdir -p $HOME/dev/tayra-sandpit
     $ cd $HOME/dev/tayra-sandpit

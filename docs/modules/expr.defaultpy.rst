@@ -1,5 +1,5 @@
-:mod:`tayra.expr.defaultpy` -- Substitute Python expressions
-============================================================
+:mod:`defaultpy` -- Substitute Python expressions
+=================================================
 
 .. automodule:: tayra.expr.defaultpy
 

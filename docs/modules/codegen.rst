@@ -1,5 +1,5 @@
-:mod:`tayra.codegen` -- Instruction generator
-=============================================
+:mod:`codegen` -- Instruction generator
+=======================================
 
 .. automodule:: tayra.codegen
 

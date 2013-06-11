@@ -1,4 +1,4 @@
-:mod:`tayra.script` -- Command line script
-==========================================
+:mod:`script` -- Command line script
+====================================
 
 .. automodule:: tayra.script

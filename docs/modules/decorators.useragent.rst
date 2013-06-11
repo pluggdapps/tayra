@@ -6,4 +6,4 @@ Decorator to template based on request's useragent
 Module contents
 ---------------
 
-.. autofunc:: useragent
+.. autofunction:: useragent

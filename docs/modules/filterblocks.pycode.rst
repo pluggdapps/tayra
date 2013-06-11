@@ -1,5 +1,5 @@
-:mod:`tayra.filterblocks.pycode` -- Python code blocks
-======================================================
+:mod:`pycode` -- Python code blocks
+===================================
 
 .. automodule:: tayra.filterblocks.pycode
 

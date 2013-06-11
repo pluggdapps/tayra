@@ -1,5 +1,5 @@
-:mod:`tayra.filterblocks` -- Filterblocks
-=========================================
+:mod:`filterblocks` -- Filterblocks
+===================================
 
 .. automodule:: tayra.filterblocks
 

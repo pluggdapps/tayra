@@ -1,5 +1,5 @@
-:mod:`tayra.ast` -- Abstract syntax tree
-=========================================
+:mod:`ast` -- Abstract syntax tree
+==================================
 
 .. automodule:: tayra.ast
 

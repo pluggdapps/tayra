@@ -3,6 +3,16 @@ CHANGELOG
 
 List of release changes.
 
+0.43dev
+-------
+
+``Wed Jun 12, 2013``
+
+- Added syntax to prune leading and training whitespace of tag's content.
+- Refactored tag-handling logic in ast.py module.
+- Documentation.
+
+
 0.42dev
 -------
 

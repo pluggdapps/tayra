@@ -19,14 +19,11 @@ Instead of importing python stdlib modules directly in template scripts it is
 better to access them via this module, so that in future when sandboxing
 feature is added, your scripts can remain compatible."""
 
-from   pluggdapps.utils.asset   import parse_assetspec, \
-                                       asset_spec_from_abspath, \
-                                       abspath_from_asset_spec
-from   pluggdapps.utils.config  import settingsfor, plugin2sec, sec2plugin, \
-                                       ConfigDict
-from   pluggdapps.utils.jsonlib import json_encode, json_decode
-from   pluggdapps.utils.lib     import parsecsv, parsecsvlines, asbool, \
-                                       asint, asfloat, docstr, reseed_random, \
-                                       mergedict, takewhile, dropwhile, \
-                                       flatten
-import os.path
+from   pluggdapps.utils.config import *
+from   pluggdapps.utils.path import *
+from   pluggdapps.utils.asset import *
+from   pluggdapps.utils.lib import *
+from   pluggdapps.utils.jsonlib import *
+from   pluggdapps.utils.parsehttp import *
+from   pluggdapps.utils.scaff import *
+import os.path as ospath

@@ -163,6 +163,12 @@ class TTLCompiler( Plugin ):
 
         # Module instance for the ttl file
         module = imp.new_module( self.modulename )
+
+        # Create helper module
+        helper = imp.new_module( 'template_helper' )
+        filterfn = lambda k, v : callable(v)
+        [ helper.__dict__.update( h.pynamespace(m) ) 
+                    for m in [tmplh] + self['helpers'] ]
         ctxt = {
             self.igen.machname : self.mach,
             '_compiler'   : self,
@@ -170,7 +176,7 @@ class TTLCompiler( Plugin ):
             'local'       : module,
             'parent'      : None,
             'next'        : None,
-            'h'           : tmplh,
+            'h'           : helper,
             '__file__'    : self.pyfile,
             '_ttlfile'    : self.ttlfile,
             '_ttlhash'    : self.ttlloc.ttlhash,
@@ -253,6 +259,7 @@ class TTLCompiler( Plugin ):
         sett['tag.plugins'] = h.parsecsvlines( sett['tag.plugins'] )
         sett['beautify_html'] = h.asbool( sett['beautify_html'] )
         sett['memcache'] = h.asbool( sett['memcache'] )
+        sett['helpers'] = h.parsecsv( sett['helpers'] )
         return sett
 
 
@@ -324,6 +331,13 @@ _defaultsettings['directories']             = {
     'types'   : ('csv',list),
     'help'    : "Comma separated list of directory path to look for a "
                 "template file. Default will be current-directory."
+}
+_defaultsettings['helpers']             = {
+    'default' : '',
+    'types'   : ('csv',list),
+    'help'    : "Comma separated list of python modules. These modules will "
+                "be imported and its namespace will be merged with template "
+                "context and can be refered as ``h.``."
 }
 _defaultsettings['cache_directory']        = {
     'default' : '',

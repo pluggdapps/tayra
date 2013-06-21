@@ -205,11 +205,20 @@ class StackMachine( object ) :
         """
         indent = kwargs.get('indent', False)
         nl = kwargs.get('nl', '')
-        contents = self.iprune(contents) \
-                        if kwargs.get('iprune',False) else contents
-        None if kwargs.get('oprune', False) else None
+        if kwargs.get('iprune',False) :
+            contents = self.iprune(contents)
+        if kwargs.get('oprune', False) :
+            contents = contents
 
         tagbegin = tagbegin.replace('\n', ' ')[1:-1]    # remove < and >
+
+        if tagbegin[-1] == '/' : # Self closing tag
+            if contents.strip('\n \t\r') :
+                self.compiler.pa.logwarn(
+                    "skipping content after self closing tag %r" % contents )
+            contents = ''
+            tagbegin = tagbegin[:-1]
+
         try    : tagname, tagbegin = tagbegin.split(' ', 1)
         except : tagname, tagbegin = tagbegin, ''
         

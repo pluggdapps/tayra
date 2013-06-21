@@ -86,6 +86,13 @@ For those who are starting with web-templating,
   have to supply the closing tag. ``</...>`` is not required.
 * Always remember the indentation. Child elements are always indented by 2
   spaces.
+* In self-closing tags, like ``<.../>``, `/` will be removed from the
+  tag-element. But please remember that void-elements like, area, base, br,
+  col, command, embed, hr, img, input, keygen, link, meta, param, source,
+  track, wbr will always be generated as ``<.../>``.
+* If a tayra tag element that belongs to the class of void-elements, like
+  mentioned above, include a element-content it will be silently ignored,
+  though a warning will be generated when compiling them.
 
 That is all is required to write your first template.
 

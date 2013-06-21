@@ -947,8 +947,8 @@ class TagSpans( NonTerminal ):
         self.tagspans, self.TAGBEGIN, self.text = tagspans, tagbegin, text
         # Set parent attribute for children, should be last statement !!
         tbtext = tagbegin.dump(None)
-        self.oprune = '!' in tbtext.split(' ', 1)[0]
-        self.iprune = '!' in tbtext.rsplit(' ', 1)[-1]
+        self.oprune = '!' == tbtext[1]
+        self.iprune = '!' == tbtext[-2]
         self.setparent( self, self.children() )
 
     def children( self ):

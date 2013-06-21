@@ -60,7 +60,7 @@ class HTML5( Tags ):
                 attributes += ' shape="%s" coords="%s"' % (shape, coords)
             except :
                 attributes += ' href=%s' % tok
-        return '<area %s>%s</area>' % (attributes, content)
+        return '<area %s/>' % attributes     # Void element
 
     audio2attr = {
         'autoplay'  : ' autoplay="autoplay"',
@@ -94,7 +94,7 @@ class HTML5( Tags ):
           and translates to ``target="<token>"``
         """
         attributes += (' target="%s"' % tokens[0]) if tokens else ''
-        return '<base %s>%s</base>' % (attributes, content)
+        return '<base %s/>' % attributes     # Void elements
 
 
     def tag_blockquote( self, mach, tagname, tokens, attributes, content ):
@@ -105,6 +105,11 @@ class HTML5( Tags ):
         """
         attributes += (' cite=%s' % tokens[0]) if tokens else ''
         return '<blockquote %s>%s</blockquote>' % (attributes, content)
+
+
+    def tag_br( self, mach, tagname, tokens, attributes, content ):
+        """<br> tag handler."""
+        return '<br/>'  # Void element
 
 
     button2attr = {
@@ -181,7 +186,7 @@ class HTML5( Tags ):
           attribute and translates to ``span="<span>"``
         """
         attributes += (' span="%s"' % tokens[0]) if tokens else ''
-        return '<col %s>%s</col>' % (attributes, content)
+        return '<col %s/>' % attributes  # Void element
 
 
     def tag_colgroup( self, mach, tagname, tokens, attributes, content ):
@@ -210,7 +215,7 @@ class HTML5( Tags ):
         for t in tokens :
             attr = self.command2attr.get( t, None )
             attributes += attr or (' icon=%s' % t)
-        return '<command %s>%s</command>' % (attributes, content)
+        return '<command %s/>' % attributes  # Void element
 
     def tag_del( self, mach, tagname, tokens, attributes, content ):
         """<del> tag handler. Supported tokens,
@@ -251,7 +256,7 @@ class HTML5( Tags ):
                 try :
                     attributes += ' width="%s" height="%s"' % tok.split(',', 1)
                 except : pass
-        return '<embed %s>%s</embed>' % (attributes, content)
+        return '<embed %s/>' % attributes   # Void element 
 
     def tag_fieldset( self, mach, tagname, tokens, attributes, content ):
         """<fieldset> tag handler. Supported tokens,
@@ -305,6 +310,10 @@ class HTML5( Tags ):
         """
         attributes += (' manifest=%s' % tokens[0]) if tokens else ''
         return '<head %s>%s</head>' % (attributes, content)
+
+    def tag_hr( self, mach, tagname, tokens, attributes, content ):
+        """<hr> tag handler."""
+        return '<hr/>'  # Void element
 
     def tag_html( self, mach, tagname, tokens, attributes, content ):
         """<html> tag handler. Supported tokens,
@@ -367,7 +376,11 @@ class HTML5( Tags ):
                         attr or
                         (' width="%s" height="%s"' % tok.split(',', 1)) )
                 except : pass
-        return '<img %s>%s</img>' % (attributes, content)
+        return '<img %s/>' % attributes  # Void element
+
+    def tag_input(self, mach, tagname, tokens, attributes, content):
+        """<input> handler"""
+        return '<input %s/>' % attributes  # Void element
 
     def tag_ins( self, mach, tagname, tokens, attributes, content ):
         """<ins> tag handler. Supported tokens,
@@ -383,6 +396,10 @@ class HTML5( Tags ):
             else :
                 attributes += ' datetime="%s"' % tok
         return '<ins %s>%s</ins>' % (attributes, content)
+
+    def tag_keygen(self, mach, tagname, tokens, attributes, content):
+        """<keygen> handler"""
+        return '<keygen %s/>' % attributes  # Void element
 
     def tag_label( self, mach, tagname, tokens, attributes, content ):
         """<label> tag handler. Supported tokens,
@@ -418,7 +435,7 @@ class HTML5( Tags ):
                 attributes += ' href=%s' % tok
             else :
                 attributes += ' type="%s"' % tok
-        return '<link %s>%s</link>' % (attributes, content)
+        return '<link %s/>' % attributes     # Void element
 
     def tag_menu( self, mach, tagname, tokens, attributes, content ):
         """<menu> tag handler. Supported tokens,
@@ -443,7 +460,7 @@ class HTML5( Tags ):
         for t in tokens :
             attributes += (' content=%s'%t) if (t,t) == ('"','"') \
                             else (' http-equiv="%s"'%t)
-        return '<meta %s>%s</meta>' % (attributes, content)
+        return '<meta %s/>' % attributes   # Void element
 
     def tag_meter( self, mach, tagname, tokens, attributes, content ):
         """<meter> tag hanlder. Supported tokens,
@@ -557,7 +574,7 @@ class HTML5( Tags ):
           as ``value="<string>"``.
         """
         attributes += (' value=%s' % tokens[0]) if tokens else ''
-        return '<param %s>%s</param>' % (attributes, content)
+        return '<param %s/>' % attributes    # Void element
 
     def tag_progress( self, mach, tagname, tokens, attributes, content ):
         """<progress> tag handler. Supported tokens,
@@ -616,7 +633,7 @@ class HTML5( Tags ):
                 attributes += ' src=%s' % tok
             else :
                 attributes += ' type="%s"' % tok
-        return '<source %s>%s</source>' % (attributes, content)
+        return '<source %s/>' % attributes # Void element
 
     style2attr = {
         'text/css' : ' type="text/css"',
@@ -656,6 +673,14 @@ class HTML5( Tags ):
             else :
                 attributes += ' pubdate="%s"' % tok
         return '<abbr %s>%s</abbr>' % (attributes, content)
+
+    def tag_track(self, mach, tagname, tokens, attributes, content):
+        """<track> handler"""
+        return '<track %s/>' % attributes  # Void element
+
+    def tag_wbr(self, mach, tagname, tokens, attributes, content):
+        """<wbr> handler"""
+        return '<wbr %s/>' % attributes  # Void element
 
     #---- ISettings interface methods
 

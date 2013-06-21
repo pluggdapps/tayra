@@ -138,7 +138,7 @@ def main() :
     elif options.test :
         from tayra.test.teststd import test_stdttl
         print( "Executing TTL tests ..." )
-        setts['beautify_html'] = True
+        setts['beautify_html'] = False
         compiler = pa.qp( pa, ISettings, 'tayra.ttlcompiler', settings=setts )
         test_stdttl( compiler, options )
 

@@ -176,7 +176,6 @@ A roadmap of things to do
   can be ported to C and bolted with many other general pupose languages like
   Java, Ruby, PHP etc ...
 
-
 * Pure sandboxing in python is not entirely possible. Nevertheless pypy 
   is providing the sandboxing feature, which can be used if required. Some ideas
   for sandboxing,
@@ -199,6 +198,21 @@ A roadmap of things to do
   text, I guess things should be fairly safe.
   
 * May be I am wrong and I would love to stand corrected.
+
+* From stackoverflow,
+  http://stackoverflow.com/questions/3558119/are-self-closing-tags-valid-in-html5
+  a self-closing div will not validate. This is because a div is a normal
+  element, not a void element. According to the spec, tags that cannot have
+  any contents (known as void elements) can be self-closing*. This includes
+  the following tags:
+    area, base, br, col, command, embed, hr, img, input,
+    keygen, link, meta, param, source, track, wbr
+  The "/" is completely optional on the above tags, however, so <img/> is not
+  different from <img>, but <img></img> is invalid.
+
+  So tayra automatically removes any self-closing tags from TAGBEGIN token and
+  subsequently tag-handlers under tayra.tags package will generate <hr/> format 
+  for void-elements.
 
 Release check-list 
 ------------------

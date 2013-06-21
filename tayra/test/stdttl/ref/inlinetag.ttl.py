@@ -54,7 +54,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:3
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -77,10 +77,10 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:4
   _m.extend( [' hello world'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   _m.extend( ['\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:5
   _m.pushbuf()
   _m.extend( ['<div #'] )
@@ -92,9 +92,9 @@ def body( *args, **kwargs ) :
   _m.extend( ['hello world how are you', '\n      '] )
   # lineno:7
   _m.extend( ['so this how it goes', '\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

@@ -55,13 +55,13 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:5
   _m.pushbuf()
   _m.extend( ['<meta http-equiv="content-type" content="text/html; charset=UTF-8">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:6
   _m.pushbuf()
   _m.extend( ['<body title="ユニコードとは何か？in Japanese">'] )
@@ -80,14 +80,14 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:9
   _m.extend( [' 什麽是Unicode', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:10
   _m.pushbuf()
   _m.extend( ['<a "http://統一碼/標準萬國碼">'] )
   _m.pushbuf()
   # lineno:10
   _m.extend( [' in Chinese', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:11
   _m.extend( ["Qu'est ce qu'Unicode? in French", '\n      '] )
   # lineno:12
@@ -106,9 +106,9 @@ def body( *args, **kwargs ) :
   _m.extend( ['Что такое Unicode? in Russian', '\n      '] )
   # lineno:19
   _m.extend( ['¿Qué es Unicode? in Spanish', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

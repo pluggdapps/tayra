@@ -54,7 +54,7 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'func("hello world")', '', globals(), locals()) )
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions
@@ -71,7 +71,7 @@ def func( a ) :
   _m.extend( [' hey firefox 5 '] )
   _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -87,7 +87,7 @@ def func( a ) :
   _m.extend( [' hey chromium 8 '] )
   _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -103,7 +103,7 @@ def func( a ) :
   _m.extend( [' Hey everyone '] )
   _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

@@ -56,7 +56,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:11
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -72,14 +72,14 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:14
   _m.extend( [' attribute value is provided as a string.', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:15
   _m.pushbuf()
   _m.extend( ['<div disabled="disabled">'] )
   _m.pushbuf()
   # lineno:15
   _m.extend( [' attribute value is provided as an atom.', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:16
   _m.pushbuf()
   _m.extend( ['<div #specid .floatr.fgblue dummy spec disabled>'] )
@@ -87,14 +87,14 @@ def body( *args, **kwargs ) :
   _m.extend( ['\n      '] )
   # lineno:17
   _m.extend( ['attribute value is provided as an atom, along with specifiers', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:18
   _m.pushbuf()
   _m.extend( ['<a>'] )
   _m.pushbuf()
   # lineno:18
   _m.extend( [' fine clause', '\n      \n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:20
   _m.pushbuf()
   _m.extend( ['<div #spcid .floatr.fgblue dummy {background-color : crimson;}\n         disabled>'] )
@@ -102,16 +102,16 @@ def body( *args, **kwargs ) :
   _m.extend( ['\n      '] )
   # lineno:22
   _m.extend( ['attribute value is provided as an atom, along with specifiers and styling', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:23
   _m.pushbuf()
   _m.extend( ['<a>'] )
   _m.pushbuf()
   # lineno:23
   _m.extend( [' hello world', '\n      \n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

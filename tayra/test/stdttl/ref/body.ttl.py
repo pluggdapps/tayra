@@ -55,7 +55,7 @@ def body( id="hello", cls="world", style='color: red;', *args, **kwargs ) :
   _m.extend( ['} >'] )
   _m.pushbuf()
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

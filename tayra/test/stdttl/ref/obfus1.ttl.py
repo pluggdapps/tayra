@@ -53,7 +53,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['}>'] )
   _m.pushbuf()
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:3
   _m.pushbuf()
   _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
@@ -61,7 +61,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['}>'] )
   _m.pushbuf()
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

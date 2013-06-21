@@ -58,7 +58,7 @@ def render( self, *args, **kwargs ):
   _m.pushbuf()
   # lineno:5
   _m.extend( [' interface successfully invoked, okay', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

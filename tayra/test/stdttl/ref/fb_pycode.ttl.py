@@ -61,7 +61,7 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'b', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:20
   _m.pushbuf()
   _m.extend( ['<html>'] )
@@ -78,7 +78,7 @@ def body( *args, **kwargs ) :
   _m.extend( [' "title" {color:red;} lang="en" data="hello">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:24
   _m.pushbuf()
   _m.extend( ['<body {margin : '] )
@@ -96,7 +96,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['I am the space station '] )
   _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
   _m.extend( [' seven cameras have a zoom range ', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:30
   _m.pushbuf()
   _m.extend( ['<p first second>'] )
@@ -105,7 +105,7 @@ def body( *args, **kwargs ) :
   _m.extend( [' of any 12x or more, '] )
   _m.append(_m.evalexprs( '', '20', '', globals(), locals()) )
   _m.extend( [' and some of the wide-angle view ', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:31
   _m.pushbuf()
   _m.extend( ['<div>'] )
@@ -116,7 +116,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n      '] )
   # lineno:33
   _m.extend( ['important for people who are with a powerful zoom lens. Some other        ', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:34
   _m.pushbuf()
   _m.extend( ['<p #'] )
@@ -134,14 +134,14 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'helloworld()', '', globals(), locals()) )
   _m.extend( ['\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:37
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'insideroot_butglobal()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions
@@ -175,7 +175,7 @@ def helloworld( x=10, y=20, a='wer', b='ehl' ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'insideroot_butglobal()', '', globals(), locals()) )
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

@@ -59,14 +59,14 @@ def body( *args, **kwargs ) :
   _m.extend( ['<input>'] )
   _m.pushbuf()
   _m.extend( ['\n\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   _m.extend( ['<!--', ' Comment\n    ', '-->', '\n    '] )
   # lineno:10
   _m.pushbuf()
   _m.extend( ['<input>'] )
   _m.pushbuf()
   _m.extend( ['\n       ', '<!--', ' Comment\n       ', '-->', '\n   \n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:14
   _m.pushbuf()
   _m.extend( ["<input text  =$_0(*&^%%$#@!@~}= world }$ {' title= hello "] )
@@ -74,8 +74,8 @@ def body( *args, **kwargs ) :
   _m.extend( ['}>'] )
   _m.pushbuf()
   _m.extend( ['\n      \n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

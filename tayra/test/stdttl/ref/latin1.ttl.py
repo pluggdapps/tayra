@@ -55,13 +55,13 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:5
   _m.pushbuf()
   _m.extend( ['<meta http-equiv="content-type" content="text/html; charset=latin1">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:6
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -80,16 +80,16 @@ def body( *args, **kwargs ) :
   _m.extend( [' Wikipédia est un projet dencyclopédie collective établie sur', '\n           '] )
   # lineno:9
   _m.extend( ['Internet,', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:10
   _m.extend( ['universelle, multilingue et fonctionnant sur le principe du wiki.', '\n      '] )
   # lineno:11
   _m.extend( ['Wikipédia a pour objectif doffrir un contenu librement réutilisable,', '\n      '] )
   # lineno:12
   _m.extend( ['objectif et vérifiable, que chacun peut modifier et améliorer.', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

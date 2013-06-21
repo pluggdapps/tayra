@@ -63,7 +63,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['" rel="icon">'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:11
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'this.hd_title()', '', globals(), locals()) )
@@ -84,7 +84,7 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'this.hd_script()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:16
   _m.pushbuf()
   _m.extend( ['<body .pluggdsite>'] )
@@ -102,8 +102,8 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'this.bd_footer()', '', globals(), locals()) )
   _m.extend( ['\n\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions
@@ -124,7 +124,7 @@ def hd_title() :
   _m.extend( [' '] )
   _m.append(_m.evalexprs( '', 'title', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -177,7 +177,7 @@ def hd_links() :
   _m.extend( ["') format('woff');", '\n    '] )
   # lineno:47
   _m.extend( ['}', '\n\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:49
   defaultcss = 'static/default.css'
   # lineno:50
@@ -187,7 +187,7 @@ def hd_links() :
   _m.extend( ['" rel="stylesheet" charset="utf-8">'] )
   _m.pushbuf()
   _m.extend( ['\n    \n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -213,7 +213,7 @@ def hd_script() :
   _m.extend( ['">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:59
   _m.pushbuf()
   _m.extend( ['<script text/javascript "'] )
@@ -221,7 +221,7 @@ def hd_script() :
   _m.extend( ['">'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:60
   _m.pushbuf()
   _m.extend( ['<script type="text/javascript">'] )
@@ -251,7 +251,7 @@ def hd_script() :
   _m.extend( ['s.parentNode.insertBefore(ga, s);', '\n    '] )
   # lineno:72
   _m.extend( ['})();', '\n\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -275,7 +275,7 @@ def bd_body() :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'this.body_rightpane()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:83
   _m.pushbuf()
   _m.extend( ['<div #left>'] )
@@ -285,7 +285,7 @@ def bd_body() :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'this.body_leftpane()', '', globals(), locals()) )
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:85
   _m.pushbuf()
   _m.extend( ['<div #center>'] )
@@ -295,7 +295,7 @@ def bd_body() :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'this.body_centerpane()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -323,8 +323,8 @@ def body_leftpane() :
   _m.pushbuf()
   # lineno:92
   _m.extend( [' home', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:93
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -336,8 +336,8 @@ def body_leftpane() :
   _m.pushbuf()
   # lineno:94
   _m.extend( [' bootstrap', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:95
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -349,8 +349,8 @@ def body_leftpane() :
   _m.pushbuf()
   # lineno:96
   _m.extend( [' Interface Specification Request', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:97
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -362,8 +362,8 @@ def body_leftpane() :
   _m.pushbuf()
   # lineno:98
   _m.extend( [' Configuration', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:99
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -375,10 +375,10 @@ def body_leftpane() :
   _m.pushbuf()
   # lineno:100
   _m.extend( [' Get Started', '\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -404,14 +404,14 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:107
   _m.extend( [' Join', '\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:108
   _m.pushbuf()
   _m.extend( ['<br/>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:109
   _m.pushbuf()
   _m.extend( ['<div .builton>'] )
@@ -423,7 +423,7 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:110
   _m.extend( [' built-on ', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:111
   _m.pushbuf()
   _m.extend( ['<ul>'] )
@@ -440,8 +440,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:113
   _m.extend( [' HTML5', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:114
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -453,8 +453,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:115
   _m.extend( [' python', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:116
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -466,8 +466,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:117
   _m.extend( [' JavaScript', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:118
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -479,10 +479,10 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:119
   _m.extend( [' Erlang', '\n\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:121
   _m.pushbuf()
   _m.extend( ['<div .builtwith>'] )
@@ -494,7 +494,7 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:122
   _m.extend( [' built-with ', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:123
   _m.pushbuf()
   _m.extend( ['<ul>'] )
@@ -511,8 +511,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:125
   _m.extend( [' Pyramid', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:126
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -524,8 +524,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:127
   _m.extend( [' EazyText', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:128
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -537,8 +537,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:129
   _m.extend( [' Tayra', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:130
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -550,8 +550,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:131
   _m.extend( [' CouchDB', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:132
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -563,8 +563,8 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:133
   _m.extend( [' CouchPy', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:134
   _m.pushbuf()
   _m.extend( ['<li>'] )
@@ -576,10 +576,10 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:135
   _m.extend( [' jQuery', '\n\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:137
   _m.pushbuf()
   _m.extend( ['<div .builtfor>'] )
@@ -591,7 +591,7 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:138
   _m.extend( [' built-for ', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:139
   _m.pushbuf()
   _m.extend( ['<ul>'] )
@@ -608,10 +608,10 @@ def body_rightpane() :
   _m.pushbuf()
   # lineno:141
   _m.extend( [' pluggdapps.com', '\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -640,12 +640,12 @@ def bd_footer() :
   _m.extend( ['<br/>'] )
   _m.pushbuf()
   _m.extend( ['\n        '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:149
   _m.extend( ['Website content copyright © by SKR Farms. All rights reserved.', '\n        '] )
   # lineno:150
   _m.extend( ['Pluggdapps and its documentation are licensed under "GPL Version-3".', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:151
   _m.pushbuf()
   _m.extend( ['<td .papowered>'] )
@@ -655,9 +655,9 @@ def bd_footer() :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'blocks.papowered( 100, 10 )', '', globals(), locals()) )
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

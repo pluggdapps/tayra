@@ -73,8 +73,8 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.extend( [' hello '] )
   _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( [' @ ! # "helo" \'world "ok', '\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:22
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -88,7 +88,7 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.extend( [' I am the space station '] )
   _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
   _m.extend( [' seven cameras', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   _m.extend( ['<!--', ' comment1\n   comment ', '-->', '\n    '] )
   # lineno:27
   _m.extend( ['have a zoom range ', '\n    '] )
@@ -98,7 +98,7 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.pushbuf()
   # lineno:29
   _m.extend( [' of any 12x or more,', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   _m.extend( ['<!--', ' comment1\n       comment ', '-->', '\n    '] )
   # lineno:32
   _m.extend( ['and some of the wide-angle view ', '\n    '] )
@@ -112,10 +112,10 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n      '] )
   # lineno:35
   _m.extend( ['important for people who are with a powerful zoom lens. Some other', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:36
   _m.extend( ['important features thatThese cameras contain electronic viewfinder,', '\n      ', '<!--', ' comment1 comment ', '-->', '\n\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:39
   _m.extend( ['full control while shooting. In general, these cameras are all seem ', '\n    '] )
   # lineno:40
@@ -128,8 +128,8 @@ def body( x=10, y=10, a="cls2 ", b="cls3", *args, **kwargs ) :
   _m.pushbuf()
   # lineno:42
   _m.extend( [' Sign my guestbook', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

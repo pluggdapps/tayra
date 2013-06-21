@@ -129,7 +129,7 @@ def func( a, x, y, z, s ) :
     _m.extend( ['<head>'] )
     _m.pushbuf()
     _m.extend( ['\n      '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     # lineno:25
     _m.pushbuf()
     _m.extend( ['<body>'] )
@@ -141,15 +141,15 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     # lineno:26
     _m.extend( [' WHO', '\n    \n        '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     # lineno:28
     _m.pushbuf()
     _m.extend( ['<button #id_ reset disabled makefriend "button value">'] )
     _m.pushbuf()
     _m.extend( ['\n\n  '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )  
   # lineno:30
   elif a == 4 :    
     # lineno:32
@@ -179,8 +179,8 @@ def func( a, x, y, z, s ) :
     _m.extend( [' brightly">'] )
     _m.pushbuf()
     _m.extend( ['\n  '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )  
   # lineno:36
   elif a == 5 :    
     # lineno:38
@@ -202,8 +202,8 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     # lineno:44
     _m.extend( [' hello {world} /> ', '\n  '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )  
   # lineno:45
   elif a == 6 :    
     # lineno:46
@@ -232,8 +232,8 @@ def func( a, x, y, z, s ) :
     _m.extend( [' hello '] )
     _m.append(_m.evalexprs( '', 's', '', globals(), locals()) )
     _m.extend( [' @ ! # "helo" \'world "ok', '\n      '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     # lineno:53
     _m.pushbuf()
     _m.extend( ['<body>'] )
@@ -247,7 +247,7 @@ def func( a, x, y, z, s ) :
     _m.extend( [' I am the space station '] )
     _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
     _m.extend( [' seven cameras', '\n        '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     _m.extend( ['<!--', ' comment1\n       comment ', '-->', '\n        '] )
     # lineno:59
     _m.extend( ['have a zoom range ', '\n        '] )
@@ -257,7 +257,7 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     # lineno:61
     _m.extend( [' of any 12x or more,', '\n        '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     _m.extend( ['<!--', ' comment1\n           comment ', '-->', '\n        '] )
     # lineno:64
     _m.extend( ['and some of the wide-angle view ', '\n        '] )
@@ -271,10 +271,10 @@ def func( a, x, y, z, s ) :
     _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n          '] )
     # lineno:67
     _m.extend( ['important for people who are with a powerful zoom lens. Some other', '\n        '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     # lineno:68
     _m.extend( ['important features thatThese cameras contain electronic viewfinder,', '\n          ', '<!--', ' comment1 comment ', '-->', '\n    \n      '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     # lineno:71
     _m.extend( ['full control while shooting. In general, these cameras are all seem ', '\n        '] )
     # lineno:72
@@ -287,8 +287,8 @@ def func( a, x, y, z, s ) :
     _m.pushbuf()
     # lineno:74
     _m.extend( [' Sign my guestbook', '\n  '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )  
   # lineno:75
   elif a == 7 :    
     # lineno:76
@@ -308,8 +308,8 @@ def func( a, x, y, z, s ) :
     _m.extend( ['}>'] )
     _m.pushbuf()
     _m.extend( ['\n  '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')  
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )  
   # lineno:82
   else :    
     # lineno:83

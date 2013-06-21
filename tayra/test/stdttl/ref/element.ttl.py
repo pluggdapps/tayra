@@ -76,13 +76,13 @@ def _toc( level, heads ) :
     _m.extend( [' '] )
     _m.append(_m.evalexprs( '', 'text', '', globals(), locals()) )
     _m.extend( ['\n      '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     # lineno:12
     _m.extend( [''] )
     _m.append(_m.evalexprs( '', "children and _toc( level+1, children ) or ''", '', globals(), locals()) )
     _m.extend( ['\n\n'] )  
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -102,12 +102,12 @@ def toc( details, heads ) :
   _m.extend( [' '] )
   _m.append(_m.evalexprs( '', 'details', '', globals(), locals()) )
   _m.extend( ['\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:17
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', '_toc( 1, heads )', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -130,10 +130,10 @@ def papowered( pcount, icount ) :
   _m.pushbuf()
   # lineno:22
   _m.extend( [' On', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:23
   _m.extend( ['pluggdapps', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:24
   _m.pushbuf()
   _m.extend( ['<div .counts>'] )
@@ -144,8 +144,8 @@ def papowered( pcount, icount ) :
   _m.extend( [' plugins via '] )
   _m.append(_m.evalexprs( '', 'icount', '', globals(), locals()) )
   _m.extend( [' interface', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

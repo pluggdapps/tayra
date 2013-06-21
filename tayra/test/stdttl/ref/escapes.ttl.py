@@ -57,7 +57,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:7
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -90,13 +90,13 @@ def body( *args, **kwargs ) :
   _m.extend( ['@while block :', '\n      '] )
   # lineno:24
   _m.extend( ['all of them are interpreted as text.', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:25
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'willbecomeglobal()', '', globals(), locals()) )
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions
@@ -110,7 +110,7 @@ def willbecomeglobal( *args ):
   _m.pushbuf()
   # lineno:12
   _m.extend( [' Ghost', '\n        '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   
   # lineno:13
   def nestedfunc():    
@@ -121,7 +121,7 @@ def willbecomeglobal( *args ):
     _m.pushbuf()
     # lineno:14
     _m.extend( [' Rider', '\n        '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     return _m.popbuftext()  
   
   # lineno:15

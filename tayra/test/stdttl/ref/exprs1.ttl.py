@@ -67,7 +67,7 @@ def render( a ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'a', '', globals(), locals()) )
   _m.extend( ['\n  \n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

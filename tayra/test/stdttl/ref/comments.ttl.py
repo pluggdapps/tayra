@@ -57,7 +57,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n    ', '<!--', ' An inline comment spanning multiple\n      lines ', '-->', '\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:9
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -69,8 +69,8 @@ def body( *args, **kwargs ) :
   _m.extend( ['again', '\n    ', '<!--', ' spanning across multiple\n    lines\n      with indentation ', '-->', '\n    '] )
   # lineno:16
   _m.extend( ['and finally finish it with text.', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

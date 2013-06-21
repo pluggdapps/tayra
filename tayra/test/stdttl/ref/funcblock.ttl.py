@@ -135,7 +135,7 @@ def func5(z=10):
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:19
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -147,7 +147,7 @@ def func5(z=10):
   _m.pushbuf()
   # lineno:20
   _m.extend( [' WHO', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   
   # lineno:21
   def nestedfunc() :    
@@ -158,7 +158,7 @@ def func5(z=10):
     _m.pushbuf()
     # lineno:22
     _m.extend( [' this is nested function', '\n        '] )
-    _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+    _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
     
     # lineno:23
     def nestednestedfunc() :      
@@ -169,7 +169,7 @@ def func5(z=10):
       _m.pushbuf()
       # lineno:24
       _m.extend( [' this is nested nested function', '\n        '] )
-      _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+      _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
       return _m.popbuftext()    
     
     # lineno:25
@@ -183,13 +183,13 @@ def func5(z=10):
   _m.extend( ['<button #id_ reset disabled makefriend "button value">'] )
   _m.pushbuf()
   _m.extend( ['\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:27
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'nestedfunc()', '', globals(), locals()) )
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -223,8 +223,8 @@ def func6 () :
   _m.extend( [' brightly">'] )
   _m.pushbuf()
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -250,8 +250,8 @@ def func7() :
   _m.pushbuf()
   # lineno:44
   _m.extend( [' hello {world} /> ', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -284,8 +284,8 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.extend( [' hello '] )
   _m.append(_m.evalexprs( '', 'c', '', globals(), locals()) )
   _m.extend( [' @ ! # "helo" \'world "ok', '\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:54
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -299,7 +299,7 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.extend( [' I am the space station '] )
   _m.append(_m.evalexprs( '', '"These "', '', globals(), locals()) )
   _m.extend( [' seven cameras', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   _m.extend( ['<!--', ' comment1\n     comment ', '-->', '\n      '] )
   # lineno:60
   _m.extend( ['have a zoom range ', '\n      '] )
@@ -309,7 +309,7 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.pushbuf()
   # lineno:62
   _m.extend( [' of any 12x or more,', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   _m.extend( ['<!--', ' comment1\n         comment ', '-->', '\n      '] )
   # lineno:65
   _m.extend( ['and some of the wide-angle view ', '\n      '] )
@@ -323,10 +323,10 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.extend( ['lot of image stabilization (either optical or mechanical), which is ', '\n        '] )
   # lineno:68
   _m.extend( ['important for people who are with a powerful zoom lens. Some other', '\n      '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:69
   _m.extend( ['important features thatThese cameras contain electronic viewfinder,', '\n        ', '<!--', ' comment1 comment ', '-->', '\n  \n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:72
   _m.extend( ['full control while shooting. In general, these cameras are all seem ', '\n      '] )
   # lineno:73
@@ -339,8 +339,8 @@ def func8( a=10, b=12.2, c="string" ) :
   _m.pushbuf()
   # lineno:75
   _m.extend( [' Sign my guestbook', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 
@@ -364,8 +364,8 @@ def func10():
   _m.extend( ['}>'] )
   _m.pushbuf()
   _m.extend( ['\n\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Interface functions

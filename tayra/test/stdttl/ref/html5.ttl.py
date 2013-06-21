@@ -50,14 +50,14 @@ def body( *args, **kwargs ) :
   _m.pushbuf()
   # lineno:1
   _m.extend( [' pluggdapps-link', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:2
   _m.pushbuf()
   _m.extend( ['<abbr "World Health Organisation">'] )
   _m.pushbuf()
   # lineno:2
   _m.extend( [' WHO', '\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

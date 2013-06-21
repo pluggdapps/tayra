@@ -62,7 +62,7 @@ def body( *args, **kwargs ) :
   _m.extend( ['<head>'] )
   _m.pushbuf()
   _m.extend( ['\n  '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:8
   _m.pushbuf()
   _m.extend( ['<body>'] )
@@ -95,8 +95,8 @@ def body( *args, **kwargs ) :
   _m.extend( [' brightly">'] )
   _m.pushbuf()
   _m.extend( ['\n\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:15
   _m.pushbuf()
   _m.extend( ['<div>'] )
@@ -114,7 +114,7 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'html', 'n', globals(), locals()) )
   _m.extend( ['\n\n    '] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   # lineno:21
   _m.extend( [''] )
   _m.append(_m.evalexprs( 'evalpy', 'l.append(10)', '', globals(), locals()) )
@@ -131,8 +131,8 @@ def body( *args, **kwargs ) :
   _m.extend( [''] )
   _m.append(_m.evalexprs( '', 'l', '', globals(), locals()) )
   _m.extend( ['\n'] )
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
-  _m.handletag( _m.popbuftext(), _m.popbuftext(), indent=False, nl='')
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
+  _m.handletag( _m.popbuftext(), _m.popbuftext(), **{'nl': '', 'oprune': False, 'indent': False, 'iprune': False} )
   return _m.popbuftext()
 
 # ---- Global Functions

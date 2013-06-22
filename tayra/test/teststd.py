@@ -53,7 +53,6 @@ def test_stdttl( compiler, options ) :
             try :
                 #assert open( pyfile ).read() == open( refpyfile ).read()
                 assert open( htmlfile ).read() == open( refhtmlfile ).read()
-                pass
             except :
                 raise
             else :

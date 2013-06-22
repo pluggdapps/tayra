@@ -9,6 +9,8 @@
 import re
 from   xml.etree                import ElementTree
 
+import pluggdapps.utils         as h
+
 def etx2html( etxconfig={}, etxloc=None, etxtext=None, **kwargs ):
     """TBD : Convert eazytext content either supplied as a file (containing
     the text) or as raw-text, into html.
@@ -34,7 +36,7 @@ def pynamespace(module, filterfn=None):
     defined in the module that do not start with `_`. If ``__all__`` is
     defined, only fetch attributes listed under __all__. Additionally apply
     ``filterfn`` function and return a dictionary of namespace from module."""
-    module = string_import(module) if isinstance(module, str) else module
+    module = h.string_import(module) if isinstance(module, str) else module
     d = { k:getattr(module,k) for k in getattr(module,'__all__',vars(module)) }
     [ d.pop(k) for k,v in d.items() if filterfn(k, v) ] if filterfn else None
     return d

@@ -16,7 +16,7 @@ from   pluggdapps.plugin        import Plugin, implements, ISettings
 import pluggdapps.utils         as h
 from   pluggdapps.interfaces    import ITemplate
 
-import tayra.utils
+from   tayra.utils              import pynamespace
 
 class TTLCompiler( Plugin ):
     """Tayra compiler. Implemented as plugin to leverage on pluggdapps
@@ -167,7 +167,7 @@ class TTLCompiler( Plugin ):
         # Create helper module
         helper = imp.new_module( 'template_helper' )
         filterfn = lambda k, v : callable(v)
-        [ helper.__dict__.update( h.pynamespace(m) ) 
+        [ helper.__dict__.update( pynamespace(m) ) 
                     for m in [tmplh] + self['helpers'] ]
         ctxt = {
             self.igen.machname : self.mach,

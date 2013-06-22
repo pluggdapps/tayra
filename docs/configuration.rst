@@ -90,6 +90,11 @@ memcache
     Cache the compiled python code in-memory to avoid re-compiling .ttl to
     .py file.
 
+helpers
+    Comma separated list of python modules. These modules will be imported
+    and its namespace will be merged with template context and can be
+    refered as ``h.``.
+
 lextab
     PLY-Lexer option. Points to the lex table that's used for optimized
     mode. Only if you're modifying the lexer and want some tests to avoid

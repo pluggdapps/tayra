@@ -23,7 +23,7 @@ class TTLCompiler( Plugin ):
     configuration system. Also implement :class:`ITemplate`. Creating a
     plugin instance can be a costly operation, to avoid this instantiate this
     plugin once and use :meth:`_init` to initialize it for subsequent uses.
-   """
+    """
 
     implements( ITemplate )
 

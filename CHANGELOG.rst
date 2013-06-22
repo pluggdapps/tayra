@@ -3,6 +3,22 @@ CHANGELOG
 
 List of release changes.
 
+0.44dev
+-------
+
+``Wed Jun 22, 2013``
+
+- TTLCompiler that compiles tayra templates can include additional helper
+  modules and its methods into ``h`` namespace accessible inside the template
+  script. This configuration is done via ttlcompiler['helpers'] settings.
+- TTLCompiler setting `beautify_html` is disabled by default.
+- in self-closing tags ``/>`` is replaced with plain ``>``, and while
+  generating a void-element it is always generated with ``/>``.
+- If a tayra tag element that belongs to the class of void-elements,
+  include a element-content it will be silently ignored, though a warning will
+  be generated when compiling them.
+- added pynamespace library function.
+
 0.43dev
 -------
 

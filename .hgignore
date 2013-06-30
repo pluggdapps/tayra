@@ -3,17 +3,17 @@ syntax: glob
 *.pyc
 *.swp
 *~
-tayra-env
-eggs/
-_build/
-dist/
 lextyrtab.py
 parsetyrtab.py
 parser.out
 distribute-0.6.10.tar.gz
 .vim_maindev
 .vimsession
-tayra.egg-info/
 # switch to regexp syntax.
 syntax: regexp
 ^\.pc/
+^tayra-env/*
+^eggs/*
+^_build/*
+^dist/*
+^tayra.egg-info/*

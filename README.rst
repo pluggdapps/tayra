@@ -55,7 +55,7 @@ Features
 - lexer for generating syntax-highlighted web documents using Pygments.
 - vim-plugin_ for template scripts.
 - **License:** `GPLv3 license`_.
-- **Requires:** Linux, Python-3.x, Pluggdapps, PLY.
+- **Requires:** Linux/OS-X, Python-3.x, Pluggdapps, PLY.
 
   - If `beautify_html` settings is enabled for ``tayra.ttlcompiler`` plugin,
     the beautifulsoup4_ needs to be installed.

@@ -15,13 +15,13 @@ them. And probably it is the only templating language that allows developers
 to build and distribute their templates as plugins, not to mention the fact
 that tayra's implementation itself is heavily based on plugins.
 """
-    
+
 from   os.path            import dirname, join, basename, abspath, isfile
 
 from   pluggdapps.plugin  import Plugin, ISettings
 import pluggdapps.utils   as h
 
-__version__ = '0.45dev'
+__version__ = '0.46dev'
 
 template_plugins = [
     'tayra:test/stdttl/implementer.ttl'

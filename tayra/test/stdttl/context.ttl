@@ -7,4 +7,4 @@
   <body>
     ${ h.parsecsv( 'one, two, three' ) }
     ${ h.parsecsvlines( 'one, \\n two, three' ) }
-    ${ dir(h) }
+    ${ [ x for x in dir(h) if not x.startswith("__") ] }

@@ -3,6 +3,13 @@ CHANGELOG
 
 List of release changes.
 
+0.45dev
+-------
+
+``Wed Jan 05, 2014``
+
+- moving to git repository and project is now tracked through github.
+
 0.44dev
 -------
 

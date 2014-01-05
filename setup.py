@@ -59,7 +59,7 @@ setup(
     },
     install_requires=[                      # setuptools
         'ply>=3.4',
-        'pluggdapps>=0.42dev',
+        'pluggdapps>=0.43dev',
     ],
     extras_require={},                      # setuptools
     setup_requires={},                      # setuptools

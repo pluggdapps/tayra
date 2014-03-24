@@ -9,6 +9,7 @@ parser.out
 distribute-0.6.10.tar.gz
 .vim_maindev
 .vimsession
+tayra.egg-info
 # switch to regexp syntax.
 syntax: regexp
 ^\.pc/

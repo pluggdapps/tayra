@@ -10,6 +10,9 @@ distribute-0.6.10.tar.gz
 .vim_maindev
 .vimsession
 tayra.egg-info
+build/
+dist/
+
 # switch to regexp syntax.
 syntax: regexp
 ^\.pc/
